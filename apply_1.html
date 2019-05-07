@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+	<!-- Meta, title, CSS, favicons, etc. -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>蓝信康</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="./css/bootstrap.min.css" rel="stylesheet">
+	<!-- Documentation extras -->
+	<link href="./css/docs.min.css" rel="stylesheet">
+	<link href="./css/main2.css" rel="stylesheet">
+	<link href="./css/apply.css" rel="stylesheet">
+</head>
+
+<body class="bs-docs-home">
+	<link href="./css/header.css" rel="stylesheet">
+	<div data-lbifile="./common/header.html"></div>
+	<div class="bs-docs-featurette carousel-cos apply-bg">
+		<div class="tip-box">
+			<div class="apply-container">
+				<h4>选择蓝信康的理由</h4>
+				<p>蓝信康，专注药店领域的移动医疗慢病管理专家，打造O2O服务平台，为连锁药店增加销量、提升服务、精准 营销、会员互动每一个环节。</p>
+				<ul>
+					<li>
+						<img src="./img/newVersion/tags/at-ic-a.png">智能慢病检测设备：覆盖常规慢病检测，为会员提供多维度个性服务； </li>
+					<li>
+						<img src="./img/newVersion/tags/at-ic-b.png">药师移动工作站：便捷的会员服务、沟通和管理，系统的知识培训和分享；</li>
+					<li>
+						<img src="./img/newVersion/tags/at-ic-c.png">后台大数据服务：顾客信息云端智能多维度精准筛查，精准用户画像；</li>
+					<li>
+						<img src="./img/newVersion/tags/at-ic-d.png">微信公众号定制：检测数据实时推送、营养方案推送，会员咨询、在线购物的一体式平台；</li>
+				</ul>
+			</div>
+		</div>
+		<div class="batch-choose">
+			<div class="apply-container">
+				<h4>试用套装(注：需自备一台安卓版智能手机)</h4>
+				<div class="img-container row">
+					<div class="col-sm-4 col-md-4">
+						<img src="./img/newVersion/at-bg-a.png">
+					</div>
+					<div class="col-sm-4 col-md-4">
+						<img src="./img/newVersion/at-bg-b.png">
+					</div>
+					<div class="col-sm-4 col-md-4">
+						<img src="./img/newVersion/at-bg-c.png">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="submit-form">
+			<div class="apply-container">
+				<p>请填写以下申请表，三个工作日我们会与您取得联系，如有疑问请拨打联系电话 021-61400686</p>
+				<form id="myform" class="form-horizontal" enctype="text/plain">
+					<div class="form-group">
+						<label for="company" class="col-sm-2 control-label">公司</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="company">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="contacts" class="col-sm-2 control-label">联系人</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="contacts">
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group sub-group">
+								<label for="tel" class="col-sm-4 control-label">联系方式</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="tel">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="address" class="col-sm-2 control-label">地址</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="address">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="remark" class="col-sm-2 control-label">备注</label>
+						<div class="col-sm-10">
+							<textarea class="form-control" style="height:150px" id="remark"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<a onclick="sendMail();" type="submit" class="btn btn-submit">提交</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<link href="./css/footer.css" rel="stylesheet">
+	<div data-lbifile="./common/footer.html"></div>
+	<script type="text/javascript" src="./js/common/jquery-1.11.2.min.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./js/common/frame.js"></script>
+	<script type="text/javascript" src="./js/common/common.js"></script>
+	<script>
+		function sendMail() {
+			var subject = "申请试用";
+			var to = "customer@carelinker.com";
+			var body = "公司：" + $('#company').val() + ',联系人：' + $('#contacts').val() + ',联系方式' + $('#tel').val() + ',地址：' +
+				$('#address').val() + ',备注：' + $('#remark').val();
+			var url = "mailto:" + to + "?subject=" + subject + "&body=" + body;
+			document.location.href = url;
+		}
+		window.onload = function() {
+			setTimeout(function() {
+				comJs.initNav()
+			}, 10)
+		}
+	</script>
+</body>
+
+</html>

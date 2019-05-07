@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+  <title>蓝信康</title>
+  <link href="./css/common.css" rel="stylesheet">
+  <link href="./css/home.css" rel="stylesheet">
+  <link href="./css/product.css" rel="stylesheet">
+  <link href="./css/company.css" rel="stylesheet">
+  <script>
+    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      window.location.href = "./m/contact.html";
+    }
+  </script>
+</head>
+
+<body>
+  <div class="home">
+    <link href="./css/header.css" rel="stylesheet">
+    <div data-lbifile="./common/header.html"></div>
+    <div class='product_center'>
+      <div class="section section-banner">
+        <div class="product_banner">
+          <div class='product_banner_left'>
+            <div class='product_banner_title'>我们助您更上一层楼</div>
+          </div>
+          <div class='banner_right'>
+            <div class='banner_img' id="scene">
+              <div class="layer" data-depth="0.20">
+                <img src="images/contact/banner/1.png">
+              </div>
+              <div class="layer" data-depth="0.30">
+                <img src="images/contact/banner/2.png">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section section-contact">
+      <div class="title">联系我们</div>
+      <div class="contact_content">
+        <ul class="contact_info">
+          <li>
+            <h5>公司地址</h5>
+            <p>上海市杨浦区政府路18号波司登大厦901</p>
+          </li>
+          <li>
+            <h5>业务洽谈</h5>
+            <p>021-61400667</p>
+            <p>（工作时间：周一至周六 早九点至晚八点）</p>
+          </li>
+          <li>
+            <h5>客服电话</h5>
+            <p>400-6190069 / 800-8190069</p>
+            <p>（工作时间：周一至周日 早八点至晚八点）</p>
+          </li>
+          <li>
+            <h5>电子邮箱</h5>
+            <p>customer@carelinker.com</p>
+          </li>
+        </ul>
+        <div class="contact_map_img">
+          <img src="./images/contact/pic_map.png">
+        </div>
+      </div>
+    </div>
+    <link href="./css/footer.css" rel="stylesheet">
+    <div data-lbifile="./common/footer.html"></div>
+  </div>
+</body>
+<script type="text/javascript" src="./js/common/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="./libs/parallax/jquery.parallax.js"></script>
+<script type="text/javascript" src="./js/common/frame.js"></script>
+<script type="text/javascript" src="./js/common/common.js"></script>
+<script type="text/javascript">
+  window.onload = function() {
+    new comJs.initBanner(".section-banner")
+    setTimeout(function() {
+      comJs.initNav('contact')
+    }, 10)
+  }
+
+</script>
+
+</html>
