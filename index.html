@@ -43,6 +43,7 @@
           <div class="swiper-slide banner">slider2</div>
           <div class="swiper-slide banner">slider3</div>
         </div>
+        <div class="swiper-pagination"></div>
       </div>
       <div class="section advantage-wrap">
         <div class="advantage clearfix">
@@ -147,6 +148,8 @@
                 <div class="swiper-slide">slider2</div>
                 <div class="swiper-slide">slider3</div>
               </div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
             </div>
           </div>
         </div>
@@ -178,37 +181,37 @@
         <div class="saas">
           <div class="saas_left">              
             <div class="manage">
-              <div class="manage_item">
-                <div class="manage_img"><img src="../images/ic_home_SAAS_用户管理_selected_@1x@2x_1.png"></div>
-                <div>用户管理</div>
+              <div class="manage_item" id="manage_img1">
+                <div class="manage_img"></div>
+                <div class="manage_text">用户管理</div>
               </div>
-              <div class="manage_item">
-                <div class="manage_img"><img src="../images/ic_home_SAAS_产品管理_unselected_@1x@2x.png"></div>
-                <div>产品管理</div>
+              <div class="manage_item" id="manage_img2">
+                <div class="manage_img"></div>
+                <div class="manage_text">产品管理</div>
               </div>
-              <div class="manage_item">
-                <div class="manage_img"><img src="../images/ic_home_SAAS_产品管理_unselected_@1x@2x.png"></div>
-                <div>产品管理</div>
+              <div class="manage_item" id="manage_img3">
+                <div class="manage_img"></div>
+                <div class="manage_text">告警管理</div>
               </div>
-              <div class="manage_item">
-                <div class="manage_img"><img src="../images/ic_home_SAAS_产品管理_unselected_@1x@2x.png"></div>
-                <div>产品管理</div>
+              <div class="manage_item" id="manage_img4">
+                <div class="manage_img"></div>
+                <div class="manage_text">服务管理</div>
               </div>
-              <div class="manage_item">
-                <div class="manage_img"><img src="../images/ic_home_SAAS_产品管理_unselected_@1x@2x.png"></div>
-                <div>产品管理</div>
+              <div class="manage_item" id="manage_img5">
+                <div class="manage_img"></div>
+                <div class="manage_text">数据统计</div>
               </div>
-              <div class="manage_item">
-                <div class="manage_img"><img src="../images/ic_home_SAAS_产品管理_unselected_@1x@2x.png"></div>
-                <div>产品管理</div>
+              <div class="manage_item" id="manage_img6">
+                <div class="manage_img"></div>
+                <div class="manage_text">用户反馈</div>
               </div>
-              <div class="manage_item">
-                <div class="manage_img"><img src="../images/ic_home_SAAS_产品管理_unselected_@1x@2x.png"></div>
-                <div>产品管理</div>
+              <div class="manage_item" id="manage_img7">
+                <div class="manage_img"></div>
+                <div class="manage_text">操作日志</div>
               </div>
-              <div class="manage_item">
-                <div class="manage_img"><img src="../images/ic_home_SAAS_产品管理_unselected_@1x@2x.png"></div>
-                <div>产品管理</div>
+              <div class="manage_item" id="manage_img8">
+                <div class="manage_img"></div>
+                <div class="manage_text">系统管理</div>
               </div>
             </div>
             <div class="case_subtitle">噢蹦SAAS管理系统可以将企业所有智能锁产品及终端用户接入系统，实现产品智能化管理，包括指纹管理、密码管理，分享设备、开锁记录、设备告警等 。
@@ -235,21 +238,21 @@
           </div>
           <div class="app_right">              
             <div class="manage">
-              <div class="manage_item">
-                <div class="manage_img"><img src="../images/ic_home_SAAS_用户管理_selected_@1x@2x_1.png"></div>
-                <div>设备管理</div>
+              <div class="manage_item" id="manage_img9">
+                <div class="manage_img_app"></div>
+                <div class="manage_text">设备管理</div>
               </div>
-              <div class="manage_item">
-                <div class="manage_img"><img src="../images/ic_home_SAAS_产品管理_unselected_@1x@2x.png"></div>
-                <div>临时密码</div>
+              <div class="manage_item" id="manage_img10">
+                <div class="manage_img_app"></div>
+                <div class="manage_text">临时密码</div>
               </div>
-              <div class="manage_item">
-                <div class="manage_img"><img src="../images/ic_home_SAAS_产品管理_unselected_@1x@2x.png"></div>
-                <div>权限分级</div>
+              <div class="manage_item" id="manage_img11">
+                <div class="manage_img_app"></div>
+                <div class="manage_text">权限分级</div>
               </div>
-              <div class="manage_item">
-                <div class="manage_img"><img src="../images/ic_home_SAAS_产品管理_unselected_@1x@2x.png"></div>
-                <div>消息通知</div>
+              <div class="manage_item" id="manage_img12">
+                <div class="manage_img_app"></div>
+                <div class="manage_text">消息通知</div>
               </div>
             </div>
             <div class="case_subtitle">在智能锁超级APP上可以浏览所有使用设备的信息状态和管理功能，包括指纹管理、密码管理，分享设备、开锁记录、设备告警等 。这一切，都让生活更加简单。 。
@@ -270,7 +273,10 @@
 <script type="text/javascript">
   window.onload = function() {
     var mySwiper = new Swiper('.swiper-container', {
-      autoplay: false,//可选选项，自动滑动
+      autoplay: false,
+      pagination: {
+        el: '.swiper-pagination'
+      },
     })
     setTimeout(function() {
       comJs.initNav('index')
