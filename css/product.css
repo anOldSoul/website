@@ -1,0 +1,688 @@
+.section-banner {
+  background-color: #102d48;
+}
+
+.product_banner {
+  width: 1200px;
+  height: 530px;
+  margin: 0 auto;
+  color: #fff;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* overflow: hidden; */
+}
+.contact_banner{
+  text-align: center;
+}
+.contact_en{
+  font-size: 24px;
+}
+.contact_zh{
+  font-size: 40px;
+}
+.contact_en{
+  margin-bottom: 20px;
+}
+.contact_sub{
+  font-size: 16px;
+  margin-top: 20px;
+}
+.solution{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 850px;
+  margin: 0 auto;
+  font-size: 24px;
+  margin-bottom: 89px;
+}
+.product_banner * {
+  user-select: none;
+}
+
+.product_banner_left {
+  width: 62%;
+  float: left;
+  position: absolute;
+  top: 35%;
+  left: 0;
+}
+
+.product_banner_title {
+  font-size: 40px;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  margin-left: 80px;
+}
+
+.product_banner_subtitle {
+  font-size: 18px;
+  line-height: 1;
+  margin-left: 80px;
+}
+
+.banner_right {
+  width: 40%;
+  height: 100%;
+  float: right;
+  /* overflow: hidden; */
+}
+
+.banner_img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.banner_img .layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.banner_img img {
+  /* width: 100%; */
+  height: 100%;
+}
+
+.modules {
+  width:1440px;
+  height:200px;
+  background:rgba(249,249,249,1);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.modules .modules_item {
+  width: 13%;
+  display: inline-block;
+  text-align: center;
+  float: left;
+}
+
+.modules_member .modules_item {
+  width: 25%;
+}
+
+.module_pharmacist .modules_item {
+  width: 33.33%;
+}
+
+.moduleImg {
+  width: 50%;
+  height: 50px;
+  margin: 0 auto;
+  opacity: 0.2;
+}
+
+.moduleImg img {
+  width: auto;
+  height: 50px;
+}
+
+.moduleName {
+  display: inline-block;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 27px;
+  color: grey;
+}
+
+.title {
+  width: 100%;
+  font-size: 24px;
+  text-align: center;
+  line-height: 1;
+  padding-top: 60px;
+  margin-bottom: 20px;
+}
+
+.useTitle {
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+  margin: 60px 0 40px;
+}
+
+.subTitle {
+  font-size: 18px;
+  text-align: center;
+  line-height: 1;
+}
+
+.module_box {
+  overflow: hidden;
+}
+
+.title_box {
+  width: 100%;
+  margin-bottom: 118px;
+}
+
+.moduleboxImg,
+.moduleboxImg1 {
+  margin: 0 auto;
+  width: 850px;
+  text-align: center;
+  margin-bottom: 58px;
+}
+
+.product_lock_img{
+  width: 720px;
+  height: 700px;
+}
+.lock{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.lock_right{
+  width: 335px;
+  margin: 0 auto;
+}
+.lock_title{
+  font-size:36px;
+}
+.lock_underline{
+  width: 50px;
+  height: 4px;
+  background: #17BF98;
+  margin-top: 20px;
+  margin-bottom: 48px;
+}
+.lock_subtitle{
+  font-size: 24px;
+  color:rgba(96,114,132,1);
+  line-height: 2;
+}
+.product_left_bac{
+  position: absolute;
+  left: 0;
+  width: 207px;
+  height: 634px;
+  background-size: 100% auto;
+}
+.obapp_img{
+  width: 331px;
+  height: 343px;
+  position: absolute;
+  bottom: 0;
+  left: 555px;
+}
+.obappTitle{
+  width:1030px;
+  margin: 0px auto;
+  text-align: center;
+  line-height: 2;
+  color: grey;
+  font-size: 24px;
+}
+
+.moduleboxImg1 img {
+  width: 100%;
+}
+
+.moduleboxImg img {
+  width: 100%;
+}
+
+.modules_item {
+  cursor: pointer;
+  color: color:rgba(9,28,42,1);
+}
+
+.modules_item.active .moduleImg {
+  opacity: 1;
+}
+
+.section-data {
+  width: 1030px;
+  margin: 0 auto;
+}
+
+.data_box {
+  height: 450px;
+  margin: 40px 0;
+}
+
+.data_left {
+  width: 340px;
+  height: 450px;
+  float: left;
+}
+
+.data_right {
+  width: 638px;
+  float: left;
+  margin-left: 50px;
+  height: 450px;
+}
+
+.item_box {
+  width: 638px;
+  float: left;
+}
+
+.rightItem {
+  width: 50%;
+  padding: 30px 0;
+  float: left;
+}
+
+.percent_box {
+  width: 100%;
+  float: left;
+  color: #fff;
+  background-color: #1989fa;
+  border-radius: 6px;
+  margin-top: 10px;
+  box-shadow: 0px 0px 10px rgba(25, 137, 250, 1);
+}
+
+.left_item {
+  width: 100%;
+  height: 215px;
+  font-size: 16px;
+  color: #fff;
+  background-size: 100% 100%;
+  overflow: hidden;
+}
+
+.left_item_bg1 {
+  background-image: url('../images/product/data.png');
+}
+
+.left_item_bg2 {
+  background-image: url('../images/product/data2.png');
+}
+
+.left_item1 {
+  width: 100%;
+  height: 85%;
+  font-size: 16px;
+  color: #fff;
+  background-image: url('../images/product/phone.png');
+  background-size: 100% 100%;
+  position: relative;
+}
+
+.itemText1 {
+  position: absolute;
+  top: 122px;
+  line-height: 24px;
+  left: 60px;
+  font-size: 16px;
+}
+
+.itemText {
+  margin-top: 42px;
+  padding-left: 30px;
+  font-size: 16px;
+  opacity: 0.8;
+  position: relative;
+}
+
+.itemText p:first-child {
+  margin-bottom: 6px;
+}
+
+.itemText::before {
+  content: '|';
+  position: absolute;
+  top: 0;
+  left: 16px;
+  color: #fff;
+}
+
+.left_item_bg2 .itemText {
+  margin-top: 20px;
+}
+
+.compare {
+  font-size: 18px;
+  position: relative;
+  line-height: 1;
+}
+
+.rightItem>.compare {
+  padding-left: 12px;
+}
+
+.rightItem>.compare::before {
+  content: '|';
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+}
+
+.num {
+  font-size: 30px;
+  line-height: 1;
+  padding-left: 12px;
+  margin-top: 18px;
+}
+
+.percent_title {
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+  line-height: 1;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.percent_title1 {
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  line-height: 1;
+  margin-top: 30px;
+  padding-bottom: 30px;
+}
+
+.percent_num {
+  width: 33.3%;
+  float: left;
+  text-align: center;
+}
+
+.num_item {
+  font-size: 30px;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.num_text {
+  line-height: 1;
+  margin-bottom: 30px;
+}
+
+.use_box {
+  margin-top: 46px;
+  width: 1076px;
+  margin: 40px auto 0;
+  height: 550px;
+}
+
+.use_box1 {
+  width: 1030px;
+  margin: 40px auto 0;
+  height: 440px;
+}
+
+.use_title {
+  background-color: #f9fbfd;
+  padding-top: 33px;
+  padding-bottom: 27px;
+  border-bottom: 1px solid #e5e9f3;
+  font-size: 18px;
+  text-align: center;
+}
+
+.use_content {
+  padding-top: 40px;
+}
+
+.use_item,
+.use_item1 {
+  overflow: hidden;
+  width: 340px;
+  height: 370px;
+  border: 1px solid #e5e9f3;
+  float: left;
+}
+
+.use_item:hover {
+  width: 390px;
+  color: #1989fa;
+  border: 1px solid #1989fa;
+}
+
+.use_item.active {
+  width: 390px;
+  height: 440px;
+  color: #1989fa;
+  border: 1px solid #1989fa;
+  cursor: pointer;
+  margin-top: -10px;
+}
+
+.use_item.active {
+  background: url('../images/common/bg.png') no-repeat 100px 132px;
+  background-size: 210px 178px;
+}
+
+.use_text {
+  line-height: 1;
+  margin-bottom: 20px;
+  font-size: 18px;
+  padding-left: 70px;
+}
+
+.use_num {
+  line-height: 1;
+  margin-bottom: 40px;
+  font-size: 30px;
+  padding-left: 78px;
+}
+
+.conclusion {
+  padding-left: 20px;
+  font-size: 16px;
+  padding-bottom: 30px;
+  opacity: 0;
+}
+
+.use_item.active .conclusion {
+  opacity: 1;
+}
+
+
+/* member */
+
+
+/* .section-member .moduleboxImg{
+  height: 0px;
+} */
+
+.section-member .moduleboxImg img {
+  width: 100%;
+  /* height: 550px; */
+  display: block;
+  margin: 0 auto;
+}
+
+.bug_drug_item {
+  width: 500px;
+  height: 584px;
+  border: 1px solid #1989fa;
+  float: left;
+}
+
+.buy_drug {
+  width: 1030px;
+  height: 584px;
+  margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.drug_title1 {
+  width: 100%;
+  text-align: center;
+  height: 84px;
+  border-bottom: 1px solid #e5e9f3;
+  background-color: #fbfbff;
+}
+
+.title_text1 {
+  font-size: 18px;
+  padding-top: 20px;
+}
+
+.subTitle_text1 {
+  width: 100%;
+  font-size: 16px;
+}
+
+.drug_item_content {
+  width: 500px;
+  position: relative;
+}
+
+.drug_item_left {
+  width: 260px;
+  float: left;
+}
+
+.drug_item_right {
+  width: 240px;
+  position: absolute;
+  top: 42px;
+  right: -4px;
+}
+
+.drug_item_right img {
+  width: 90%;
+}
+
+.interval_days {
+  font-size: 18px;
+  line-height: 1;
+  margin-top: 40px;
+  margin-left: 60px;
+  position: relative;
+}
+
+.interval_days::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10px;
+  background: rgba(0, 0, 0, 5);
+  width: 1px;
+  height: 20px;
+}
+
+.change_value {
+  font-size: 16px;
+  line-height: 1;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-left: 60px;
+}
+
+.change_num {
+  font-size: 40px;
+  line-height: 1;
+  margin-left: 60px;
+}
+
+.change_subnum {
+  font-size: 16px;
+}
+
+.drug_items li {
+  width: 260px;
+  height: 586px;
+  position: relative;
+  overflow: hidden;
+  float: left;
+  border: 1px solid #e5e9f3;
+  border-left: none;
+}
+
+.drug_items li:first-child {
+  border-left: 1px solid #e5e9f3;
+}
+
+.drug_items li.active {
+  width: 500px;
+  border: 1px solid #1989fa;
+}
+
+.drug_items li.active .drug_title1 {
+  color: #1989fa;
+  border-bottom: 1px solid #1989fa;
+}
+
+
+/* pharmacist */
+
+.pharmacist-list {
+  width: 1028px;
+  margin: 40px auto 80px;
+}
+
+.pharmacist-swiper-list {
+  height: 365px;
+}
+
+.pharmacist-swiper-list img {
+  width: 100%;
+  margin-top: 40px;
+}
+
+.pharmacist-swiper-list .swiper-slide {
+  width: 240px!important;
+  height: 324px;
+  border: 1px solid #1989fa;
+  overflow: hidden;
+}
+
+.pharmacist-swiper-list .swiper-slide:last-child {
+  /* margin-right: 0!important; */
+}
+
+.pharmacist-info {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: -240px;
+  background: #1989fa;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+.pharmacist-info .name {
+  font-size: 24px;
+  line-height: 1;
+  padding: 0 20px 40px;
+  margin-top: 40px;
+  position: relative;
+}
+
+.pharmacist-info .des {
+  line-height: 1.5;
+  padding: 20px 0;
+  font-size: 18px;
+  position: relative;
+}
+
+.pharmacist-info .name::after,
+.pharmacist-info .des::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 64px;
+  width: 112px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.pharmacist-info .info {
+  margin-top: 30px;
+  padding: 0 10px;
+  line-height: 1.5;
+  text-align: left;
+  font-size: 16px;
+}

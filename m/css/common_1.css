@@ -1,0 +1,101 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{font-family:'Microsoft YaHei';margin:0;padding:0;}
+table{border-spacing:0;border-collapse:collapse;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,var{font-weight:normal;font-style:normal;}
+ol,ul{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+*{font-family:Arial,Verdana,Tahoma;margin:0;padding:0;}
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+.wrapper {
+  width: 100%;
+}
+
+.content-wrapper {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}
+.section{
+	position: relative;
+  overflow: hidden;
+}
+.max-width-1440{
+	max-width: 19.2rem;
+	margin: 0 auto;
+}
+.btn{
+	font-size: 0.213333rem;
+	color: #1989fa;
+	height: 0.48rem;
+	text-align: center;
+	padding: 0 0.266667rem;
+	line-height: 0.48rem;
+	border: 0.013333rem solid #1989fa;
+	display: inline-block;
+	margin: 0 auto;
+	cursor: pointer;
+	background: #e8f3fe;
+}
+.bg{
+	width: 100%;
+	display: block;
+}
+.logo{
+	display: block;
+	margin: 0.346667rem 0 0.8rem 0.8rem;
+	width: 1.333333rem;
+}
+.footer{
+	width: 100%;
+	padding: 0.8rem 0 1.066667rem;
+	background-color: #00164e;
+  text-align: center;
+	color: #fff;
+	position: absolute;
+	padding-bottom: 1.066667rem;
+}
+.footer .info{
+	font-size: 0.266667rem;
+	line-height: 1;
+	width: 5.333333rem;
+	position: absolute;
+	text-align: center;
+	left: 50%;
+  transform: translateX(-50%);
+}
+.footer .info p{
+	margin-bottom: 0.24rem;
+	width: 100%;
+}
+.footer .address{
+	margin-top: 0.933333rem;
+	width: 5.333333rem;
+	position: absolute;
+	text-align: center;
+	left: 50%;
+  transform: translateX(-50%);
+}
+.footer .address p{
+	margin-top: 0.133333rem;
+	font-size: 0.24rem;
+	line-height: 1;
+	color: rgba(255, 255, 255, 0.5);
+}
+.footer .copyright{
+	font-size: 0.213333rem;
+	color: rgba(255, 255, 255, 0.5);
+	margin: 2.266667rem 0 0.013333rem;
+}

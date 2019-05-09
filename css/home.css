@@ -1,0 +1,434 @@
+.wrapper{
+}
+.banner_right {
+}
+
+.banner_img {
+  width: 100%;
+  height: 100%;
+}
+.product_item{
+  width:470px;
+  height:270px;
+  background:rgba(17,49,78,1);
+  box-shadow:0px 8px 12px 0px rgba(32,33,39,0.1);
+  border-radius:6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  font-weight: normal;
+}
+.product_title{
+  font-size: 20px;
+  padding-left: 52px;
+}
+.product_subtitle{
+  font-size: 14px;
+  padding-left: 52px;
+  margin-top: 22px;
+}
+.lock_img{
+  width: 113px;
+  height: 227px;
+  margin-right: 52px;
+}
+.saas_img{
+  width: 560px;
+  height: 526px;
+}
+.lock_cycle_img{
+  width: 256px;
+  height: 197px;
+}
+.productList{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: #fff;
+}
+.case{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.saas{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.manage_img{
+  width: 35px;
+  height: 35px;
+}
+.saas_left{
+  margin-left: 165px;
+}
+.manage{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.manage_item{
+  width: 25%;
+  margin-bottom: 54px;
+  margin-top: 54px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.case_img{
+  width: 520px;
+  height: 390px;
+}
+.case_title{
+  font-size: 28px;
+  margin-top: 50px;
+}
+.case_subtitle{
+  width:510px;
+  font-size:14px;
+  color:rgba(96,114,132,1);
+  margin-top: 24px;
+}
+.case_right{
+  margin-left: 67px;
+}
+.more_btn{
+  width:108px;
+  height:38px;
+  font-size:14px;
+  color:rgba(23,191,152,1);
+  border: 1px solid rgba(23,191,152,1);
+  text-align: center;
+  line-height: 38px;
+  margin-top: 30px;
+}
+img {
+  width: 100%;
+}
+.product{
+  width: 990px;
+  margin: 0 auto;
+  height: 270px;
+  margin-top: 30px;
+}
+.banner {
+  width: 100%;
+  height: 530px;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: #0f2d48;
+}
+
+.banner_title {
+  margin-top: 60px;
+  font-size: 40px;
+}
+
+.banner_subtitle {
+  margin-top: 20px;
+  font-size: 18px;
+  line-height: 28px;
+  text-shadow: 0 2px #00164e, 2px 0 #00164e, -2px 0 #00164e, 0 -2px #00164e;
+}
+.banner-footer{
+  text-decoration: underline;
+}
+.view_more{
+  font-size: 14px;
+  margin-top: 75px;
+  margin-left: 52px;
+}
+.advantage-wrap {
+  overflow: hidden;
+  padding: 0 20px;
+}
+
+.advantage {
+  margin: 0 auto;
+  margin-top: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.advantage_item {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.item_left {
+  width: 205px;
+  height: 159px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.item_left img{
+  height: 159px;
+  width: auto;
+}
+.item_right {
+  padding-top: 8px;
+  text-align: center;
+}
+
+.right_num {
+  font-size: 20px;
+}
+.right_num span{
+  display: inline-block;
+  margin-left: 2px;
+  font-size: 30px;
+  vertical-align: top;
+}
+.right_Name {
+  font-size: 12px;
+  color: #8593b6;
+}
+
+.useTitle {
+  margin: 0px auto;
+  margin-top: 60px;
+  margin-bottom: 25px;
+  font-size:24px;
+  font-family:MicrosoftYaHei;
+  line-height:1;
+  font-weight: bold;
+  text-align: center;
+}
+.title_underline{
+  width: 50px;
+  height: 4px;
+  margin: 0 auto;
+  background: #17bf98;
+  margin-top: 20px;
+}
+.useSubTitle{
+  width:699px;
+  margin: 0px auto;
+  text-align: center;
+  margin-bottom: 60px;
+  color: grey;
+}
+
+.chronic_img{
+  margin: 0 auto;
+  width: 1200px;
+  height: 580px;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}
+
+.chronic_img1{
+  margin: 0 auto;
+  width: 1200px;
+  height: 950px;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}
+.bac_img2{
+  width: 100%;
+  height: 100%;
+  background-image: url(../images/2.png);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  position: relative;
+  z-index: 5;
+}
+.left_img{
+  position: absolute;
+  left: 0;
+  width: 309px;
+  height: 634px;
+  background-size: 100% auto;
+}
+.right_img{
+  position: absolute;
+  right: 0;
+  top: 180px;
+  width: 250px;
+  height: 592px;
+  background-size: 100% auto;
+}
+.bac_img3{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 5;
+}
+.patient_img{
+  margin: 0 auto;
+  width: 1150px;
+}
+
+.bac_img{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.bac_img1{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.chronic_box{
+  width: 160px;
+  height: 90px;
+  position: absolute;
+  left: 12%;
+  top: 50px;
+  z-index: 3;
+}
+.member_box{
+  width: 180px;
+  height: 90px;
+  position: absolute;
+  left: 13.5%;
+  top: 53px;
+  z-index: 3;
+  text-align: justify;
+}
+.member_box2{
+  width: 180px;
+  height: 90px;
+  position: absolute;
+  left: 13.5%;
+  top: 216px;
+  z-index: 3;
+  text-align: justify;
+}
+.profession_box{
+  width: 177px;
+  height: 90px;
+  position: absolute;
+  left: 32.5%;
+  top: 180px;
+  z-index: 3;
+  text-align:justify;
+}
+.profession_box2{
+  width: 177px;
+  height: 90px;
+  position: absolute;
+  left: 73%;
+  top: 180px;
+  z-index: 3;
+  text-align:justify;
+}
+.profession_box3{
+  width: 177px;
+  height: 90px;
+  position: absolute;
+  left: 12%;
+  top: 425px;
+  z-index: 3;
+  text-align:justify;
+}
+.profession_box4{
+  width: 177px;
+  height: 90px;
+  position: absolute;
+  left: 53%;
+  top: 425px;
+  z-index: 3;
+  text-align:justify;
+}
+.member_box3{
+  width: 180px;
+  height: 90px;
+  position: absolute;
+  left: 13.5%;
+  top: 395px;
+  z-index: 3;
+  text-align: justify;
+}
+.member_box4{
+  width: 180px;
+  height: 90px;
+  position: absolute;
+  left: 13.5%;
+  top: 555px;
+  z-index: 3;
+  text-align: justify;
+}
+.chronic_box2{
+  width: 160px;
+  height: 90px;
+  position: absolute;
+  right: 13%;
+  top: 50px;
+  z-index: 3;
+  text-align: justify;
+}
+.chronic_box3{
+  width: 160px;
+  height: 90px;
+  position: absolute;
+  left: 12%;
+  top: 410px;
+  z-index: 3;
+  text-align: justify;
+}
+.patient_no{
+  font-size: 60px;
+}
+.patient_box{
+  background: #fff;
+  padding: 20px;
+  width: 230px;
+  height: 220px;
+  box-shadow:0px 1px 10px 0px rgba(32,33,39,0.1);
+  border-radius:4px;
+}
+.app_img{
+  width: 355px;
+  height: 615px;
+  margin-left: 124px;
+}
+.app_right{
+  margin-right: 225px;
+  margin-top: 160px;
+}
+.app_img img{
+  width: 100%;
+}
+.service_content{
+  color:rgba(96,114,132,1);
+  font-size:12px;
+  text-align: justify;
+}
+.chronic_box4{
+  width: 160px;
+  height: 90px;
+  position: absolute;
+  right: 13%;
+  top: 400px;
+  z-index: 3;
+  text-align: justify;
+}
+.chronic_title{
+  text-align: right;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.chronic_title1{
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.patient_title{
+  padding-top: 6px;
+  padding-bottom: 20px;
+  font-size: 18px;
+}

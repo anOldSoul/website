@@ -1,0 +1,560 @@
+.banner {
+  width: 100%;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.wrapper{
+  background: #f6f7fb;
+}
+.banner-info-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-info {
+  text-align: center;
+}
+
+.banner_title {
+  font-size: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.banner_subtitle {
+  width: 6.8rem;
+  margin: 0 auto;
+  font-size: 0.24rem;
+  line-height: 0.373333rem;
+  text-shadow: 0 0.026667rem #00164e, 0.026667rem 0 #00164e, -0.026667rem 0 #00164e, 0 -0.026667rem #00164e;
+}
+
+.banner-footer {
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  font-size: 0.24rem;
+  bottom: 0.266667rem;
+  left: 0;
+}
+
+.advantage-wrap {
+  overflow: hidden;
+  height: 1.066667rem;
+  background-color: #122c6f;
+}
+
+.advantage {
+  height: 100%;
+}
+
+.advantage_item {
+  overflow: hidden;
+  width: 24.6%;
+  float: left;
+  height: 100%;
+}
+
+.advantage_item:nth-child(2) {
+  border-right: 0.013333rem solid #1351e4;
+  border-left: 0.013333rem solid #1351e4;
+}
+
+.advantage_item:nth-child(3) {
+  border-right: 0.013333rem solid #1351e4;
+}
+
+.item_left {
+  width: 0.666667rem;
+  margin-left: 0.266667rem;
+  margin-right: 0.133333rem;
+  opacity: .8;
+  height: 100%;
+  float: left;
+}
+
+.item_left img {
+  width: 100%;
+  margin-top: 0.186667rem;
+}
+
+.item_right {
+  float: left;
+  color: #fff;
+  padding-top: 0.16rem;
+}
+
+.right_num {
+  font-size: 0.266667rem;
+  line-height: 1;
+}
+.right_num sup{
+  display: inline-block;
+  margin-left: -0.08rem;
+}
+
+.right_num span {
+  display: inline-block;
+  margin-left: 0.026667rem;
+  font-size: 0.266667rem;
+  vertical-align: top;
+}
+
+.right_Name {
+  font-size: 0.186667rem;
+  opacity: .5;
+  margin-top: 0.026667rem;
+  vertical-align: top;
+  display: inline-block;
+}
+
+.useTitle {
+  margin: 0.8rem auto;
+  line-height: 1;
+  text-align: center;
+  position: relative;
+}
+
+.useTitle h1 {
+  margin: 0 auto 0.133333rem;
+  width: 1.253333rem;
+  font-size: 0.266667rem;
+  color: #111c35;
+  padding-bottom: 0.133333rem;
+  border-bottom: 0.013333rem solid #bcbdbf;
+  font-weight: bold;
+}
+
+.useTitle p {
+  font-size: 0.24rem;
+  color: #111c3585;
+  position: absolute;
+  left: 50%;
+  bottom: -0.4rem;
+  transform: translateX(-50%);
+}
+
+.serviceList {
+  width: 10rem;
+  height: 7.066667rem;
+  background: url('../images/home/bg_1_1.png') no-repeat center center;
+  background-size: 100% 5.066667rem;
+  position: relative;
+  margin-bottom: 0.4rem;
+}
+
+.serviceList .content {
+  width: 10rem;
+  height: 7.066667rem;
+  background: url('../images/home/bg_1.png') no-repeat center center;
+  background-size: 100% 100%;
+  position: relative;
+}
+
+.serviceList .content .text {
+  width: 2.533333rem;
+  position: absolute;
+  line-height: 1.2;
+  text-align: justify;
+}
+
+.serviceList .content .text.text1 {
+  top: 0.533333rem;
+  left: 0.653333rem;
+}
+
+.serviceList .content .text.text2 {
+  top: 0.64rem;
+  right: 0.666667rem;
+}
+
+.serviceList .content .text.text3 {
+  bottom: 0.853333rem;
+  left: 0.653333rem;
+}
+
+.serviceList .content .text.text4 {
+  bottom: 0.693333rem;
+  right: 0.666667rem;
+}
+
+.serviceList .content .text.text1 h3,
+.serviceList .content .text.text3 h3 {
+  text-align: right;
+  font-weight: bold;
+}
+
+.serviceList .content .text h3 {
+  font-size: 0.24rem;
+  color: rgb(2, 2, 2);
+  margin-bottom: 0.08rem;
+  font-weight: bold;
+}
+
+.serviceList .content .text p {
+  font-size: 0.24rem;
+  /* color: rgba(2, 2, 2, 0.5); */
+}
+
+.cooperation {
+  width: 10rem;
+  height: 8.666667rem;
+  background: url('../images/home/bg_2_2.png') no-repeat center center;
+  background-size: 100% 100%;
+  position: relative;
+  margin-bottom: 0.4rem;
+  overflow: hidden;
+}
+
+.cooperation .content {
+  width: 10rem;
+  height: 8.666667rem;
+  background: url('../images/home/bg_2.png') no-repeat center center;
+  background-size: 100% 7.466667rem;
+  position: relative;
+  margin-top: -0.266667rem;
+}
+
+.cooperation .content .text {
+  font-size: 0.24rem;
+  color: rgb(2, 2, 2);
+  width: 3.626667rem;
+  position: absolute;
+  left: 0.8rem;
+  text-align: justify;
+  line-height: 1.2;
+}
+
+.cooperation .content .text.text1 {
+  top: 1.413333rem;
+}
+
+.cooperation .content .text.text2 {
+  top: 2.986667rem;
+}
+
+.cooperation .content .text.text3 {
+  bottom: 3.2rem;
+}
+
+.cooperation .content .text.text4 {
+  bottom: 1.36rem;
+}
+
+.communication {
+  width: 10rem;
+  height: 7.466667rem;
+  background: url('../images/home/bg_3_3.png') no-repeat center bottom;
+  background-size: 100% 6.4rem;
+  position: relative;
+  margin-bottom: 0.4rem;
+  overflow: hidden;
+}
+
+.communication .content {
+  width: 10rem;
+  height: 6.4rem;
+  background: url('../images/home/bg_3.png') no-repeat center top;
+  background-size: 100% 3.333333rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.communication .content .text {
+  font-size: 0.24rem;
+  color: rgb(2, 2, 2);
+  width: 1.466667rem;
+  position: absolute;
+  top: 1.28rem;
+  line-height: 1.2;
+}
+
+.communication .content .text h3 {
+  font-size: 0.24rem;
+  color: rgb(2, 2, 2);
+  margin-bottom: 0.08rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.communication .content .text p {
+  font-size: 0.24rem;
+  /* color: rgba(2, 2, 2, 0.5); */
+  text-align: justify;
+}
+
+.communication .content .text.text1 {
+  left: 0.72rem;
+}
+
+.communication .content .text.text2 {
+  left: 2.986667rem;
+  width: 1.706667rem;
+}
+
+.communication .content .text.text3 {
+  left: 5.44rem;
+}
+
+.communication .content .text.text4 {
+  right: 0.72rem;
+}
+.section-train{
+  margin-top: -1.333333rem;
+}
+.train {
+  width: 10rem;
+  height: 7.066667rem;
+  background: url('../images/home/bg_4.png') no-repeat center center;
+  background-size: 100% 100%;
+  position: relative;
+  margin-bottom: 0.4rem;
+  overflow: hidden;
+}
+
+.train .content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.train .content .text {
+  font-size: 0.24rem;
+  color: rgb(2, 2, 2);
+  width: 2.4rem;
+  position: absolute;
+  top: 1.28rem;
+}
+
+.train .content .text h3 {
+  font-size: 0.24rem;
+  color: rgb(2, 2, 2);
+  margin-bottom: 0.213333rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.train .content .text p {
+  font-size: 0.24rem;
+  /* color: rgba(2, 2, 2, 0.5); */
+  text-align: justify;
+  line-height: 1.2;
+}
+
+.train .content .text.text1 {
+  left: 0.693333rem;
+}
+
+.train .content .text.text2 {
+  top: 4.266667rem;
+  left: 3.8rem;
+}
+
+.train .content .text.text3 {
+  right: 0.746667rem;
+}
+
+.train .content .text.text4 {
+  top: 4.266667rem;
+  right: 0.746667rem;
+}
+
+.logos {
+  display: block;
+  width: 100%;
+  margin-bottom: 1.6rem;
+}
+
+/* news */
+.newsBanner{
+  width: 100%;
+  height: 4.533333rem;
+  background: #00164e url('../images/bannericon.png') no-repeat center right;
+  background-size: 4.733333rem 4.773333rem;
+  text-shadow: 0 0.026667rem #00164e, 0.026667rem 0 #00164e, -0.026667rem 0 #00164e, 0 -0.026667rem #00164e;
+}
+.newsBanner .banner_title{
+  text-align: left;
+  padding-left: 0.4rem;
+  width: 4.533333rem;
+}
+.newsList {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.8rem 0.4rem;
+}
+
+.newsList a {
+  text-decoration: none;
+}
+
+.newsList li {
+  background: #fbfbff;
+  border: 0.013333rem solid #e5e9f3;
+  margin-bottom: 0.4rem;
+}
+
+.newsList li .pics {
+  padding: 0.4rem;
+}
+
+.newsList li .pics img {
+  width: 100%;
+}
+
+.newsList li .info {
+  padding: 0.4rem;
+  color: #111c3f;
+  font-size: 0.266667rem;
+  line-height: 1;
+  border-top: 0.013333rem solid #e5e9f3;
+}
+
+.newsList li .info h5 {
+  margin-bottom: 0.213333rem;
+}
+
+/* contact */
+.section-contact{
+  position: relative;
+}
+.section-contact .title{
+  position: relative;
+  z-index: 2;
+  margin: 0.8rem auto;
+  text-align: center;
+  font-size: 0.32rem;
+  font-weight: bold;
+}
+.contact_content{
+  width: 10rem;
+  margin: 0 auto 0.8rem;
+  position: relative;
+}
+.contact_map_img{
+  text-align: center;
+}
+.contact_map_img img{
+  display: inline-block;
+  width: 10rem;
+}
+.contact_info{
+  position: absolute;
+  top: 1.2rem;
+  left: 6%;
+  background: #fff;
+  width: 4.906667rem;
+  height: 4.906667rem;
+  padding: 0.4rem;
+  border: 0.013333rem solid #80befc;
+}
+.contact_info li{
+  width: 100%;
+  line-height: 1;
+  padding-bottom: 0.266667rem;
+}
+.contact_info li h5{
+  font-size: 0.24rem;
+  position: relative;
+  padding-left: 0.133333rem;
+  margin-bottom: 0.133333rem;
+}
+.contact_info li h5::before{
+  content: '';
+  position: absolute;
+  top: 0.053333rem;
+  left: 0;
+  width: 0.026667rem;
+  height: 0.266667rem;
+  background: #838a98;
+}
+.contact_info li p{
+  font-size: 0.24rem;
+  margin-bottom: 0.133333rem;
+  padding-left: 0.133333rem;
+}
+
+/* company */
+.product_center{
+  padding: 0.4rem;
+  margin-bottom: 1.6rem;
+}
+.product_center .title{
+  position: relative;
+  z-index: 2;
+  margin: 0.8rem auto 0.4rem;
+  text-align: center;
+  font-size: 0.293333rem;
+  color: #081631;
+}
+.company_content{
+  color: #081631;
+  line-height: 1.5;
+  text-indent: 0.426667rem;
+  text-align: justify;
+}
+.company_img{
+  width: 100%;
+  margin: 0.533333rem auto;
+}
+.honour{
+  width: 100%;
+  height: 2.613333rem;
+  margin: 0 auto 0.266667rem;
+}
+.company_img img{
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+.honour_box{
+  width: 2.666667rem;
+  height: 2.613333rem;
+  color: #1989fa;
+  float: left;
+  margin: 0 0.133333rem;
+  margin-bottom: 0.253333rem;
+  border: 0.013333rem solid #80befc;
+  background-color: #e8f3fe;
+  cursor: pointer;
+}
+.honour_box_title{
+  margin: 0 auto;
+  font-size: 0.32rem;
+  width: 1.68rem;
+  margin-top: 0.6rem;
+  line-height: 2;
+  text-align: center;
+  border-bottom: 0.013333rem solid #1989fa;
+}
+.honour_box_subTitle{
+  margin: 0 auto;
+  font-size: 0.24rem;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
+.bac{
+  width: 100%;
+  height: 100%;
+}
+.honour_certificate{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.5);
+  text-align: center;
+  z-index: 1005;
+  display: none;
+}
+.honour_certificate img{
+  width: 100%;
+  display: inline-block;
+}

@@ -1,0 +1,126 @@
+.company_content{
+  width: 1030px;
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 26px;
+  text-indent: 32px;
+}
+.company_img{
+  width: 1030px;
+  margin: 40px auto;
+  height: 500px;
+}
+.honour{
+  width: 1058px;
+  height: 263px;
+  margin: 0 auto;
+}
+.company_img img{
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+.honour_box{
+  width: 242px;
+  height: 242px;
+  color: #1989fa;
+  float: left;
+  margin: 0 10px;
+  margin-bottom: 19px;
+  border: 1px solid #80befc;
+  background-color: #e8f3fe;
+  cursor: pointer;
+}
+.honour_box_title{
+  margin: 0 auto;
+  font-size: 24px;
+  width: 126px;
+  margin-top: 75px;
+  line-height: 2;
+  text-align: center;
+  border-bottom: 1px solid #1989fa;
+}
+.honour_box_subTitle{
+  margin: 0 auto;
+  font-size: 18px;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
+.bac{
+  width: 100%;
+  height: 100%;
+}
+.honour_certificate{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.5);
+  text-align: center;
+  z-index: 1005;
+  display: none;
+}
+.honour_certificate img{
+  height: 100%;
+  display: inline-block;
+}
+/* contact */
+.section-contact{
+  /* margin-bottom: 200px; */
+  position: relative;
+}
+.section-contact .title{
+  margin-bottom: 0;
+  position: relative;
+  z-index: 2;
+}
+.contact_content{
+  width: 1200px;
+  margin: -90px auto 0;
+  position: relative;
+}
+.contact_map_img{
+  text-align: center;
+}
+.contact_map_img img{
+  display: inline-block;
+  /* height: 800px; */
+  width: 1200px;
+}
+.contact_info{
+  position: absolute;
+  top: 310px;
+  left: 8%;
+  background: #fff;
+  width: 368px;
+  height: 368px;
+  padding: 30px;
+  border: 1px solid #80befc;
+}
+.contact_info li{
+  width: 100%;
+  line-height: 1;
+  padding-bottom: 20px;
+}
+.contact_info li h5{
+  font-size: 24px;
+  position: relative;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+.contact_info li h5::before{
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 2px;
+  height: 20px;
+  background: #838a98;
+}
+.contact_info li p{
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
