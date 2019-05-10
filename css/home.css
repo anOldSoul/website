@@ -198,9 +198,12 @@
   height: 100%;
   position: absolute;
   background: black;
-  opacity: 0.2;
+  opacity: 0.5;
   top: 0;
   left: 0;
+}
+.case_item.active .black_bac {
+  opacity: 0;
 }
 .case_img{
   width: 520px;

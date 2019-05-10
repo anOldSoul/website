@@ -1,8 +1,8 @@
 .header {
 
-  height: 60px;
+  height: 90px;
 
-  background-color: #102d48;
+  background-color: #091928;
   box-sizing: content-box!important;
   /* display: none; */
 }
@@ -11,6 +11,7 @@
 }
 .header-content {
   width: 1200px;
+  height: 90px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -19,9 +20,9 @@
 .logo {
   float: left;
   overflow: hidden;
-  height: 56px;
+  height: 90px;
   width: 116px;
-  line-height: 56px;
+  line-height: 90px;
   margin-right: 80px;
 }
 
@@ -53,7 +54,7 @@
   opacity: 1;
 }
 .menu_item.active {
-  height: 56px;
+  height: 90px;
   opacity: 1;
 }
 .menu_item .sub_menu{
@@ -73,7 +74,6 @@
   width: 30px;
   height: 4px;
   border-radius: 4px;
-
   margin: 0 auto;
   margin-top: 5px;
 }

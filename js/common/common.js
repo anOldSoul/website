@@ -14,7 +14,7 @@ var comJs = {
   handleCaseTabChange: function(options) {
     $('.case_item').each(function(index, el) {
       $(this).click(function() {
-        $('.company_header_box').removeClass('active')
+        $('.case_item').removeClass('active')
         $(this).addClass('active')
         $('.case_img img').attr('src', options.srcArr[index])
         $('.case_title').html(options.htmlArr[index])
