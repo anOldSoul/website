@@ -35,6 +35,9 @@ var comJs = {
         }
         $('#hotel_title').html(options.htmlArr[index])
         $('#hotel_detail').html(options.htmlDetailArr[index])
+        $('#htmlSupport').html(options.htmlSupport[index])
+        $('#htmlService').html(options.htmlService[index])
+        $('#htmlCooperation').html(options.htmlCooperation[index])
       })
     })
   },
