@@ -77,6 +77,31 @@
   font-size: 14px;
   margin-top: 14px;
 }
+.case_item{
+  width: 100px;
+  height: 100px;
+  position: relative;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.case_img_s{
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+#manage_img13 .case_img_s {
+  background-image: url(../images/pic_home_企业案例酒店小_selected_@1x.png);
+}
+#manage_img14 .case_img_s {
+  background-image: url(../images/pic_home_企业案例校园小_selected_@1x.png);
+}
+#manage_img15 .case_img_s {
+  background-image: url(../images/pic_home_企业案例家居小_selected_@1x.png);
+}
+#manage_img16 .case_img_s {
+  background-image: url(../images/pic_home_企业案例交通小_selected_@1x.png);
+}
 #manage_img1 .manage_img{
   background-image: url(../images/ic_home_SAAS_用户管理_unselected_@1x.png);
 }
@@ -167,6 +192,15 @@
   border-radius: 5px;
   flex-direction: column;
   align-items: center;
+}
+.black_bac{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: black;
+  opacity: 0.2;
+  top: 0;
+  left: 0;
 }
 .case_img{
   width: 520px;

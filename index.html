@@ -161,7 +161,7 @@
         <div class="case">
           <div class='banner_right'>
             <div class='case_img' id="scene">
-              <div class="layer" data-depth="0.20"><img src="../images/pic_home_企业案例酒店大_@1x@2x.png"></div>
+              <div class="layer" data-depth="0.20"><img src="../images/pic_home_企业案例酒店大_@1x_1.png"></div>
             </div>
           </div>
           <div class='case_right'>              
@@ -169,6 +169,24 @@
             <div class="case_subtitle">利用自有的金融级安全指纹技术和云平台架构，可将智能门锁方案广泛应用在酒店、公寓、公租房等行业。
             </div>
             <p class="more_btn">查看更多</p>
+            <div class="manage">
+              <div class="case_item" id="manage_img13">
+                <div class="case_img_s"></div>
+                <div class="black_bac"></div>
+              </div>
+              <div class="case_item" id="manage_img14">
+                <div class="case_img_s"></div>
+                <div class="black_bac"></div>
+              </div>
+              <div class="case_item" id="manage_img15">
+                <div class="case_img_s"></div>
+                <div class="black_bac"></div>
+              </div>
+              <div class="case_item" id="manage_img16">
+                <div class="case_img_s"></div>
+                <div class="black_bac"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -271,6 +289,11 @@
 <script type="text/javascript" src="./libs/swiper/js/swiper.min.js"></script>
 <script type="text/javascript">
   window.onload = function() {
+    var options = {
+      srcArr: ['./images/pic_home_企业案例酒店大_@1x_1.png', './images/pic_home_企业案例校园大_@1x.png', './images/pic_home_企业案例家居大_@1x.png', './images/pic_home_企业案例交通大_@1x.png'],
+      htmlArr: ['酒店公寓租房管理', '校园办公安防管理', '智能家居生活管理', '交通出行工具管理'],
+      htmlDetailArr: ['利用自有的金融级安全指纹技术和云平台架构，可将智能门锁方案广泛应用在酒店、公寓、公租房等行业。', '利用自有的金融级安全指纹技术和云平台架构，可将智能门锁方案广泛应用在酒店、公寓、公租房等行业。', '通过服务平台生态实现开放协作，将企业、校园内空间访问权限进行统一管理，替代传统借还钥匙的繁琐过程，同时验证身份，极大地提高效率及保障校园安全。', '指纹电动车将指纹技术和电动摩托车完美结合，只需要用“一根手指”就能操作包括启动、关闭、开启座桶在内的多个功能，智能防盗保障行驶安全。'],
+    }
     var mySwiper = new Swiper('.swiper-container', {
       autoplay: false,
       pagination: {
@@ -280,6 +303,7 @@
     setTimeout(function() {
       comJs.initNav('index')
     }, 10)
+    comJs.handleCaseTabChange(options)
   }
 </script>
 

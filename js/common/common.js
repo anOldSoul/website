@@ -11,6 +11,17 @@ var comJs = {
       })
     }
   },
+  handleCaseTabChange: function(options) {
+    $('.case_item').each(function(index, el) {
+      $(this).click(function() {
+        $('.company_header_box').removeClass('active')
+        $(this).addClass('active')
+        $('.case_img img').attr('src', options.srcArr[index])
+        $('.case_title').html(options.htmlArr[index])
+        $('.case_subtitle').html(options.htmlDetailArr[index])
+      })
+    })
+  },
   handleCompanyTabChange: function(options) {
     $('.company_header_box').each(function(index, el) {
       $(this).click(function() {
