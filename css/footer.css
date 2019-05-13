@@ -7,14 +7,24 @@
   font-size: 14px;
   float: left;
   display: none;
-  padding-top: 50px;
-  padding-bottom: 30px;
+  padding-top: 60px;
 }
 .bottom_box{
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  margin-bottom: 50px;
+  padding: 0 165px;
+  padding-bottom: 32px;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3)
+}
+.bottom_footer{
+  padding: 24px 0;
+  font-size: 11px;
+  opacity: 0.8;
+}
+.bottom_left{
+  display: flex;
+  flex-direction: row;
 }
 .codeName{
   color: #fff;
@@ -46,6 +56,18 @@
   padding-bottom: 60px;
 }
 .bottom_item{
-  margin-right: 50px;
+  margin-right: 80px;
+  text-align: left;
+}
+.bottom_title{
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+.bottom_sub_item{
   opacity: 0.5;
+  margin-bottom: 17px;
+  line-height: 1;
+}
+.qr_code{
+  margin-top: 30px;
 }
