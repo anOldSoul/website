@@ -77,6 +77,15 @@ var comJs = {
     $('#lock_title1').html(options.solutionTitleArr1[index])
     $('#lock_title2').html(options.solutionTitleArr2[index])
     $('#lock_title3').html(options.solutionTitleArr3[index])
+    if (index > 0) {
+      $("#hideSection").hide();
+      $("#hideSection1").hide();
+      $("#hideSection2").show();
+    } else {
+      $("#hideSection").show();
+      $("#hideSection1").show();
+      $("#hideSection2").hide();
+    }
   },
   handleProTabChange: function(options) {
     $('.modules_item').each(function(index, el) {
@@ -93,6 +102,15 @@ var comJs = {
         $('#lock_title1').html(options.solutionTitleArr1[index])
         $('#lock_title2').html(options.solutionTitleArr2[index])
         $('#lock_title3').html(options.solutionTitleArr3[index])
+        if (index > 0) {
+          $("#hideSection").hide();
+          $("#hideSection1").hide();
+          $("#hideSection2").show();
+        } else {
+          $("#hideSection").show();
+          $("#hideSection1").show();
+          $("#hideSection1").hide();
+        }
       })
     })
   },
