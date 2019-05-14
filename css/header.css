@@ -10,7 +10,7 @@
   box-sizing: content-box!important;
 }
 .header-content {
-  width: 1200px;
+  width: 1440px;
   height: 90px;
   margin: 0 auto;
   display: flex;
@@ -45,7 +45,7 @@
   flex-direction: column;
   justify-content: center;
   float: left;
-  padding: 0 20px;
+  padding: 0 40px;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
