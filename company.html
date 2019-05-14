@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
-  <title>蓝信康</title>
+  <title>OPENN</title>
   <link href="./css/common.css" rel="stylesheet">
   <link href="./css/home.css" rel="stylesheet">
   <link href="./css/product.css" rel="stylesheet">
@@ -21,7 +21,7 @@
   <div class="home">
     <link href="./css/header.css" rel="stylesheet">
     <div data-lbifile="./common/header.html"></div>
-    <div class="max-width-1440" style="margin: 70px 0;">
+    <div class="max-width-1440">
       <div class="company_header">
         <div class="bac_img1">
           <div class="company_header_box active">
@@ -59,38 +59,40 @@
         </div>
       </div>
     </div>
-    <div class="section max-width-1440">
+    <div class="section">
       <div class="hotel_manage">
-        <div class="hotel_box">          
+        <div class="hotel_box max-width-1440">          
           <div class="hotel_title" id="hotel_title">酒店公寓租房管理</div>
           <div class="hotel_detail" id="hotel_detail">噢蹦一站式智能锁解决方案，利用自有的金融级安全技术结合指纹技术和云端平台，解决了传统智能锁信息安全漏洞，安全锁不安全的痛点。具有防盗报警、智能控制，安全升级，通信加密保护，产品运营和大数据分析等特点，可广泛应用在智能门锁，酒店公寓、新住宿、新旅游等行业，整合行业优质技术能力，将为该行业的发展起到极大的推动作用。</div>
         </div>
       </div>
     </div>
-    <div class="section max-width-1440" style="height: 769px;">
-      <div class="company_box">        
-        <div class="company_left_img" style="background-image: url(./images/bg_home_一站式服务平台_left_@1x@2x.png);"></div>
-        <div class="company_right_img" style="background-image: url(./images/bg_home_一站式服务平台_right_@1x@2x.png);"></div>
-        <div class="company_title">方案支持</div>
-        <div class="company_underline"></div>
-        <div class="company_detail" id="htmlSupport">
-          <div>1.客人扫码入住不需要经过前台，减少时间浪费， 提高出行便利性；</div>
-          <div>2.强大的后台管理实现了连锁酒店超级管理员的统一管理，各个分店管理权限分开发放；</div>
-          <div>3.提供丰富的接口程序，介入酒店管理系统实现订房，付款，授权，开门和入住一条龙服务；</div>
-          <div>4.实时获取开门记录，无需用卡提取；</div>
-          <div>5.通过手机app对客人进行远程授权，并实时取消其开门权限；</div>
-          <div>6.通过管理系统和app实时监控门锁电量 关闭上锁状态；</div>
-          <div>7.支持指纹，密码，卡片，app多种开锁方式。</div>               
-        </div>
-        <div class="company_title">提供服务</div>
-        <div class="company_underline"></div>
-        <div class="company_detail" id="htmlService">
-          <div>定制解决方案 指纹模组 芯片 物联服务API 智能锁SaaS管理系统 智能锁APP</div>          
-        </div>
-        <div class="company_title">合作客户</div>
-        <div class="company_underline"></div>
-        <div class="company_detail" id="htmlCooperation">
-          <div>图正西安子公司</div>
+    <div class="outer_box">
+      <div class="company_left_img" style="background-image: url(./images/bg_home_一站式服务平台_left_@1x@2x.png);"></div>
+      <div class="company_right_img" style="background-image: url(./images/bg_home_一站式服务平台_right_@1x@2x.png);"></div>
+      <div class="section max-width-1440" style="height: 769px;">
+        <div class="company_box">        
+          <div class="company_title">方案支持</div>
+          <div class="company_underline"></div>
+          <div class="company_detail" id="htmlSupport">
+            <div>1.客人扫码入住不需要经过前台，减少时间浪费， 提高出行便利性；</div>
+            <div>2.强大的后台管理实现了连锁酒店超级管理员的统一管理，各个分店管理权限分开发放；</div>
+            <div>3.提供丰富的接口程序，介入酒店管理系统实现订房，付款，授权，开门和入住一条龙服务；</div>
+            <div>4.实时获取开门记录，无需用卡提取；</div>
+            <div>5.通过手机app对客人进行远程授权，并实时取消其开门权限；</div>
+            <div>6.通过管理系统和app实时监控门锁电量 关闭上锁状态；</div>
+            <div>7.支持指纹，密码，卡片，app多种开锁方式。</div>               
+          </div>
+          <div class="company_title">提供服务</div>
+          <div class="company_underline"></div>
+          <div class="company_detail" id="htmlService">
+            <div>定制解决方案 指纹模组 芯片 物联服务API 智能锁SaaS管理系统 智能锁APP</div>          
+          </div>
+          <div class="company_title">合作客户</div>
+          <div class="company_underline"></div>
+          <div class="company_detail" id="htmlCooperation">
+            <div>图正西安子公司</div>
+          </div>
         </div>
       </div>
     </div>
@@ -114,6 +116,8 @@
       htmlCooperation: ['图正西安子公司', '西安工业大学', '图正西安子公司', '雅迪、爱玛']
     }
     new comJs.initBanner(".section-banner")
+    var action = comJs.getUrlParam('companyType');
+    comJs.showCurrentCompany(options, action)
     setTimeout(function() {
       comJs.initNav('company')
     }, 10)

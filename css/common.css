@@ -7,7 +7,6 @@ caption,th{text-align:left;}
 h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
 h2{font-size: 30px;}
 body{
-  max-width: 1440px;
   margin: 0 auto;
 }
 *{font-family:Arial,Verdana,Tahoma;margin:0;padding:0;}
@@ -27,7 +26,15 @@ body{
 .wrapper {
   width: 100%;
 }
-
+.img_box{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
 .content-wrapper {
   position: relative;
   width: 100%;
@@ -38,8 +45,16 @@ body{
   overflow: hidden;
 }
 .max-width-1440{
-	max-width: 1440px;
+	max-width: 1110px;
 	margin: 0 auto;
+}
+.max-width-1110{
+	min-width: 1210px;
+	margin: 0 auto;
+	position: relative;
+}
+.outer_box{
+	position: relative;
 }
 .btn{
 	font-size: 16px;

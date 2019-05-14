@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+  <title>OPENN</title>
+  <link href="./css/common.css" rel="stylesheet">
+  <link href="./css/home.css" rel="stylesheet">
+  <link href="./css/product.css" rel="stylesheet">
+  <link href="./css/company.css" rel="stylesheet">
+  <script>
+    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      window.location.href = "./m/contact.html";
+    }
+  </script>
+</head>
+
+<body>
+  <div class="home">
+    <link href="./css/header.css" rel="stylesheet">
+    <div data-lbifile="./common/header.html"></div>
+    <div class="outer_box">
+      <div class="saas_left_img" style="background-image: url(./images/bg_saas_left_@1x.png);"></div>
+      <div class="saas_right_img" style="background-image: url(./images/bg_saas_right_@1x.png);"></div>
+      <div class="section max-width-1440">
+        <div class="saas_content">         
+          <div class="saas_left">       
+            <div class="saas_title">与万千企业共同开启智能时代</div>
+            <div class="saas_sub_title">噢蹦SAAS智能锁管理云平台</div>
+            <div class="saas_contact">
+              <div class="saas_contact_item"><img class="saas_icon_ke" src="./images/ic_saas_客服_@1x.png">客服专线：800-8208820</div>
+              <div class="saas_contact_item"><img class="saas_icon_you" src="./images/ic_saas_邮箱_@1x.png">邮箱：bd@whoareyou.live</div>
+            </div>
+            <div class="saas_company">©2014-2019 互啊佑智能科技有限公司 版权所有</div>
+          </div>
+          <div class="saas_box">
+            <div class="saas_right">
+              <div class="login_top">                
+                <div class="login_by_account">账号登录</div>
+                <div class="login_by_password">密码登录</div>
+              </div>
+              <div class="account_input"><input placeholder="您的账号"></div>
+              <div class="password_input"><input placeholder="您的密码"></div>
+              <div class="code_box">             
+                <div class="code_input"><input placeholder="验证码"></div>
+                <div class="code_auth">1234</div>
+                <div class="code_img"><img src="./images/btn_saas_refresh_@1x.png"></div>
+              </div>
+              <div class="saas_login_btn">登录</div>
+              <div class="saas_login_forget">忘记密码</div>
+              <div class="saas_login_apply">还没有开通帐号？ 点此申请开通 >></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <link href="./css/footer.css" rel="stylesheet">
+    <div data-lbifile="./common/footer.html"></div>
+  </div>
+</body>
+<script type="text/javascript" src="./js/common/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="./libs/parallax/jquery.parallax.js"></script>
+<script type="text/javascript" src="./js/common/frame.js"></script>
+<script type="text/javascript" src="./js/common/common.js"></script>
+<script type="text/javascript">
+  window.onload = function() {
+    new comJs.initBanner(".section-banner")
+    setTimeout(function() {
+      comJs.initNav('saas')
+    }, 10)
+  }
+
+</script>
+
+</html>
