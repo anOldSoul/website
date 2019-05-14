@@ -242,7 +242,7 @@ a{
   background-image: url(../images/ic_home_SAAS_系统管理_unselected_@1x.png);
 }
 #manage_img1:hover .manage_img {
-  background-image: url(../images/ic_home_SAAS_用户管理_selected_@1x@2x_1.png);
+  background-image: url(../images/ic_home_SAAS_用户管理_selected_@1x.png);
 }
 #manage_img2:hover .manage_img {
   background-image: url(../images/ic_home_SAAS_产品管理_selected_@1x.png);
@@ -269,7 +269,7 @@ a{
   background-image: url(../images/ic_home_APP_设备管理_unselected_@1x.png);
 }
 #manage_img9:hover .manage_img_app {
-  background-image: url(../images/ic_home_APP_设备管理_selected_@1x_1.png);
+  background-image: url(../images/ic_home_APP_设备管理_selected_@1x.png);
 }
 #manage_img10 .manage_img_app {
   background-image: url(../images/ic_home_APP_临时密码_unselected_@1x.png);
