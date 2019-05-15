@@ -21,10 +21,9 @@
   margin-top: 20px;
 }
 .download_banner{
-  margin-left: 165px;
 }
 .temp_title{
-  margin-top: 234px;
+  padding-top: 234px;
 }
 .notice_left_img{
   position: absolute;
@@ -58,12 +57,11 @@
 }
 .download_right{
   position: absolute;
-  right: 164px;
+  right: 0;
   top: 84px;
 }
 .download_left{
   position: absolute;
-  left: 165px;
   top: 393px;
 }
 .contact_left{
@@ -341,7 +339,7 @@
   background-size: 100% auto;
 }
 .roleTitle{
-  margin-top: 235px;
+  padding-top: 235px;
 }
 .role_left_img{
   width: 486px;
@@ -350,7 +348,7 @@
 }
 .role_right_box{
   position: absolute;
-  top: 10px;
+  top: 235px;
   right: 100px;
 }
 .role_right_img{
