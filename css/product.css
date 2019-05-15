@@ -129,7 +129,6 @@
 }
 
 .product_banner {
-  width: 80%;
   height: 610px;
   margin: 0 auto;
   color: #fff;
@@ -224,6 +223,9 @@
   display: inline-block;
   text-align: center;
   float: left;
+}
+.modules_item:hover .moduleName{
+  color: black;
 }
 
 .modules_member .modules_item {

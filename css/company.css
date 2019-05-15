@@ -17,6 +17,9 @@
   flex-direction: column;
   cursor: pointer;
 }
+.company_header_box:hover{
+  box-shadow:0px 1px 20px rgba(32,33,39,0.2);
+}
 
 .company_header{
   margin:70px 0;
@@ -33,10 +36,13 @@
 .company_header_line{
   width: 25px;
   height: 3px;
-  background-color: #17bf98;
+  background-color: #d0d0d0;
   border-radius: 3px;
   margin-top: 10px;
   margin-bottom: 15px;
+}
+.company_header_box.active .company_header_line{
+  background-color: #17bf98;
 }
 .company_header_img{
   width: 40px;
@@ -128,23 +134,21 @@
   height: 100%;
   display: inline-block;
 }
-/* contact */
 .section-contact{
-  /* margin-bottom: 200px; */
   position: relative;
 }
 .hotel_manage{
-  height: 380px;
-  background: url('../images/company/pic_企业案例_酒店_@1x@2x.png') no-repeat;
-  background-size: 100% 100%;
   color: #fff;
+  position: relative;
 }
 .hotel_box{
-  text-align: left;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .hotel_title{
   font-size: 30px;
-  padding-top: 90px;
   padding-bottom: 30px;
 }
 .company_title{
@@ -173,7 +177,7 @@
   width: 462px;
 }
 .about_us{
-  margin: 30px 165px;
+  margin: 30px 15%;
   font-size: 16px;
 }
 .about_item{
@@ -189,6 +193,7 @@
   width: 18px;
   height: 20px;
   margin-right: 38px;
+  padding-top: 8px;
 }
 .section-contact .title{
   margin-bottom: 0;

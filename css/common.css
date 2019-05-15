@@ -42,7 +42,6 @@ body{
 }
 .section{
 	position: relative;
-  overflow: hidden;
 }
 .max-width-1440{
 	max-width: 1110px;

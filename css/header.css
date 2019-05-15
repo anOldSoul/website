@@ -1,10 +1,7 @@
 .header {
-
   height: 90px;
-
   background-color: #091928;
   box-sizing: content-box!important;
-  /* display: none; */
 }
 .header * {
   box-sizing: content-box!important;
@@ -50,13 +47,6 @@
   text-align: center;
   text-decoration: none;
   color: #fff;
-}
-.menu_item:hover{
-  opacity: 1;
-}
-.menu_item.active {
-  height: 90px;
-  opacity: 1;
 }
 .menu_item .sub_menu{
   width: 104px;
@@ -105,6 +95,9 @@
 .menu_item:hover .sub_menu {
   display: block;
   z-index: 2;
+}
+.menu_item:hover a{
+  color: #17bf98;
 }
 
 .login_btn a {

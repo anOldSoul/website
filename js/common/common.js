@@ -32,7 +32,7 @@ var comJs = {
     if (index > 0) {      
       $('.company_header_box').removeClass('active')
       $('.company_header_box').eq(index).addClass('active')
-      $('.hotel_manage').css("background-image", 'url(' + options.srcArr[index] + ')')
+      $('.hotel_manage img').attr("src", options.srcArr[index])
       if (index === 1 || index === 2) {
         $('.hotel_box').addClass('fontDiff')
       } else {
@@ -50,7 +50,7 @@ var comJs = {
       $(this).click(function() {
         $('.company_header_box').removeClass('active')
         $(this).addClass('active')
-        $('.hotel_manage').css("background-image", 'url(' + options.srcArr[index] + ')')
+        $('.hotel_manage img').attr("src", options.srcArr[index])
         if (index === 1 || index === 2) {
           $('.hotel_box').addClass('fontDiff')
         } else {
