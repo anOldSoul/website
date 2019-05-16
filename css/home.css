@@ -365,7 +365,7 @@ a{
   height: 390px;
 }
 .case_title{
-  font-size: 28px;
+  font-size: 24px;
   margin-top: 50px;
 }
 .case_subtitle{
@@ -373,6 +373,7 @@ a{
   font-size:14px;
   color:rgba(96,114,132,1);
   margin-top: 24px;
+  line-height: 2;
 }
 .case_right{
   margin-left: 67px;
