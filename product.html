@@ -67,7 +67,7 @@
         <div class="section max-width-1440">
           <div class="lock">
             <div class=''>
-              <div class='product_lock_img' id="scene">
+              <div class='product_lock_img' id="scene1">
                 <div class="layer" data-depth="0.20"><img class="product_img2" src="../images/product/pic_方案产品_门锁3_@1x.png"></div>
               </div>
             </div>
@@ -138,7 +138,6 @@
     </div>
   </body>
   <script type="text/javascript" src="./js/common/jquery-1.11.2.min.js"></script>
-  <script type="text/javascript" src="./libs/parallax/jquery.parallax.js"></script>
   <script type="text/javascript" src="./js/common/frame.js"></script>
   <script type="text/javascript" src="./js/common/common.js"></script>
   <script type="text/javascript">
@@ -172,6 +171,34 @@
       $(this).stop().animate({width:390, height: 440},200, function() {
         $(this).find('.conclusion').animate({opacity: 1},200)
       }).siblings(".use_item").stop().animate({width:340, height: 370},200)
+    });
+    $(document).scroll(function() {
+      $('.product_lock_img').each(function(index, el) {
+        var item = $('.product_lock_img').eq(index);
+        var item1 = $('.lock_right').eq(index);
+        var itemOffsetTop = item.offset().top;  //元素距离顶部的距离
+        var itemOuterHeight = item.outerHeight(true); //元素的高度
+        var winScrollHeight = $(window).scrollTop();  //页面滚动的距离
+        var winHeight = $(window).height(); //窗口的高度
+        console.log(winScrollHeight)
+        console.log(itemOffsetTop)
+        if((winScrollHeight + itemOuterHeight > itemOffsetTop) && (winScrollHeight + itemOuterHeight < itemOffsetTop + 700)) {
+          console.log("出现了")
+          item1.addClass('active')
+          if (index%2 === 0) {
+            item.addClass('active')
+          } else {
+            item.addClass('active1')
+          }
+        } else {
+          item1.removeClass('active')
+          if (index%2 === 0) {
+            item.removeClass('active')
+          } else {
+            item.removeClass('active1')
+          }
+        }
+      })
     });
   }
   </script>

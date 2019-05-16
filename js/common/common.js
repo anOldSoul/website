@@ -1,5 +1,5 @@
 var comJs = {
-  getUrlParam(name) {//a标签跳转获取参数
+  getUrlParam: function(name) {//a标签跳转获取参数
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
       var r = window.location.search.substr(1).match(reg);
       if (r != null) return (r[2]); return null;
@@ -115,23 +115,23 @@ var comJs = {
     })
   },
   initBanner: function(obj) {
-    var $scene = null
-    var el = $(obj)
-    el.mouseover(function() {
-      if (!$scene) {
-        $scene = el.parallax({
-          limitX: 20,
-          scalarX: 5,
-        })
-      } else {
-        $scene.parallax('enable')
-      }
-    })
-    el.mouseout(function(event) {
-      if ($scene) {
-        $scene.parallax('disable')
-      }
-    })
+    // var $scene = null
+    // var el = $(obj)
+    // el.mouseover(function() {
+    //   if (!$scene) {
+    //     $scene = el.parallax({
+    //       limitX: 20,
+    //       scalarX: 5,
+    //     })
+    //   } else {
+    //     $scene.parallax('enable')
+    //   }
+    // })
+    // el.mouseout(function(event) {
+    //   if ($scene) {
+    //     $scene.parallax('disable')
+    //   }
+    // })
   },
   getQueryString: function(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");

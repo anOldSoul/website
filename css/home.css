@@ -10,14 +10,25 @@ a{
   color: #17BF98;
 }
 .index_banner_bac{
-  width: 1155px;
+  width: 100%;
   height: 610px;
   background-repeat: no-repeat;
-  background-size: 100% auto;
+  background-size: 100% 100%;
   position: absolute;
   left: 0;
   z-index: 0;
+}
+#banner1{
   background-image: url(../images/pic_home_banner_背景图_@1x.png);
+}
+#banner2{
+  background-image: url(../images/pic_home_banner_背景图2_@1x.png);
+}
+#banner3{
+  background-image: url(../images/pic_home_banner_背景图3_@1x.png);
+}
+#banner4{
+  background-image: url(../images/pic_home_banner_背景图4_@1x.png);
 }
 .index_banner_bac_corner{
   width: 542px;
@@ -60,12 +71,18 @@ a{
   top: 144px;
   right: 0;
 }
+.banner_header_right4{
+  position: absolute;
+  z-index: 100;
+  top: 61px;
+  right: 0;
+}
 .case_top_box{
   width: 100%;
   height: 250px;
   background-color: #F3F8FC;
   position: absolute;
-  bottom: 140px;
+  top: 0;
   z-index: -1;
 }
 .manage_item:hover { 
@@ -387,7 +404,6 @@ img {
   color: #fff;
   display: flex;
   flex-direction: row;
-  background: #091928;
   position: relative;
 }
 
