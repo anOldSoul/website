@@ -137,8 +137,7 @@ a{
   margin-right: 52px;
   margin-top: 30px;
 }
-.saas_img{
-  width: 560px;
+.saas_img{  
   height: 526px;
 }
 .lock_cycle_img{
@@ -182,7 +181,7 @@ a{
 .case{
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
 }
 .saas{
@@ -312,20 +311,19 @@ a{
 .saas_left{
 }
 .manage{
-  width: 550px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 70px;
 }
 .manage_item{
-  width: 25%;
-  padding-bottom: 25px;
-  padding-top: 25px;
+  width: 156px;
+  height: 120px;
   display: flex;
   border-radius: 5px;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 .black_bac{
   width: 100%;
@@ -369,14 +367,13 @@ a{
   margin-top: 50px;
 }
 .case_subtitle{
-  width:510px;
+  width:540px;
   font-size:14px;
   color:rgba(96,114,132,1);
   margin-top: 24px;
   line-height: 2;
 }
 .case_right{
-  margin-left: 67px;
 }
 .more_btn{
   width:108px;
@@ -737,7 +734,6 @@ img {
   height: 615px;
 }
 .app_right{
-  margin-left: 172px;
   margin-top: 100px;
 }
 .app_img img{

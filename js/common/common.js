@@ -115,23 +115,6 @@ var comJs = {
     })
   },
   initBanner: function(obj) {
-    // var $scene = null
-    // var el = $(obj)
-    // el.mouseover(function() {
-    //   if (!$scene) {
-    //     $scene = el.parallax({
-    //       limitX: 20,
-    //       scalarX: 5,
-    //     })
-    //   } else {
-    //     $scene.parallax('enable')
-    //   }
-    // })
-    // el.mouseout(function(event) {
-    //   if ($scene) {
-    //     $scene.parallax('disable')
-    //   }
-    // })
   },
   getQueryString: function(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
