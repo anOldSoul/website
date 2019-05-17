@@ -99,6 +99,12 @@
 .menu_item:hover a{
   color: #17bf98;
 }
+.menu_item a{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 .login_btn a {
   color: #fff;

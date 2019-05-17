@@ -224,6 +224,10 @@ a{
   background-repeat: no-repeat;
   background-size: 100% auto;
 }
+.hover{
+  background-color: #0f2d48;
+  color: #fff;
+}
 #manage_img13 .case_img_s {
   background-image: url(../images/pic_home_企业案例酒店小_selected_@1x.png);
 }
@@ -316,7 +320,7 @@ a{
   flex-wrap: wrap;
   margin-top: 70px;
 }
-.manage_item{
+.manage_item, .manage_item1{
   width: 156px;
   height: 120px;
   display: flex;

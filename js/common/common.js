@@ -16,6 +16,16 @@ var comJs = {
       })
     }
   },
+  handleManageItemTabHover: function(className, options) {
+    $(className).each(function(index, el) {
+      $(this).hover(function() {
+        $(className).removeClass('hover')
+        $(this).addClass('hover')
+        // $('.manage_img').eq(index).css('background-image', 'url(' + options.saasBac[index] + ')')
+      })
+        // $('.manage_img').eq(index).css('background-image', 'url(' + options.saasBacUnselected[index] + ')')
+    })
+  },
   handleCaseTabChange: function(options) {
     $('.case_item').each(function(index, el) {
       $(this).click(function() {
