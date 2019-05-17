@@ -137,7 +137,8 @@ a{
   margin-right: 52px;
   margin-top: 30px;
 }
-.saas_img{  
+.saas_img{
+  width: 471px;
   height: 526px;
 }
 .lock_cycle_img{
@@ -176,7 +177,6 @@ a{
 .productListRight{
   color: #fff;
   display: flex;
-  /*justify-content: flex-start;*/
 }
 .case{
   display: flex;
@@ -241,7 +241,7 @@ a{
   background-image: url(../images/pic_home_企业案例交通小_selected_@1x.png);
 }
 #manage_img1 .manage_img{
-  background-image: url(../images/ic_home_SAAS_用户管理_unselected_@1x.png);
+  background-image: url(../images/ic_home_SAAS_用户管理_selected_@1x.png);
 }
 #manage_img2 .manage_img {
   background-image: url(../images/ic_home_SAAS_产品管理_unselected_@1x.png);
@@ -264,55 +264,17 @@ a{
 #manage_img8 .manage_img {
   background-image: url(../images/ic_home_SAAS_系统管理_unselected_@1x.png);
 }
-#manage_img1:hover .manage_img {
-  background-image: url(../images/ic_home_SAAS_用户管理_selected_@1x.png);
-}
-#manage_img2:hover .manage_img {
-  background-image: url(../images/ic_home_SAAS_产品管理_selected_@1x.png);
-}
-#manage_img3:hover .manage_img {
-  background-image: url(../images/ic_home_SAAS_告警管理_selected_@1x.png);
-}
-#manage_img4:hover .manage_img {
-  background-image: url(../images/ic_home_SAAS_服务管理_selected_@1x.png);
-}
-#manage_img5:hover .manage_img {
-  background-image: url(../images/ic_home_SAAS_数据统计_selected_@1x.png);
-}
-#manage_img6:hover .manage_img {
-  background-image: url(../images/ic_home_SAAS_用户反馈_selected_@1x.png);
-}
-#manage_img7:hover .manage_img {
-  background-image: url(../images/ic_home_SAAS_操作日志_selected_@1x.png);
-}
-#manage_img8:hover .manage_img {
-  background-image: url(../images/ic_home_SAAS_系统管理_selected_@1x.png);
-}
 #manage_img9 .manage_img_app {
-  background-image: url(../images/ic_home_APP_设备管理_unselected_@1x.png);
-}
-#manage_img9:hover .manage_img_app {
   background-image: url(../images/ic_home_APP_设备管理_selected_@1x.png);
 }
 #manage_img10 .manage_img_app {
   background-image: url(../images/ic_home_APP_临时密码_unselected_@1x.png);
 }
-#manage_img10:hover .manage_img_app {
-  background-image: url(../images/ic_home_APP_临时密码_selected_@1x.png);
-}
 #manage_img11 .manage_img_app {
   background-image: url(../images/ic_home_APP_权限分级_unselected_@1x.png);
 }
-#manage_img11:hover .manage_img_app {
-  background-image: url(../images/ic_home_APP_权限分级_selected_@1x.png);
-}
 #manage_img12 .manage_img_app {
   background-image: url(../images/ic_home_APP_消息通知_unselected_@1x.png);
-}
-#manage_img12:hover .manage_img_app {
-  background-image: url(../images/ic_home_APP_消息通知_selected_@1x.png);
-}
-.saas_left{
 }
 .manage{
   display: flex;
@@ -734,8 +696,8 @@ img {
   box-shadow:0px 2px 10px rgba(32,33,39,0.2);
 }
 .app_img{
-  width: 355px;
-  height: 615px;
+  width: 307px;
+  height: 567px;
 }
 .app_right{
   margin-top: 100px;

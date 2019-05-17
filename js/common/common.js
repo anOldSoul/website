@@ -21,9 +21,19 @@ var comJs = {
       $(this).hover(function() {
         $(className).removeClass('hover')
         $(this).addClass('hover')
-        // $('.manage_img').eq(index).css('background-image', 'url(' + options.saasBac[index] + ')')
+        if (className === '.manage_item') {
+          $('.manage_img').each(function(imgIndex) {
+            $('.manage_img').eq(imgIndex).css('background-image', 'url(' + options.saasBacUnselected[imgIndex] + ')')
+          })
+          $('.manage_img').eq(index).css('background-image', 'url(' + options.saasBac[index] + ')')
+        }
+        if (className === '.manage_item1') {
+          $('.manage_img_app').each(function(imgIndex) {
+            $('.manage_img_app').eq(imgIndex).css('background-image', 'url(' + options.appBacUnselected[imgIndex] + ')')
+          })
+          $('.manage_img_app').eq(index).css('background-image', 'url(' + options.appBac[index] + ')')
+        }
       })
-        // $('.manage_img').eq(index).css('background-image', 'url(' + options.saasBacUnselected[index] + ')')
     })
   },
   handleCaseTabChange: function(options) {
