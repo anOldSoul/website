@@ -1,0 +1,17 @@
+<view class="reward_rules">
+  <view class="header">
+    <view>{{title}}</view>
+    <view class="header_img"><image src="../../images/pic_tb.png"></image></view>
+  </view>
+  <view class="rule_item">
+    <block wx:for="{{ruleList}}" wx:key="{{index}}">
+      <view class="title">
+        <view class="title_img"><image src="../../images/icon.png"></image></view>
+        <view class="title_name">{{item.question}}</view>
+      </view>
+      <!-- <view class="ruleItem">{{item.question}}</view> -->
+      <view class="ruleItem">{{item.questionAnswers}}</view>
+    </block>
+  </view>
+  <view class='explain'>在法律允许范围内，本商城对活动拥有最终解释权</view>
+</view>

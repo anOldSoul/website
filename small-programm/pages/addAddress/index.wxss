@@ -1,0 +1,56 @@
+page{
+  width: 100%;
+  height: 100%;
+  background: #f5f5f5;
+}
+.add_address{
+  width: 100%;
+  overflow: hidden;
+  padding-top: 30rpx;
+}
+.inputSection{
+  width: 100%;
+  padding:20rpx;
+  border-bottom: 1rpx solid #ddd;
+  display:flex;
+  flex-direction: row;
+  font-size: 26rpx;
+  align-items: center;
+  background: #fff;
+  height: 50rpx;
+  justify-content: flex-start;
+}
+.inputSection1{
+  padding:20rpx;
+  display:flex;
+  flex-direction: row;
+  font-size: 26rpx;
+  align-items: center;
+  border-bottom: 1rpx solid #ddd;
+  background: #fff;
+  height: 50rpx;
+}
+.detailAddress{
+  width: 72%;
+  padding-right: 20rpx; 
+}
+.tel{
+  width: 20%;
+  font-size: 26rpx;
+}
+
+.store_address{
+  width: -webkit-calc(78%);
+}
+.bottom_btn{
+  width: 710rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: var(--colorG);
+  color: #fff;
+  text-align: center;
+  position: fixed;
+  bottom: 20rpx;
+  left: 20rpx;
+  font-size: 30rpx;
+}

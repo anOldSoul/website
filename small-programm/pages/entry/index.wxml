@@ -1,0 +1,24 @@
+<view class="container">
+  <import src="../../component/toast/toast.wxml"/>
+  <template is="toast" data="{{ ..._toast_ }}"/>
+    <image src="http://cs.carelinker.com/image/online/mall/本草国banner.png"></image>
+    <view class="content">
+        <view class="inputSection">
+            <view class="tel">手机号码</view>
+            <input type="number" bindinput="bindKeyInput" placeholder="请输入您的手机号码"/>
+        </view>
+        <view class="inputSection">
+            <view class="tel">图形验证</view>     
+            <input class="inputCode" bindinput="bindCodeInput" placeholder="验证码" type="text"/>
+            <image class="codeImg" src="{{codeImg}}"></image>
+            <view class="sendCode1" bindtap="getImgCode">换一张</view>
+        </view>
+        <view class="inputSection">
+            <view class="tel">验证码</view>
+            <input type="number" bindinput="bindCodeInput1" placeholder="请输入六位验证码" />
+            <view class="sendCode{{ ifZoom? 'ZoomWidth' : ''}}" bindtap="bindSendCode" wx:if="{{ifSend || !countDown}}"><text class="sendText">发送验证码</text></view>
+            <view class="sendCode{{ ifZoom? 'ZoomWidth' : ''}}" bindtap="bindSendCode" wx:if="{{!ifSend && countDown}}">{{countDown}}s后重发</view>
+        </view>
+        <button class="button loginBtn{{inputValue && inputCodeValue && inputCodeValue1 ? 'login_sure' : ''}}" bindtap="bindCheckAccount">立即登录</button>
+    </view>
+</view>

@@ -1,0 +1,64 @@
+<view class="member">
+  <view class="card_box">
+    <image class="card" src="../../images/wd_bg.png"></image>
+    <view class="head">
+      <view class="head_img"><open-data type="userAvatarUrl"></open-data></view>
+      <view class="member_name"><open-data type="userNickName"></open-data></view>
+    </view>
+  </view>
+  <view class="coupon_box">
+    <view class="coupon">
+      <navigator class="coupon_item" url="/pages/coupon/list/index?from=my" hover-class='none'>
+        <view class="coupon_num">{{couponNum}}</view>
+        <view class="coupon_title">优惠券</view>
+      </navigator>
+      <navigator class="coupon_item" url="/pages/invite/index"  hover-class='none'>       
+        <view class="coupon_num">{{healthMoney}}</view>
+        <view class="coupon_title">收入(元)</view>
+      </navigator>
+      <view class="coupon_item" bindtap='goBuBu'>
+        <view class="coupon_num">{{profit}}</view>
+        <view class="coupon_title">健康币</view>
+      </view>
+    </view>
+  </view>
+  <navigator class="myList" url="/pages/order/index" hover-class="none">
+    <view class="list_text">订单管理</view>
+    <view class="list_right"><span>查看所有订单</span><image class="list_more" src="/images/more.png"></image></view>
+  </navigator>
+  <view class="card_list">
+    <navigator class="card_item" url="/pages/order/index?status=PENDING_PAY" hover-class="none">
+      <image class="icon_img" src="../../images/daifukuan.png"></image>
+      <text class="icon_text">待付款</text>
+    </navigator>
+    <navigator class="card_item" url="/pages/order/index?status=IN_PROGRESS" hover-class="none">
+      <image class="icon_img" src="../../images/daishouhuo.png"></image>
+      <text class="icon_text">进行中</text>
+    </navigator>
+    <navigator class="card_item" url="/pages/order/index?status=COMPLETED" hover-class="none">
+      <image class="icon_img" src="../../images/daifahuo.png"></image>
+      <text class="icon_text">已完成</text>
+    </navigator>
+  </view>
+  <view bindtap="handleAddressManage" class="myList" hover-class="none">
+    <view class="list_text">地址管理</view>
+    <image class="list_more" src="/images/more.png"></image>
+  </view>
+  <!-- <view>
+    <view class="myList">
+      <view class="list_text">客服咨询</view>
+      <image class="list_more" src="/images/more.png"></image>
+    </view>
+  </view> -->
+  <view>
+    <view class="myList" bindtap='clickIssueFeedbackAction'>
+      <view class="list_text">问题反馈</view>
+      <image class="list_more" src="/images/more.png"></image>
+    </view>
+  </view>
+  <view class="myList" bindtap="makeSure">
+    <view class="list_text">退出登录</view>
+    <image class="list_more" src="/images/more.png"></image>
+  </view>
+  <view class="support">蓝信康提供技术支持</view>
+</view>

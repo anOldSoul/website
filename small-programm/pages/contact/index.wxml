@@ -1,0 +1,9 @@
+<view class="contact">
+  <view class="tel">电话<span class="tel_num">{{seviceList.tel}}</span></view>
+  <view class="work_time">
+    <view class="time">工作时间</view>
+    <block wx:for="{{seviceList.workTime}}" wx:key="{{index}}">
+      <view class="time">{{item}}</view>
+    </block>
+  </view>
+</view>

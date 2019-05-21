@@ -1,0 +1,27 @@
+@import "./component/toast/toast.wxss";
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+page{
+  /* 全局色调 */
+  --colorG: #30a9ff;
+  /* 价格颜色 */
+  --colorM: #fc5a64;
+  --boxShadow: 3rpx 0rpx 20rpx rgba(201, 201, 201, 0.3);
+}
+.checkbox{
+  transform:scale(.7);
+}
+.checkbox{
+  transform:scale(.7);
+}
+switch{
+  transform:scale(.8);
+}
+.point,.value1{
+  font-weight: bold;
+}

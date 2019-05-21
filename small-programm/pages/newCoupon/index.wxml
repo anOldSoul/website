@@ -1,0 +1,37 @@
+<!--待领取  -->
+<view class="activity_banner">
+  <image src="{{bannerImg.couponsName}}"></image>
+</view>
+<view class="container">
+  <view class="item" wx:for="{{unclaimedList}}" wx:key="{{index}}">
+    <image src='/images/pic_yhq.png'></image>
+    <view class='info-wrapper'>
+      <view class='value-wrapper'>
+        <view class='value'>
+          <text>￥</text>
+          <text>{{item.faceValue}}</text>
+        </view>
+      </view>
+      <view class='validity-wrapper'>
+        <view class='validity-left'>
+          <view class='info'>{{item.validCondition}}</view>
+          <view class='date'>{{item.periodOfValidity}}</view>
+        </view>
+        <view class='validity-right'>
+          <view id="{{item.classId}}" data-index="{{index}}" class='btn' bindtap='handleToReceive'>立即领取</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="protect_box">
+  <view class="protect">    
+    <view class="protect_title">淘妈妈正品保障</view>
+    <view class="service">
+      <view class="service_item"><image class="service_icon" src="../../images/zhengpin.png"></image>我们甄选母婴优品</view>
+      <view class="service_item"><image class="service_icon" src="../../images/baoyou.png"></image>我们的商品全国包邮</view>
+      <view class="service_item"><image class="service_icon" src="../../images/anshifahuo.png"></image>下单一天内准时发货</view>
+      <view class="service_item"><image class="service_icon" src="../../images/anshidaohuo.png"></image>一周内准时送达</view>
+    </view>
+  </view>
+</view>

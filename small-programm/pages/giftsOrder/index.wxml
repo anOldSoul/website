@@ -1,0 +1,47 @@
+<!--logs.wxml-->
+<view class="shopping_container">
+  <view class='gift_banner'>
+    <image src="http://cs.carelinker.com/image/online/mall/20181213bg3.png"></image>
+  </view>
+  <view class='total_gifts'>
+    <view>共{{totalNum}}件礼物</view>
+    <view class='continue' bindtap='addGift'>继续添加<image class="list_more" src="/images/more.png"></image></view>
+  </view>
+  <view wx:if="{{list.length > 0}}">
+    <view class="goods_list">
+      <block wx:for="{{list}}" wx:key="{{index}}">
+        <view class="item">
+          <view class="inner goods_item" bindtouchstart="touchS" bindtouchmove="touchM" catchtouchend="touchE" data-index="{{index}}" style="{{item.txtStyle}}">
+            <view class="item_left" id="{{index}}" catchtap="handleCheckbox">
+              <image class="goods_img" src="{{item.bannerUrl}}"></image>
+            </view>
+            <view class="item_middle">
+              <view class="good_name"><text>{{item.goodsName}}</text></view>
+              <view class="point"><span class="yuan">￥</span>{{item.presentPrice}}</view>     
+            </view>
+            <view class="item_right">
+              <view class="add_subtract" >
+                <span class="subtract{{item.value == 1 ? 'disabled' : ''}}" data-index="{{index}}" bindtap="handleSubtract">-</span>
+                <input type="number" data-index="{{index}}" bindblur="bindInputValue" value="{{item.goodsNumber}}" />
+                <span class="add" data-index="{{index}}" bindtap="handleAdd">+</span>
+              </view>
+            </view>
+          </view>
+          <view data-index="{{index}}" bindtap="delItem" class="inner del">删除</view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class='total_gifts'>
+    <view>传达心意，写祝福语</view>
+    <view class='continue' bindtap='goBlessing'>更多祝福语<image class="list_more" src="/images/more.png"></image></view>
+  </view>
+  <view class='blessingTextarea'><textarea maxlength="45" placeholder="一声问候，带去你的关心和祝福。" value='{{blessings}}' bindinput="bindBlessingsInput"></textarea>
+  </view>
+  <view class='input_text'>可输入{{blessings.length <=20 ? (50 - blessings.length) : 0}}个字</view>
+  <view class='total_money'>
+    <view>商品金额</view>
+    <view class='continue'>￥{{totalPrice}}</view>
+  </view>
+  <view class='gift_bottom' bindtap='goGift'>生成礼物红包</view>
+</view>

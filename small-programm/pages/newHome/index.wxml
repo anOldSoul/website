@@ -1,0 +1,89 @@
+<!--logs.wxml-->
+<view class="shopping_container">
+  <!-- <official-account></official-account> -->
+  <view class="bannerImg">
+    <!-- <image class="pic_bg" src="{{bannerImg.bannerName}}"></image> -->
+    <swiper indicator-dots="{{indicatorDots}}" indicator-color="#fff" autoplay="{{autoplay}}" indicator-active-color="#fca5cd" interval="{{interval}}" duration="{{duration}}" display-multiple-items="1">
+      <block wx:for="{{bannerImg.bannerName}}" wx:key="{{index}}">
+        <swiper-item data-item="{{item}}" bindtap="goEventGood">
+          <image class="pic_bg" src="{{item}}"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view bindtap="goGroup" class="activity_banner" >
+    <image src="../../images/pic_qmpd.png"></image>
+    <image class="activity_go" src="../../images/qmpd_bt.png"></image>
+  </view>
+  <view bindtap="goGifts">送礼{{current}}</view>
+  <view class='bubu'>   
+    <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
+      <button bindtap="goBuBu" formType="submit">
+        <view class='step'>今日步数 {{step1}}</view>
+        <image class="bubu_bg" mode="widthFix" src='../../images/pic_bbdj.png'></image>
+      </button>
+    </form>
+    <view bindtap="goCoupon">
+      <image class="bubu_bg" mode="widthFix" src='../../images/pic_xrlb.png'></image>
+    </view>
+  </view>
+  <view class="hot_banner">
+    <image class='hot_banner_image' src="../../images/store_banner1.png"></image>
+  </view>
+  <view class="range_goods_list">
+    <block wx:for="{{goodsList}}" wx:key="{{index}}">
+      <view class="rangeGoods_item" data-item="{{item}}" bindtap="goDetail">
+        <image class="rangeGoods_img" src="{{item.imgUrl}}"></image>
+        <view class='desc' wx:if="{{item.goodsRemarks}}">{{item.goodsRemarks}}</view>
+        <text class="rangeGoods_text">{{item.name1}}</text>
+        <view class="value1">￥{{item.presentPrice}}</view>
+      </view>
+    </block>
+  </view>
+  <view class='goCart' bindtap="goBuBu">
+    <image src='/images/xuanfu.png'></image>
+  </view>
+  <!-- 新人券 -->
+  <view class='pop' wx:if="{{showCoupon}}">
+    <view class='pop-wrapper'>
+     <image class='ljb' src='/images/ljb.png' bindtap='handleOpenMsg'></image>
+     <image class='close' src="/images/close.png" bindtap='handleClose'></image>
+      <!-- <image class='bg' src='/images/bg_hb.png'></image>
+      <image class='close' src="/images/close.png" bindtap='handleClose'></image>
+      <view class='pop-content-wrapper'>
+        <view class='pop-header'>
+          <view class='text1'>恭喜你</view>
+          <view class='text2'>获得
+            <text>{{totalValue}}</text>元新人礼包</view>
+        </view>
+        <view class='pop-content'>
+          <scroll-view class='scroll-view' scroll-y>
+            <view class='item' wx:for="{{couponList}}" wx:key="*this">
+              <image src="/images/bg_yhq.png"></image>
+              <view class='item-content'>
+                <view class='price'>
+                  <text>￥</text>
+                  <text>{{item.faceValue}}</text>
+                </view>
+                <view class='item-info'>
+                  <view class='rule'>{{item.className}}</view>
+                  <view class="periodOfValidity">{{item.periodOfValidity}}</view>
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+          <view class='text' wx:if="{{couponList.lenght > 3}}">
+            <view>
+              <image class='text-icon' src="/images/down.png"></image>
+            </view>
+            <view>滑动查看更多</view>
+          </view>
+        </view>
+        <view class='pop-footer'>
+          <view class='btn' bindtap='handleGoUse'>立即使用</view>
+          <view class='text'>优惠券已放入账户中，可进我的优惠券查看</view>
+        </view>
+      </view> -->
+    </view>
+  </view>
+</view>

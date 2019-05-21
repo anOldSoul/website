@@ -1,0 +1,50 @@
+<!--logs.wxml-->
+<view>
+  <view class="top">
+    <view class="search_box" bindtap='clickSeachBarAction'>
+      <image class="search_img" src="../../images/ic_search1.png"></image>
+      <input type="text" value="{{inputSearch}}" placeholder-class="search" bindinput="bindblur" confirm-type="search" placeholder="搜索商品名"/>
+    </view>
+    <!-- <view class="cancel" bindtap="handleCancel">取消</view> -->
+  </view>
+  <view class="shopping_container" wx:if="{{!inputSearch}}">
+    <scroll-view class="range_list" scroll-y="true" scroll-top='{{activeIndex > 10 ? (activeIndex * 100) : 0}}'>
+      <block wx:for="{{rangeList}}" wx:key="*this">
+        <view data-index="{{index}}" data-eventType="{{item.eventType}}" class="range_item{{activeIndex == index ? 'select_on' : ''}}" bindtap="handleTabClick">{{item.eventName}}
+        </view>
+      </block>
+    </scroll-view>
+    <view class="range_goods_list">
+      <view class='filter'>
+        <view>{{rangeList[activeIndex].eventName}}</view>
+        <view class='filter_right'>
+          <!-- <span class="filter_sale{{isSelect ? 'Select': ''}}" bindtap='handleFilterBySale'>销量</span> -->
+          <span class="filter_price{{!isSelect ? 'Select': ''}}" bindtap='handleFilterByPrice'>价格
+            <image class='price_filter' wx:if="{{isSelect}}" src='../../images/ic_default.png'></image>
+            <image class='price_filter' wx:if="{{isDownPrice}}" src='../../images/ic_down.png'></image>
+            <image class='price_filter' wx:if="{{isUpPrice}}" src='../../images/ic_up.png'></image>
+          </span>
+        </view>
+      </view>
+      <view class="categoryList">
+        <block wx:for="{{goodList}}" wx:key="{{index}}">
+          <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
+            <button formType="submit" style='text-align: left;' hover-class='none' class="operationCardSmall" data-item="{{item}}" bindtap="goDetail">
+              <view class="rangeGoods_item">
+                <image class="rangeGoods_img" src="{{item.bannerUrl}}"></image>              
+              </view>
+              <view class='list_right'>
+                <view class="rangeGoods_text">{{item.name}}</view>
+                <view class="goods_describe" wx:if="{{item.goodsDescribe}}">{{item.goodsDescribe}}</view>
+                <view class='discountValue_box' wx:if="{{item.discountValue}}">
+                  <text class="goods_discountValue">{{item.discountValue}}</text>
+                </view>
+                <view class="presentPrice">￥{{item.presentPrice}}</view>
+              </view>
+            </button>
+          </form>
+        </block>
+      </view>
+    </view>
+  </view>
+</view>

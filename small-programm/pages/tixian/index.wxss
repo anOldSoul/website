@@ -1,0 +1,89 @@
+page{
+  width: 100%;
+  height: 100%;
+  background: #f6f6f6;
+}
+.content{
+  width: 690rpx;
+  margin: 0 auto;
+}
+.header{
+  width: 590rpx;
+  padding: 0 50rpx;
+  display: flex;
+  line-height: 142rpx;
+  background: #FAFAFA;
+}
+.contact{
+  text-align: right;
+  font-size: 30rpx;
+  padding: 20rpx 0;
+}
+.header_left{
+  font-size: 30rpx;
+  padding-right: 20rpx;
+}
+.header_middle{
+  font-size: 60rpx;
+  color: #A2A1A1;
+}
+.header_right{
+  font-size: 30rpx;
+  color: #A2A1A1;
+}
+.center{
+  width: 590rpx;
+  padding: 0 50rpx;
+  background: #ffffff;
+}
+.center_title{
+  font-size: 30rpx;
+  padding: 30rpx 0;
+}
+.cash{
+  border-bottom: 1rpx solid grey;
+  padding:10px 0;
+  line-height:1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.cash input{
+  margin-left: 10rpx;
+}
+.where{
+  font-size: 30rpx;
+  opacity: 0.65;
+  padding: 20rpx 0;
+}
+.btn{
+  width:690rpx;
+  margin: 0 auto;
+  height:98rpx;
+  line-height: 98rpx;
+  text-align: center;
+  border-radius: 5rpx;
+  background: var(--colorG);
+  color: #ffffff;
+  margin-top: 60rpx;
+}
+.tip{
+  width: 418rpx;
+  height: 64rpx;
+  font-size: 30rpx;
+  opacity: 0.8;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 30rpx;
+}
+.record{
+  width: 120rpx;
+  height: 30rpx;
+  text-align: center;
+  font-size: 30rpx;
+  text-decoration: underline;
+  opacity: 0.8;
+  position: absolute;
+  bottom: 90rpx;
+  left: 315rpx;
+}

@@ -1,0 +1,47 @@
+<!--logs.wxml-->
+<view class="myOrder">
+  <view class='empty_order'  wx:if="{{list.length == 0}}">
+    <image class="pic_kzt" src="../../images/pic_kzt.png"></image>
+    <view class='empty_text1'>您当前还没有订单哦</view>
+    <view class='empty_text2'>快去看看有哪些想买的</view>
+  </view>
+  <block wx:for="{{list}}" wx:key="{{index}}" wx:if="{{list.length > 0}}">
+    <view class="title" bindtap="handleChase" data-item="{{item}}"><span>订单编号:{{item.orderId}}</span><span class="order_status">{{item.statusDescr}}</span></view>
+    <view class="order_goods" wx:if="{{item.onlineMallUserOrderItemList.length > 4}}"  bindtap="handleDetail" data-item="{{item}}">    
+      <swiper indicator-dots="{{indicatorDots}}" indicator-color="#fff"
+        autoplay="{{autoplay}}" indicator-active-color="#fca5cd" interval="{{interval}}" duration="{{duration}}" display-multiple-items="4">
+        <block wx:for="{{item.onlineMallUserOrderItemList}}" wx:for-item="onlineMallUserOrderItemList">
+          <swiper-item bindtap="goDetail">
+            <image class="good_img" src="{{onlineMallUserOrderItemList.bannerUrl}}"></image>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <view class="order_goods" wx:if="{{item.onlineMallUserOrderItemList.length < 5 && item.onlineMallUserOrderItemList.length > 1}}" data-item="{{item}}" bindtap="handleDetail">
+      <block wx:for="{{item.onlineMallUserOrderItemList}}" wx:key="{{index}}">
+        <image class="good_img1" src="{{item.bannerUrl}}"></image>
+      </block>
+    </view>
+    <view class="order_goods" wx:if="{{item.onlineMallUserOrderItemList.length == 1}}" data-item="{{item}}" bindtap="handleDetail">
+      <view class="goods_list">
+        <view class="item">
+          <view><image class="good_img" src="{{item.onlineMallUserOrderItemList[0].bannerUrl}}"></image></view>
+          <view class="item_name"><text>{{item.onlineMallUserOrderItemList[0].goodsName}}</text></view>
+        </view>
+      </view>
+    </view>
+    <view class="orderList">
+      <text class="status">共{{item.totalGoodsNumber}}件商品，实付款￥{{item.totalPrise}}</text>
+    </view>
+    <view class="btnList">
+      <view class="btn" bindtap="handleCancel" data-item="{{item}}" wx:if="{{item.cancelOrderButton}}">取消订单</view>
+      <view class="btn1" bindtap="handlePay" data-item="{{item}}" wx:if="{{item.statusDescr=='待付款'}}">立即付款</view>
+      <view class="btn1" wx:if="{{item.needShowGiftButton}}"><button open-type="share" data-item="{{item}}">继续转发</button></view>
+      <view class="btn1" bindtap="handleReceive" data-item="{{item}}" wx:if="{{item.confirmReceiveGoodsButton}}">确认收货</view>
+      <navigator class='btn1' wx:if="{{item.needShowInsuranceButton}}" id="btn_color" target="miniProgram" open-type="navigate" app-id="wx24ec5716778609ee" path="/pages/index/index?recomendId=1083296&sceneStr=Aae9@Bbc0" extra-data="" version="release">前往保单</navigator>
+      <view class="btn" bindtap="handleShare" data-item="{{item}}" wx:if="{{item.groupStatus}}">参团详情</view>
+      <view class="btn3" wx:if="{{item.groupStatus=='IN_PROGRESS'}}" data-item="{{item}}" bindtap="handleShare">邀请好友拼单</view>
+      <view class="btn" bindtap="handleChase" data-item="{{item}}" data-statusType="afterSale" wx:if="{{item.showAfterSaleStatusButton}}">查看售后状态</view>
+    </view>
+  </block>
+</view>

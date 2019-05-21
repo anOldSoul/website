@@ -1,0 +1,15 @@
+<view class='container'>
+  <view class='i-item'>
+    <view class='i-item-title'>联系电话</view>
+    <input class='i-item-input' placeholder='选填，便于我们与你联系' type='number' bindinput='phoneNumberInput'></input>
+  </view>
+  <view class='i-item'>
+    <view class='i-item-title'>申请说明</view>
+    <input class='i-item-input' placeholder='你还可以输入{{wordnumber}}字' disabled='false'></input>
+  </view>
+  <view class='textarea-view'>
+    <textarea placeholder='请填写10个字以上的问题描述以便我们提供更好的帮助' placeholder-style='line-height: 1.2rem;' bindinput='issueInputAction' maxlength='100'></textarea>
+  </view>
+  <view class='handleBtn' style='opacity:{{disabled?0.5:1}}' bindtap='clickFeedbackAction'>提交申请</view>
+</view>
+

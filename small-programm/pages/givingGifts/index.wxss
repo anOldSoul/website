@@ -1,0 +1,94 @@
+page{
+  height: 100%;
+  background: #e42c45;
+}
+.gift_banner{
+  width: 750rpx;
+  height: 750rpx;
+  position: relative;
+}
+.gift_img{
+  width: 342rpx;
+  height: 342rpx;
+  border-radius: 171rpx;
+  top: 160rpx;
+  left: 204rpx;
+  background: #fff;
+  position: absolute;
+  overflow: hidden;
+}
+.banner{
+  border-radius: 171rpx;
+}
+.gift_top{
+  width: 750rpx;
+  height: 40rpx;
+}
+.top_bar{
+  left: 160rpx;
+  right: 160rpx;
+  top: 568rpx;
+  position: absolute;
+  color: #f4f4f4;
+  font-size: 30rpx;
+}
+image{
+  width: 100%;
+  height: 100%;
+}
+.wishing{
+  width: 750rpx;
+  height: 325rpx;
+  position: relative;
+}
+.noticeDescr{
+  width: 750rpx;
+  height: 325rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+.wishing_text{
+  font-size: 30rpx;
+  color: #f4f4f4;
+  position: absolute;
+  top: 85rpx;
+  right: 100rpx;
+  left: 200rpx;
+}
+.wishing_person{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  position: absolute;
+  bottom: 85rpx;
+  right: 100rpx;
+  left: 200rpx;
+}
+.wishing_name{
+  font-size: 26rpx;
+  display: flex;
+  justify-content: center;
+}
+.wishing_date{
+  font-size: 24rpx;
+}
+.btn{
+  width: 710rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  margin: 0 auto;
+  background: #fff;
+  color: #e62633;
+  text-align: center;
+  margin-top: 30rpx;
+}
+.person_img{
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 20rpx;
+  margin-right: 10rpx;
+}

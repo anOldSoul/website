@@ -1,0 +1,23 @@
+.tel{
+  height: 110rpx;
+  line-height: 110rpx;
+  padding: 0 30rpx;
+  font-size: 26rpx;
+  border-top: 1rpx solid #acacac;
+  border-bottom: 1rpx solid #acacac;
+}
+.tel_num{
+  margin-left: 30rpx;
+}
+.work_time{
+  font-size: 26rpx;
+  padding: 40rpx 30rpx;
+  border-bottom: 1rpx solid #acacac;
+}
+.time{
+  line-height: 1;
+  margin-bottom: 20rpx;
+}
+.time1{
+  line-height: 1;
+}

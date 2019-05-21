@@ -1,0 +1,110 @@
+<import src="/component/toast/toast.wxml" />
+<wxs module="filters" src="../tool.wxs"></wxs>
+<template is="toast" data="{{ ..._toast_ }}" />
+<view class="fill_order">
+  <view class='delivery_box' wx:if="{{orderType!=='gift'}}">
+    <view class='delivery_item' wx:for="{{privilage.deliveryModeList}}" wx:key="{{item}}" style="width: -webkit-calc(90% / {{ privilage.deliveryModeList.length}}); background: {{activeIndex === index ? '#30a9ff' : '#fff'}}; color: {{activeIndex === index ? '#fff' : '#30a9ff'}};" bindtap='clickTap' data-index="{{index}}">
+      <view class='ruleName'>{{item.ruleName}}</view>
+      <view class='carriage'>运费 ￥{{item.carriage}}</view>
+    </view>
+  </view>
+  <view class="address" bindtap='handleChangeAddress'>
+    <view class="address_left">
+      <view class="img_box">
+        <image class="position_img" src="../../images/position.png"></image>
+      </view>
+      <view class="address_detail" wx:if="{{!defaultAddress.receiverName}}">请添加您的收货地址</view>
+      <view class="address_detail" wx:if="{{defaultAddress.receiverName}}">
+        <view class="name">
+          <view>{{defaultAddress.receiverName}}</view>
+          <view class="tel">{{defaultAddress.phone}}</view>
+          <view class="send_way" wx:if="{{defaultAddress.deliveryMode == 'PICKUP_STORE'}}">门店自提</view>
+          <view class="send_way" wx:if="{{defaultAddress.deliveryMode == 'DELIVER_TO_HOME'}}">送货到家</view>
+        </view>
+        <view class="address1" wx:if="{{defaultAddress.deliveryMode == 'DELIVER_TO_HOME'}}">{{(defaultAddress.province || '')  + (defaultAddress.city || '') + (defaultAddress.district || '') + (defaultAddress.placeLocation || '') + defaultAddress.detailAddress}}</view>
+        <view class="address1" wx:if="{{defaultAddress.deliveryMode == 'PICKUP_STORE'}}">{{defaultAddress.receiveStoreName}}</view>
+      </view>
+    </view>
+    <view class="address_right">
+      <image class="arrow_img" src="../../images/more.png"></image>
+    </view>
+    <image class="line_img" src="../../images/dtdd_bg.png"></image>
+  </view>
+  <view class="border_item"></view>
+  <view class="order_goods">
+    <view class="goods_list">
+      <block wx:for="{{orderList}}" wx:key="{{index}}">
+        <view class="item" wx:if="{{index < 3}}">
+          <view>
+            <image class="good_img" src="{{item.imgUrl}}"></image>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="total_num">共{{totalNum}}件</view>
+  </view>
+  <view wx:if="{{orderType!=='gift'}}">
+    <view class="border_item"  wx:if="{{buyType !== 'pintuan' && buyType !== 'buyAlone'}}"></view>
+    <navigator url="{{'/pages/coupon/list/index?from=order&totalPoint=' + originPrice + '&order=' + orderList1}}" class="myList" hover-class="none" wx:if="{{buyType !== 'pintuan' && buyType !== 'buyAlone'}}">
+      <view class="list_text">优惠券</view>
+      <view wx:if="{{originPrice >= coupon.minConsumption}}">-￥{{coupon.faceValue}}<image class="list_more" src="/images/more.png"></image></view>
+      <view wx:if="{{originPrice < coupon.minConsumption || !coupon}}">{{privilage.usableCouponDesc}}<image class="list_more" src="/images/more.png"></image></view>
+    </navigator>
+    <view class="border_item"></view>
+    <view class="myList">
+      <view class="list_text">健康币</view>
+      <view>{{privilage.usableHealthCurrencyDesc}}<switch checked="{{isDiscount}}" color='#30a9ff' bindchange="switchChange"/></view>
+    </view>
+    <view class="border_item"></view>
+    <view class="inputSection">
+      <view class="msg">买家留言：</view>
+      <input class="inputMsg" bindinput="bindRemarkInput" placeholder="选填，50字以内" />
+    </view>
+    <view class="border_item"></view>
+    <view class="myList">
+      <view class="list_text">商品金额</view>
+      <view class='list_price'>￥{{originPrice}}</view>
+    </view>
+    <view class="myList" wx:if="{{coupon.faceValue}}">
+      <view class="list_text">优惠券减免</view>
+      <view class='list_price'>-￥{{coupon.faceValue}}</view>
+    </view>
+    <view class="myList" wx:if="{{isDiscount}}">
+      <view class="list_text">健康币抵扣</view>
+      <view class='list_price'>-￥{{privilage.exchangeableMoneyValue}}</view>
+    </view>
+    <view class="myList" wx:if="{{orderType!=='gift' && activeIndex >=0}}">
+      <view class="list_text">运费</view>
+      <view class='list_price'>+￥{{privilage.deliveryModeList[activeIndex].carriage}}</view>
+    </view>
+    <view class="border_item"></view>
+  </view>
+  <view wx:if="{{orderType==='gift'}}">
+    <view class="inputSection">
+      <view class="msg">祝福语：</view>
+      <view>{{giftData.blessings}}</view>
+    </view>
+    <view class="myList">
+      <view class="list_text">送礼人</view>
+      <view class='list_price'>{{giftData.giverNickName}}</view>
+    </view>
+    <view class="myList">
+      <view class="list_text">订单时间</view>
+      <view class='list_price'>{{giftData.createDate}}</view>
+    </view>
+  </view>
+</view>
+<view class="bottom_btn" wx:if="{{orderType!=='gift'}}">
+  <view class="total_point">
+    <view class="point_view">
+      <span>实付款：</span>
+      <span class="total_point1">￥ {{totalPoint}}</span>
+    </view>
+  </view>
+  <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
+    <button hover-class='none' formType="submit" class="commit" bindtap="handleBalance">提交订单</button>
+  </form>
+</view>
+<view class="bottom_btn" bindtap='sendGift' wx:if="{{orderType==='gift'}}">
+  <view class='goGift'>收礼物</view>   
+</view>

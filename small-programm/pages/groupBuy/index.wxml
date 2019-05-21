@@ -1,0 +1,53 @@
+<view class="tixian">
+  <view class="content">
+    <view url="/pages/contact/index" hover-class="none" class="contact">好东西齐分享，快来和我一起拼团 ！！</view>
+    <view class="center" bindtap='goDetail'>
+      <view class="center_title"><image class="pic" src="{{imgUrls}}" ></image></view>
+      <view class="where">
+        <view class='good_name'>{{goodInfo.name}}</view>
+        <view class='limit_price'>￥{{goodInfo.groupPurchasePrice}}<span class='market_price'>￥{{goodInfo.presentPrice}}</span></view>
+        <view class='limit_btn'>限时抢购</view>
+      </view>    
+    </view>
+    <view class='triangle'></view>
+  </view>
+  <view class='group_buy_members'>
+    <view class='group_buy_friends'>
+      <view  wx:for="{{memberList}}" wx:key="{{item}}">     
+      <image class="pic_default" src="{{item.headImageUrl}}" wx:if="{{item.headImageUrl}}"></image>
+      <image class="pic_default" src="../../images/pic_default.png" wx:if="{{!item.headImageUrl}}"></image>
+      </view>
+    </view>
+    <view class='group_invite'><span class='surplus_num'></span>{{resultData.groupPurchaseDesc}}</view>
+    <view class='surplus' wx:if="{{resultData.groupPurchaseStatus === 'IN_PROGRESS'}}">
+      剩余
+      <view class='time_box'>
+        <view class='time'>{{hours}}</view>:
+        <view class='time'>{{minutes}}</view>:
+        <view class='time'>{{countDown}}</view>
+      </view>
+      结束
+    </view>
+    <view class='pintuan_result'>
+      <image class="ztsb" src="../../images/ztsb.png" wx:if="{{resultData.groupPurchaseStatus === 'OVERDUE'}}"></image>
+      <image class="ztsb" src="../../images/ztcg.png" wx:if="{{resultData.groupPurchaseStatus === 'COMPLETED'}}"></image>
+    </view>
+  </view>
+  <button class="btn" open-type='share' wx:if="{{resultData.jumpButtonDesc === '邀好友参团'}}">{{resultData.jumpButtonDesc}}</button>
+  <view class="btn" bindtap="handlePintuan" wx:if="{{resultData.jumpButtonDesc === '我也要开团' || resultData.jumpButtonDesc === '我要参团'}}">{{resultData.jumpButtonDesc}}</view>
+  <view class="btn" bindtap="handleGoOrder" wx:if="{{resultData.jumpButtonDesc === '查看订单'}}">{{resultData.jumpButtonDesc}}</view>
+  <view class='group_info' id='line'>
+    <view class='info_left'>
+      <image class="pic_leader" src="{{resultData.initiatorHeadImageUrl}}"></image>
+      <view class='leader_info'>
+        <view>{{resultData.initiatorNickName}}</view>
+        <view class='tuanzhang'>团长</view>
+      </view>
+    </view>
+    <view>{{resultData.groupPurchaseDate}} 开团</view>
+  </view>
+  <view class='group_info'>
+    <view>拼团须知</view>
+    <view>好友参团·人满发货·人不满退款</view>
+  </view>
+</view>

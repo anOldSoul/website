@@ -1,0 +1,35 @@
+<!--logs.wxml-->
+<view class="shopping_container">
+  <swiper class="category_swiper" indicator-dots="{{indicatorDots}}" display-multiple-items="{{rangeList.length > 4 ? 4 : rangeList.length}}"
+    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{rangeList}}" wx:key="{{index}}">
+      <swiper-item>
+        <view src="{{item}}" data-index="{{index}}" bindtap="handleTabClick" class="slide-image{{activeIndex == index ? 'select_on' : ''}}">{{item.name}}</view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- <view class="empty" wx:if="{{rangeGoodsList.length == 0}}">{{tips}}</view> -->
+  <view class="range_goods_list">
+    <block wx:for="{{rangeGoodsList}}" wx:key="{{index}}">
+      <view class="operationCardSmall{{index%2 == 0 ? 'Border' : ''}}">
+        <view class="rangeGoods_item" data-item="{{item}}">
+          <image class="rangeGoods_img" src="{{item.imgUrl}}" data-item="{{item}}" bindtap="goDetail"></image>
+          <view class='desc' wx:if="{{item.goodsRemarks}}">{{item.goodsRemarks}}</view>
+          <text class="rangeGoods_text">{{item.name}}</text>
+          <view class="buy">
+            <view class="price_info">
+              <view class="value1">￥{{item.presentPrice}}</view>        
+            </view>
+            <view class="pay">
+              {{item.payUserCount}}人已付款
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="cart_num" bindtap="goShoppingCart">
+    <image class="money_img" src="../../images/add.png"></image>
+    <view class="total_num">{{totalNum}}</view>
+  </view>
+</view>

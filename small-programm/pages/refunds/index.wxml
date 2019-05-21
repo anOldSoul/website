@@ -1,0 +1,25 @@
+<view class="index">
+  <view class="title">
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{reasonArray}}" range-key="type">
+      <view class="picker">
+        申请类型：{{reasonArray[index].type}}
+        <span class='notSelect' wx:if="{{!reasonArray[index].type}}">点击选择申请类型</span>
+        <image class="list_more" src="/images/arrow_down.png"></image>
+      </view>
+    </picker>
+  </view>
+  <view class="title">
+    <picker bindchange="bindPickerReasonChange" value="{{reasonIndex}}" range="{{reasonArray[index].reason}}">
+      <view class="picker">
+        申请原因：{{reasonArray[index].reason[reasonIndex]}}
+        <span class='notSelect' wx:if="{{!reasonArray[index].reason[reasonIndex]}}">点击选择申请原因</span>
+        <image class="list_more" src="/images/arrow_down.png"></image>
+      </view>
+    </picker>
+  </view>
+  <view class="inputComment">
+    <view class='apply_title'>申请说明：<text class='leftNum'>您还可以输入{{100 - inputValue1.length}}字</text></view>
+    <textarea  placeholder="请您详细填写申请说明（最多100字）" placeholder-class="notSelect" maxlength="100" bindinput="bindContentInput"></textarea>
+  </view>
+  <button class="button loginBtn{{reasonArray[index].type && reasonArray[index].reason[reasonIndex] && inputValue1 ? 'login_sure' : ''}}" bindtap="makeSure">提交申请</button>
+</view>

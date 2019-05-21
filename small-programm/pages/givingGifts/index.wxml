@@ -1,0 +1,25 @@
+<!--pages/givingGifts/index.wxml-->
+<view class='gift_banner'>
+  <image src="http://cs.carelinker.com/image/online/mall/20181213bg1.png"></image>
+    <swiper class="gift_img" indicator-dots="{{indicatorDots}}" indicator-active-color="#fa4b9b" indicator-color="#fff" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="onChangeBanner">
+      <block wx:for="{{giftData.onlineMallGiftCartAndGoodsList}}" wx:key="{{index}}">
+        <swiper-item bindtap="previewImg">
+          <image class='banner' src="{{item.bannerUrl}}"></image>
+        </swiper-item>
+      </block>
+    </swiper> 
+  <view class='top_bar'>{{giftData.onlineMallGiftCartAndGoodsList[current].goodsName}} ×{{giftData.onlineMallGiftCartAndGoodsList[current].goodsNumber}}件</view>
+</view>
+<view class='wishing' wx:if="{{giftData.jumpPageEnum == 'FILL_IN_ADDRESS' || giftData.jumpPageEnum === 'FRIENDS_LIST'}}">
+  <image src="http://cs.carelinker.com/image/online/mall/20181213bg2.png"></image>
+  <view class='wishing_text'>{{giftData.blessings}}</view>
+  <view class='wishing_person'>
+    <view class='wishing_name'><image class='person_img' src="{{giftData.headImageUrl}}"></image>{{giftData.giverNickName}}</view>
+    <view class='wishing_date'>{{giftData.createDate}}</view>
+  </view>
+</view>
+<view class='wishing' wx:if="{{giftData.jumpPageEnum !== 'FILL_IN_ADDRESS' && giftData.jumpPageEnum !== 'FRIENDS_LIST'}}">
+  <view class='noticeDescr'>{{giftData.noticeDescr}}</view>
+</view>
+<button class='btn' open-type="share" wx:if="{{giftData.jumpPageEnum === 'FRIENDS_LIST'}}">{{giftData.buttonDescr}}</button>
+<button class='btn' bindtap='handlebtn' wx:if="{{giftData.jumpPageEnum !== 'FRIENDS_LIST'}}">{{giftData.buttonDescr}}</button>

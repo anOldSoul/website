@@ -1,0 +1,154 @@
+page{
+  width: 100%;
+}
+image{
+  width: 750rpx;
+  height: 350rpx;
+}
+.container{
+  width: 100%;
+  background-color: white;
+}
+.content{
+  width: 100%;
+}
+.bannerTitle{
+  width: 750rpx;
+  height: 340rpx;
+  line-height: 340rpx;
+  text-align: center;
+  font-size: 50rpx;
+  font-weight: bold;
+  color: #08ae0e;
+  position: relative;
+  background-color: #f5f5f5;
+}
+.bannerImg{
+  width: 750rpx;
+  height: 100rpx;
+  position: absolute;
+  top: 242rpx;
+}
+.inputSection{
+  padding: 0 30rpx;
+  height: 110rpx;
+  line-height: 110rpx;
+  border-bottom: 2rpx solid #f5f5f5;
+  display:flex;
+  flex-direction: row; 
+}
+.inputSection .tel{
+  width: 23%;
+  font-size: 32rpx;
+}
+.inputSection .tel1{
+  width: 28%;
+  font-size: 32rpx;
+}
+.inputSection .tel1ChangeWidth{
+  width: 280rpx;
+  font-size: 32rpx;
+}
+.inputSection input{
+  height: 110rpx;
+  line-height: 110rpx;
+  font-size: 32rpx;
+}
+.inputCode{
+  width: 180rpx;
+}
+.codeImg{
+  width: 220rpx;
+  height: 80rpx;
+  margin-top: 15rpx;
+}
+.sendCode1{
+  margin-left: 20rpx;
+  font-size: 30rpx;
+  text-decoration: underline;
+}
+.button{
+  width: 670rpx;
+  background-color: var(--colorG);
+  color: #fff;
+  font-size: 36rpx;
+  margin-top: 60rpx;
+}
+.loginBtn{
+  opacity: 0.5;
+  margin-top: 30rpx;
+}
+.login_sure{
+  opacity: 1;
+}
+.sendCodeZoomWidth {
+  width: 290rpx;
+  height: 55rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26rpx;
+  border: 2rpx solid #08ae0e;
+  color: #08ae0e;
+  border-radius: 5rpx;
+  background-color: #fff;
+  margin-top: 22rpx;
+  text-align: center;
+}
+.sendCode {
+  width: 170rpx;
+  height: 55rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26rpx;
+  border: 2rpx solid var(--colorG);
+  color: var(--colorG);
+  border-radius: 5rpx;
+  background-color: #fff;
+  margin-top: 22rpx;
+  text-align: center;
+}
+.artificial{
+  color: #ff4400;
+  margin-top: 60rpx;
+  font-size: 30rpx;
+  text-align: center;
+  text-decoration: underline;
+}
+.protocol{
+  padding:30rpx;
+  display:flex;
+  flex-direction: row;
+  color: #1989fa;
+}
+.protocol navigator{
+  text-decoration: underline;
+}
+.checkbox{
+  margin-right: 40rpx;
+}
+.btnList{
+  width: 100%;
+  height: 88rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 35rpx;
+  border-top: 1rpx solid #cccccc;
+}
+.border{
+  width: 1rpx;
+  height: 88rpx;
+  background: #cccccc;
+}
+.return{
+  width: 50%;
+  text-align: center;
+}
+.sure{
+  text-align: center;
+  color: #fb6bad;
+  width: -webkit-calc(50% - 1rpx);
+}

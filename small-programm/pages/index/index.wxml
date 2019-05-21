@@ -1,0 +1,21 @@
+<!--index.wxml-->
+<view class="container">
+  <import src="../../component/toast/toast.wxml" />
+  <template is="toast" data="{{ ..._toast_ }}" />
+  <view class="container index">
+    <image class="bannerImg" src="http://cs.carelinker.com/image/online/mall/本草国banner.png"></image>
+    <!-- <image class="bannerImg" src="/images/banner1-demo.png"></image> -->
+    <view>
+      <!-- <button class="button"  bindtap="alertAgree" wx:if="{{!isAgree}}">微信授权登录</button> -->
+      <button class="button" wx:if="{{isAgree}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信授权登录</button>
+    </view>
+<!--     <view class="agree">
+      <checkbox-group bindchange="checkboxChange">
+        <checkbox value="{{item.name}}" color="#fb6bad" checked="{{isAgree}}"/>
+      </checkbox-group>
+      我已阅读并同意<span class="underline" bindtap="goAgree">《用户知情同意书》</span>
+    </view> -->
+    <image bindtap="loginByPhone" class="loginByPhone" src="/images/sjh.png"></image>
+    <view class="support">蓝信康提供技术支持</view>
+  </view>
+</view>

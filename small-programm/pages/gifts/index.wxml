@@ -1,0 +1,28 @@
+<!--pages/gifts/index.wxml-->
+<view>
+  <view class='gift_banner'>
+    <image src="http://cs.carelinker.com/image/online/mall/20181213pic_title.png"></image>
+    <view class='top_bar'>
+      <view class="bar_item{{index !== (eventTypeList.length -1) ? 'Margin' : ''}}" wx:for="{{eventTypeList}}" wx:key="{{index}}" data-index="{{index}}" bindtap="handleTabClick">
+        <image src="http://cs.carelinker.com/image/online/mall/20181213bt_pre.png" wx:if="{{activeIndex == index}}"></image>
+        <image src="http://cs.carelinker.com/image/online/mall/20181213bt_none.png" wx:if="{{activeIndex != index}}"></image>
+        <view class="bar_text{{activeIndex == index ? 'Selected' : ''}}">{{item.eventName}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='gift_top'>
+    <image src="http://cs.carelinker.com/image/online/mall/20181213bg_bt.png"></image>
+  </view>
+  <view class='gift_item' wx:for="{{goodsList}}" wx:key="{{index}}" data-item="{{item}}" bindtap="goDetail">
+    <image src="http://cs.carelinker.com/image/online/mall/20181213pic_spbj.png"></image>
+    <view class='gift_detail'>
+      <view class="gift_img"><image src="{{item.imgUrl}}"></image></view>
+      <view class='gift_right'>       
+        <text class="rangeGoods_text">{{item.name1}}</text>
+        <view class='desc' wx:if="{{item.goodsRemarks}}">{{item.goodsRemarks}}</view>
+        <view class="value1">￥{{item.presentPrice}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='gift_bottom'><image src="../../images/pic_bottom.png"></image></view>
+</view>

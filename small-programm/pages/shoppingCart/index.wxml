@@ -1,0 +1,62 @@
+<!--logs.wxml-->
+<view class="shopping_container{{proInfoWindow?'indexFixed':''}}">
+  <view wx:if="{{list.length > 0}}">
+    <view class="goods_list">
+      <block wx:for="{{list}}" wx:key="{{index}}">
+        <view class="item">
+          <view class="inner goods_item" bindtouchstart="touchS" bindtouchmove="touchM" catchtouchend="touchE" data-index="{{index}}" style="{{item.txtStyle}}">
+            <view class="item_left">
+              <radio-group  id="{{index}}" catchtap="handleCheckbox">
+                <radio color="#fc5a64" class="checkbox" value="{{index}}" checked="{{item.checked}}"/>
+              </radio-group>
+              <image class="goods_img" src="{{item.imgUrl}}" bindtap='cartGoodDetail' data-item='{{item}}'></image>
+            </view>
+            <view class="item_middle" bindtap='cartGoodDetail' data-item='{{item}}'>
+              <view class="good_name"><text>{{item.goodsName}}</text></view>
+              <view class="point"><span class="yuan">￥</span>{{item.presentPrice}}</view>     
+            </view>
+            <view class="item_right">
+              <view class="add_subtract" >
+                <span class="subtract{{item.value == 1 ? 'disabled' : ''}}" data-index="{{index}}" bindtap="handleSubtract">-</span>
+                <input type="number" data-index="{{index}}" bindblur="bindInputValue" value="{{item.goodsNumber}}" />
+                <span class="add" data-index="{{index}}" bindtap="handleAdd">+</span>
+              </view>
+            </view>
+          </view>
+          <view data-index="{{index}}" bindtap="delItem" class="inner del">删除</view>
+        </view>
+      </block>
+    </view>
+    <view class="hot_banner">
+      <image class='hot_banner_image' src="../../images/pic_cnxh.png"></image>
+    </view>
+    <view class="range_goods_list">
+      <block wx:for="{{rangeGoodsList}}" wx:key="{{index}}">
+        <view class="operationCardSmall">
+          <view class="rangeGoods_item">
+            <image class="rangeGoods_img" src="{{item.imgUrl}}" data-item="{{item}}" bindtap="goDetail"></image>
+            <view class='desc' wx:if="{{item.goodsRemarks}}">{{item.goodsRemarks}}</view>
+            <text class="rangeGoods_text">{{item.name}}</text>
+            <view class="buy">
+              <view class="price_info">
+                <view class="value1"><span class="yuan">￥</span>{{item.presentPrice}}</view>
+              </view>
+              <view class="pay">{{item.payUserCount}}人已付款</view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="no_more">没有更多了</view>
+    <view class="bottom_btn">
+      <view class="bottom_flex"><radio-group bindtap="checkboxChange"><radio color="#fc5a64" class="checkbox" value="ifSelectAll" checked="{{totalChecked}}"/></radio-group>全选</view>
+      <view class="bottom_flex">
+        <view class="total_point">          
+          <view class="point_view"><span>合计：</span><span class="total_point1">￥{{totalPoint}}</span></view>
+        </view>
+        <view class="total_num" bindtap="handleBalance">结算({{totalNum}})</view>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{list.length == 0}}" class="empty">{{tips}}</view>
+</view>

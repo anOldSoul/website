@@ -1,0 +1,18 @@
+<view class="tixian">
+  <view class="content">
+    <navigator url="/pages/contact/index" hover-class="none" class="contact">联系客服</navigator>
+    <view class="header">
+      <span class="header_left">当前可提现</span>
+      <span class="header_middle">{{currentPopularityValue}}</span>
+      <span class="header_right">（元）</span>
+    </view>
+    <view class="center">
+      <view class="center_title">提现金额</view>
+      <view class="cash">￥<input bindinput="bindKeyInput" type='number' /></view>
+      <view class="where">5元起提，提现金额须为整数</view>
+    </view>
+  </view>
+  <view class="btn" bindtap="handleTixian">提现</view>
+  <view class="tip">提现金额将以微信红包形式发放1-5个工作日到账</view>
+  <navigator url="/pages/tixianRecord/index" class="record">提现记录</navigator>
+</view>

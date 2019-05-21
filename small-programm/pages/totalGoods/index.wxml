@@ -1,0 +1,32 @@
+<!--logs.wxml-->
+<view class="shopping_container">
+  <view class="title"><span>订单编号:{{orderId}}</span></view>
+  <view wx:if="{{list.length > 0}}">
+    <view class="goods_list">
+      <block wx:for="{{list}}" wx:key="{{index}}">
+        <view class="item">
+          <view class="inner goods_item" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.txtStyle}}">
+            <view class="item_left" id="{{index}}" bindtap="handleCheckbox">
+              <image class="goods_img" src="{{item.imgUrl}}"></image>
+            </view>
+            <view class="item_middle">
+              <view class="good_name"><text>{{item.goodsName}}</text></view>
+              <view class="point">×{{item.goodsNumber}}</view>     
+            </view>
+            <view class="item_right">
+              <view class="add_subtract" >
+                <span class="yuan">￥</span>{{item.unitPrise}}
+              </view>
+            </view>
+          </view>
+          <view class="border"></view>
+        </view>
+      </block>
+    </view>
+    <view class="total">共 {{totalNum}} 件商品，实付款：￥{{list[0].totalPrise}}</view>
+    <view class="bottom">
+      <view class="btn" bindtap="handleAfterApply" wx:if="{{showAfterSaleApplyButton}}">申请售后</view>
+      <view class="btn" bindtap="handleChase">状态追踪</view>
+    </view>
+  </view>
+</view>

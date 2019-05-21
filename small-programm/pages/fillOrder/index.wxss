@@ -1,0 +1,197 @@
+.fill_order{
+  margin-bottom: 100rpx;
+}
+.address{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 0;
+  font-size: 30rpx;
+  position: relative;
+}
+.address_left{
+  display: flex;
+  flex-direction: row;
+  margin-left: 20rpx
+}
+.name{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20rpx;
+  line-height: 1;
+}
+.address_detail{
+  display: flex;
+  flex-direction: column;
+}
+.img_box{
+  display: flex;
+  align-items: center;
+  margin-right: 20rpx;
+}
+.position_img{
+  width: 30rpx;
+  height: 30rpx;
+}
+.arrow_img{
+  width: 18rpx;
+  height: 18rpx;
+  margin-right: 20rpx;
+}
+.tel{
+  margin-left: 30rpx;
+}
+.send_way{
+  width: 100rpx;
+  height: 26rpx;
+  font-size: 20rpx;
+  text-align: center;
+  line-height: 26rpx;
+  color: var(--colorG);
+  border: 1rpx solid var(--colorG);
+  margin-left: 30rpx;
+}
+.address1{
+  line-height: 1.5;
+  text-align: justify;
+  margin-right: 20rpx;
+}
+.line_img{
+  width: 100%;
+  height: 4rpx;
+  position: absolute;
+  bottom: 2rpx;
+}
+.good_img{
+  width: 170rpx;
+  height: 170rpx;
+  background: grey;
+}
+.order_goods{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20rpx;
+}
+.goods_list{
+  display: flex;
+  flex-direction: row;
+}
+.border_item{
+  width: 100%;
+  height: 20rpx;
+  background: #f6f6f6;
+}
+.item{
+  margin-right: 20rpx;
+}
+.total_num{
+  font-size: 26rpx;
+}
+.inputSection{
+  align-items: center;
+  padding: 32rpx 20rpx;
+  display:flex;
+  flex-direction: row;
+  font-size: 26rpx;
+}
+.bottom_btn{
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  position: fixed;
+  z-index: 99;
+  bottom: 0;
+  left: 0;
+  font-size: 26rpx;
+  background: #fff;
+  border-top: 1rpx solid #cccccc;
+}
+.commit{
+  width: 250rpx;
+  line-height: 100rpx;
+  text-align: center;
+  background: var(--colorG);
+  color: #fff;
+  font-size: 30rpx;
+  margin-left: 20rpx;
+}
+.total_point1{
+  color: var(--colorG);
+  font-size: 40rpx;
+}
+.point_view{
+  display: flex;
+  flex-direction: row;
+  font-size: 30rpx;
+  align-items: center;
+}
+.myList{
+  height: 90rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  font-size: 26rpx;
+  padding: 0 20rpx;
+}
+.list_price{
+  color: var(--colorG);
+}
+.list_right{
+  display: flex;
+  align-items: center;
+  color: #cccccc;
+}
+.list_more{
+  width: 20rpx;
+  height: 20rpx;
+  color:#acacac;
+  margin-left: 20rpx;
+}
+.inputMsg{
+  width: 80%;
+}
+.goGift{
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #fe3286, #ff48ab);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+}
+.delivery_box{
+  display: flex;
+  flex-direction: row;
+  font-size: 30rpx;
+  color: var(--colorG);
+  text-align: center;
+  justify-content: space-around;
+  margin: 20rpx;
+}
+.delivery_item{
+  border: 1rpx solid var(--colorG);
+  padding: 30rpx 0;
+}
+.ruleName{
+  font-weight: bold;
+}
+.carriage{
+  font-size: 26rpx;
+}
+button{
+  border:none;
+  border-radius: 0;
+  padding: 0;
+  background: #fff;
+  line-height: normal;
+}

@@ -1,0 +1,131 @@
+<!--logs.wxml-->
+<view class="shopping_container">
+  <import src="../../component/toast/toast.wxml"/>
+  <button open-type="share" class='beg_gift' bindtap="goBeg" wx:if="{{tuanType === 'gift'}}">
+    <image class="beg_icon" src='/images/love.png'></image>求礼物
+  </button>
+  <view class="banner">
+    <swiper class="swiper-box" indicator-dots="{{indicatorDots}}" indicator-active-color="#fc5a64" indicator-color="#fff" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+        <swiper-item bindtap="previewImg" data-item="{{imgUrls}}" data-index="{{index}}">
+          <image src="{{item}}"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class='banner_price' wx:if="{{eventType !== 'group_purchase'}}">
+      <view>
+        <span class='price'>￥{{goodInfo.presentPrice}}</span>
+        <span class='market_price'>市场价￥{{goodInfo.marketPrice}}</span>
+      </view>
+      <view class="market_value" wx:if="{{goodInfo.otherPaymentMethodDesc}}">{{goodInfo.otherPaymentMethodDesc}}</view>
+    </view>
+    <view class='banner_price' wx:if="{{eventType === 'group_purchase'}}">
+      <view>
+        <span class='price'>{{goodInfo.goodsDescribe}}￥{{goodInfo.groupPurchasePrice}}</span>
+        <span class='market_price'>￥{{goodInfo.presentPrice}}</span>
+      </view>
+      <view class="market_value" wx:if="{{tuanType === 'cantuan'}}">
+        距结束
+        <view class='time_box'>
+          <view class='time'>{{hours}}</view>
+          <view class='time'>{{minutes}}</view>
+          <view class='time'>{{countDown}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="rangeGoods_text">
+    <view class='goodInfo_name'>{{goodInfo.name}}</view>
+    <view class='share_box'>
+      <button class='share' open-type="share"><image class="share_icon" src="../../images/share.png"></image></button>
+      <view>分享</view>
+    </view>
+  </view>
+  <view class='instrction'>
+    <image class="service_icon" mode="widthFix" src="http://cs.carelinker.com/image/online/mall/pic_spbz1.png"></image>
+  </view>
+  <view class='group_buy' wx:if="{{eventType === 'group_purchase'}}">
+    <view class='group_buy_title'>拼团</view>
+    <view class='group_buy_members'>
+      <view class='group_buy_friends'>
+        <view  wx:for="{{memberList}}" wx:key="{{item}}">
+          <image class="pic_default" src="{{item.headImageUrl}}"  wx:if="{{item.headImageUrl}}"></image>
+          <image class="pic_default" src="../../images/pic_default.png"  wx:if="{{!item.headImageUrl}}"></image>
+        </view>
+      </view>
+      <view class='group_invite'>开团后可邀请好友</view>
+    </view>
+  </view>
+  <view class='good_detail_title'>
+    <view id="{{index}}" wx:for="{{goodDetailTitle}}" wx:key="{{index}}" class="{{activeIndex == index ? 'select_on' : ''}}" bindtap="handleTabClick">{{item}}</view>
+  </view>
+  <view class="detailList" wx:if="{{activeIndex == 0}}">
+    <block wx:for="{{detailList}}" wx:key="{{index}}">
+      <view class="detail">
+        <image src="{{item}}" mode="widthFix"></image>
+      </view>
+    </block>
+  </view>
+  <view class="detailList1" wx:if="{{activeIndex == 1}}">
+    <view class="rule_item">
+      <view class="title">  
+        <view class="title_img"><image src="../../images/pic_kfzx.png"></image></view>
+        <view class="title_name">客服咨询</view>
+      </view>
+      <block wx:for="{{ruleList.customerConsul}}" wx:key="{{index}}">
+        <view class="title">
+          <view class="title_img"><view class="title_point"></view></view>
+          <view class="title_content">{{item.answers}}</view>
+        </view>
+      </block>
+      <view class="title" id='second_section'>
+        <view class="title_img"><image src="../../images/pic_kfzx.png"></image></view>
+        <view class="title_name">服务须知</view>
+      </view>
+      <block wx:for="{{ruleList.serviceNotice}}" wx:key="{{index}}">
+        <view class="title">
+          <view class="title_img"><view class="title_point"></view></view>
+          <view class="title_content">{{item.answers}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="bottom_btn" wx:if="{{tuanType === 'gift'}}">
+    <button class='goGift' bindgetuserinfo='goGift' open-type='getUserInfo'>去送礼</button>
+  </view>
+  <view class="bottom_btn" wx:if="{{tuanType !== 'gift'}}">
+    <view class="bottom_left">
+      <button open-type="contact" hover-class='none' class="bottom_flex">
+        <view class="bottom_icon"><image src="../../images/customer.png"></image></view>
+        <view class="bottom_text">客服</view>
+      </button>
+      <view class="bottom_flex" bindtap="goShoppingCart" wx:if="{{eventType !== 'group_purchase'}}">          
+        <view class="bottom_icon"><image src="../../images/publishgoods1.png"></image></view>
+        <view class="bottom_text">购物车</view>
+        <view class="cart_num">{{cart_num}}</view>
+      </view> 
+      <view class="bottom_flex" bindtap='goShopping' hover-class="none" wx:if="{{eventType === 'group_purchase'}}">
+        <view class="bottom_icon"><image src="../../images/homepage1.png"></image></view>
+        <view class="bottom_text">返回首页</view>
+      </view> 
+    </view>
+    <form bindsubmit="formSubmit" report-submit="true">
+      <button class="total_num" style='height: 100%;' formType="submit" bindtap="handleJoinIn" wx:if="{{eventType !== 'group_purchase'}}">加入购物车</button>
+    </form>
+    <form bindsubmit="formSubmit" report-submit="true">
+      <button class="buy_now" style='height: 100%;' formType="submit" bindtap="handleBuy" wx:if="{{eventType !== 'group_purchase'}}">立即购买</button>
+    </form>
+    <button class="total_num" bindgetuserinfo="handleGroupBuy" data-buyType="buyAlone" wx:if="{{eventType === 'group_purchase'}}" open-type='getUserInfo'>
+      <view class='bottom_btn_b'>单独购买</view>
+      <view class='bottom_btn_s'>￥{{goodInfo.presentPrice}}</view>
+    </button>
+    <button class="buy_now" bindgetuserinfo="handleGroupBuy" data-buyType="pintuan" wx:if="{{tuanType === 'kaituan' || !tuanType && eventType === 'group_purchase'}}" open-type='getUserInfo'>
+      <view class='bottom_btn_b'>发起拼团</view>
+      <view class='bottom_btn_s'>￥{{goodInfo.groupPurchasePrice}}</view>
+    </button>
+    <button class="buy_now" bindgetuserinfo="handleGroupBuy" data-buyType="pintuan" wx:if="{{tuanType === 'cantuan'}}" open-type='getUserInfo'>
+      <view class='bottom_btn_b'>立即参团</view>
+      <view class='bottom_btn_s'>￥{{goodInfo.groupPurchasePrice}}</view>
+    </button>
+  </view>
+</view>

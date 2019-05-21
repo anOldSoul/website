@@ -1,0 +1,23 @@
+/* pages/wishing/index.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  background: #f4f4f4;
+}
+.wishing{
+  width: 100%;
+  height: 100%;
+}
+.blessing{
+  font-size: 30rpx;
+  padding: 30rpx 20rpx;
+  background: #fff;
+  margin-top: 20rpx;
+}
+.blessingSelected {
+  font-size: 30rpx;
+  color: #e42c45;
+  padding: 30rpx 20rpx;
+  background: #fff;
+  margin-top: 20rpx;
+}

@@ -1,0 +1,7 @@
+<view class="share_image">
+  <image mode="widthFix" src="{{imageUrl}}"></image>
+  <view class='headImg'><open-data class='headImg1' type="userAvatarUrl"></open-data></view>
+  <view class='codeImg'>
+    <image src="{{codeImg}}"></image> 
+  </view>
+</view>

@@ -1,0 +1,50 @@
+<!--logs.wxml-->
+<view class="add_address">
+  <import src="../../component/toast/toast.wxml"/>
+  <template is="toast" data="{{ ..._toast_ }}"/>
+  <view class="inputSection">
+    <view class="tel">收货人</view>
+    <input bindinput="bindNameInput" value="{{inputName}}" placeholder="请输入收货人"/>
+  </view>
+  <view class="inputSection">
+    <view class="tel">联系电话</view>
+    <input type="number" bindinput="bindTelInput" value="{{inputTel}}" placeholder="请输入联系电话"/>
+  </view>
+  <!-- <view class="inputSection">
+    <view class="tel">配送方式</view>
+    <radio-group class="radio-group" bindchange="radioChange">
+      <label class="radio" wx:for="{{items}}" style="margin-right: 60rpx;" wx:key="{{index}}">
+        <radio color="#fb6bad" value="{{item.value}}" checked="{{deliveryMode == item.value}}"/>{{item.name}}
+      </label>
+    </radio-group>
+  </view> -->
+  <view wx:if="{{ifHome}}">
+    <view class="inputSection">
+      <view class="tel">所在地区</view>
+      <input bindinput="bindAreaInput" value="{{inputAreaInput}}" placeholder="请输入省、市、区信息"/>
+    </view>
+    <view class="inputSection">
+      <view class="tel">详细地址</view>
+      <view class="detailAddress"><input bindinput="bindKeyInput" value="{{inputDetailInput}}" placeholder="请填写详细地址，不少于5个字"/></view>
+    </view>
+  </view>
+  <view>
+    <view class="inputSection">
+      <view class="tel">选择门店</view>
+      <picker bindchange="bindPickerChange" range="{{array}}">
+        <view class="picker">
+          {{array[index]}}
+        </view>
+      </picker>
+    </view>
+    <view class="inputSection">
+      <view class="tel">门店地址</view>
+      <view class="store_address">{{address}}</view>
+    </view>
+  </view>
+   <view class="inputSection">
+    <view class="tel">默认地址</view>
+    <switch checked="{{isDefault}}" color="#30a9ff" bindchange="switchChange"/>
+  </view> 
+  <view class="bottom_btn" bindtap="handleMakeSure">确定</view>
+</view>

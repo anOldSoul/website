@@ -1,0 +1,169 @@
+.result_img{
+  width: 150rpx;
+  height: 150rpx;
+}
+.header{
+  display: flex;
+  justify-content: center;
+  margin: 50rpx 0;
+}
+.price{
+  font-size: 40rpx;
+  text-align: center;
+  margin-bottom: 40rpx;
+  color: var(--colorM);
+}
+.yuan{
+  font-size: 30rpx;
+}
+.button{
+  width: 670rpx;
+  background-color: var(--colorG);
+  color: #fff;
+  font-size: 36rpx;
+  margin-bottom: 30rpx;
+}
+.guess_title{
+  height: 100rpx;
+  background: #f6f6f6;
+  font-size: 26rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.circle_small{
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 3rpx;
+  background: #cccccc;
+}
+.circle_big{
+  width: 10rpx;
+  height: 10rpx;
+  margin: 0 10rpx;
+  border-radius: 5rpx;
+  background: #cccccc;
+}
+.range_goods_list{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.no_more{
+  font-size: 26rpx;
+  color: #cccccc;
+  padding: 30rpx;
+  line-height: 1;
+  text-align: center;
+  background: #f6f6f6;
+  width: 100%;
+}
+.operationCardSmall{
+  background: #fff;
+  border-bottom: 10rpx solid #f6f6f6;
+}
+.operationCardSmallBorder{
+  background: #fff;
+  border-bottom: 10rpx solid #f6f6f6;
+  border-right: 10rpx solid #f6f6f6;
+}
+.rangeGoods_item{
+  width: 370rpx;
+  display: flex;
+  flex-direction: column;
+  font-size: 30rpx;
+  align-items: center;
+}
+.rangeGoods_img{
+  width: 290rpx;
+  height: 290rpx;
+  margin: 40rpx 0;
+}
+.rangeGoods_text{
+  width: 290rpx;
+  height: 60rpx;
+  font-size: 24rpx;
+  text-align: justify;
+}
+.buy{
+  width: 290rpx;
+  margin: 0 40rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20rpx;
+  margin-bottom: 30rpx;
+}
+.pay{
+  font-size: 20rpx;
+  color: #cccccc;
+  margin-top: 20rpx;
+  line-height: 1;
+}
+.price_info{
+  display: flex;
+  flex-direction: column;
+}
+.value1{
+  height: 28rpx;
+  display: flex;
+  align-items: center;
+  color: var(--colorM);
+  font-size: 30rpx;
+}
+.money_img{
+  width: 60rpx;
+  height: 60rpx;
+}
+.bac{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.bac_box{
+  width: 592rpx;
+  height: 640rpx;
+  font-size: 30rpx;
+  background: #fff;
+  border-radius: 10rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pop_img{
+  width: 540rpx;
+  height: 220rpx;
+  margin: 26rpx;
+}
+.pop_text{
+  text-align: center;
+  margin-top: 30rpx;
+  margin-bottom: 80rpx;
+  line-height: 1.5;
+}
+.del_img{
+  width: 54rpx;
+  height: 54rpx;
+  margin-top: 60rpx;
+}
+.navigator_btn{
+  width: 380rpx;
+  height: 88rpx;
+  background: var(--colorG);
+  color: #fff;
+  font-size: 32rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,14 @@
+<view class="top">
+  <view class="search_box">
+    <image class="search_img" src="../../images/ic_search1.png"></image>
+    <input type="text" value="{{inputSearch}}" placeholder-class="search" bindinput="bindblur" focus confirm-type="search" placeholder="搜索商品名"/>
+  </view>
+  <view class="cancel" bindtap="handleCancel">清空</view>
+</view>
+<view class="search_result" wx:if="{{inputSearch}}">
+  <view wx:if="{{searchResult.length == 0}}">{{tip}}</view>
+  <block wx:if="{{searchResult.length > 0}}" wx:for="{{searchResult}}" wx:key="*this">
+    <view class="result_item" data-item="{{item}}" id="{{item.id}}" bindtap="goDetail">{{item.name}}
+    </view>
+  </block>
+</view>

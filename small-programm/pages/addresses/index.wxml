@@ -1,0 +1,44 @@
+<view class="fill_order">
+  <block wx:for="{{list}}" wx:key="{{index}}">
+    <view class='address-item'>
+      <view class="address" bindtouchstart="touchS" bindtouchmove="touchM" catchtouchend="touchE" data-index="{{index}}" style="{{item.txtStyle}}">
+        <view class="address-info">
+          <view class="address_left" data-item="{{item}}" bindtap="checkboxChange">
+            <view class='selected'>
+              <image wx-if="{{item.isDefaultAddress}}" src='/images/selected.png'></image>
+            </view>
+            <view class="address_detail">
+              <view class="name">
+                {{item.receiverName}}
+                <!-- <view class="send_way" wx:if="{{item.deliveryMode=='DELIVER_TO_HOME'}}">送货到家</view>
+              <view class="send_way" wx:if="{{item.deliveryMode=='PICKUP_STORE'}}">门店自提</view> -->
+              </view>
+              <!-- <view class="address1" wx:if="{{item.deliveryMode=='DELIVER_TO_HOME'}}">{{item.placeLocation + item.detailAddress}}</view> -->
+              <view class="address1">{{item.receiveStoreName}}</view>
+            </view>
+          </view>
+          <view class="tel" data-item="{{item}}" bindtap="editAddress">
+            <image src='/images/tips.png'></image>
+          </view>
+        </view>
+      </view>
+      <view data-item="{{item}}" bindtap="handleDelete" class="inner del">删除</view>
+    </view>
+  </block>
+  <navigator class='address-item add-new' url="/pages/addAddress/index">
+    <view class="address">
+      <view class="address_left">
+        <view class='selected'>
+          <image src='/images/new.png'></image>
+        </view>
+        <view class="address_detail">
+          <view class="name">新建地址</view>
+        </view>
+      </view>
+      <view class="tel">
+        <image src='/images/more.png'></image>
+      </view>
+    </view>
+  </navigator>
+  <!-- <navigator class="bottom_btn" url="/pages/addAddress/index">新建地址</navigator> -->
+</view>

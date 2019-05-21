@@ -1,0 +1,159 @@
+<view class='container'>
+<wxs module="utils">
+module.exports.max = function(n1, n2) {
+  return Math.max(n1, n2)
+}
+module.exports.len = function(arr) {
+  arr = arr || []
+  return arr.length
+}
+</wxs>
+<button bindtap="openBluetoothAdapter">开始扫描</button>
+<button bindtap="stopBluetoothDevicesDiscovery">停止扫描</button>
+<button bindtap="closeBluetoothAdapter">结束流程</button>
+
+<view class="devices_summary">已发现 {{devices.length}} 个外围设备：</view>
+<scroll-view class="device_list" scroll-y scroll-with-animation>
+  <view wx:for="{{devices}}" wx:key="index"
+   data-device-id="{{item.deviceId}}"
+   data-name="{{item.name || item.localName}}"
+   bindtap="createBLEConnection" 
+   class="device_item"
+   hover-class="device_item_hover">
+    <view style="font-size: 16px; color: #333;">{{item.name}}</view>
+    <view style="font-size: 10px">信号强度: {{item.RSSI}}dBm ({{utils.max(0, item.RSSI + 100)}}%)</view>
+    <view style="font-size: 10px">UUID: {{item.deviceId}}</view>
+    <view style="font-size: 10px">Service数量: {{utils.len(item.advertisServiceUUIDs)}}</view>
+  </view>
+</scroll-view>
+
+<view class="connected_info" wx:if="{{connected}}">
+  <view>
+    <text>已连接到 {{name}}</text>
+    <view class="operation">
+    <button wx:if="{{canWrite}}" size="mini" bindtap="writeBLECharacteristicValue">写数据</button>
+    <button size="mini" bindtap="closeBLEConnection">断开连接</button>
+    </view>
+  </view>
+  <view wx:for="{{chs}}" wx:key="index" style="font-size: 12px; margin-top: 10px;">
+    <view>特性UUID: {{item.uuid}}</view>
+    <view>特性值: {{item.value}}</view>
+  </view>
+</view>
+
+  <!-- 搜索框 -->
+  <view class='seachBarView'>
+    <view class='seachBarView-search' bindtap='clickSeachBarAction'>
+      <image src='/images/ic_search1.png' style='width:30rpx;height:30rpx;'></image>
+      <view style='margin-left:16rpx;color:#767676;font-size:26rpx;'>输入药品名称查询 </view>
+    </view>
+  </view>
+
+  <!-- 图片轮播器 -->
+  <view class='swiperView'>
+    <swiper indicator-dots="{{indicatorDots}}" indicator-color="#fff" autoplay="{{autoplay}}" indicator-active-color="#30a9ff" interval="{{interval}}" duration="{{duration}}" display-multiple-items="1">
+      <block wx:for="{{bannerImg.bannerName}}" wx:key="{{index}}">
+        <swiper-item data-item="{{item}}" bindtap="goEventGood">
+          <image class="pic_bg" src="{{item}}"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <!-- 中间物流介绍栏 -->
+  <view class='descView'>
+    <image src='http://cs.carelinker.com/image/online/mall/pic_bz0116.png' style='width:100%;height:100%;'></image>
+  </view>
+
+  <!-- 商品分类 -->
+  <view class='goodsType'>
+    <swiper display-multiple-items="1" style='width:100%;height:95%;' bindchange='swiperChange'>
+      <block wx:for='{{newGoodsTypes}}' wx:key='newGoodsTypes' wx:for-index="groupindex">
+        <swiper-item>
+          <view class='goodsType-swiper'>
+            <block wx:for='{{item}}' wx:key='item'>
+              <view class='goodsType-item' data-item='{{item}}' data-index='{{index + groupindex*10}}' bindtap='goCategory'>
+                <view style='width:90rpx;height:90rpx;border-radius:50%;'><image src='{{item.imageUrl}}' style='width:100%;height:100%;border-radius:50%;'></image></view>
+                <view style='margin-top:16rpx;'>{{item.eventName}}</view>
+              </view>
+            </block>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class='dotsView' wx:if='{{showDots}}'>
+      <view class='dot dot1' style='background:{{currentIndex==0?"#bbbbbb":"#dddddd"}};'></view>
+      <view class='dot dot2' style='margin-left:10rpx;background:{{currentIndex!=0?"#bbbbbb":"#dddddd"}};'></view>
+    </view>
+  </view>
+
+  <!-- 健康精选推荐 -->
+  <i-specialGood
+    title='健康精选推荐'
+    cardType='healthy_selected'
+    bind:clickCurrentGoodAction = 'clickSpecialCurrentGoodAction'
+  ></i-specialGood>
+
+  <!-- 走路赚钱领券广场 -->
+  <view class='activitiesView'>
+    <!-- // 走路赚钱 -->
+    <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
+      <button class='activities-item walkActivities' formType="submit" bindtap='goBuBu'>
+        <view class='leftView'>
+          <view class='leftView-toptext'>走路赚钱</view>
+          <view class='leftView-bottomtext'>积分换大礼</view>
+        </view>
+        <image class='rightImg' src='/images/pic_zlzq.png'></image>
+      </button>
+    </form>
+    <!-- // 领券广场 -->
+    <view class='activities-item couponActivities' bindtap='goCoupon'>
+      <view class='leftView'>
+        <view class='leftView-toptext'>领券广场</view>
+        <view class='leftView-bottomtext'>优惠券领取</view>
+      </view>
+      <image class='rightImg' src='/images/pic_lqgc.png'></image>
+    </view>
+  </view>
+
+
+  <!-- 实惠拼团 -->
+  <i-specialGood
+  title='实惠拼团' 
+  cardType='group_purchase'
+  bind:clickCurrentGoodAction = 'clickSpecialCurrentGoodAction'
+  ></i-specialGood>
+
+
+  <!-- 送礼到家 -->
+  <i-specialGood
+  title='送礼到家'
+  cardType='sending_parents'
+  bind:clickCurrentGoodAction = 'clickSpecialCurrentGoodAction'
+  ></i-specialGood>
+
+
+
+  <!-- 热销推荐 -->
+  <view class='hotGoodsTopView'>
+    <image class='hotGoodsTopView-img1' src='/images/pic_rx_1.png'></image>
+    <view class='hotGoodsTopView-text'>热销推荐</view>
+    <image class='hotGoodsTopView-img2' src='/images/pic_rx_2.png'></image>
+  </view>
+  <view class='hotGoodsListView' wx:for='{{goodsList.selected_hot}}' wx:key='{{item}}'>
+    <view class='hotGoodsListView-item {{index==0?"hotGoodsListView-fistItem":""}}' bindtap="goDetail" data-item='{{item}}'>
+      <view class='listItem-leftView'>
+        <image class='goodsImg' src='{{item.imgUrl}}'></image>
+      </view>
+      <view class='listItem-rightView'>
+        <view class='listItem-rightView-goodname'>{{item.name1}}</view>
+        <view class='listItem-rightView-desc'>{{item.goodsDescribe || ''}}</view>
+        <view><text class='listItem-rightView-remark' wx:if="{{item.goodsRemarks}}">{{item.goodsRemarks}}</text></view>
+        <view class='listItem-rightView-priceView'>
+          <view class='listItem-rightView-priceView-price'>￥{{item.presentPrice}}</view>
+          <view class='listItem-rightView-priceView-marketPrice'>￥{{item.marketPrice}} </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

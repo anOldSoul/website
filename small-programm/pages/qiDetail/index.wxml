@@ -1,0 +1,18 @@
+<!--logs.wxml-->
+<view class="add_address">
+    <view class="orderDetailList">
+      <block wx:for="{{detailList}}" wx:key="{{index}}">
+        <view class="orderDetailItem">
+          <view class='item_left'>
+            <view class="circle_box"></view>
+            <view class="line_box"></view>
+          </view>
+          <view class="item_middle">
+            <view class="popularityValue">{{item.popularityValue}}</view>
+            <view class="popularityOrigin">{{item.popularityOrigin}}</view>
+            <view class="createDate">{{item.createDate}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+</view>

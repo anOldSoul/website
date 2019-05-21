@@ -1,0 +1,33 @@
+<view class="tixian">
+  <view class='header'>
+    <navigator class='header_item' url="/pages/qiDetail/index">
+      <image class='icon_img' src="../../images/icon_mingxi.png"></image>奖励明细
+    </navigator>
+    <navigator class='header_item' url="/pages/rewardRules/index">
+      <image class='icon_img1' src="../../images/icon_tishi.png"></image>奖励规则
+    </navigator>
+  </view>
+  <view class='tixian_bg' bindtap='goTixian'>
+    <image class='pic_bg' src="../../images/invite.png"></image>
+    <view class='renqi'>{{exchangeMoneyValue}}</view>
+  </view>
+  <view class='code_img'>
+    <image class='pic_bg' src="{{codeImg}}"></image>
+  </view>
+  <navigator class="bottom_btn" url="/pages/shareImage/index">马上邀请好友</navigator>
+  <view class='reward_list'>
+    <image class='reward_bac' src="http://cs.carelinker.com/image/online/mall/background.png"></image>
+    <view class='fans_list'>
+      <view wx:for="{{fans}}" wx:key="{{index}}" class='fans'>
+        <view class='fan_left'>
+          <view class='orderNumber'>{{item.orderNumber}}</view>
+          <view>
+            <view>{{item.hiddenPhoneNumber}}</view>
+            <view>{{item.createDate}}</view>
+          </view>
+        </view>
+        <view class='consumptionDescr'>{{item.consumptionDescr}}</view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,66 @@
+<view class="weui-tab">
+  <view class="weui-navbar">
+    <block wx:for="{{tabs}}" wx:key="*this">
+      <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+        <view class="weui-navbar__title">{{item}}</view>
+      </view>
+    </block>
+    <view class="weui-navbar__slider" style="width:{{sliderWidth}}px;left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+  </view>
+</view>
+<view class='empty_order'  wx:if="{{(unclaimedList.length === 0 && activeIndex === '0') || (receivedList.length === 0 && activeIndex === '1')}}">
+  <image class="pic_kzt" src="../../../images/qs_yhq.png"></image>
+  <view class='empty_text1'>暂无优惠券</view>
+</view>
+<!--待领取  -->
+<view class="container" hidden="{{activeIndex != '0'}}">
+  <view class="item" wx:for="{{unclaimedList}}" wx:key="{{index}}">
+    <image src='/images/pic_yhq.png'></image>
+    <view class='info-wrapper'>
+      <view class='value-wrapper'>
+        <view class='value'>
+          <text>￥</text>
+          <text>{{item.faceValue}}</text>
+        </view>
+      </view>
+      <view class='validity-wrapper'>
+        <view class='validity-left'>
+          <view class='info'>{{item.validCondition}}</view>
+          <view class='date'>{{item.periodOfValidity}}</view>
+        </view>
+        <view class='validity-right'>
+          <view id="{{item.classId}}" data-index="{{index}}" class='btn' bindtap='handleToReceive'>立即领取</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!--已领取  -->
+<view class="container" hidden="{{activeIndex != '1'}}">
+  <view class="item" wx:for="{{receivedList}}" wx:key="{{index}}">
+    <image src='/images/pic_yhq.png' wx:if="{{item.canUse}}"></image>
+    <image src='/images/pic_sxbj.png' wx:if="{{!item.canUse}}"></image>
+    <view class='info-wrapper'>
+      <view class='value-wrapper'>
+        <view class="value{{!item.canUse ? 'Grey': ''}}">
+          <text>￥</text>
+          <text>{{item.faceValue}}</text>
+        </view>
+      </view>
+      <view class='validity-wrapper' id="{{index}}" bindtap="handleCheckChange">
+        <view class='validity-left'>
+          <view class='info'>{{item.className}}</view>         
+          <view class='date'>{{item.startDate}}-{{item.endDate}}</view>
+          <view class='date'>{{item.validCondition}}</view>
+        </view>
+        <view class='validity-right'>
+          <radio value="{{item.name}}" wx:if="{{from=='order'}}" disabled="{{!item.canUse}}" color="#fb6bad" checked="{{item.checked}}"/>
+          <view id="{{index}}" class="btn{{!item.canUse ? 'Grey': ''}}" bindtap='handleGoDetail' wx:if="{{from!=='order' && item.couponStatus == 'CAN_USE'}}">立即使用</view>
+          <view id="{{index}}" class="btn{{!item.canUse ? 'Grey': ''}}" bindtap='handleGoDetail' wx:if="{{from!=='order' && item.couponStatus == 'EXPIRED'}}">已过期</view>
+          <view id="{{index}}" class="btn{{!item.canUse ? 'Grey': ''}}" bindtap='handleGoDetail' wx:if="{{from!=='order' && item.couponStatus == 'USED'}}">已使用</view>
+          <view id="{{index}}" class="btn{{!item.canUse ? 'Grey': ''}}" bindtap='handleGoDetail' wx:if="{{from!=='order' && item.couponStatus == 'BEFORE_START_DATE'}}">非有效期内</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

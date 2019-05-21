@@ -1,0 +1,39 @@
+<!--logs.wxml-->
+<import src="/component/toast/toast.wxml" />
+<template is="toast" data="{{ ..._toast_ }}" />
+<view class="add_address">
+  <view class="title" wx:if="{{statustype !=='afterSale'}}">
+    <view class="title_item">订单编号：{{orderId}}</view>
+    <view class="title_item">快递单号：{{detailList.onlineMallUserOrder.logisticsNumber || ''}}</view>
+    <view class="title_item">快递公司：{{detailList.onlineMallUserOrder.expressCompany || ''}}</view>
+    <view class="title_item">客服联系电话：<span class="phone">{{detailList.onlineMallStoreSetup.carrierPhone}}</span></view>
+  </view>
+  <view class="orderDetailList">
+    <block wx:for="{{statusList}}" wx:key="{{index}}">
+      <view class="orderDetailItemLatest">
+        <view class='item_top'>
+          <view class="circle_box"><image src="../../images/ic1.png"></image></view>
+          <view>{{item.createDate}}</view>
+        </view>
+        <view class='item_middle'>          
+          <view>{{item.statusDescr}}</view>
+          <view class='link_box'><text class='link' bindtap='handleFeedback' wx:if="{{item.needReturnGoodsLink}}">{{item.returnGoodsLinkDescr}}</text></view>
+          <view class='line'></view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="bac" wx:if="{{isSubmit}}">
+    <view class="bac_box">          
+      <view class="box_title">请填写物流信息</view>
+      <view class="cardList">
+        <view class='cardItem'><input bindinput="bindCompanyInput" placeholder="请填写物流公司" /></view>
+        <view class='cardItem'><input bindinput="bindNumInput" placeholder="请填写物流单号" type='number' /></view>
+      </view>
+      <view class="btnList">
+        <button class="submit" bindtap="handleSubmit">提交</button>
+        <view bindtap="handleCancel" class='cancel'>取消</view>
+      </view>
+    </view>
+  </view>
+</view>

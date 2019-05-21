@@ -1,0 +1,18 @@
+<view class="bubu">
+  <view class="bannerImg">
+    <image class="bannerImg" src="http://cs.carelinker.com/image/online/mall/pd_banner.png"></image>
+  </view>
+  <view class='exchange_list'>
+    <view class='exchange_item' wx:for="{{exchangeList}}" wx:key="{{item.id}}" data-item="{{item}}" bindtap="goDetail">
+      <view class='item_left'><image src='{{item.imgUrl}}'></image></view>
+      <view class='item_right'>
+        <view class='good_name'>{{item.name}}</view>
+        <view class='priceDisplayDesc'>￥{{item.groupPurchasePrice}}<span class='market_price'>￥{{item.presentPrice}}</span></view>
+        <view class='goodsDescribe'>
+          <view class='pintuan'><image src='../../images/pintuan.png'></image></view>
+          <view class='tuanDescribe'>{{item.goodsDescribe}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

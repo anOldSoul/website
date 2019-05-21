@@ -1,0 +1,151 @@
+page {
+  width: 100%;
+  min-height: 100%;
+  background: #f1f1f3;
+}
+
+.container {
+  text-align: left;
+  width: 100%;
+  padding: 0 30rpx;
+  padding-top: 30rpx;
+  align-items: center;
+}
+
+.item {
+  position: relative;
+  width: 100%;
+  height: 232rpx;
+  margin-bottom: 30rpx;
+}
+
+.item image {
+  width: 100%;
+  height: 100%;
+}
+
+.info-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--colorG);
+  display: flex;
+  flex-direction: row;
+}
+
+.value-wrapper {
+  width: 230rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.value-wrapper .value {
+  font-size: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 1rpx 1rpx 5rpx rgba(255, 105, 116, 0.19);
+}
+
+.value-wrapper .value text:first-child {
+  margin-top: 28rpx;
+}
+
+.value-wrapper .value text:last-child {
+  font-size: 80rpx;
+}
+
+.value-wrapper .rules {
+  font-size: 30rpx;
+}
+
+.validity-wrapper {
+  width: 480rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 22rpx;
+}
+
+.validity-left {
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 50%;
+  margin-left: 30rpx;
+  line-height: 1;
+  text-align: flex;
+}
+
+.info {
+  font-size: 30rpx;
+  color: #323232;
+  margin-bottom: 16rpx;
+}
+
+.date {
+  font-size: 24rpx;
+  color: rgba(50, 50, 50, 0.6);
+  line-height: 34rpx;
+}
+
+.validity-right .btn {
+  background: var(--colorG);
+  color: #fff;
+  border: nonr;
+  font-size: 28rpx;
+  padding: 10rpx 20rpx;
+  line-height: 34rpx;
+}
+
+.other .value, .other .info, .other .date {
+  color: #b7b7b7;
+}
+.activity_banner {
+  height: 260rpx;
+}
+.protect_box{
+  background: #ffbad6;
+  padding: 20rpx 30rpx;
+}
+.protect{
+  background: #fff;
+  padding: 30rpx;
+}
+.protect_title{
+  font-size: 30rpx;
+  text-align: center;
+  color: #fb6bad;
+}
+.service{
+  font-size: 26rpx;
+  color: #fb6bad;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 20rpx 0;
+}
+.service_item{
+  width: 50%;
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+}
+.service_icon{
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 1;
+  margin-right: 10rpx;
+}
+image{
+  width: 100%;
+  height: 100%;
+}

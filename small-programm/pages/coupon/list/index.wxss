@@ -1,0 +1,201 @@
+@import '/common/weui-navbar.wxss';
+
+page {
+  width: 100%;
+  min-height: 100%;
+  background: #f1f1f3;
+}
+
+.container {
+  text-align: left;
+  width: 100%;
+  padding: 30rpx;
+  align-items: center;
+  margin-top: 100rpx;
+}
+.empty_order{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 400rpx;
+  font-size: 26rpx;
+}
+.pic_kzt{
+  width: 100rpx;
+  height: 100rpx;
+  margin-bottom: 30rpx;
+}
+.item {
+  position: relative;
+  width: 100%;
+  height: 232rpx;
+  margin-bottom: 30rpx;
+}
+
+.item image {
+  width: 100%;
+  height: 100%;
+}
+
+.info-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--colorM);
+  display: flex;
+  flex-direction: row;
+}
+
+.value-wrapper {
+  width: 230rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.value-wrapper .value {
+  font-size: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 1rpx 1rpx 5rpx rgba(255, 105, 116, 0.19);
+}
+
+.value-wrapper .value text:first-child {
+  margin-top: 28rpx;
+}
+
+.value-wrapper .value text:last-child {
+  font-size: 80rpx;
+}
+
+.value-wrapper .rules {
+  font-size: 30rpx;
+}
+
+.validity-wrapper {
+  width: 480rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 22rpx;
+}
+
+.validity-left {
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 59%;
+  margin-left: 30rpx;
+  line-height: 1;
+  text-align: flex;
+}
+
+.info {
+  font-size: 26rpx;
+  color: #323232;
+  margin-bottom: 16rpx;
+}
+
+.date {
+  font-size: 24rpx;
+  color: rgba(50, 50, 50, 0.6);
+  line-height: 1.5;
+}
+
+.validity-right .btn {
+  background: var(--colorM);
+  color: #fff;
+  border: none;
+  font-size: 24rpx;
+  padding: 10rpx 20rpx;
+  line-height: 34rpx;
+}
+
+.other .value, .other .info, .other .date {
+  color: #b7b7b7;
+}
+.valueGrey {
+  color: grey;
+  font-size: 48rpx;
+}
+
+.pop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.pop-wrapper {
+  width: 714rpx;
+  height: 696rpx;
+  position: relative;
+  margin-top: -60rpx;
+  margin-left: 20rpx;
+}
+
+.pop-wrapper .bg {
+  width: 100%;
+  height: 100%;
+}
+
+.pop-wrapper .close {
+  width: 38rpx;
+  height: 38rpx;
+  position: absolute;
+  right: 100rpx;
+  top: 50rpx;
+}
+
+.pop-content {
+  text-align: center;
+  color: rgba(253, 88, 30, 1);
+  position: absolute;
+  top: 220rpx;
+  left: 0;
+  width: 94%;
+  line-height: 1;
+}
+
+.pop-content .success-tips, .pop-content .coupon-name {
+  font-size: 40rpx;
+  font-weight: 400;
+  margin-bottom: 26rpx;
+}
+
+.pop-content .coupon-info {
+  font-size: 30rpx;
+  width: 334rpx;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.pop-content .btn {
+  width: 56%;
+  height: 110rpx;
+  margin: 130rpx auto 0;
+}
+.btnGrey{
+  background: grey;
+  color: #fff;
+  border: none;
+  font-size: 24rpx;
+  padding: 10rpx 20rpx;
+  line-height: 34rpx;
+}
+

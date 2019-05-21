@@ -1,0 +1,89 @@
+<view class="bubu">
+<form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
+  <navigator class='header_item' url="/pages/rewardRules/index?ruleType=bubu" hover-class='none'>
+    <image class='icon_img' src="../../images/icon_tishi.png"></image>规则
+  </navigator>
+  <view class='invite_success'>我的健康币 <span class='totalHealthCurrencyValue'>{{healthData.totalHealthCurrencyValue}} </span>(等值现金{{healthData.totalHealthCurrencyMoneyValue}}元)</view>
+  <view class='bac'>
+    <view class='health_money'>{{healthData.totalHealthCurrencyValue}}</view>
+    <image class='pic_bg' src="http://cs.carelinker.com/image/online/mall/bg_bs.png"></image>
+    <view class='step_today' bindtap='handleReceive'>
+     <view class='step_title'>今日步数</view>
+     <view class='center_step'>{{step1}}</view>
+     <view class="clickReceive{{healthData.canReceive ? '' : 'Tomorrow'}}" bindtap='handleReceive'>{{healthData.canReceive ? '点击领取' : '明日再领'}}</view>
+    </view>
+    <view class='step'>
+     <view class='step_text'>
+        <swiper class="news_content" vertical="true" autoplay="true" circular="true" interval="2000">
+          <block wx:for="{{healthData.awardStepDetailList}}" wx:key="{{index}}">
+            <swiper-item>
+            <view class="swiper_item">{{item}}</view>
+            </swiper-item>
+          </block>
+        </swiper>
+     </view>
+    </view>
+  </view>
+  <view class="box" wx:if="{{ifBox}}">
+    <view class="box_center">          
+      <view class="center_title" style='margin-top: 30rpx;'>今日步数</view>
+      <view class="today_step">{{step1}}</view>
+      <view class="can_receive">可获得{{healthData.currentHealthCurrencyValue}}健康币</view>
+      <view class="center_title" style='margin-bottom: 30rpx;'>每天只能领取一次哟</view>
+      <view class="btnList">
+        <button class="return" bindtap="handleReturn">再走走</button>
+        <view class="border"></view>
+        <button class="sure" bindtap="handleMakeSure">立即领取</button>
+      </view>
+    </view>
+  </view>
+  <view class="box" wx:if="{{ifHint}}"  bindtap="handleReturn">
+    <view class="box_center">          
+      <view class="center_title">本商品健康币最多可抵扣</view>
+      <view class="can_receive">{{resultData.deductionMoneyValue}}元</view>
+      <view class="center_title">您还差<span class='needNum'>{{resultData.gapHealthCurrencyValue}}个</span>健康币</view>
+      <view class="btnList">
+        <view class="return" bindtap="handleBuyNow">土豪直接购买</view>
+        <view class="border"></view>
+        <button class="" open-type='share'>邀好友赚健康币</button>
+      </view>
+    </view>
+  </view>
+  <view class="box" wx:if="{{hasReceived}}"  bindtap="handleReturn">
+    <view class="box_center">          
+      <view class="center_title">每天只能领取一次哦</view>
+      <view class="btnList">
+        <view class="return" bindtap="handleReturn" formType="submit">明天再来领</view>
+        <view class="border"></view>
+        <button class="" open-type='share' formType="submit">邀好友赚健康币</button>
+      </view>
+    </view>
+  </view>
+  <view class="box" wx:if="{{ifBox1}}">
+    <view class="box_center">
+      <view class="center_title" style='margin-top: 30rpx;'>今日步数</view>
+      <view class="today_step">{{step1}}</view>
+      <view class="can_receive" style='margin-bottom: 50rpx;'>{{healthData.nextGoalState}}</view>
+      <view class="btnList">
+        <button class="return" bindtap="handleReturn" formType="submit" hover-class='none'>继续努力</button>
+      </view>
+    </view>
+  </view>
+  <button size='default' open-type="share" class='bottom_btn' formType="submit">邀好友奖100健康币</button>
+  <view class="hot_banner">
+    <image class='hot_banner_image' src="../../images/title_dhjp.png"></image>
+  </view>
+  <view class='exchange_list'>
+    <button class='exchange_item' formType="submit" wx:for="{{exchangeList}}" wx:key="{{item.id}}" data-item="{{item}}" bindtap="goDetail" hover-class='none'>
+      <view class='item_left'>
+        <image src='{{item.imgUrl}}'></image>
+        <view class='desc' wx:if="{{item.goodsRemarks}}">{{item.goodsRemarks}}</view>
+      </view>
+      <view class='item_right'>
+        <view class='good_name'>{{item.name}}</view>
+        <view class='priceDisplayDesc'>{{item.priceDisplayDesc}}</view>
+      </view>
+    </button>
+  </view>
+  </form>
+</view>

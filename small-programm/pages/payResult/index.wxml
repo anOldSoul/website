@@ -1,0 +1,43 @@
+<view class="payResult">
+  <view class="header">
+    <image class="result_img" src="../../images/success.png" wx:if="{{resultSucess}}"></image>
+    <image class="result_img" src="../../images/fail.png"  wx:if="{{resultFail}}"></image>
+  </view>
+  <view class="price"><span class="yuan" wx:if="{{result !== 3}}">￥</span>{{payPrise}}</view>
+  <view class="price"><span class="yuan" wx:if="{{result === 3}}">订单成功，礼物正在飞奔赶来</span></view>
+  <button class="button" bindtap="handleViewOrder" wx:if="{{result !== 3}}">查看订单</button>
+  <button class="button" bindtap="goGifts" wx:if="{{result === 3}}">我也去送礼</button>
+  <view class="guess_title">
+    <view class="circle_small"></view>
+    <view class="circle_big"></view>
+    <view>猜你喜欢</view>
+    <view class="circle_big"></view>
+    <view class="circle_small"></view>
+  </view>
+  <view class="range_goods_list">
+    <block wx:for="{{rangeGoodsList}}" wx:key="{{index}}">
+      <view class="operationCardSmall{{index%2 == 0 ? 'Border' : ''}}">
+        <view class="rangeGoods_item">
+          <image class="rangeGoods_img" src="{{item.imgUrl}}" data-item="{{item}}" bindtap="goDetail"></image>
+          <text class="rangeGoods_text">{{item.name}}</text>
+          <view class="buy">
+            <view class="price_info">
+              <view class="value1"><span class="yuan">￥</span>{{item.presentPrice}}</view>
+              <view class="pay">{{item.payUserCount}}人已付款</view>
+            </view>
+            <view bindtap="handleJoinIn" data-item="{{item}}"><image class="money_img" src="../../images/cart.png"></image></view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view class="no_more">没有更多了</view>
+  </view>
+</view>
+<view class="bac" wx:if="{{ifShowBac}}">
+  <view class="bac_box">
+    <image class="pop_img" src="../../images/pic_grxxv.png"></image>
+    <text class='pop_text'>您需要准确提交个人信息后,\n才能享受门急诊费用报销</text>
+    <navigator class='navigator_btn' bindcomplete="closeDialog" target="miniProgram" open-type="navigate" app-id="wx24ec5716778609ee" path="/pages/index/index?recomendId=1083296&sceneStr=Aae9@Bbc0" extra-data="" version="release">立即填写</navigator>
+  </view>
+  <image class="del_img" src="../../images/close.png" bindtap="closeDialog"></image>
+</view>

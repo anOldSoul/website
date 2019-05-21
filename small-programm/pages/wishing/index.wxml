@@ -1,0 +1,4 @@
+<!--pages/wishing/index.wxml-->
+<view class='wishing'>
+  <view class="blessing{{activeIndex === index ? 'Selected' : ''}}" wx:for="{{blessing}}" wx:key="{{index}}" data-index="{{index}}" bindtap='handleTabClick'>{{item}}</view>
+</view>
