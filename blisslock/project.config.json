@@ -1,0 +1,87 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.5.0",
+	"appid": "wx288a438a6b3464ab",
+	"projectname": "blisslock",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "9990000",
+					"pathName": "pages/index/index",
+					"query": "mainStoreId=9990000"
+				},
+				{
+					"id": -1,
+					"name": "9839000",
+					"pathName": "pages/index/index",
+					"query": "mainStoreId=9839000"
+				},
+				{
+					"id": 2,
+					"name": "0351000",
+					"pathName": "pages/index/index",
+					"query": "mainStoreId=0351000"
+				},
+				{
+					"id": -1,
+					"name": "3223000",
+					"pathName": "pages/index/index",
+					"query": "mainStoreId=3223000"
+				},
+				{
+					"id": 4,
+					"name": "8397000",
+					"pathName": "pages/index/index",
+					"query": "mainStoreId=8397000"
+				},
+				{
+					"id": -1,
+					"name": "1417000",
+					"pathName": "pages/index/index",
+					"query": "mainStoreId=1417000"
+				},
+				{
+					"id": 6,
+					"name": "0298000",
+					"pathName": "pages/index/index",
+					"query": "mainStoreId=0298000"
+				},
+				{
+					"id": -1,
+					"name": "9812000",
+					"pathName": "pages/shopping/index",
+					"query": "mainStoreId=9812000"
+				}
+			]
+		}
+	}
+}
