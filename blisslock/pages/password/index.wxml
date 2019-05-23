@@ -1,0 +1,5 @@
+<view class='password'>
+  <view class='password_title'>密码用户</view>
+  <button class='add_password' bindtap="primary">添加密码</button>
+  <button class='sync_password' bindtap="primary">同步数据</button>
+</view>
