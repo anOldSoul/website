@@ -129,7 +129,7 @@ var comJs = {
         } else {
           $("#hideSection").show();
           $("#hideSection1").show();
-          $("#hideSection1").hide();
+          $("#hideSection2").hide();
         }
       })
     })

@@ -2,6 +2,14 @@
   height: 90px;
   background-color: #091928;
   box-sizing: content-box!important;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  margin-bottom: 90px;
+}
+.top{
+  margin-top: 90px;
 }
 .header * {
   box-sizing: content-box!important;

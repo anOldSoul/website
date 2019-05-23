@@ -193,7 +193,7 @@ a{
   width: 35px;
   height: 35px;
   background-repeat: no-repeat;
-  background-size: 100% auto;
+  background-size: 100% 100%;
 }
 .manage_img_app{
   width: 39px;
