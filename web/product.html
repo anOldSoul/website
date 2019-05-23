@@ -45,11 +45,6 @@
               <div class='subTitle' id="idSubTitle">智能安居 美好生活</div>
             </div>
             <div class='moduleboxImg'><img src='./images/product/pic_方案产品_门锁1_@1x.png'></div>
-            <div class="solution">
-              <div>解决方案</div>
-              <div>指纹模组</div>
-              <div id="solution_things">智能门锁</div>
-            </div>
           </div>
         </div>
         <div class="section max-width-1440">
@@ -153,7 +148,6 @@
       srcArr3: ['./images/product/pic_方案产品_门锁4_@1x.png', './images/product/pic_方案产品_车锁4_@1x.png', './images/product/pic_方案产品_挂锁4_@1x.png', './images/product/pic_方案产品_柜锁4_@1x.png', './images/product/pic_方案产品_箱包锁4_@1x.png'],
       htmlArr: ['智能门锁解决方案', '智能车锁解决方案', '智能挂锁解决方案', '智能柜锁解决方案', '智能箱包锁解决方案'],
       subHtmlArr: ['智能安居 美好生活', '一键启动 无锁不能', '一触即开 创新生活', '解放钥匙 私密管家', '有锁不同 安全随行'],
-      solutionArr: ['智能门锁', '智能车锁', '智能挂锁', '智能柜锁', '智能箱包锁'],
       solutionTitleArr1: ['智能解锁  一步开启', '解放钥匙 智能开锁', '智能生活  锁住安全', '工作生活  私密管家', '指纹验证 智能生活'],
       solutionTitleArr2: ['密码管理  远程智控', '开锁记录 定位查询', '授权开锁  分享设备', '开锁记录  实时查询', '开锁记录 定位查询'],
       solutionTitleArr3: ['非法开锁  告警通知', '无锁不能 智能防盗', '便捷安装  适用广泛', '家居  办公', '轻触即开 远程智控'],
@@ -180,10 +174,7 @@
         var itemOuterHeight = item.outerHeight(true); //元素的高度
         var winScrollHeight = $(window).scrollTop();  //页面滚动的距离
         var winHeight = $(window).height(); //窗口的高度
-        console.log(winScrollHeight)
-        console.log(itemOffsetTop)
         if((winScrollHeight + itemOuterHeight > itemOffsetTop) && (winScrollHeight + itemOuterHeight < itemOffsetTop + 700)) {
-          console.log("出现了")
           item1.addClass('active')
           if (index%2 === 0) {
             item.addClass('active')

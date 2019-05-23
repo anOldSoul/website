@@ -137,9 +137,35 @@ a{
   margin-right: 52px;
   margin-top: 30px;
 }
+@keyframes bounceInLeft {
+  0% {
+    transform: translateX(10%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes bounceInLeft1 {
+  0% {
+    transform: translateX(-10%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.saas_img.active{
+  -webkit-animation: bounceInLeft 1s infinite;
+}
+.app_img.active{
+  -webkit-animation: bounceInLeft1 1s infinite;
+}
 .saas_img{
   width: 471px;
   height: 526px;
+}
+.app_img{
+  width: 307px;
+  height: 567px;
 }
 .lock_cycle_img{
   width: 197px;
@@ -694,10 +720,6 @@ img {
 }
 .patient_box:hover{
   box-shadow:0px 2px 10px rgba(32,33,39,0.2);
-}
-.app_img{
-  width: 307px;
-  height: 567px;
 }
 .app_right{
   margin-top: 100px;

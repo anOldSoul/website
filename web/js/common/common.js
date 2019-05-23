@@ -26,12 +26,22 @@ var comJs = {
             $('.manage_img').eq(imgIndex).css('background-image', 'url(' + options.saasBacUnselected[imgIndex] + ')')
           })
           $('.manage_img').eq(index).css('background-image', 'url(' + options.saasBac[index] + ')')
+          $('.saas_img img').attr("src", options.saasRightImg[index])
+          $('.saas_img').addClass('active')
+          setTimeout(function () {
+            $('.saas_img').removeClass('active')
+          }, 1000)
         }
         if (className === '.manage_item1') {
           $('.manage_img_app').each(function(imgIndex) {
             $('.manage_img_app').eq(imgIndex).css('background-image', 'url(' + options.appBacUnselected[imgIndex] + ')')
           })
           $('.manage_img_app').eq(index).css('background-image', 'url(' + options.appBac[index] + ')')
+          $('.app_img img').attr("src", options.appRightImg[index])
+          $('.app_img').addClass('active')
+          setTimeout(function () {
+            $('.app_img').removeClass('active')
+          }, 1000)
         }
       })
     })
@@ -87,13 +97,15 @@ var comJs = {
   showCurrent: function(options,index) {
     $('.modules_item').removeClass('active')
     $('.modules_item').eq(index).addClass('active')
+    comJs.profunc(options, index)
+  },
+  profunc: function(options,index) {
     $('.moduleboxImg img').attr('src', options.srcArr[index])
     $('.product_img1').attr('src', options.srcArr1[index])
     $('.product_img2').attr('src', options.srcArr2[index])
     $('.product_img3').attr('src', options.srcArr3[index])
     $('#idTitle').html(options.htmlArr[index])
     $('#idSubTitle').html(options.subHtmlArr[index])
-    $('#solution_things').html(options.solutionArr[index])
     $('#lock_title1').html(options.solutionTitleArr1[index])
     $('#lock_title2').html(options.solutionTitleArr2[index])
     $('#lock_title3').html(options.solutionTitleArr3[index])
@@ -112,25 +124,7 @@ var comJs = {
       $(this).click(function() {
         $('.modules_item').removeClass('active')
         $(this).addClass('active')
-        $('.moduleboxImg img').attr('src', options.srcArr[index])
-        $('.product_img1').attr('src', options.srcArr1[index])
-        $('.product_img2').attr('src', options.srcArr2[index])
-        $('.product_img3').attr('src', options.srcArr3[index])
-        $('#idTitle').html(options.htmlArr[index])
-        $('#idSubTitle').html(options.subHtmlArr[index])
-        $('#solution_things').html(options.solutionArr[index])
-        $('#lock_title1').html(options.solutionTitleArr1[index])
-        $('#lock_title2').html(options.solutionTitleArr2[index])
-        $('#lock_title3').html(options.solutionTitleArr3[index])
-        if (index > 0) {
-          $("#hideSection").hide();
-          $("#hideSection1").hide();
-          $("#hideSection2").show();
-        } else {
-          $("#hideSection").show();
-          $("#hideSection1").show();
-          $("#hideSection2").hide();
-        }
+        comJs.profunc(options, index)
       })
     })
   },
