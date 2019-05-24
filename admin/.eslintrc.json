@@ -1,0 +1,30 @@
+{
+    "env": {
+        "browser": true
+    },
+    "extends": [
+        "standard",
+        "plugin:vue/essential"
+    ],
+    "globals": {
+        "dotProp": true,
+        "moment": true,
+        "Site": true
+    },
+    "parserOptions": {
+        "parser": "babel-eslint",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "vue"
+    ],
+    "rules": {
+        "arrow-parens": "off",
+        "generator-star-spacing": "off",
+        "handle-callback-err": "off",
+        "no-mixed-operators": "warn",
+        "no-unused-vars": "warn",
+        "no-useless-escape": "off",
+        "vue/no-unused-vars": "warn"
+    }
+}
