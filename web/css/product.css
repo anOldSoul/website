@@ -36,7 +36,7 @@
 .notice_right_img{
   position: absolute;
   bottom: 0;
-  width: 462px;
+  width: 757px;
   height: 341px;
   background-size: 100% auto;
 }
@@ -51,8 +51,8 @@
 .temp_right_img{
   position: absolute;
   right: 0;
-  width: 486px;
-  height: 476px;
+  width: 512px;
+  height: 534px;
   background-size: 100% auto;
 }
 .download_right{
@@ -381,8 +381,8 @@
   padding-top: 235px;
 }
 .role_left_img{
-  width: 486px;
-  height: 476px;
+  width: 581px;
+  height: 534px;
   background-size: 100% auto;
 }
 .role_right_box{
@@ -415,7 +415,7 @@
 }
 .device_img{
   background-size: 100% 100%;
-  width: 462px;
+  width: 780px;
   height: 341px;
   bottom: 0;
   position: absolute;

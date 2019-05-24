@@ -27,10 +27,6 @@ var comJs = {
           })
           $('.manage_img').eq(index).css('background-image', 'url(' + options.saasBac[index] + ')')
           $('.saas_img img').attr("src", options.saasRightImg[index])
-          $('.saas_img').addClass('active')
-          setTimeout(function () {
-            $('.saas_img').removeClass('active')
-          }, 1000)
         }
         if (className === '.manage_item1') {
           $('.manage_img_app').each(function(imgIndex) {
@@ -38,10 +34,6 @@ var comJs = {
           })
           $('.manage_img_app').eq(index).css('background-image', 'url(' + options.appBac[index] + ')')
           $('.app_img img').attr("src", options.appRightImg[index])
-          $('.app_img').addClass('active')
-          setTimeout(function () {
-            $('.app_img').removeClass('active')
-          }, 1000)
         }
       })
     })
