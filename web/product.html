@@ -9,6 +9,12 @@
     <link href="./css/common.css" rel="stylesheet">
     <link href="./css/home.css" rel="stylesheet">
     <link href="./css/product.css" rel="stylesheet">
+    <script>
+      if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+        var viewport = document.querySelector("meta[name=viewport]");
+        viewport.setAttribute('content', 'width=device-width, initial-scale=0.2,maximum-scale=1, user-scalable=no');
+      }
+    </script>
   </head>
 
   <body>

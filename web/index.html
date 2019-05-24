@@ -10,6 +10,12 @@
   <link href="./libs/swiper/css/swiper.min.css" rel="stylesheet">
   <link href="./css/home.css" rel="stylesheet">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <script>
+    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      var viewport = document.querySelector("meta[name=viewport]");
+      viewport.setAttribute('content', 'width=device-width, initial-scale=0.2,maximum-scale=1, user-scalable=no');
+    }
+  </script>
 </head>
 
 <body>
