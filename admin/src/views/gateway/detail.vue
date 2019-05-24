@@ -9,7 +9,7 @@
 		    <el-col :span="3">国家</el-col>
 		    <el-col :span="5">
 			    <el-select v-model="formData.countryRef" filterable clearable>
-			      <el-option v-for="country in countries" :label="country.name" :value="country._id">
+			      <el-option v-for="country in countries" :key="country._id" :label="country.name" :value="country._id">
 			      </el-option>
 			    </el-select>
 		    </el-col>

@@ -1,28 +1,18 @@
 <template>
   <div class="page">
-    <div class="flex search-box">
-      <el-form class="form" label-width="86px">
-        <el-row>
-          <el-col :span="6">
-            <el-form-item label="名称">
-              <el-input v-model="searchModel.no" @change="handleSearchChange"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="编号">
-              <el-input v-model="searchModel.no" @change="handleSearchChange"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
+    <div class="btn-wrap">
+      <el-button type="primary" size="small" @click="dialogFormVisible = true">新增</el-button>
+      <el-button size="small" @click="$router.back()">返回</el-button>
     </div>
     <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
-      <el-table-column prop="countryRef.name" label="类型"></el-table-column>
-      <el-table-column prop="title" label="标题"></el-table-column>
+      <el-table-column prop="countryRef.name" label="密码"></el-table-column>
+      <el-table-column prop="title" label="密码类型"></el-table-column>
+      <el-table-column prop="title" label="申请时间"></el-table-column>
+      <el-table-column prop="title" label="下发时间"></el-table-column>
+      <el-table-column prop="title" label="下发状态"></el-table-column>
       <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
         <template slot-scope="scope">
           <template>
-            <el-button type="text" @click="handleGoDetail(scope.row)">详情</el-button>
             <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </template>
@@ -30,6 +20,23 @@
     </el-table>
     <el-pagination @current-change="handleCurrentChange" :current-page="searchModel.pageNo" :page-size="20" layout="total, prev, pager, next" :total="dataCount" class="flex pagination">
     </el-pagination>
+    <el-dialog title="新增密码" :visible.sync="dialogFormVisible">
+      <el-form :model="form">
+        <el-form-item label="密码" :label-width="formLabelWidth">
+          <el-input v-model="form.name" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码类型" :label-width="formLabelWidth">
+          <el-select v-model="form.region" placeholder="请选择活动区域">
+            <el-option label="区域一" value="shanghai"></el-option>
+            <el-option label="区域二" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -45,6 +52,18 @@ export default {
   },
   data () {
     return {
+      form: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      dialogFormVisible: false,
+      formLabelWidth: '120px',
       tableData: [], // 必须
       dataCount: 0, // 必须
       searchModel: {
@@ -59,10 +78,8 @@ export default {
   computed: {},
 
   methods: {
-    handleGoDetail: function (row) {
-      this.$router.push({
-        path: `/lock/detail/${row._id}`
-      })
+    addPassword() {
+
     },
     handleDelete (row) {
       this.$confirm('确定删除?', '提示', {
@@ -79,11 +96,6 @@ export default {
           this.getCount()
         })
       }).catch(() => { })
-    },
-    addProvisions () {
-      this.$router.push({
-        path: `/provisions/detail/add`
-      })
     },
     handleCurrentChange (val) {
       this.searchModel.pageNo = +val
@@ -123,6 +135,11 @@ export default {
           this.dataCount = data.count
         }.bind(this)
       )
+    },
+    handleGoDetail: function (row) {
+      this.$router.push({
+        path: `/lock/detail/${row._id}`
+      })
     },
     rowKey (row) {
       return row._id

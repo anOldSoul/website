@@ -5,7 +5,7 @@
       <div class="fixed">
         <div class="breadcrumb-box flex-a-c">
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item v-for="(item,index) in $store.state.breadcrumbs" :key="index" :to="{ path:item.url}">{{item.text}}</el-breadcrumb-item>
+            <el-breadcrumb-item v-for="(item,index) in $route.meta.breadcrumb" :key="index" :to="{ path:item.url}">{{item.text}}</el-breadcrumb-item>
           </el-breadcrumb>
         </div>
       </div>

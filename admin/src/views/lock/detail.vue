@@ -5,36 +5,45 @@
 		  <el-button size="small" @click="$router.back()">返回</el-button>
 		</div>
 		<el-card class="page-content">
+      <el-row>
+        <el-col :span="3">锁具编号</el-col>
+        <el-col :span="10">************************</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="3">锁具名称</el-col>
+        <el-col :span="10">
+          <el-input v-model="formData.title" placeholder="请输入锁具名称"></el-input>
+        </el-col>
+      </el-row>
 		  <el-row>
-		    <el-col :span="3">国家</el-col>
-		    <el-col :span="5">
-			    <el-select v-model="formData.countryRef" filterable clearable>
-			      <el-option v-for="country in countries" :label="country.name" :value="country._id">
-			      </el-option>
-			    </el-select>
+		    <el-col :span="3">锁具位置</el-col>
+		    <el-col :span="10">
+		    	<el-input v-model="formData.title" placeholder="锁具位置"></el-input>
 		    </el-col>
 		  </el-row>
-		  <el-row>
-		    <el-col :span="3">标题</el-col>
-		    <el-col :span="15">
-		    	<el-input v-model="formData.title" placeholder="请输入标题"></el-input>
-		    </el-col>
-		  </el-row>
-		  <el-row>
-		    <el-col :span="3">内容</el-col>
-		    <el-col :span="15">
-		    	<editor :content="formData.richText" :tokenData="entity.uploadTokenData" @onChange="handleOnContentChange"></editor>
-		    </el-col>
-		  </el-row>
+      <el-row>
+        <el-col :span="3">绑定网关</el-col>
+        <el-col :span="10">************************</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="3">网关编号</el-col>
+        <el-col :span="10">************************</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="3">网关位置</el-col>
+        <el-col :span="10">************************</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="3">绑定状态</el-col>
+        <el-col :span="10">绑定</el-col>
+      </el-row>
 		</el-card>
 	</div>
 </template>
 <script>
-import Editor from '@/components/common/editor'
 export default {
   name: 'detail',
   components: {
-  	Editor
   },
   data () {
     return {
@@ -43,10 +52,7 @@ export default {
       	title: '',
       	richText: ''
       },
-      countries: [],
-      entity: {
-        uploadTokenData: {}
-      }
+      countries: []
     }
   },
   created: function () {
@@ -63,11 +69,6 @@ export default {
   	}
   },
   methods: {
-  	getEntity () {
-  	  Site.http.get('/biz/util/getUploadToken', {}, data => {
-  	    this.entity.uploadTokenData = data
-  	  })
-  	},
   	handleOnContentChange (q, html, text) {
   	  this.formData.richText = html
   	  this.formData.text = text
@@ -111,7 +112,6 @@ export default {
     }
   },
   mounted: function () {
-    this.getEntity()
 	this.fetchCountries()
   	if (!this.isAdd) { 		
 	    this.getData()

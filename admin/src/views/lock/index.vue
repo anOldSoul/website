@@ -1,7 +1,6 @@
 <template>
   <div class="page">
     <div class="btn-wrap">
-      <el-button type="primary" size="small" @click="addProvisions">新增</el-button>
     </div>
     <div class="flex search-box">
       <el-form class="form" label-width="86px">
@@ -19,14 +18,14 @@
           <el-col :span="6">
             <el-form-item label="绑定网关">
               <el-select v-model="searchModel.countryRef" filterable clearable @change="handleSearchChange">
-                <el-option v-for="country in countries" :label="country.name" :value="country._id"></el-option>
+                <el-option v-for="country in countries" :key="country._id" :label="country.name" :value="country._id"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="绑定状态">
               <el-select v-model="searchModel.countryRef" filterable clearable @change="handleSearchChange">
-                <el-option v-for="country in countries" :label="country.name" :value="country._id"></el-option>
+                <el-option v-for="country in countries" :key="country._id" :label="country.name" :value="country._id"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -34,21 +33,15 @@
       </el-form>
     </div>
     <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
-      <el-table-column type="expand">
-        <template slot-scope="props">
-          <el-form label-position="left" inline>
-            <el-form-item>
-              <div v-html="props.row.richText" class="noticeContent"></div>
-            </el-form-item>
-          </el-form>
-        </template>
-      </el-table-column>
-      <el-table-column prop="countryRef.name" label="类型"></el-table-column>
-      <el-table-column prop="title" label="标题"></el-table-column>
+      <el-table-column prop="countryRef.name" label="网关名称"></el-table-column>
+      <el-table-column prop="title" label="网关编号"></el-table-column>
+      <el-table-column prop="title" label="网关位置"></el-table-column>
+      <el-table-column prop="title" label="绑定数量"></el-table-column>
       <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
         <template slot-scope="scope">
           <template>
-            <el-button type="text" @click="handleGoDetail(scope.row)">查看</el-button>
+            <el-button type="text" @click="handleGoDetail(scope.row)">详情</el-button>
+            <el-button type="text" @click="handleGoPassword(scope.row)">密码</el-button>
             <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </template>
@@ -85,6 +78,11 @@ export default {
   computed: {},
 
   methods: {
+    handleGoPassword () {
+      this.$router.push({
+        path: `/lock/password`
+      })
+    },
     handleDelete (row) {
       this.$confirm('确定删除?', '提示', {
         confirmButtonText: '确定',
@@ -100,11 +98,6 @@ export default {
           this.getCount()
         })
       }).catch(() => { })
-    },
-    addProvisions () {
-      this.$router.push({
-        path: `/provisions/detail/add`
-      })
     },
     handleCurrentChange (val) {
       this.searchModel.pageNo = +val
@@ -147,7 +140,7 @@ export default {
     },
     handleGoDetail: function (row) {
       this.$router.push({
-        path: `/provisions/detail/${row._id}`
+        path: `/lock/detail/${row._id}`
       })
     },
     rowKey (row) {
