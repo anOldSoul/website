@@ -6,11 +6,11 @@
           LORA联网DEMO
         </div>
         <!-- 首页 -->
-        <el-menu-item index="1" @click="goView('/')">
-          <i class="el-icon-menu"></i>锁具
-        </el-menu-item>
         <el-menu-item index="2" @click="goView('/gateway')">
           <i class="el-icon-menu"></i>网关
+        </el-menu-item>
+        <el-menu-item index="1" @click="goView('/')">
+          <i class="el-icon-menu"></i>锁具
         </el-menu-item>
       </el-menu>
     </el-col>

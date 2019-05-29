@@ -6,46 +6,36 @@
 		</div>
 		<el-card class="page-content">
 		  <el-row>
-		    <el-col :span="3">国家</el-col>
-		    <el-col :span="5">
-			    <el-select v-model="formData.countryRef" filterable clearable>
-			      <el-option v-for="country in countries" :key="country._id" :label="country.name" :value="country._id">
-			      </el-option>
-			    </el-select>
+		    <el-col :span="3">网关编号</el-col>
+		    <el-col :span="15">{{formData.gateid}}
 		    </el-col>
 		  </el-row>
 		  <el-row>
-		    <el-col :span="3">标题</el-col>
+		    <el-col :span="3">网关名称</el-col>
 		    <el-col :span="15">
-		    	<el-input v-model="formData.title" placeholder="请输入标题"></el-input>
+		    	<el-input v-model="formData.gatewayname" placeholder="请输入网关名称"></el-input>
 		    </el-col>
 		  </el-row>
-		  <el-row>
-		    <el-col :span="3">内容</el-col>
-		    <el-col :span="15">
-		    	<editor :content="formData.richText" :tokenData="entity.uploadTokenData" @onChange="handleOnContentChange"></editor>
-		    </el-col>
-		  </el-row>
+      <el-row>
+        <el-col :span="3">网关位置</el-col>
+        <el-col :span="15">
+          <el-input v-model="formData.gateaddr" placeholder="请输入网关位置"></el-input>
+        </el-col>
+      </el-row>
 		</el-card>
 	</div>
 </template>
 <script>
-import Editor from '@/components/common/editor'
 export default {
   name: 'detail',
   components: {
-  	Editor
   },
   data () {
     return {
       formData: {
-      	countryRef: '',
-      	title: '',
-      	richText: ''
-      },
-      countries: [],
-      entity: {
-        uploadTokenData: {}
+      	gateid: '',
+      	gatewayname: '',
+      	gateaddr: ''
       }
     }
   },
@@ -63,59 +53,39 @@ export default {
   	}
   },
   methods: {
-  	getEntity () {
-  	  Site.http.get('/biz/util/getUploadToken', {}, data => {
-  	    this.entity.uploadTokenData = data
-  	  })
-  	},
   	handleOnContentChange (q, html, text) {
   	  this.formData.richText = html
   	  this.formData.text = text
   	},
-  	fetchCountries() {
-  	  Site.http.get(
-  	    '/rest/countries', {},
-  	    data => {
-  	      this.countries = data
-  	    }
-  	  )
-  	},
     getData () {
       let populate = []
-      Site.http.get('/rest/provisions/' + this.$route.params.id, {
-        populate: populate
+      Site.http.get('/tGateWayInfo/getOneGateWayinfo', {
+        gateId: (this.$route.params.id).toString()
       }, data => {
-        this.formData = data
-      })
-    },
-    postData () {
-      Site.http.post('/rest/provisions', this.formData, data => {
-        this.$router.back()
+        this.formData = data.data
       })
     },
     handleSave() {
-    	if (!this.isAdd) {
-    		this.patchData()
-    	} else {
-    		this.postData()
-    	}
+      this.patchData()
     },
     patchData () {
-      Site.http.patch('/rest/provisions/' + this.$route.params.id, this.formData, data => {
-        this.getData()
-        this.$message({
-          message: '保存成功',
-          type: 'success'
-        })
+      Site.http.patch('/tGateWayInfo/updateGateWay', {
+        gateid: (this.formData.gateid).toString(),
+        gatewayname: this.formData.gatewayname,
+        gateaddr: this.formData.gateaddr
+      }, data => {
+        if (data.errno === 0) {
+          this.$message({
+            message: '保存成功',
+            type: 'success'
+          })
+          this.$router.back()
+        }
       })
     }
   },
   mounted: function () {
-    this.getEntity()
-	this.fetchCountries()
-  	if (!this.isAdd) { 		
-	    this.getData()
-  	}
+    this.getData()
   }
 }
 </script>
@@ -130,5 +100,6 @@ export default {
   margin-bottom: 20px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 </style>

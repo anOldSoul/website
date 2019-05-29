@@ -1,3 +1,9 @@
+const Moment = require('./moment.min.js')
+let rtc, seedA, seedB, seedC, key, decodedPackageData
+let func = {
+  addPass: false,
+  syncPass: false
+}
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -19,7 +25,165 @@ const getQueryString = (url, name) => {
   if (r != null) return unescape(r[2]);
   return null;
 }
-const writeBle = (hex) => {
+const getBLEDeviceCharacteristics = (deviceId, serviceId) => {
+  wx.getBLEDeviceCharacteristics({
+    deviceId,
+    serviceId,
+    success: (res) => {
+      for (let i = 0; i < res.characteristics.length; i++) {
+        let item = res.characteristics[i]
+        if (item.properties.read) {
+          wx.readBLECharacteristicValue({
+            deviceId,
+            serviceId,
+            characteristicId: item.uuid,
+          })
+        }
+        if (item.properties.write) {
+          // this.setData({
+          //   canWrite: true
+          // })
+          wx.setStorageSync('_deviceId', deviceId)
+          wx.setStorageSync('_serviceId', serviceId)
+          wx.setStorageSync('_characteristicId', item.uuid)
+          let hex = '5511000031323334353637383930313233340000'  //login
+          writeBle(hex)
+        }
+        if (item.properties.notify || item.properties.indicate) {
+          wx.notifyBLECharacteristicValueChange({
+            deviceId,
+            serviceId,
+            characteristicId: item.uuid,
+            state: true,
+            success: function (res) {
+              console.log('notify success', res.errMsg)
+            },
+            fail: function (res) {
+              console.log('notify fail', res.errMsg)
+            },
+            complete: function (res) {
+              console.log('notify complete', res.errMsg)
+            },
+          })
+        }
+      }
+    },
+    fail(res) {
+      console.error('getBLEDeviceCharacteristics', res)
+    }
+  })
+  // 操作之前先监听，保证第一时间获取数据
+  wx.onBLECharacteristicValueChange((characteristic) => {
+    console.log('~~~~~~~~~~~~~')
+    console.log(ab2hex(characteristic.value))
+    let value = ab2hex(characteristic.value)
+    if (value.slice(-4, -2) === '11') {
+      let time = Moment().format('ssmmhhDDMMYY')
+      console.log(time)
+      let hex = `55130000${time}00000000000000000000`  //时间信息
+      rtc = time
+      writeBle(hex)
+    }
+    if (value.slice(-4, -2) === '13') {
+      let hex = '5523000000000000000000000000000000000000'  //seedC
+      writeBle(hex)
+    }
+    if (value.slice(-4, -2) === '23') {
+      seedC = value.slice(8, 36)
+      let hex = '5512000000000000000000000000000000000000'  //seedA,获取mac
+      writeBle(hex)
+    }
+    if (value.slice(-4, -2) === '12') {
+      seedA = value.slice(8, 20)
+      let time = Moment().format('ssmmhhDDMMYY')
+      seedB = time
+      let hex = `55140000${time}00000000000000000000` //seedB,时间信息
+      writeBle(hex)
+    }
+    if (value.slice(-4, -2) === '14') {
+      let hex = '5516000000000000000000000000000000000000'  //电池电量
+      writeBle(hex)
+    }
+    if (value.slice(-4, -2) === '16') {
+      let hex = '5531000038383838383800000000000000000000'  //管理员密码
+      writeBle(hex)
+    }
+    if (value.slice(-4, -2) === '31') {
+      let hex = '5532000039363536313631320000000000000000'  //设置绑定码
+      writeBle(hex)
+    }
+    if (value.slice(-4, -2) === '32') {
+      let hex = '5530000000000000000000000000000000000000'  //绑定结束
+      writeBle(hex)
+    }
+    if (value.slice(-4, -2) === 'b0') {
+      console.log('绑定成功~~~~~~~~~~~~')
+    }
+    if (value.slice(-4, -2) === '28') {
+      let hex = '5515200000000000000000000000000000000000'  //对码
+      writeBle(hex)
+    }
+    if (value.slice(-4, -2) === '15') {
+      key = seedA + seedC + rtc + seedB
+      console.log('key' + key)
+      let orgPackageData = '08805678';
+      for (let i = 0; i < 8; i++) {
+        orgPackageData += "00";
+      }
+      let cmd = 'logind';
+      let command = strToHexCharCode(cmd);
+      orgPackageData += command;
+      orgPackageData += "000000010116000000010146";
+      console.log(orgPackageData)
+      //计算checksum
+      let checksum = getCheckSum(hexToBytes(orgPackageData));
+      console.log('checksum' + checksum)
+      //写入checksum
+      orgPackageData += bytes2Str(shortToBytesLe(checksum));
+      console.log('orgPackageData@@@' + orgPackageData)
+      //加密
+      decodedPackageData = bytes2Str(crypt(hexToBytes(key), hexToBytes(orgPackageData)));
+      console.log('decodedPackageData' + decodedPackageData)
+      let hex = `a800${decodedPackageData.slice(0, 36)}`
+      writeBle(hex)
+    }
+    if (decodedPackageData) {
+      if (value === (`a800${decodedPackageData.slice(0, 36)}`).toLowerCase()) {
+        let hex = `a801${decodedPackageData.slice(36, 64)}00000000`
+        writeBle(hex)
+      }
+    }
+    if (value.slice(-4, -2) === '95') {
+      if (func['addPass']) {
+        let hex = '551D000031323334353600000000000000000000'
+        writeBle(hex)
+      }
+      if (func['syncPass']) {
+        let hex = '551E000000000000000000000000000000000000'
+        writeBle(hex)
+      }
+    }
+  })
+}
+// ArrayBuffer转16进度字符串示例
+function ab2hex(buffer) {
+  var hexArr = Array.prototype.map.call(
+    new Uint8Array(buffer),
+    function (bit) {
+      return ('00' + bit.toString(16)).slice(-2)
+    }
+  )
+  return hexArr.join('');
+}
+const getCheckSum = (data) => {
+  let ret = 0;
+  for (let i = 0; i < data.length; i++) {
+    ret += data[i];
+  }
+  return ret;
+}
+const writeBle = (hex, funcKey = '') => {
+  func[funcKey] = true
   var typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
     return parseInt(h, 16)
   }))
@@ -27,9 +191,9 @@ const writeBle = (hex) => {
   var buffer1 = typedArray.buffer
   let pos = 0;
   wx.writeBLECharacteristicValue({
-    deviceId: this._deviceId,
-    serviceId: this._serviceId,
-    characteristicId: this._characteristicId,
+    deviceId: wx.getStorageSync('_deviceId'),
+    serviceId: wx.getStorageSync('_serviceId'),
+    characteristicId: wx.getStorageSync('_characteristicId'),
     value: buffer1,
     success: function (res) {
       console.log('writeBLECharacteristicValue success', res.errMsg)
@@ -130,5 +294,6 @@ module.exports = {
   bytes2Str: bytes2Str,
   shortToBytesLe: shortToBytesLe,
   hexToBytes: hexToBytes,
-  crypt: crypt
+  crypt: crypt,
+  getBLEDeviceCharacteristics: getBLEDeviceCharacteristics
 }

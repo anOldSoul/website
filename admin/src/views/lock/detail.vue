@@ -7,35 +7,31 @@
 		<el-card class="page-content">
       <el-row>
         <el-col :span="3">锁具编号</el-col>
-        <el-col :span="10">************************</el-col>
+        <el-col :span="10">{{formData.lockid}}</el-col>
       </el-row>
       <el-row>
         <el-col :span="3">锁具名称</el-col>
         <el-col :span="10">
-          <el-input v-model="formData.title" placeholder="请输入锁具名称"></el-input>
+          <el-input v-model="formData.lockname" placeholder="请输入锁具名称"></el-input>
         </el-col>
       </el-row>
 		  <el-row>
 		    <el-col :span="3">锁具位置</el-col>
 		    <el-col :span="10">
-		    	<el-input v-model="formData.title" placeholder="锁具位置"></el-input>
+		    	<el-input v-model="formData.lockaddr" placeholder="锁具位置"></el-input>
 		    </el-col>
 		  </el-row>
       <el-row>
-        <el-col :span="3">绑定网关</el-col>
-        <el-col :span="10">************************</el-col>
-      </el-row>
-      <el-row>
         <el-col :span="3">网关编号</el-col>
-        <el-col :span="10">************************</el-col>
+        <el-col :span="10">{{formData.gateid}}</el-col>
       </el-row>
       <el-row>
         <el-col :span="3">网关位置</el-col>
-        <el-col :span="10">************************</el-col>
+        <el-col :span="10">{{formData.gateaddr}}</el-col>
       </el-row>
       <el-row>
         <el-col :span="3">绑定状态</el-col>
-        <el-col :span="10">绑定</el-col>
+        <el-col :span="10">{{bindStr[formData.bindingstat]}}</el-col>
       </el-row>
 		</el-card>
 	</div>
@@ -47,10 +43,11 @@ export default {
   },
   data () {
     return {
+      bindStr: {
+        '1': '锁具与网关已绑定',
+        '0': '锁具与网关已解绑'
+      },
       formData: {
-      	countryRef: '',
-      	title: '',
-      	richText: ''
       },
       countries: []
     }
@@ -69,53 +66,32 @@ export default {
   	}
   },
   methods: {
-  	handleOnContentChange (q, html, text) {
-  	  this.formData.richText = html
-  	  this.formData.text = text
-  	},
-  	fetchCountries() {
-  	  Site.http.get(
-  	    '/rest/countries', {},
-  	    data => {
-  	      this.countries = data
-  	    }
-  	  )
-  	},
     getData () {
       let populate = []
-      Site.http.get('/rest/provisions/' + this.$route.params.id, {
-        populate: populate
+      Site.http.get('/tLockInfo/getDetailLockInfo', {
+        lockId: this.$route.params.id
       }, data => {
-        this.formData = data
-      })
-    },
-    postData () {
-      Site.http.post('/rest/provisions', this.formData, data => {
-        this.$router.back()
+        this.formData = data.data
       })
     },
     handleSave() {
-    	if (!this.isAdd) {
-    		this.patchData()
-    	} else {
-    		this.postData()
-    	}
+      this.patchData()
     },
     patchData () {
-      Site.http.patch('/rest/provisions/' + this.$route.params.id, this.formData, data => {
-        this.getData()
-        this.$message({
-          message: '保存成功',
-          type: 'success'
-        })
+      this.formData.lockId = (this.formData.lockid).toString()
+      Site.http.patch('/tLockInfo/updateLock', this.formData, data => {
+        if (data.errno === 0) {
+          this.$message({
+            message: '保存成功',
+            type: 'success'
+          })
+          this.$router.back()
+        }
       })
     }
   },
   mounted: function () {
-	this.fetchCountries()
-  	if (!this.isAdd) { 		
-	    this.getData()
-  	}
+    this.getData()
   }
 }
 </script>
@@ -130,5 +106,6 @@ export default {
   margin-bottom: 20px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 </style>

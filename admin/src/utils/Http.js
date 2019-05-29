@@ -18,23 +18,16 @@ switch (env) {
     baseURL = 'http://139.196.174.134/services-ed0edaf138'
     break
   case 'dev':
-    baseURL = 'https://dev-noah-tax.charmdeer.com/services'
+    baseURL = 'http://149.129.174.60:9010'
     break
 }
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = false
 let logoustTimer, warnTimer
 axios.interceptors.request.use(function (config) {
   return config
 })
 axios.interceptors.response.use(function (response) {
-  // Do something with response data
-  if(env==='overseas'){
-    let resStr = JSON.stringify(response)
-    resStr = resStr.replace(/https:\/\/qiniu-uploads\.charmdeer\.com/g, 'https://qiniu-sea-uploads.charmdeer.com')
-    return JSON.parse(resStr)
-  }else{
-    return response;
-  }
+  return response;
 }, function (error) {
   // Do something with response error
   return Promise.reject(error);
@@ -44,8 +37,7 @@ let Http = {
   baseURL: baseURL,
   env: env,
   header: {
-    'Content-Type': 'application/json; charset=utf-8',
-    'charmdeer-client': 'v-web'
+    'Content-Type': 'application/json; charset=utf-8'
   },
   upload (data, qiniuToken) {
     let url = 'https://up.qbox.me/?token=' + qiniuToken

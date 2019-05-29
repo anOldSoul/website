@@ -39,7 +39,7 @@ const routers = [
       }]
     }
   }, {
-    path: '/lock/password',
+    path: '/lock/password/:id',
     name: 'Password',
     component: Password,
     meta: {
