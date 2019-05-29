@@ -9,10 +9,10 @@
         <template slot-scope="scope">{{pwStr[scope.row.downstat]}}</template>
       </el-table-column>
       <el-table-column label="申请时间" width="200">
-        <template slot-scope="scope">{{(scope.row.reqtime) ? $moment(scope.row.reqtime, "YYYYMMDD").format("YYYY.MM.DD h:mm:ss") : ''}}</template>
+        <template slot-scope="scope">{{(scope.row.reqtime) ? $moment(scope.row.reqtime, "YYYYMMDDHH:mm:ss").format("YYYY.MM.DD HH:mm:ss") : ''}}</template>
       </el-table-column>
       <el-table-column label="下发时间" width="200">
-        <template slot-scope="scope">{{(scope.row.downtime) ? $moment(scope.row.downtime, "YYYYMMDD").format("YYYY.MM.DD h:mm:ss") : ''}}</template>
+        <template slot-scope="scope">{{(scope.row.downtime) ? $moment(scope.row.downtime, "YYYYMMDDHH:mm:ss").format("YYYY.MM.DD HH:mm:ss") : ''}}</template>
       </el-table-column>
       <el-table-column label="下发状态" width="250">
         <template slot-scope="scope">{{statLabel[scope.row.downstat]}}</template>
@@ -31,7 +31,7 @@
           <el-input v-model="form.lockwd" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码类型" :label-width="formLabelWidth">
-          <el-select v-model="form.lockwdtype" placeholder="请选择活动区域">
+          <el-select v-model="form.lockwdtype" placeholder="请选择密码类型">
             <el-option label="2分钟内有效" value="1"></el-option>
             <el-option label="5分钟内有效" value="2"></el-option>
           </el-select>
