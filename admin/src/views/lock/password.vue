@@ -8,11 +8,11 @@
       <el-table-column label="密码类型">
         <template slot-scope="scope">{{pwStr[scope.row.downstat]}}</template>
       </el-table-column>
-      <el-table-column label="申请时间">
-        <template slot-scope="scope">{{(scope.row.reqtime) ? $moment(parseInt(scope.row.reqtime)).format("YYYY.MM.DD h:mm") : ''}}</template>
+      <el-table-column label="申请时间" width="200">
+        <template slot-scope="scope">{{(scope.row.reqtime) ? $moment(scope.row.reqtime, "YYYYMMDD").format("YYYY.MM.DD h:mm:ss") : ''}}</template>
       </el-table-column>
-      <el-table-column label="下发时间">
-        <template slot-scope="scope">{{(scope.row.downtime) ? $moment(parseInt(scope.row.downtime)).format("YYYY.MM.DD h:mm") : ''}}</template>
+      <el-table-column label="下发时间" width="200">
+        <template slot-scope="scope">{{(scope.row.downtime) ? $moment(scope.row.downtime, "YYYYMMDD").format("YYYY.MM.DD h:mm:ss") : ''}}</template>
       </el-table-column>
       <el-table-column label="下发状态" width="250">
         <template slot-scope="scope">{{statLabel[scope.row.downstat]}}</template>
