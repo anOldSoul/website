@@ -84,9 +84,9 @@ export default {
       this.form = row
     },
     handlePatch () {
-      if (this.form.lockwd.length < 6) {
+      if (this.form.lockwd.length !== 6) {
         this.$message({
-          message: '密码至少6位',
+          message: '密码必须为6位',
           type: 'warning'
         })
         return

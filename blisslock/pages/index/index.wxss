@@ -1,0 +1,26 @@
+/* pages/index/index.wxss */
+.no_apparatus{
+  width: 472rpx;
+  height: 307rpx;
+  margin-left: 139rpx;
+  margin-top: 94rpx;
+  margin-bottom: 78rpx;
+}
+.tip_text{
+  font-size: 34rpx;
+  text-align: center;
+}
+.add_apparatus{
+  width:360rpx;
+  height:94rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 266rpx;
+  background:rgba(9,25,40,1);
+  box-shadow:0 4rpx 8rpx 0 rgba(9,25,40,0.24);
+  border-radius:8rpx;
+  color: #fff;
+  margin-left: 195rpx;
+  font-size: 36rpx;
+}

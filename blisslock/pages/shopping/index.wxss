@@ -1,6 +1,4 @@
-.func_manage{
-  margin: 42rpx;
-}
+
 .func_row{
   width: 614rpx;
   display: flex;

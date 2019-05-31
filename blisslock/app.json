@@ -1,12 +1,16 @@
 {
   "pages": [
     "pages/shopping/index",
-    "pages/password/index"
+    "pages/index/index",
+    "pages/password/index",
+    "pages/admPw/index",
+    "pages/repair/index",   
+    "pages/search/index",
+    "pages/addDevice/index",
+    "pages/finger/index"
   ],
   "window": {
-    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "white",
     "navigationBarTextStyle": "black"
-  },
-  "sitemapLocation": "sitemap.json"
+  }
 }

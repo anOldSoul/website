@@ -1,5 +1,9 @@
 <view class='password'>
-  <view class='password_title'>密码用户</view>
-  <button class='add_password' bindtap="manage_password">添加密码</button>
-  <button class='sync_password' bindtap="sync_password">同步数据</button>
+  <view class='title'><view class='dot'></view>密码用户</view>
+  <view wx:for="{{pwArr}}" wx:key="{{index}}" class='pw_item'>{{item}}
+  </view>
+  <view class='fixed'>
+    <button class='add_password' bindtap="manage_password">添加密码</button>
+    <button class='sync_password' bindtap="sync_password">同步数据</button>
+  </view>
 </view>

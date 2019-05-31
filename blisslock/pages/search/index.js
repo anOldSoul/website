@@ -62,6 +62,7 @@ Page({
   },
   onBluetoothDeviceFound() {
     wx.onBluetoothDeviceFound((res) => {
+      wx.hideLoading()
       res.devices.forEach(device => {
         if (!device.name && !device.localName) {
           return
@@ -119,40 +120,22 @@ Page({
       }
     })
   },
+  // writeBLECharacteristicValue() {
+  //   // 向蓝牙设备发送一个0x00的16进制数据
+  //   let hex = '5511000031323334353637383930313233340000'  //login
+  //   app.util.writeBle(hex)
+  // },
   closeBluetoothAdapter() {
     wx.closeBluetoothAdapter()
     this._discoveryStarted = false
   },
   onLoad: function (options) {
+    // wx.showLoading({
+    //   title: '加载中',
+    // })
+    this.openBluetoothAdapter()
   },
   onShow: function () {
-  },
-  handleDelDevice: function() {
-    wx.showModal({
-      title: '提示',
-      content: '确定要删除设备吗？',
-      success(res) {
-        if (res.confirm) {
-          console.log('用户点击确定')
-        } else if (res.cancel) {
-          console.log('用户点击取消')
-        }
-      }
-    })
-  },
-  checkAdmPw: function() {
-    wx.showModal({
-      title: '提示',
-      content: '管理员密码为：123456',
-      showCancel: false,
-      success(res) {
-        if (res.confirm) {
-          console.log('用户点击确定')
-        } else if (res.cancel) {
-          console.log('用户点击取消')
-        }
-      }
-    })
   },
   goDetail: function (e) {
     let item = e.currentTarget.dataset.item

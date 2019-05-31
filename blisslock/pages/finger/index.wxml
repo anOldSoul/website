@@ -1,0 +1,5 @@
+<view class='password'>
+  <view class='password_title'>指纹用户</view>
+  <button class='add_password' bindtap="manage_password">添加指纹</button>
+  <button class='sync_password' bindtap="sync_password">同步数据</button>
+</view>

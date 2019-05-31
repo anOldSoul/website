@@ -1,5 +1,5 @@
 <view class='container'>
-  <button bindtap="openBluetoothAdapter">开始扫描</button>
+  <!-- <button bindtap="openBluetoothAdapter">开始扫描</button>
   <button bindtap="stopBluetoothDevicesDiscovery">停止扫描</button>
   <button bindtap="closeBluetoothAdapter">结束流程</button>
 
@@ -28,22 +28,22 @@
       <view>特性UUID: {{item.uuid}}</view>
       <view>特性值: {{item.value}}</view>
     </view>
-  </view>
+  </view> -->
   <view class="func_manage">
     <view class="func_row">
-      <navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-我的指纹.png'></image>我的指纹</navigator>
+      <navigator class="func_item" url="/pages/finger/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-我的指纹.png'></image>我的指纹</navigator>
       <navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-我的密码.png'></image>我的密码</navigator>
       <navigator class="func_item" url="/pages/password/index" hover-class="none"navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-临时密码.png'></image>临时密码</navigator>
     </view>
     <view class="func_row">
-      <navigator class="func_item" url="/pages/password/index" hover-class="none"navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-管理员密码.png'></image>管理员密码</navigator>
-      <navigator class="func_item" url="/pages/password/index" hover-class="none"navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-开锁记录.png'></image>开锁记录</navigator>
-      <navigator class="func_item" url="/pages/password/index" hover-class="none"navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-使用说明.png'></image>使用说明</navigator>
+      <view class="func_item" bindtap='checkAdmPw' class="func_item"><image class="func_img" src='../../images/ic_设备名称-管理员密码.png'></image>管理员密码</view>
+      <navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-开锁记录.png'></image>开锁记录</navigator>
+      <navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-使用说明.png'></image>使用说明</navigator>
     </view>
     <view class="func_row">
-      <navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-一键报修.png'></image>一键报修</navigator>
+      <navigator class="func_item" url="/pages/repair/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-一键报修.png'></image>一键报修</navigator>
       <navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-手机绑定.png'></image>手机绑定</navigator>
-      <navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-删除设备.png'></image>删除设备</navigator>
+      <view class="func_item"  bindtap='handleDelDevice'><image class="func_img" src='../../images/ic_设备名称-删除设备.png'></image>删除设备</view>
     </view>
   </view>
 </view>

@@ -1,4 +1,4 @@
-@import "./component/toast/toast.wxss";
+/* pages/admPw/index.wxss */
 .title{
   margin: 30rpx 40rpx;
   display: flex;
@@ -13,17 +13,19 @@
   background-color: #17BF98;
   margin-right: 20rpx;
 }
-.checkbox{
-  transform:scale(.7);
+input{
+  width: 630rpx;
+  height: 94rpx;
+  background-color: #F0F0F0;
+  margin-left: 30rpx;
+  padding:0 30rpx;
+  font-size: 30rpx;
 }
-.checkbox{
-  transform:scale(.7);
-}
-switch{
-  transform:scale(.8);
-}
-.point,.value1{
-  font-weight: bold;
+.tip_text{
+  font-size: 30rpx;
+  color: #999999;
+  line-height:50rpx;
+  margin: 40rpx 30rpx;
 }
 .add_apparatus{
   width:670rpx;
@@ -39,5 +41,3 @@ switch{
   margin-left: 40rpx;
   font-size: 36rpx;
 }
-
-

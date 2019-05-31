@@ -1,0 +1,39 @@
+/* pages/index/index.wxss */
+.title{
+  margin: 0 40rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 36rpx;
+}
+.dot{
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 12rpx;
+  background-color: #17BF98;
+  margin-right: 20rpx;
+}
+.no_apparatus{
+  width: 368rpx;
+  height: 501rpx;
+  margin-left: 191rpx;
+  margin-top: 45rpx;
+  margin-bottom: 52rpx;
+}
+.tip_text{
+  font-size: 30rpx;
+  margin: 0 30rpx;
+  color: #666666;
+  line-height:50rpx;
+}
+
+.check{
+  font-size:26rpx;
+  color:rgba(153,153,153,1);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 67rpx;
+}

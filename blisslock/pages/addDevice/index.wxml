@@ -1,0 +1,13 @@
+<!--pages/addDevice/index.wxml-->
+<view>
+  <view><image class="no_apparatus" src='../../images/pic-添加设备.png'></image></view>
+  <view class='title'><view class='dot'></view>添加步骤</view>
+  <view class='tip_text'>
+    <view>1、请将手机靠近锁体(确保蓝牙已打开)；</view>
+    <view>2、请卸下智能锁背面的电池盖；</view>
+    <view>3、请卸下智能锁背面的电池盖；</view>
+    <view>4、若提示验证管理员，请在锁体密码键盘上输入设置的管理员密码，并按#确认。</view>
+  </view>
+  <view class='check'><checkbox value="{{item.name}}" checked="{{item.checked}}"/>已完成上述操作</view>
+  <navigator url="/pages/admPw/index" class='add_apparatus'>下一步</navigator>
+</view>
