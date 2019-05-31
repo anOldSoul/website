@@ -1,13 +1,16 @@
 {
   "pages": [
+    "pages/search/index",
+    "pages/finger/index",
+    "pages/editFinger/index",
     "pages/shopping/index",
-    "pages/index/index",
     "pages/password/index",
+    "pages/editPw/index",
+    
+    "pages/index/index",
     "pages/admPw/index",
     "pages/repair/index",   
-    "pages/search/index",
-    "pages/addDevice/index",
-    "pages/finger/index"
+    "pages/addDevice/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "white",

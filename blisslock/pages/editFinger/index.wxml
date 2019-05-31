@@ -1,0 +1,7 @@
+<view class='password'>
+  <view class='pw_item'>{{pw}}
+  </view>
+  <view class='fixed'>
+    <button class='add_password' bindtap="del_password">删除指纹</button>
+  </view>
+</view>

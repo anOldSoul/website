@@ -1,7 +1,7 @@
 <view class='password'>
   <view class='title'><view class='dot'></view>密码用户</view>
-  <view wx:for="{{pwArr}}" wx:key="{{index}}" class='pw_item'>{{item}}
-  </view>
+  <navigator  url="{{'/pages/editPw/index?pw=' + item}}" wx:for="{{pwArr}}" wx:key="{{index}}" class='pw_item'>{{item}}
+  </navigator>
   <view class='fixed'>
     <button class='add_password' bindtap="manage_password">添加密码</button>
     <button class='sync_password' bindtap="sync_password">同步数据</button>

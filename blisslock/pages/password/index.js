@@ -28,12 +28,27 @@ Page({
     })
   },
   onLoad: function (options) {
-    let that = this;
-    app.watch(that.watchBack)
-  },
-  watchBack: function (name) {
-    console.log(22222);
-    console.log('this.name==' + name)
+    let msg
+    let delResult = options.result
+    if (delResult === '30') {
+      msg = '删除成功'
+    }
+    if (delResult === '31') {
+      msg = '本地密码ID不存在'
+    }
+    if (delResult === '32') {
+      msg = '删除失败'
+    }
+    if (msg) {
+      wx.showToast({
+        title: msg,
+        icon: 'success',
+        duration: 2000
+      })
+    }
+    this.setData({
+      pwArr: wx.getStorageSync('pwData')
+    })
   },
   onShow: function () {
   },

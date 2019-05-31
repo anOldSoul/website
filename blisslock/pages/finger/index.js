@@ -2,28 +2,53 @@
 const app = getApp()
 Page({
   data: {
-    devices: [],
+    pwArr: [1111, 1111, 1111, 1111, 1111, 1111, 1111, 1111, 1111, 3444],
     connected: false,
     chs: []
   },
   manage_password() {
-    this.doBLEConnection('addFinger')
+    app.util.doBLEConnection('addFinger')
   },
   sync_password() {
-    this.doBLEConnection('syncFinger')
-  },
-  doBLEConnection(funcKey) {
-    wx.createBLEConnection({
-      // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
-      deviceId: wx.getStorageSync('_deviceId'),
-      success(res) {
-        let time = app.Moment().format('ssmmhhDDMMYY')
-        let hex = `55280000${time}00000000000000000000` //重置时钟
-        app.util.writeBle(hex, funcKey)
+    return new Promise((resolve, reject) => {
+      app.util.doBLEConnection('syncFinger', resolve)
+    }).then(() => {
+      console.log('监听成功')
+      console.log(wx.getStorageSync('fingerData'))
+      let str = wx.getStorageSync('fingerData')
+      var strArr = [];
+      var n = 8;
+      for (var i = 0, l = str.length; i < l / n; i++) { 
+        var a = str.slice(n * i, n * (i + 1));
+        strArr.push(a); 
       }
+      this.setData({
+        pwArr: strArr
+      })
     })
   },
   onLoad: function (options) {
+    let msg
+    let delResult = options.result
+    if (delResult === '30') {
+      msg = '删除成功'
+    }
+    if (delResult === '31') {
+      msg = '本地指纹ID不存在'
+    }
+    if (delResult === '32') {
+      msg = '删除失败'
+    }
+    if (msg) {
+      wx.showToast({
+        title: msg,
+        icon: 'success',
+        duration: 2000
+      })
+    }
+    this.setData({
+      pwArr: wx.getStorageSync('fingerData')
+    })
   },
   onShow: function () {
   },
