@@ -101,6 +101,9 @@ var comJs = {
     $('#lock_title1').html(options.solutionTitleArr1[index])
     $('#lock_title2').html(options.solutionTitleArr2[index])
     $('#lock_title3').html(options.solutionTitleArr3[index])
+    $('#idSubTitle1').html(options.solutionSubTitleArr1[index])
+    $('#idSubTitle2').html(options.solutionSubTitleArr2[index])
+    $('#idSubTitle3').html(options.solutionSubTitleArr3[index])
     if (index > 0) {
       $("#hideSection").hide();
       $("#hideSection1").hide();
