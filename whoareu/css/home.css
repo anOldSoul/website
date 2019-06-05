@@ -1,0 +1,116 @@
+a{
+  display: inline-block;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+}
+img {
+  width: 100%;
+}
+.section_index{
+  width: 100%;
+  height: 650px;
+  background:rgba(0,0,0,1);
+  position: relative;
+}
+.section1_index{
+  width: 100%;
+  height: 650px;
+  position: relative;
+}
+.section2_index{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #DBDEE5;
+  height: 358px;
+}
+.legue_title{
+  color: #375A92;
+  font-size: 20px;
+  line-height: 1.5;
+}
+.legue_box{
+  display: flex;
+  flex-direction: row;
+  margin-top: 25px;
+}
+.finger_computer_img{
+  position: absolute;
+  right: 0;
+}
+.finger_certify_img{
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+}
+.league_img{
+  width: 305px;
+  height: 148px;
+}
+
+.banner {
+  position: relative;
+}
+
+.banner_btn{
+  position: absolute;
+  top: 60%;
+  width:180px;
+  height:54px;
+  border:2px solid rgba(255,255,255,1);
+  border-radius:27px;
+  color: #fff;
+  left:50%;
+  transform:translate(-50%,0);
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.banner_btn a {
+  text-align: center;
+  color: rgba(23,191,152,1);
+}
+.banner_btn:hover a {
+  color: #fff;
+}
+.banner_btn:hover{
+  text-align: center;
+  background:rgba(23,191,152,1);
+  color: #fff;
+}
+
+/*指纹鼠标*/
+.section_mouse{
+  background: #375A92;
+}
+.section1_mouse{
+  padding-top: 46px;
+  padding-bottom: 52px;
+}
+.section2_mouse{
+  background: #DBDEE5;
+  position: relative;
+}
+.mouse_img{
+  width: 1176px;
+  margin: 0 auto;
+}
+.mouse_btn{
+  position: absolute;
+  bottom: 7%;
+  width:180px;
+  height:54px;
+  border:2px solid rgba(255,255,255,1);
+  border-radius:27px;
+  color: #fff;
+  left:50%;
+  transform:translate(-50%,0);
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
