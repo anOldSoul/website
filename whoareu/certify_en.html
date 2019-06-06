@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+  <title>Who Are You</title>
+  <link href="./css/common.css" rel="stylesheet">
+  <link href="./css/home.css" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <script>
+    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      var viewport = document.querySelector("meta[name=viewport]");
+      viewport.setAttribute('content', 'width=device-width, initial-scale=0.2,maximum-scale=1, user-scalable=no');
+    }
+  </script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <link href="./css/header.css" rel="stylesheet">
+    <div data-lbifile="./common/header_en.html"></div>
+    <div class="page">
+      <div class="section_certify">
+        <div class="max-width-1440">
+          <img src="./images/certify/pic-指纹验证器-banner.png">
+        </div>
+      </div>
+      <div class="mouseS_video_box max-width-1440">
+        <div class="certify_video">
+          <img src="./images/certify/pic-指纹验证器-2.1.png">
+          <div class="certify_video_content">
+            <div class="mouseS_video_title">Password-less</div>
+			<div class="mouseS_video_title">Login Windows Hello</div>
+			<div class="mouseS_video_title">By Fingerprint</div>
+            <div class="certify_video_btn"><div class="video_btn_on"><img src="./images/mouse/ic-播放.png"></div>PLAY VIDEO</div>
+          </div>
+        </div>
+        <div class="certify_video">
+          <img src="./images/certify/pic-指纹验证器-2.2.png">
+          <div class="certify_video_content">          
+            <div class="mouseS_video_title">Password-less Login</div>
+            <div class="mouseS_video_title">Microsoft Applications</div>
+			<div class="mouseS_video_title">by Fingerprint</div>
+            <div class="certify_video_btn"><div class="video_btn_on"><img src="./images/mouse/ic-播放.png"></div>PLAY VIDEO</div>
+          </div>
+        </div>
+        <div class="certify_video">
+          <img src="./images/certify/pic-指纹验证器-2.3.png">
+          <div class="certify_video_content"> 
+            <div class="mouseS_video_title">Encrypt & Decrypt Data</div>
+            <div class="mouseS_video_title">by Fingerprint,</div>
+			<div class="mouseS_video_title">Protect Your Privacy</div>
+            <div class="certify_video_btn"><div class="video_btn_on"><img src="./images/mouse/ic-播放.png"></div>PLAY VIDEO</div>
+          </div>
+        </div>
+      </div>
+      <div class="max-width-1440">
+        <div class="basic_title">SPECIFICATIONS</div>
+        <div class="basic_w"><div>Tracking Type：Optical</div><div class="basic_right">Number Of Buttons：4</div></div>
+        <div class="basic_g"><div>Connectivity：Wired</div><div class="basic_right">Resolution：1000dpi</div></div>
+        <div class="basic_w"><div>Interface：USB</div><div class="basic_right">Supporting Ergonomic</div></div>
+        <div class="basic_g"><div>Dimensions：100.5x63.5x35.5 (mm)</div><div class="basic_right">Operating System：Windows</div></div>
+        <div class="basic_w"><div>Achieved WBDI Certification</div><div class="basic_right">Compatibility：Windows7 and above</div></div>
+        <div class="basic_g"></div>
+      </div>
+    </div>
+    <link href="./css/footer.css" rel="stylesheet">
+    <div data-lbifile="./common/footer_en.html"></div>
+  </div>
+</body>
+<script type="text/javascript" src="./js/common/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="./js/common/frame.js"></script>
+<script type="text/javascript" src="./js/common/common.js"></script>
+<script type="text/javascript">
+  window.onload = function() {
+    setTimeout(function() {
+      comJs.initNav('certify')
+    }, 10)
+  }
+</script>
+
+</html>
