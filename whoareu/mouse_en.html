@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+  <title>Who Are You</title>
+  <link href="./css/common.css" rel="stylesheet">
+  <link href="./css/home.css" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <script>
+    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      var viewport = document.querySelector("meta[name=viewport]");
+      viewport.setAttribute('content', 'width=device-width, initial-scale=0.2,maximum-scale=1, user-scalable=no');
+    }
+  </script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <link href="./css/header.css" rel="stylesheet">
+    <div data-lbifile="./common/header_en.html"></div>
+    <div class="page">
+      <div class="section_mouse">
+        <div class="max-width-1440">
+          <img src="./images/mouse/pic_p2_S1.png">
+        </div>
+      </div>
+      <div class="section1_mouse">
+        <div class="max-width-1440">
+          <div class="mouse_img"><img src="./images/mouse/pic_p2_2_en.png"></div>
+        </div>
+      </div>
+      <div class="section2_mouse">
+        <div class="max-width-1440">
+          <img src="./images/mouse/pic_p2_n1_en.png">
+          <div class="mouse_btn"><a href='mouseS.html'>LEARN MORE</a></div>
+        </div>
+      </div>
+    </div>
+    <link href="./css/footer.css" rel="stylesheet">
+    <div data-lbifile="./common/footer_en.html"></div>
+  </div>
+</body>
+<script type="text/javascript" src="./js/common/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="./js/common/frame.js"></script>
+<script type="text/javascript" src="./js/common/common.js"></script>
+<script type="text/javascript">
+  window.onload = function() {
+    setTimeout(function() {
+      comJs.initNav('mouse')
+    }, 10)
+  }
+</script>
+
+</html>
