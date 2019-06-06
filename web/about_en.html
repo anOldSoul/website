@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+  <title>Who Are You</title>
+  <link href="./css/common.css" rel="stylesheet">
+  <link href="./css/home.css" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <script>
+    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      var viewport = document.querySelector("meta[name=viewport]");
+      viewport.setAttribute('content', 'width=device-width, initial-scale=0.2,maximum-scale=1, user-scalable=no');
+    }
+  </script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <link href="./css/header.css" rel="stylesheet">
+    <div data-lbifile="./common/header_en.html"></div>
+    <div class="page">
+      <div class="section_about">
+        <div class="max-width-1440">
+          <img src="./images/pic-关于我们-简介.png">
+          <div class="banner_content_about">
+                WhoAreYou is an intelligent hardware manufacturer and comprehensive service provider in account security industry, with globalization perspective and headquarter in Shanghai, China.
+				WhoAreYou empowers with strong security authentication technology, redefines and independently develops a series of computer peripherals for internet usage scenario, such as fingerprint mouse, fingerprint dongle, etc.
+				WhoAreYou is committed to continuous exploration in internet, IOT, business service, financial industry, cultural entertainment and block chains, as well as large-scale deployment of hardware products and security technology.
+				The vision of WhoAreYou is to make authentication simpler and stronger. With gradual popularization of password-less authentication using biometric such as fingerprint in smart phones, WhoAreYou is aimed to apply it to  computers and IoT(Internet of Things). By embedding biometric technology and security architecture into hardware devices such as mouse and dongle, the users can get stronger account security and simpler operation without additional devices such as an internet bank key.
+				The founders of WhoAreYou include technical experts in the fields of biometric and information security, senior specialists in financial payment and consumer electronics industries, and several Internet successive entrepreneurs.
+				As member of FIDO (Fast Identity Online) Alliance and China IFAA (Internet Finance Authentication Alliance), the core technology and hardware products have achieved FIDO, IFAA and Windows Biometric Identification Driver certification. We will strive to work with alliance members, such as Alibaba, Lenovo, Microsoft, Google and other global famous enterprises, to improve the web security environment.
+		  </div>
+      </div>
+      <div class="section2_about">
+        <div class="about_logo"><img src="./images/pic-关于我们-互啊佑logo.png"></div>     
+          <div class="about_img">
+            <img src="./images/pic-关于我们-2.png">
+          </div>
+      </div>
+      <div class="section2_index">
+        <div class="legue_title">WhoAreYou is the member of two international security organizations,</div>
+		<div class="legue_title"> FIDO & IFAA, </div>
+        <div class="legue_title">achieved FIDO2 and Windows Biometric Identification Driver certification.</div>
+        <div class="legue_box">          
+          <div class="league_img">
+            <img src="./images/pic-首页-认证-1.png">
+          </div>
+          <div class="league_img">
+            <img src="./images/pic-首页-认证-2.png">
+          </div>
+          <div class="league_img">
+            <img src="./images/pic-首页-认证-3.png">
+          </div>
+        </div>
+      </div>
+    </div>
+    <link href="./css/footer.css" rel="stylesheet">
+    <div data-lbifile="./common/footer_en.html"></div>
+  </div>
+</body>
+<script type="text/javascript" src="./js/common/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="./js/common/frame.js"></script>
+<script type="text/javascript" src="./js/common/common.js"></script>
+<script type="text/javascript">
+  window.onload = function() {
+    setTimeout(function() {
+      comJs.initNav('about')
+    }, 10)
+  }
+</script>
+
+</html>
