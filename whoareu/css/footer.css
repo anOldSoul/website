@@ -1,7 +1,6 @@
 
 .bottom {
   width: 100%;
-  text-align: center;
   color: #fff;
   font-size: 14px;
   float: left;
@@ -75,9 +74,14 @@
 .bottom_sub_item{
   margin-bottom: 17px;
   line-height: 1;
+  
+}
+.bottom_sub_item a {
+  text-align: left;
 }
 .bottom_sub_item:hover a{
-  color: #17bf98;
+  color: #FF9364;
+  text-align: left;
 }
 .qr_code{
   margin-top: 30px;

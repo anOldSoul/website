@@ -10,17 +10,69 @@
 .top{
   height: 32px;
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
   background:rgba(55,90,146,1);
+}
+.top_icon{
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+.top_text{
+  color: #fff;
+  margin-right: 10%;
 }
 .header * {
   box-sizing: content-box!important;
 }
 .header-content {
-  width: 1440px;
+  width: 1200px;
   height: 70px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+}
+.header_sub{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:rgba(255,255,255,0.5);
+  height: 28px;
+  bottom: -28px;
+  position: absolute;
+}
+.header_sub1{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:rgba(255,255,255,0.5);
+  height: 28px;
+  bottom: -58px;
+  position: absolute;
+}
+
+.buy_btn{
+  width:90px;
+  height:32px;
+  background:rgba(255,147,100,1);
+  border-radius:6px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 19px;
+}
+.buy_icon{
+  width: 16px;
+  height: 18px;
+  font-size: 18px;
+  margin-right: 9px;
 }
 
 .logo {
@@ -49,13 +101,12 @@
   font-size: 14px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   float: left;
-  padding: 0 40px;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
   color: #fff;
+  width: 160px;
 }
 .menu_item .sub_menu{
   width: 104px;
@@ -63,7 +114,6 @@
   top: 60px;
   left: 0;
   color: #fff;
-  /*background: #1472d8;*/
   display: none;
 }
 .menu_item .sub_menu li{
@@ -71,29 +121,30 @@
   height: 40px;
 }
 .header_underline{
-  width: 30px;
-  height: 4px;
-  border-radius: 4px;
+  width: 160px;
+  height: 10px;
   margin: 0 auto;
   margin-top: 5px;
+  position: absolute;
+  bottom: 0;
 }
 #menu_item1.active .header_underline{
-  background: #17bf98; 
+  background: #FF9364; 
 }
 #menu_item2.active .header_underline{
-  background: #17bf98; 
+  background: #FF9364; 
 }
 #menu_item3.active .header_underline{
-  background: #17bf98; 
+  background: #FF9364; 
 }
 #menu_item4.active .header_underline{
-  background: #17bf98; 
+  background: #FF9364; 
 }
 #menu_item5.active .header_underline{
-  background: #17bf98; 
+  background: #FF9364; 
 }
 #menu_item6.active .header_underline{
-  background: #17bf98; 
+  background: #FF9364; 
 }
 .menu_item a, .menu_item .sub_menu li a{
   display: inline-block;
@@ -106,12 +157,18 @@
   z-index: 2;
 }
 .menu_item:hover a{
-  color: #17bf98;
+  color: #FF9364;
 }
 .menu_item a{
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+}
+.header_sub a, .header_sub1 a{
+  height: 100%;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
