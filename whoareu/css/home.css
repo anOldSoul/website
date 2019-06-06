@@ -8,6 +8,50 @@ a{
 img {
   width: 100%;
 }
+video{
+  background: black;
+  box-shadow: 0px 0px 5px 3px #252323;
+}
+.video_lg{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 130;
+  display: none;
+  background-color: rgba(0,0,0,0.5);
+}
+.video_play {
+  width: 810px;
+  height: 500px;
+  z-index: 131;
+  position: fixed;
+  display: none;
+  margin-top: -250px;
+  top: 50%;
+  margin-right: auto;
+  left: 50%;
+  margin-left: -400px;
+}
+.close_video {
+  background: url(../images/icon-cross-squre.png) no-repeat;
+  border-radius: 0.3rem;
+  top: -32px;
+  background-size: 100% 100%;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+.video-js{
+  background-color: #000;
+  position: relative;
+  padding: 0;
+  font-size: 10px;
+  vertical-align: middle;
+}
 .section_index{
   width: 100%;
   height: 650px;
@@ -26,6 +70,7 @@ img {
   align-items: center;
   background: #DBDEE5;
   height: 358px;
+  position: relative;
 }
 .section2_about{
   display: flex;
@@ -100,17 +145,51 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
-.banner_btn a {
+.banner_btn_mouse{
+  color: #fff;
+  position: absolute;
+  left:50%;
+  bottom: 57px;
+  transform:translate(-50%,0);
+  width:180px;
+  height:54px;
+  border:2px solid rgba(255,255,255,1);
+  border-radius:27px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.banner_btn_certify{
+  position: absolute;
+  left:50%;
+  bottom: 62px;
+  transform:translate(-50%,0);
+  width:180px;
+  height:54px;
+  border:2px solid rgba(0, 0, 0,1);
+  border-radius:27px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.banner_btn_certify a{
+  color: black;
+}
+.banner_btn a, .banner_btn_certify a, .banner_btn_mouse a {
   text-align: center;
-  color: rgba(23,191,152,1);
 }
-.banner_btn:hover a {
+.banner_btn:hover a, .banner_btn_certify:hover a {
   color: #fff;
 }
-.banner_btn:hover{
+.banner_btn:hover, .banner_btn_certify:hover, .banner_btn_mouse:hover{
   text-align: center;
-  background:rgba(23,191,152,1);
+  background: #FF9364;
   color: #fff;
 }
 
