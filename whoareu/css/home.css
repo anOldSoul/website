@@ -382,6 +382,23 @@ video{
   line-height: 1.5;
   display: inline;
 }
+.support_a_text_title{
+  margin-bottom: 28px;
+}
+.support_a_text_img{
+  margin: 17px 0;
+}
+.support_a_text_box{
+  display: flex;
+  flex-direction: row;
+}
+.support_a_text_left{
+  width: 483px;
+  margin-right: 50px;
+}
+.support_a_text_right{
+  width: 483px;
+}
 .support_img_logo{
   width: 110px;
   height: 19px;
