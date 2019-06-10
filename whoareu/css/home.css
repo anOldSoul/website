@@ -292,6 +292,7 @@ video{
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 .video_btn_on img{
   width: 14px;
