@@ -23,9 +23,9 @@
     <div data-lbifile="./common/header.html"></div>
     <div class="page">
       <div class="section_mouseS">
-        <div class="max-width-1440">
+        <div class="relative max-width-1440">
           <img src="./images/mouse/pic_p3_banner.png">
-          <div class="mouse_btn">立即购买</div>
+          <div class="mouseS_btn mouse_btn">立即购买</div>
         </div>
       </div>
       <div class="section1_mouse">
@@ -78,6 +78,14 @@
     </div>
     <link href="./css/footer.css" rel="stylesheet">
     <div data-lbifile="./common/footer.html"></div>
+    <div class="video_lg">
+      <div class="video_play" style="display: block;">
+        <div class="close_video"></div>
+        <div class="video-js">
+          <video autoplay="autoplay" controls="controls" id="example_video_1_html5_api" class="vjs-tech" style="position: relative;width: 100% ;height: 100%;" src=""></video>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 <script type="text/javascript" src="./js/common/jquery-1.11.2.min.js"></script>
@@ -89,6 +97,16 @@
       comJs.initNav('mouse')
     }, 10)
   }
+  var videoSrc = ['https://outin-f2ad090b86a611e9860900163e06123c.oss-cn-shanghai.aliyuncs.com/8dd873afcbfe423ca141656d09eb41f4/095f099c98c84083960291193000d042-aa01faf5770b6e434ed70f9d77e8a5dd-sd.mp4', 'https://outin-f2ad090b86a611e9860900163e06123c.oss-cn-shanghai.aliyuncs.com/d0fc75a4bc8e45eb9abeb06b094bf4ab/7d1fb0e7cd724ccf88f9a639621d86fc-13d01dc3f0f68fb1096fb23ad62344fe-hd.mp4', 'https://outin-f2ad090b86a611e9860900163e06123c.oss-cn-shanghai.aliyuncs.com/78081633d1fa404c9d8fd1c48cb410ed/d6eba80885c14776a6d4c9dc3bb5fc6d-d2ed3f8f3d74d890f0d87d90cd519fcd-hd.mp4', 'https://outin-f2ad090b86a611e9860900163e06123c.oss-cn-shanghai.aliyuncs.com/3c02c6955b8c404fa5c1a56bd094fe6f/15651490f5e34602b59b45d25ac24684-bbc6728b57d706a960f003aa663f87d3-hd.mp4']
+  $('.mouseS_video_btn').each(function(index, el) {
+    $(this).click(function() {
+      $('.video_lg').css('display', 'block')
+      $('video').attr('src', videoSrc[index])
+    })
+  })
+  $('.close_video').click(function() {
+    $('.video_lg').css('display', 'none')
+  })
 </script>
 
 </html>

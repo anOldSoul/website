@@ -69,7 +69,7 @@
       <div class="video_play" style="display: block;">
         <div class="close_video"></div>
         <div class="video-js">
-          <video autoplay="autoplay" controls="controls" id="example_video_1_html5_api" class="vjs-tech" style="position: relative;width: 100% ;height: 100%;" src="https://outin-f2ad090b86a611e9860900163e06123c.oss-cn-shanghai.aliyuncs.com/37492078fa384542a9f8e3fb5024d056/9a1e5bf3c65bb449f278a8eceeed8d4f-sd.mp4?Expires=1559813848&OSSAccessKeyId=LTAIrkwb21KyGjJl&Signature=ZGXPB2l9LRIfxv2Hd4E0wFZT%2BAg%3D"></video>
+          <video autoplay="autoplay" controls="controls" id="example_video_1_html5_api" class="vjs-tech" style="position: relative;width: 100% ;height: 100%;" src=""></video>
         </div>
       </div>
     </div>
@@ -83,11 +83,15 @@
     setTimeout(function() {
       comJs.initNav('certify')
     }, 10)
+    var videoSrc = ['https://outin-f2ad090b86a611e9860900163e06123c.oss-cn-shanghai.aliyuncs.com/b235dbbb03d24a0992b2ea18cbb53df4/0f053d02992347148426dd00add6cd6c-2af3f6afc58aab664ccc1a3fda86fac3-hd.mp4', 'https://outin-f2ad090b86a611e9860900163e06123c.oss-cn-shanghai.aliyuncs.com/b0ca842d6ab441de86bad3cdfe634c5a/853bc2b48e8742e98a7e1cd01407bf01-38771d1967faf8deea548790d1975c3a-hd.mp4', 'https://outin-f2ad090b86a611e9860900163e06123c.oss-cn-shanghai.aliyuncs.com/bf692c741c584a90b62c86c88423a447/a94c92d490e94c1b9e0574d13163cc89-16b4684bbebb8b4a44da68c001c837c6-hd.mp4']
+    $('.certify_video_btn').each(function(index, el) {
+      $(this).click(function() {
+        $('.video_lg').css('display', 'block')
+        $('video').attr('src', videoSrc[index])
+      })
+    })
     $('.close_video').click(function() {
       $('.video_lg').css('display', 'none')
-    })
-    $('.certify_video_btn').click(function() {
-      $('.video_lg').css('display', 'block')
     })
   }
 </script>
