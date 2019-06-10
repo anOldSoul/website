@@ -23,3 +23,26 @@ var comJs = {
     return null;
   }
 }
+
+$(function() {
+	if(window.location.href.indexOf("8080")) {
+		if(!$.cookie("changeFlag")) {
+			window.location.href = navigator.language == "zh-CN" ? "http://localhost:8080/WayWebSite-New/index.html" :
+				"http://localhost:8080/WayWebSite-New/index_en.html";
+		}
+	} else {
+		if($.cookie("changeFlag")) {
+			window.location.href = navigator.language == "zh-CN" ? "www.whoareyou.live" : "www.whoareyou.live/index_en.html";
+		}
+	}
+	$.cookie("changeFlag", true);
+});
+
+function toENorCN() {
+	if(window.location.href.indexOf("html") == -1) {
+		window.location.href = "index_en.html";
+	} else {
+		window.location.href = window.location.href.indexOf("_en")==-1 ? window.location.href.replace(".html", "_en.html") : window.location.href.replace("_en.html", ".html");
+	}
+}
+
