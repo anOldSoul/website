@@ -454,6 +454,15 @@ video{
   left: 20%;
   position: absolute;
 }
+.banner_content_about_en{
+  width: 470px;
+  top: 6%;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: justify;
+  left: 20%;
+  position: absolute;
+}
 .about_logo{
   margin-top: 60px;
   margin-bottom: 73px;
