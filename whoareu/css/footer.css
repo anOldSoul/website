@@ -11,6 +11,7 @@
   height: 63px;
 }
 .bottom_box{
+  color: #fff;
   height: 240px;
   background:rgba(55,90,146,1);
   display: flex;
@@ -75,17 +76,16 @@
 .bottom_sub_item{
   margin-bottom: 17px;
   line-height: 1;
-  
 }
 .bottom_sub_item a {
-  text-align: left;
+  display: flex;
+  justify-content: flex-start;
 }
 .bottom_sub_item:hover a{
   color: #FF9364;
   text-align: left;
 }
 .qr_code{
-  margin-top: 30px;
   width: 79px;
   height: 79px;
 }
