@@ -2,12 +2,12 @@
 
 .tip_text{
   width:610rpx;
-  height:708rpx;
   background:rgba(255,255,255,1);
   box-shadow:0 2rpx 12rpx 0 rgba(0,0,0,0.1);
   border-radius:8rpx;
   margin-left: 30rpx;
   margin-top: 30rpx;
+  margin-bottom: 40rpx;
   padding: 30rpx 40rpx;
 }
 
@@ -28,4 +28,7 @@
 .text_content{
   margin-top: 10rpx;
   margin-bottom: 30rpx;
+}
+.attention{
+  font-size: 28rpx;
 }

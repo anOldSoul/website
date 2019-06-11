@@ -1,12 +1,14 @@
 {
   "pages": [
     "pages/search/index",
+    "pages/index/index",
+    "pages/shopping/index",
+    "pages/introduction/index",
     "pages/finger/index",
     "pages/editFinger/index",
-    "pages/shopping/index",
     "pages/password/index",
     "pages/editPw/index",
-    "pages/index/index",
+    
     "pages/admPw/index",
     "pages/repair/index",
     "pages/addDevice/index"
