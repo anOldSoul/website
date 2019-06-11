@@ -229,6 +229,12 @@ video{
   left: 77% !important;
   bottom: 27% !important;
 }
+.relative .mouseN_btn{
+  left: 21% !important;
+  bottom: 16% !important;
+  color: #000000;
+  border: 2px solid rgba(0,0,0,1);
+}
 .section_certify{
   background: #DBDEE5;
 }
@@ -294,7 +300,7 @@ video{
   margin-bottom: 10px;
 }
 .certify_video{
-  width: 393px;
+  /* width: 393px; */
   height: 632px;
   position: relative;
   margin-bottom: 20px;
