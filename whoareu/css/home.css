@@ -140,6 +140,24 @@ video{
   align-items: center;
   margin: 28px 0;
 }
+
+.index_btn, .mouse_btn{
+  color: #fff;
+  position: absolute;
+  left:50%;
+  bottom: 57px;
+  transform:translate(-50%,0);
+  width:180px;
+  height:54px;
+  border:2px solid rgba(255,255,255,1);
+  border-radius:27px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
 .banner_btn{
   color: #fff;
   position: absolute;
@@ -190,13 +208,17 @@ video{
 .banner_btn_certify a{
   color: black;
 }
+.banner_btn_support{
+	cursor: pointer;
+}
 .banner_btn a, .banner_btn_certify a, .banner_btn_mouse a {
   text-align: center;
 }
 .banner_btn:hover a, .banner_btn_certify:hover a {
   color: #fff;
 }
-.banner_btn:hover, .banner_btn_certify:hover, .banner_btn_mouse:hover{
+.banner_btn_support:hover, .certify_video_btn:hover, .index_btn:hover, 
+.mouse_btn:hover, .mouseS_video_btn:hover, .banner_btn:hover, .banner_btn_certify:hover, .banner_btn_mouse:hover{
   text-align: center;
   background: #FF9364;
   color: #fff;
@@ -444,22 +466,25 @@ video{
 .section_about{
   position: relative;
 }
+.banner_content_about div {
+	text-indent:2em;
+}
 .banner_content_about{
   width: 459px;
-  top: 12%;
+  top: 91px;
   font-size: 14px;
   line-height: 1.5;
   text-align: justify;
-  left: 20%;
+  left: 164px;
   position: absolute;
 }
 .banner_content_about_en{
-  width: 470px;
-  top: 6%;
+  width: 523px;
+  top: 70px;
   font-size: 14px;
   line-height: 1.5;
-  text-align: justify;
-  left: 20%;
+  /* text-align: justify; */
+  left: 164px;
   position: absolute;
 }
 .about_logo{
