@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/shopping/index",
+    "pages/addPw/index",
+    
     "pages/unlockRecord/index",
     "pages/search/index",
     "pages/activateDevice/index",

@@ -17,5 +17,5 @@
       </view>
     </view>
   </view>
-  <navigator class='add_apparatus' url="/pages/activateDevice/index" hover-class="none">同步数据</navigator>
+  <navigator class='add_apparatus' url="/pages/activateDevice/index?func=unlockRecord" hover-class="none">同步数据</navigator>
 </view>
