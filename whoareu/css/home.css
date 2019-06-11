@@ -232,7 +232,7 @@ video{
 .relative .mouseN_btn{
   left: 21% !important;
   bottom: 16% !important;
-  color: #000000;
+  color: #000;
   border: 2px solid rgba(0,0,0,1);
 }
 .section_certify{

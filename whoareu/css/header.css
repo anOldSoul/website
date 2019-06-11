@@ -49,6 +49,9 @@
   font-size: 14px;
   margin-top: 19px;
 }
+.buy_btn:hover{
+	cursor: pointer;
+}
 .buy_icon{
   width: 16px;
   height: 18px;
