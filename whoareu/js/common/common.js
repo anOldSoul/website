@@ -29,7 +29,7 @@ $(function() {
 		}
 	} else {
 		if($.cookie("changeFlag") == null) {
-			window.location.href = navigator.language == "zh-CN" ? "www.whoareyou.live" : "www.whoareyou.live/index_en.html";
+			window.location.href = navigator.language == "zh-CN" ? "https://www.whoareyou.live" : "https://www.whoareyou.live/index_en.html";
 		}
 	}
 	$.cookie("changeFlag", true);
