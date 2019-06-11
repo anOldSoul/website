@@ -161,13 +161,19 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       let hex = '5531000038383838383800000000000000000000'  //管理员密码
       writeBle(hex)
     }
-    if (value.slice(-4, -2) === '31') {
+    if (value.slice(-4, -2) === '31' && value.slice(0, 2) === 'aa') {
       let hex = '5532000039363536313631320000000000000000'  //设置绑定码
       writeBle(hex)
     }
     if (value.slice(-4, -2) === '32') {
       let hex = '5530000000000000000000000000000000000000'  //绑定结束
       writeBle(hex)
+    }
+    if (value.slice(-4, -2) === 'a0') {
+      console.log('添加指纹成功~~~~~~~~~~~~')
+      wx.navigateTo({
+        url: `/pages/finger/index`
+      })
     }
     if (value.slice(-4, -2) === 'b0') {
       console.log('绑定成功~~~~~~~~~~~~')
@@ -230,7 +236,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       }
       onChangePw.hexLen = value.slice(4, 8)      
       let len = bytesToIntLe(hexToBytes(onChangePw.hexLen))
-      console.log('密码数量为：' + len)
+      console.log('数量为：' + len)
       if (len > 0) {
         //原包返回，接收数据包
         //计算数据页数
