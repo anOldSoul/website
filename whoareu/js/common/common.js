@@ -22,13 +22,13 @@ var comJs = {
 }
 
 $(function() {
-	if(window.location.href.indexOf("8080")) {
+	if(window.location.href.indexOf("8080") != -1) {
 		if(!$.cookie("changeFlag")) {
 			window.location.href = navigator.language == "zh-CN" ? "http://localhost:8080/WayWebSite-New/index.html" :
 				"http://localhost:8080/WayWebSite-New/index_en.html";
 		}
 	} else {
-		if($.cookie("changeFlag")) {
+		if($.cookie("changeFlag") == null) {
 			window.location.href = navigator.language == "zh-CN" ? "www.whoareyou.live" : "www.whoareyou.live/index_en.html";
 		}
 	}
