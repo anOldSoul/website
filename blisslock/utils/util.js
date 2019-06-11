@@ -8,6 +8,7 @@ let func = {
   syncFinger: false,
   delFinger: false,
   delPass: false,
+  unlockRecord: false,
   resolve: ''
 }
 let onChangePw = {
@@ -89,7 +90,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
           wx.setStorageSync('_characteristicId', item.uuid)
           let hex
           if (funcKey && func[funcKey]) {
-            let time = Moment().format('ssmmhhDDMMYY')
+            let time = Moment().format('ssmmHHDDMMYY')
             rtc = time
             hex = `55280000${time}00000000000000000000` //重置时钟
           } else {
@@ -130,7 +131,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       if (funcKey && func[funcKey]) {
         hex = '5523000000000000000000000000000000000000'  //seedC
       } else {
-        let time = Moment().format('ssmmhhDDMMYY')
+        let time = Moment().format('ssmmHHDDMMYY')
         hex = `55130000${time}00000000000000000000`  //时间信息
         rtc = time
       }
@@ -147,7 +148,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
     }
     if (value.slice(-4, -2) === '12') {
       seedA = value.slice(8, 20)
-      let time = Moment().format('ssmmhhDDMMYY')
+      let time = Moment().format('ssmmHHDDMMYY')
       seedB = time
       let hex = `55140000${time}00000000000000000000` //seedB,时间信息
       writeBle(hex)
@@ -226,6 +227,18 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
         let hex = `a801${decodedPackageData.slice(36, 64)}00000000`
         writeBle(hex)
       }
+    }
+    if (value.slice(-4, -2) === '2c' && value !=='aa30000000000000000000000000000000002c00') {
+      let unlockRecordData = wx.getStorageSync('unlockRecordData')
+      unlockRecordData.push(value)
+      wx.setStorageSync('unlockRecordData', value)
+      let hex = `552C000000000000000000000000000000000000`
+      writeBle(hex)
+    }
+    if (value === 'aa30000000000000000000000000000000002c00') {
+      wx.navigateTo({
+        url: `/pages/unlockRecord/index?result=noRecord`
+      })
     }
     if (value.slice(-4, -2) === '9e' || value.slice(-4, -2) === 'a2') {
       if (func['syncPass']) {
@@ -309,7 +322,10 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
         let hex = `55210000${finger}000000000000000000000000`
         writeBle(hex)
       }
-      
+      if (func['unlockRecord']) {
+        let hex = '552C000000000000000000000000000000000000'
+        writeBle(hex)
+      }
     }
   })
 }

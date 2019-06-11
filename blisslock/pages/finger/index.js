@@ -16,15 +16,12 @@ Page({
       console.log('监听成功')
       console.log(wx.getStorageSync('fingerData'))
       let str = wx.getStorageSync('fingerData')
-      console.log('-------------')
-      console.log(str)
       var strArr = [];
       var n = 8;
       for (var i = 0, l = str.length; i < l / n; i++) { 
         var a = str.slice(n * i, n * (i + 1));
         strArr.push(a); 
       }
-      console.log(strArr)
       this.setData({
         pwArr: strArr
       })

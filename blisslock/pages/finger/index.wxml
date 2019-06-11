@@ -1,6 +1,6 @@
 <view class='password'>
   <view class='title'><view class='dot'></view>指纹用户</view>
-  <navigator  url="{{'/pages/editPw/index?pw=' + item}}" wx:for="{{pwArr}}" wx:key="{{index}}" class='pw_item'>{{item}}
+  <navigator url="{{'/pages/editPw/index?pw=' + item}}" wx:for="{{pwArr}}" wx:key="{{index}}" class='pw_item'>{{item}}
   </navigator>
   <view class='fixed'>
     <button class='add_password' bindtap="manage_password">添加指纹</button>

@@ -64,7 +64,7 @@ Page({
     wx.onBluetoothDeviceFound((res) => {
       wx.hideLoading()
       res.devices.forEach(device => {
-        if (!device.name && !device.localName) {
+        if (device.name !== 'Blisslock') {
           return
         }
         const foundDevices = this.data.devices

@@ -37,7 +37,7 @@
     </view>
     <view class="func_row">
       <view class="func_item" bindtap='checkAdmPw' class="func_item"><image class="func_img" src='../../images/ic_设备名称-管理员密码.png'></image>管理员密码</view>
-      <navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-开锁记录.png'></image>开锁记录</navigator>
+      <navigator class="func_item" url="/pages/unlockRecord/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-开锁记录.png'></image>开锁记录</navigator>
       <navigator class="func_item" url="/pages/introduction/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-使用说明.png'></image>使用说明</navigator>
     </view>
     <view class="func_row">
