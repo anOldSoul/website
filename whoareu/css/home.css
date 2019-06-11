@@ -1,3 +1,24 @@
+.index_text{
+	z-index: 1;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+	color: #000;
+	font-size:40px;
+}
+.index_text_bold{
+	font-weight:bold;
+}
+.index_text_en{
+	z-index: 1;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+	color: #000;
+	font-size:36px;
+	font-weight:bold;
+}
+
 a{
   display: inline-block;
   width: 100%;
