@@ -120,11 +120,6 @@ Page({
       }
     })
   },
-  // writeBLECharacteristicValue() {
-  //   // 向蓝牙设备发送一个0x00的16进制数据
-  //   let hex = '5511000031323334353637383930313233340000'  //login
-  //   app.util.writeBle(hex)
-  // },
   closeBluetoothAdapter() {
     wx.closeBluetoothAdapter()
     this._discoveryStarted = false

@@ -1,5 +1,6 @@
 const Moment = require('./moment.min.js')
 let rtc, seedA, seedB, seedC, key, decodedPackageData
+let hasUnlockRecord = false
 const app = getApp();
 let func = {
   addPass: false,
@@ -229,15 +230,17 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       }
     }
     if (value.slice(-4, -2) === '2c' && value !=='aa30000000000000000000000000000000002c00') {
-      let unlockRecordData = wx.getStorageSync('unlockRecordData')
+      hasUnlockRecord = true
+      let tempData = wx.getStorageSync('unlockRecordData')
+      let unlockRecordData = (tempData instanceof Array) ? tempData : []
       unlockRecordData.push(value)
-      wx.setStorageSync('unlockRecordData', value)
+      wx.setStorageSync('unlockRecordData', unlockRecordData)
       let hex = `552C000000000000000000000000000000000000`
       writeBle(hex)
     }
     if (value === 'aa30000000000000000000000000000000002c00') {
-      wx.navigateTo({
-        url: `/pages/unlockRecord/index?result=noRecord`
+      wx.redirectTo({
+        url: `/pages/unlockRecord/index?result=${hasUnlockRecord ? 'hasRecord' : 'noRecord'}`
       })
     }
     if (value.slice(-4, -2) === '9e' || value.slice(-4, -2) === 'a2') {
