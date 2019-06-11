@@ -420,6 +420,9 @@ video{
   width: 50%;
   text-align: left;
 }
+.basic_right_bold{
+	font-weight: bold;
+}
 /*技术支持*/
 .support_use_title{
   color: #283149;

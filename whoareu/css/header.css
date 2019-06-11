@@ -172,6 +172,9 @@
 .menu_item:hover a{
   color: #FF9364;
 }
+.header_sub span, .header_sub1 span{
+	color: #000;
+}
 .menu_item a{
   height: 100%;
   display: flex;
