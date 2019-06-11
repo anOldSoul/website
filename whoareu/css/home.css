@@ -70,7 +70,7 @@ video{
   position: fixed;
   display: none;
   margin-top: -250px;
-  top: 50%;
+  top: 55%;
   margin-right: auto;
   left: 50%;
   margin-left: -400px;
@@ -78,7 +78,7 @@ video{
 .close_video {
   background: url(../images/icon-cross-squre.png) no-repeat;
   border-radius: 0.3rem;
-  top: -32px;
+  top: -30px;
   background-size: 100% 100%;
   width: 30px;
   height: 30px;
