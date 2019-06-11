@@ -1,0 +1,16 @@
+/* pages/index/index.wxss */
+.no_apparatus{
+  width: 400rpx;
+  height: 306rpx;
+  margin-left: 182rpx;
+  margin-top: 234rpx;
+  margin-bottom: 122rpx;
+}
+.tip_text{
+  font-size: 32rpx;
+  text-align: center;
+}
+.add_apparatus{
+  position: fixed;
+  bottom: 60rpx;
+}

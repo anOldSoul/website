@@ -3,14 +3,14 @@
     "pages/shopping/index",
     "pages/unlockRecord/index",
     "pages/search/index",
-    "pages/index/index",
+    "pages/activateDevice/index",
     
+    "pages/index/index",
     "pages/introduction/index",
     "pages/finger/index",
     "pages/editFinger/index",
     "pages/password/index",
     "pages/editPw/index",
-    
     "pages/admPw/index",
     "pages/repair/index",
     "pages/addDevice/index"

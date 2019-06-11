@@ -2,7 +2,8 @@
 const app = getApp()
 Page({
   data: {
-    date: '2016-09',
+    date: app.Moment().format('YYYY-MM'),
+    currentMonthData: [],
     unlockRecord: []
   },
   onLoad: function (options) {
@@ -19,29 +20,41 @@ Page({
           }
         }
       })
-      return
     }
     let unlockRecordData = wx.getStorageSync('unlockRecordData') || []
-    let unlockRecord = unlockRecordData.map((item, index) => {
-      let type = item.slice(8, 10)
-      let time = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('20YY-MM-DD HH:mm:ss')
-      let lockType
-      if (type === '23') {
-        lockType = '指纹开锁'
-      }
-      if (type === '24') {
-        lockType = '本地密码'
-      }
-      if (type === '25') {
-        lockType = '临时密码'
-      }
-      return {
-        lockType: lockType,
-        time: time
-      }
-    })
+    let unlockRecord
+    if (unlockRecordData instanceof Array) {
+      unlockRecord = unlockRecordData.map((item, index) => {
+        let type = item.slice(8, 10)
+        let time = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('HH:mm:ss')
+        let date = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('20YY-MM-DD')
+        let month = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('20YY-MM')
+        let lockType
+        if (type === '23') {
+          lockType = '指纹开锁'
+        }
+        if (type === '24') {
+          lockType = '本地密码'
+        }
+        if (type === '25') {
+          lockType = '临时密码'
+        }
+        return {
+          lockType: lockType,
+          time: time,
+          month: month,
+          date: date
+        }
+      })
+    } else {
+      unlockRecord = []
+    }
+    console.log(unlockRecord)
+    this.data.unlockRecord = unlockRecord
     this.setData({
-      unlockRecord: unlockRecord
+      currentMonthData: unlockRecord.filter((item, index) => {
+        return item.month === this.data.date
+      })
     })
   },
   syncUnlockRecord: function() {
@@ -49,8 +62,13 @@ Page({
   },
   bindDateChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
+    let currentMonth = e.detail.value
+    let unlockRecord = this.data.unlockRecord.filter((item, index) => {
+      return item.month === currentMonth
+    })
     this.setData({
-      date: e.detail.value
+      date: currentMonth,
+      currentMonthData: unlockRecord
     })
   }
 })

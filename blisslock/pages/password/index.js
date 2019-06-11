@@ -2,7 +2,7 @@
 const app = getApp()
 Page({
   data: {
-    pwArr: [1111, 1111, 1111, 1111, 1111, 1111, 1111, 1111, 1111, 3444],
+    pwArr: [],
     connected: false,
     chs: []
   },
