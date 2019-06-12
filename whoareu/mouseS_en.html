@@ -86,10 +86,7 @@
     <div class="video_lg">
       <div class="video_play" style="display: block;">
         <div class="close_video"></div>
-        <div class="video-js">
-          <video autoplay="autoplay" controls="controls" id="example_video_1_html5_api" class="vjs-tech" 
-          	style="position: relative;width: 100% ;height: 100%;" src=""></video>
-        </div>
+        <iframe width="810" height="500" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
     </div>
   </div>
@@ -104,15 +101,15 @@
       comJs.initNav('mouse')
     }, 10)
   }
-  var videoSrc = ['https://youtu.be/Asv6QVC_C0c',
-		'https://youtu.be/Url1o42Dqy0',
-		'https://youtu.be/Asv6QVC_C0c',
-		'https://youtu.be/DEbPWG31G3s']
+  var videoSrc = ['https://www.youtube.com/embed/Asv6QVC_C0c',
+				  'https://www.youtube.com/embed/Url1o42Dqy0',
+				  'https://www.youtube.com/embed/Asv6QVC_C0c',
+				  'https://www.youtube.com/embed/DEbPWG31G3s']
   
   $('.mouseS_video_btn').each(function(index, el) {
 	    $(this).click(function() {
 	      $('.video_lg').css('display', 'block')
-	      $('video').attr('src', videoSrc[index])
+	      $('iframe').attr('src', videoSrc[index])
 	    })
 	  })
 	  $('.close_video').click(function() {
