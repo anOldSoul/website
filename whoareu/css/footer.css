@@ -1,6 +1,13 @@
 .foot_blank{
 	height: 85px;
-	border: 1px solid #fff;
+	background-color:#fff;
+	padding-right: 1px;
+	margin-right: 60px;
+}
+.foot_blank_en{
+	height: 85px;
+	background-color:#fff;
+	padding-right: 1.5px;
 	margin-right: 60px;
 }
 .logo_bottom{

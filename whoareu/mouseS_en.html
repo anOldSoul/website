@@ -105,16 +105,17 @@
 				  'https://www.youtube.com/embed/Url1o42Dqy0',
 				  'https://www.youtube.com/embed/Asv6QVC_C0c',
 				  'https://www.youtube.com/embed/DEbPWG31G3s']
-  
-  $('.mouseS_video_btn').each(function(index, el) {
+
+  	$('.mouseS_video_btn').each(function(index, el) {
 	    $(this).click(function() {
 	      $('.video_lg').css('display', 'block')
 	      $('iframe').attr('src', videoSrc[index])
 	    })
-	  })
-	  $('.close_video').click(function() {
+ 	});
+
+	$('.close_video').click(function() {
 	    $('.video_lg').css('display', 'none')
-  })
+  	});
 </script>
 
 </html>
