@@ -22,6 +22,9 @@
   margin-right: 10px;
   cursor:pointer;
 }
+.top_logo{
+	height: 32px;
+}
 .top_text{
   color: #fff;
   margin-right: 10%;
