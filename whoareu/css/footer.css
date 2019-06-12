@@ -1,3 +1,8 @@
+.foot_blank{
+	height: 85px;
+	border: 1px solid #fff;
+	margin-right: 60px;
+}
 .logo_bottom{
   width: 195px;
   height: 63px;
@@ -69,6 +74,9 @@
 .bottom_sub_item{
   margin-bottom: 17px;
   line-height: 1;
+}
+.bottom_sub_item_en{
+	margin-bottom:5px;
 }
 .bottom_sub_item a {
   display: flex;
