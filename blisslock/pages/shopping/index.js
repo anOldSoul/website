@@ -10,6 +10,7 @@ function inArray(arr, key, val) {
 }
 Page({
   data: {
+    device_name: '',
     devices: [],
     connected: false,
     chs: []
@@ -123,7 +124,11 @@ Page({
     wx.closeBluetoothAdapter()
     this._discoveryStarted = false
   },
-  onLoad: function (options) {
+  onLoad: function (options) {  
+    let device_name = wx.getStorageSync('device_name')
+    this.setData({
+      device_name: device_name
+    })
   },
   onShow: function () {
   },

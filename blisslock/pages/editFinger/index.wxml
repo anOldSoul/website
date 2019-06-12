@@ -2,6 +2,6 @@
   <view class='pw_item'>{{pw}}
   </view>
   <view class='fixed'>
-    <button class='add_password' bindtap="del_password">删除指纹</button>
+    <button class='add_password' bindtap="del_finger">删除指纹</button>
   </view>
 </view>

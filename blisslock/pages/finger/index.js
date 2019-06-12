@@ -15,16 +15,24 @@ Page({
     }).then(() => {
       console.log('监听成功')
       console.log(wx.getStorageSync('fingerData'))
-      let str = wx.getStorageSync('fingerData')
-      var strArr = [];
-      var n = 8;
-      for (var i = 0, l = str.length; i < l / n; i++) { 
-        var a = str.slice(n * i, n * (i + 1));
-        strArr.push(a); 
-      }
-      this.setData({
-        pwArr: strArr
-      })
+      this.formatFinger()
+    })
+  },
+  formatFinger: function () {
+    let str = wx.getStorageSync('fingerData')
+    var strArr = [];
+    var n = 8;
+    for (var i = 0, l = str.length; i < l / n; i++) {
+      var a = str.slice(n * i, n * (i + 1));
+      strArr.push(a);
+    }
+    let delFinger = wx.getStorageSync('delFinger')
+    let index = strArr.indexOf(delFinger);
+    if (index > -1) {
+      strArr.splice(index, 1);
+    }
+    this.setData({
+      pwArr: strArr
     })
   },
   onLoad: function (options) {
@@ -45,12 +53,10 @@ Page({
         icon: 'success',
         duration: 2000
       })
-    }
-    this.setData({
-      pwArr: wx.getStorageSync('fingerData')
-    })
+    }  
   },
   onShow: function () {
+    this.formatFinger()
   },
   goDetail: function (e) {
     let item = e.currentTarget.dataset.item

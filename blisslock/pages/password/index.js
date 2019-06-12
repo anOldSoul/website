@@ -15,16 +15,24 @@ Page({
     }).then(() => {
       console.log('监听成功')
       console.log(wx.getStorageSync('pwData'))
-      let str = wx.getStorageSync('pwData')
-      var strArr = [];
-      var n = 8;
-      for (var i = 0, l = str.length; i < l / n; i++) { 
-        var a = str.slice(n * i, n * (i + 1));
-        strArr.push(a); 
-      }
-      this.setData({
-        pwArr: strArr
-      })
+      this.formatPw()
+    })
+  },
+  formatPw: function() {
+    let str = wx.getStorageSync('pwData')
+    var strArr = [];
+    var n = 8;
+    for (var i = 0, l = str.length; i < l / n; i++) {
+      var a = str.slice(n * i, n * (i + 1));
+      strArr.push(a);
+    }
+    let delPass = wx.getStorageSync('delPass')
+    let index = strArr.indexOf(delPass);
+    if (index > -1) {
+      strArr.splice(index, 1);
+    }
+    this.setData({
+      pwArr: strArr
     })
   },
   onLoad: function (options) {
@@ -46,9 +54,7 @@ Page({
         duration: 2000
       })
     }
-    this.setData({
-      pwArr: wx.getStorageSync('pwData')
-    })
+    this.formatPw()
   },
   onShow: function () {
   },

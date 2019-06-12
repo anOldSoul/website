@@ -175,25 +175,27 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
     }
     if (value.slice(-4, -2) === 'a0') {
       console.log('添加指纹成功~~~~~~~~~~~~')
-      wx.navigateTo({
+      let str = wx.getStorageSync('fingerData')
+      wx.setStorageSync('fingerData', str + value.slice(8, 16))
+      wx.redirectTo({
         url: `/pages/finger/index`
       })
     }
     if (value.slice(-4, -2) === 'b0') {
       console.log('绑定成功~~~~~~~~~~~~')
-      wx.navigateTo({
+      wx.redirectTo({
         url: `/pages/shopping/index`
       })
     }
     if (value.slice(-4, -2) === '1f') {
       console.log('删除密码成功~~~~~~~~~~~~')
-      wx.navigateTo({
+      wx.navigateBack({
         url: `/pages/password/index?result=${value.slice(2, 4)}`
       })
     }
     if (value.slice(-4, -2) === '21') {
       console.log('删除指纹成功~~~~~~~~~~~~')
-      wx.navigateTo({
+      wx.navigateBack({
         url: `/pages/finger/index?result=${value.slice(2, 4)}`
       })
     }
@@ -302,8 +304,13 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
     }
     if (value.slice(-4, -2) === '95') {
       if (func['addPass']) {
-        let pw = pwNeedToAdd
-        let hex = '551D000031323334353600000000000000000000'
+        let pw = strToHexCharCode(pwNeedToAdd)
+        if (pw.length < 24) {
+          for (let i = pw.length; i < 24; i++) {
+            pw = pw + '0'
+          }
+        }
+        let hex = `551D0000${pw}00000000`
         writeBle(hex)
       }
       if (func['syncPass']) {

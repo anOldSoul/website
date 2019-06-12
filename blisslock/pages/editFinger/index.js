@@ -4,9 +4,9 @@ Page({
   data: {
     pw: ''
   },
-  del_password() {
-    wx.setStorageSync('delPass' ,this.data.pw)
-    app.util.doBLEConnection('delPass')
+  del_finger() {
+    wx.setStorageSync('delFinger' ,this.data.pw)
+    app.util.doBLEConnection('delFinger')
   },
   onLoad: function (options) {
     this.setData({
