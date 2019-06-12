@@ -516,7 +516,7 @@ video{
   font-size: 14px;
   line-height: 1.5;
   text-align: justify;
-  left: 164px;
+  left: 20px;
   position: absolute;
 }
 .banner_content_about_en{
@@ -524,8 +524,7 @@ video{
   top: 70px;
   font-size: 14px;
   line-height: 1.5;
-  /* text-align: justify; */
-  left: 164px;
+  left: 20px;
   position: absolute;
 }
 .about_logo{

@@ -141,34 +141,83 @@
 			</div>
           </div>
         </div>
-		<div class="support_q_item">         
+        <div class="support_q_item">
           <div class="support_q">
             <div class="support_q_left">Q10</div>
-            <div class="support_q_right">What if Windows Hello fingerprint enrollment failed in Windows 8.1 system ?</div>
+            <div class="support_q_right">How to set account password and PIN code?</div>
           </div>
           <div class="support_a">
-            <div class="support_a_text">Because Windows Hello fingerprint enrollment times limit in Windows 8.1 system is 8, which is a conflict with WhoAreYou fingerprint peripherals ( 4 times), the fingerprint data can’t be stored properly. In order to avoid this and ensure best usability, it is recommended to enroll fingerprints by【WhoAreYou PC Peripherals Fingerprint Application Tool】.</div>
+            <div class="support_a_text">
+              <div class="support_a_text_box">               
+                <div class="support_a_text_left">
+                  <div>STEP1: Take Windows 10 as an example. First, enter Windows Settings→Account→Sign in options.</div>
+                  <div class="support_a_text_img"><img src="./images/support/pic-p6-Q10-1_EN.png"></div>
+                  <div>STEP2: Please create Password and click Add button under PIN. If the account has a password already, you can add PIN code directly.</div>
+                  <div class="support_a_text_img"><img src="./images/support/pic-p6-Q10-2_EN.png"></div>
+                </div>
+                <div class="support_a_text_right">
+                  <div>STEP3: Verify the password in pop-up, enter the password just set or the original account password, and then click Confirm.</div>
+                  <div class="support_a_text_img"><img src="./images/support/pic-p6-Q10-3_EN.png"></div>
+                  <div>STEP4: The PIN code can be set after the password is verified. You can use a 4-bit PIN code or a longer code.</div>
+                  <div class="support_a_text_img">
+                  	<img src="./images/support/pic-p6-Q10-4_EN.png"><br>
+                  	After setting up, please lock screen and login again , the system will prompt for PIN code.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-		<div class="support_q_item">         
+        <div class="support_q_item">
           <div class="support_q">
             <div class="support_q_left">Q11</div>
-            <div class="support_q_right">What if Windows Hello reports ‘Fingerprint Already Enrolled’ when you replace a new PC fingerprint peripheral and enroll fingerprint ? </div>
+            <div class="support_q_right">How to use WhoAreYou Fingerprint peripherals in Windows 7 ?</div>
           </div>
           <div class="support_a">
-            <div class="support_a_text">Register in Windows Hello account with a non-enrolled finger. Then delete the previous enrolled fingerprint in Windows Hello account.</div>
+            <div class="support_a_text">
+              <div class="support_a_text_title">If your current account type is "Administrator", "Guest" or "Standard Account", you will not be able to set up fingerprint applications. Please create a new account by following steps.</div>
+              <div class="support_a_text_box">               
+                <div class="support_a_text_left">
+                  <div>STEP1: Right-click the computer icon in desktop → Manage → Local User and Group → User</div>
+                  <div class="support_a_text_img"><img src="./images/support/pic-p6-Q11-1_en.png"></div>
+                  
+                </div>
+                <div class="support_a_text_right">
+                  <div>STEP2: Click on "Create" to set password according to the system prompt. Note that in password setting page, cancel "User must change password next time log in", and select "Password never expire".</div>
+                  <div class="support_a_text_img"><img src="./images/support/pic-p6-Q11-2_en.png"></div>
+             	  <div>Now a standard account has been created, but fingerprint function is not yet available. Next, you need to upgrade the standard account to an administrative account. Right-click on the new account→property→affiliation→add, enter "administrators", click "Check name"→"Confirm", the new administrative account is finally set up.</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 		<div class="support_q_item">         
           <div class="support_q">
             <div class="support_q_left">Q12</div>
+            <div class="support_q_right">What if Windows Hello fingerprint enrollment failed in Windows 8.1 system ?</div>
+          </div>
+          <div class="support_a">
+            <div class="support_a_text">Because Windows Hello fingerprint enrollment times limit in Windows 8.1 system is 8, which is a conflict with WhoAreYou fingerprint peripherals ( 4 times for S-series, and 14 times for N-series), the fingerprint data can’t be stored properly. In order to avoid this and ensure best usability, it is recommended to enroll fingerprints by【WhoAreYou PC Peripherals Fingerprint Application Tool】.</div>
+          </div>
+        </div>
+		<div class="support_q_item">         
+          <div class="support_q">
+            <div class="support_q_left">Q13</div>
+            <div class="support_q_right">What if Windows Hello reports ‘Fingerprint Already Enrolled’ when you make registration ?</div>
+          </div>
+          <div class="support_a">
+            <div class="support_a_text">The fingerprint is already stored in the mouse, please login 【WhoAreYou PC Peripheral Fingerprint Application Tool】,delete all the previous enrolled fingerprints and make enrollment again.</div>
+          </div>
+        </div>
+		<div class="support_q_item">         
+          <div class="support_q">
+            <div class="support_q_left">Q14</div>
             <div class="support_q_right">Is the fingerprint in Windows Hello synchronized with WhoAreYou Software?</div>
           </div>
           <div class="support_a">
-            <div class="support_a_text">Fingerprints enrolled in Windows Hello can be synchronized with【WhoAreYou PC Peripheral Fingerprint Application Tool】. But fingerprints enrolled in 【WhoAreYou PC Peripheral Fingerprint Application Tool】can’t be synchronized with Windows hello.</div>
+            <div class="support_a_text">Fingerprints enrolled in Windows Hello are automatically synchronized into【WhoAreYou PC Peripheral Fingerprint Application Tool】when the software starts. The fingerprints enrolled in Windows Hello can be used to login the software, but they can’t be managed in the software. The fingerprints enrolled in【WhoAreYou PC Peripheral Fingerprint Application Tool】are automatically synchronized into Windows hello. These fingerprints can be managed both in software and Windows Hello.</div>
           </div>
         </div>
-		<!-- 添加-->
       </div>
     </div>
     <link href="./css/footer.css" rel="stylesheet">

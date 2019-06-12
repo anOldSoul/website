@@ -24,7 +24,7 @@
     <div class="page">
       <div class="banner">
         <img src="./images/index/pic_home_banner_en.png">
-        <div class="index_btn"><div class="video_btn_on"><img src="./images/ic_home_playvideo.png"></div>PLAY VIDEO</div>
+        <div class="index_btn learn_more_btn"><div class="video_btn_on"><img src="./images/ic_home_playvideo.png"></div>PLAY VIDEO</div>
       </div>
       <div class="section_index">
         <div class="max-width-1440">
@@ -70,11 +70,7 @@
     <div class="video_lg">
       <div class="video_play" style="display: block;">
         <div class="close_video"></div>
-        <div class="video-js">
-          <video autoplay="autoplay" controls="controls" id="example_video_1_html5_api" class="vjs-tech" style="position: 
-          		relative;width: 100% ;height: 100%;" 
-          		src="https://youtu.be/Zywq6giZW0U">
-          </video>
+        <iframe width="810" src="https://www.youtube.com/embed/Zywq6giZW0U" height="500" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
       </div>
     </div>
@@ -92,7 +88,7 @@
     $('.close_video').click(function() {
       $('.video_lg').css('display', 'none')
     })
-    $('.index_btn').click(function() {
+    $('.learn_more_btn').click(function() {
       $('.video_lg').css('display', 'block')
     })
   }
