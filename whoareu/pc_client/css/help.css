@@ -1,0 +1,81 @@
+.help_div{
+	height:90px;
+	left:45px
+}
+
+.help_div span{
+	vertical-align: middle;
+	color:#375A90;
+	font-size:20px
+}
+
+
+.help_text_div{
+	top:18px;
+	left:60px;
+	background-color:#f4f4f6
+}
+
+.help_text_div span{
+	font-size:16px;
+	color:#72727e;
+	float:left;
+	margin-top:18px;
+	margin-bottom:18px
+}
+
+.hepl_img{
+	float:left;
+	margin-bottom:34px
+}
+
+.user_title{
+	padding:16px;
+	border-bottom:2px solid #375A92;
+	float:left;
+	color: #375A92;
+	font-size:16px
+}
+
+.user_hr{
+padding:16px;
+border-bottom:1px solid #DEDEDE;
+height:54px;
+float:left;
+width: 780px;
+}
+.user_hr_1{
+	padding:16px;
+	border-bottom:1px solid #DEDEDE;
+	height:54px;
+	float:left;
+	width: 750px;
+}
+
+.user_en{
+padding:16px;
+border-bottom:1px solid #DEDEDE;
+height:54px;
+float:left;
+}
+.user_en_1{
+	width: 680px;
+}
+.user_en_2{
+	width: 700px;
+}
+.user_en_3{
+	width: 650px;
+}
+.user_en_4{
+	width: 630px;
+}
+.user_en_5{
+	width: 580px;
+}
+.user_text{
+	margin-top:12px;
+	color:#666666;
+	font-size:16px;
+	line-height:30px
+}

@@ -1,0 +1,24 @@
+[genuitec-file-id="wc1-65"],[genuitec-lp-path="/zrlog/src/main/webapp/include/templates/default/css/pager.css"],[genuitec-lp-enabled=false]{
+  /* for codelive */
+}
+
+.page_navi {
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+}
+.page_navi a {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    color: #888;
+    height: 36px;
+    line-height: 36px;
+    margin: 2px;
+    padding: 3px 8px;
+    text-decoration: none;
+}
+.page_navi a:hover, .page_navi a.current {
+    border: 1px solid #1e90ff;
+    color: #4682b4;
+    font-weight: bolder;
+}

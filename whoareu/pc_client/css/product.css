@@ -1,0 +1,19 @@
+
+  @media screen and (min-width: 1900px) { 
+.right_product{
+	float:right;
+}
+.left_product{
+	float:left;
+}
+} 
+
+  @media screen and (min-width: 1400px) { 
+.right_product{
+	float:right;
+}
+.left_product{
+	float:left;
+}
+} 
+
