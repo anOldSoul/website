@@ -28,6 +28,11 @@ $(function() {
 				"http://localhost:8080/WayWebSite-New/index_en.html";
 		}
 	} else {
+		if(window.location.href.indexOf("support.html") != -1 || window.location.href.indexOf("support_en.html") != -1 ||
+				window.location.href.indexOf("pc_client/user_contract.html") != -1 || window.location.href.indexOf("pc_client/user_contract_en.html") != -1) {
+			return;
+		}
+		
 		if($.cookie("changeFlag") == null) {
 			window.location.href = navigator.language == "zh-CN" ? "https://www.whoareyou.live" : "https://www.whoareyou.live/index_en.html";
 		}
