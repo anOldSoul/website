@@ -1,0 +1,38 @@
+{
+	"WAYSoftware": {
+		"APP": {
+			"SAFE": {
+				"name": "alpha 1.0.8",
+				"number": 100,
+				"fileCheckCode": "",
+				"downloadUrl": "https://www.whoareyou.live/WAYSoftware/app/safe/waySAFEClient.exe"
+			},
+			"NORMAL": {
+				"name": "1.0.0",
+				"number": 1,
+				"fileCheckCode": "",
+				"downloadUrl": "https://www.whoareyou.live/WAYSoftware/app/normal/wayNORMALClient.exe"
+			}
+		},
+		"FIRMWARE": {
+			"SAFE": {
+				"name": "safe2-1006",
+				"number": 1006,
+				"fileCheckCode": "2222214271",
+				"downloadUrl": "https://www.whoareyou.live/WAYSoftware/firmware/safe/waySAFE-USB.bin"
+			},
+			"NORMAL1": {
+				"name": "normal1-2004",
+				"number": 2004,
+				"fileCheckCode": "2471018586",
+				"downloadUrl": "https://www.whoareyou.live/WAYSoftware/firmware/normal1/wayNORMAL1-USB.bin"
+			},
+			"NORMAL3": {
+				"name": "normal3-3004",
+				"number": 3004,
+				"fileCheckCode": "191739268",
+				"downloadUrl": "https://www.whoareyou.live/WAYSoftware/firmware/normal3/wayNORMAL3-USB.bin"
+			}
+		}
+	}
+}
