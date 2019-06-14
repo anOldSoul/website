@@ -115,7 +115,7 @@ video{
   justify-content: center;
   align-items: center;
   background: #DBDEE5;
-  height: 358px;
+  height: 650px;
   position: relative;
 }
 .section2_about{
@@ -146,7 +146,7 @@ video{
 }
 .league_img{
   width: 305px;
-  height: 148px;
+  height: 478px;
 }
 .league_img:hover{
 	cursor:pointer;
@@ -267,7 +267,7 @@ video{
 
 /*指纹鼠标*/
 .mouseS_btn{
-  left: 77% !important;
+  left: 27% !important;
   bottom: 27% !important;
 }
 .relative .mouseN_btn{
@@ -339,6 +339,10 @@ video{
   height: 492px;
   position: relative;
   margin-bottom: 10px;
+}
+
+.mouseS_top{
+	margin-top:20px;
 }
 .certify_video{
   /* width: 393px; */
