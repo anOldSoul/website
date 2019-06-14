@@ -48,33 +48,20 @@
         </div>
 		<div class="mouse_btn_b index_btn"><a href='certify_en.html'>LEARN MORE ></a></div>
       </div>
-      <div class="section2_index">
-        <div class="legue_title">WhoAreYou is the member of two international security organizations,</div>
-		<div class="legue_title"> FIDO & IFAA, </div>
-        <div class="legue_title">achieved FIDO2 and Windows Biometric Identification Driver certification.</div>
-        <div class="legue_box">          
-          <div class="league_img" onclick="window.open('http://fidoalliance.org/')">
-            <img src="./images/index/pic_home_fido.png">
-          </div>
-          <div class="league_img" onclick="window.open('http://aka.ms/gopasswordless')">
-            <img src="./images/index/pic_home_microsoft.png">
-          </div>
-          <div class="league_img" onclick="window.open('http://ifaa.org.cn/')">
-            <img src="./images/index/pic_home_ifaa.png">
-          </div>
-        </div>
-      </div>
+      <!-- 认证展示层英文版 -->
+      <div data-lbifile="./common/auth_en.html"></div>
     </div>
     <link href="./css/footer.css" rel="stylesheet">
     <div data-lbifile="./common/footer_en.html"></div>
     <div class="video_lg">
       <div class="video_play" style="display: block;">
-        <div class="close_video"></div>
+      	<div class="close_video"></div>
         <iframe width="810" src="https://www.youtube.com/embed/Zywq6giZW0U" height="500" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      </div>
+       </div>
     </div>
-  </div>
+    <!-- 图片弹出层 -->
+	<div data-lbifile="./common/img_show.html"></div>
+   </div>
 </body>
 <script type="text/javascript" src="./js/common/jquery.min.js"></script>
 <script type="text/javascript" src="./js/common/jquery.cookie.js"></script>
@@ -84,13 +71,18 @@
   window.onload = function() {
     setTimeout(function() {
       comJs.initNav('index')
-    }, 10)
+    }, 10);
     $('.close_video').click(function() {
       $('.video_lg').css('display', 'none')
-    })
+    });
     $('.learn_more_btn').click(function() {
       $('.video_lg').css('display', 'block')
-    })
+    });
+    
+    $(".pimg").click(function(){
+		var _this = $(this);//将当前的pimg元素作为_this传入函数
+		imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+	});
   }
 </script>
 

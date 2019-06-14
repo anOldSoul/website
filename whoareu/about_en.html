@@ -40,25 +40,15 @@
             <img src="./images/about-us/pic-p7-2_en.png">
           </div>
       </div>
-      <div class="section2_index">
-        <div class="legue_title">WhoAreYou is the member of two international security organizations,</div>
-		<div class="legue_title"> FIDO & IFAA, </div>
-        <div class="legue_title">achieved FIDO2 and Windows Biometric Identification Driver certification.</div>
-        <div class="legue_box">          
-          <div class="league_img" onclick="window.open('http://fidoalliance.org/')">
-            <img src="./images/index/pic_home_fido.png">
-          </div>
-          <div class="league_img" onclick="window.open('http://aka.ms/gopasswordless')">
-            <img src="./images/index/pic_home_microsoft.png">
-          </div>
-          <div class="league_img" onclick="window.open('http://ifaa.org.cn/')">
-            <img src="./images/index/pic_home_ifaa.png">
-          </div>
-        </div>
-      </div>
+      
+      <!-- 认证展示层英文版 -->
+      <div data-lbifile="./common/auth_en.html"></div>
+      
     </div>
     <link href="./css/footer.css" rel="stylesheet">
     <div data-lbifile="./common/footer_en.html"></div>
+    <!-- 图片弹出层 -->
+	<div data-lbifile="./common/img_show.html"></div>
   </div>
 </body>
 <script type="text/javascript" src="./js/common/jquery.min.js"></script>
@@ -69,7 +59,12 @@
   window.onload = function() {
     setTimeout(function() {
       comJs.initNav('about')
-    }, 10)
+    }, 10);
+    
+    $(".pimg").click(function(){
+		var _this = $(this);//将当前的pimg元素作为_this传入函数
+		imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+	});
   }
 </script>
 

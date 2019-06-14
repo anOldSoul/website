@@ -47,21 +47,8 @@
         </div>
         <div class="mouse_btn_b index_btn"><a href='certify.html'>了解详情 ></a></div>
       </div>
-      <div class="section2_index">
-        <div class="legue_title">互啊佑是FIDO、IFAA两大国际安全联盟成员</div>
-        <div class="legue_title">产品已通过FIDO2及微软生物识别驱动认证</div>
-        <div class="legue_box">
-          <div class="league_img" onclick="window.open('http://fidoalliance.org/')">
-            <img src="./images/index/pic_home_fido.png">
-          </div>
-          <div class="league_img" onclick="window.open('http://aka.ms/gopasswordless')">
-            <img src="./images/index/pic_home_microsoft.png">
-          </div>
-          <div class="league_img" onclick="window.open('http://ifaa.org.cn/')">
-            <img src="./images/index/pic_home_ifaa.png">
-          </div>
-        </div>
-      </div>
+      <!-- 认证展示层 -->
+      <div data-lbifile="./common/auth.html"></div>
     </div>
     <link href="./css/footer.css" rel="stylesheet">
     <div data-lbifile="./common/footer.html"></div>
@@ -76,6 +63,9 @@
         </div>
       </div>
     </div>
+    <!-- 图片弹出层 -->
+	<div data-lbifile="./common/img_show.html"></div>
+    
   </div>
 </body>
 <script type="text/javascript" src="./js/common/jquery.min.js"></script>
@@ -89,10 +79,16 @@
     }, 10)
     $('.close_video').click(function() {
       $('.video_lg').css('display', 'none')
-    })
+    });
     $('.learn_more_btn').click(function() {
       $('.video_lg').css('display', 'block')
-    })
+    });
+    
+    /* 为什么写到公共JS方法(common.js)里无效 */
+    $(".pimg").click(function(){
+		var _this = $(this);//将当前的pimg元素作为_this传入函数
+		imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+	});
   }
 </script>
 
