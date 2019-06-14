@@ -8,10 +8,13 @@
   <view wx:for="{{devices}}" wx:key="index"
     data-device-id="{{item.deviceId}}"
     data-name="{{item.name || item.localName}}"
-    bindtap="createBLEConnection" 
+    bindtap="currentInfo" 
     class="device_item"
     hover-class="device_item_hover">
       <view style="font-size: 16px; color: #333;">{{item.name}}</view>
+      <view>
+        <checkbox value="{{item.name}}" checked="{{checked}}"/>
+      </view>
   </view>
 
   <view class="connected_info" wx:if="{{connected}}">
@@ -27,5 +30,5 @@
       <view>特性值: {{item.value}}</view>
     </view>
   </view>
-  <navigator url="/pages/search/index" class='add_apparatus'>绑定</navigator>
+  <view class='add_apparatus' bindtap="createBLEConnection" >绑定</view>
 </view>

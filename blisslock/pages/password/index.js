@@ -20,6 +20,7 @@ Page({
   },
   formatPw: function() {
     let str = wx.getStorageSync('pwData')
+    console.log(str)
     var strArr = [];
     var n = 8;
     for (var i = 0, l = str.length; i < l / n; i++) {
@@ -54,9 +55,9 @@ Page({
         duration: 2000
       })
     }
-    this.formatPw()
   },
   onShow: function () {
+    this.formatPw()
   },
   goDetail: function (e) {
     let item = e.currentTarget.dataset.item

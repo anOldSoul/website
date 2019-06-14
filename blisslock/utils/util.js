@@ -163,7 +163,16 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       writeBle(hex)
     }
     if (value.slice(-4, -2) === '16') {
-      let hex = '5531000038383838383800000000000000000000'  //管理员密码
+      let admPw = wx.getStorageSync('admPw') || '123456'
+      console.log(admPw)
+      let pw = strToHexCharCode(admPw)
+      console.log(pw)
+      if (pw.length < 24) {
+        for (let i = pw.length; i < 24; i++) {
+          pw = pw + '0'
+        }
+      }
+      let hex = `55310000${pw}00000000`//管理员密码
       writeBle(hex)
     }
     if (value.slice(-4, -2) === '31' && value.slice(0, 2) === 'aa') {
@@ -182,6 +191,14 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
         url: `/pages/finger/index`
       })
     }
+    if (value.slice(-4, -2) === '9d') {
+      console.log('添加密码成功~~~~~~~~~~~~')
+      let str = wx.getStorageSync('pwData')
+      wx.setStorageSync('pwData', str + value.slice(8, 16))
+      wx.redirectTo({
+        url: `/pages/password/index`
+      })
+    }
     if (value.slice(-4, -2) === 'b0') {
       console.log('绑定成功~~~~~~~~~~~~')
       wx.redirectTo({
@@ -190,13 +207,29 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
     }
     if (value.slice(-4, -2) === '1f') {
       console.log('删除密码成功~~~~~~~~~~~~')
-      wx.navigateBack({
+      let tempData = wx.getStorageSync('pwData')
+      console.log(tempData)
+      let str = wx.getStorageSync('delPass')
+      console.log(str)
+      let index = tempData.indexOf(str)
+      tempData = tempData.substring(0, index) + tempData.substring(index + 8, tempData.length)
+      console.log(tempData)
+      wx.setStorageSync('pwData', tempData)
+      wx.redirectTo({
         url: `/pages/password/index?result=${value.slice(2, 4)}`
       })
     }
     if (value.slice(-4, -2) === '21') {
       console.log('删除指纹成功~~~~~~~~~~~~')
-      wx.navigateBack({
+      let tempData = wx.getStorageSync('fingerData')
+      console.log(tempData)
+      let str = wx.getStorageSync('delFinger')
+      console.log(str)
+      let index = tempData.indexOf(str)
+      tempData = tempData.substring(0, index) + tempData.substring(index + 8, tempData.length)
+      console.log(tempData)
+      wx.setStorageSync('fingerData', tempData)
+      wx.redirectTo({
         url: `/pages/finger/index?result=${value.slice(2, 4)}`
       })
     }
