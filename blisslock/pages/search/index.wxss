@@ -23,8 +23,12 @@
   border-radius:12rpx;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .add_apparatus{
   position: fixed;
   bottom: 60rpx;
+}
+checkbox .wx-checkbox-input {
+  border: 0;
 }

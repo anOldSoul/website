@@ -1,5 +1,8 @@
 // pages/newHome/index.js
 const app = getApp()
+var ds
+var deviceId
+var name
 function inArray(arr, key, val) {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i][key] === val) {
@@ -10,6 +13,7 @@ function inArray(arr, key, val) {
 }
 Page({
   data: {
+    checked: true,
     devices: [],
     connected: false,
     chs: []
@@ -66,6 +70,9 @@ Page({
       res.devices.forEach(device => {
         if (device.name !== 'Blisslock') {
           return
+        } else {
+          deviceId = device.deviceId
+          name = device.name
         }
         const foundDevices = this.data.devices
         const idx = inArray(foundDevices, 'deviceId', device.deviceId)
@@ -79,10 +86,13 @@ Page({
       })
     })
   },
-  createBLEConnection(e) {
-    const ds = e.currentTarget.dataset
-    const deviceId = ds.deviceId
-    const name = ds.name
+  currentInfo: function(e) {
+    ds = e.currentTarget.dataset
+    deviceId = ds.deviceId
+    name = ds.name
+    this.createBLEConnection()
+  },
+  createBLEConnection() {
     wx.createBLEConnection({
       deviceId,
       success: (res) => {

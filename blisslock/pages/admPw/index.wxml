@@ -1,7 +1,7 @@
 <!--pages/admPw/index.wxml-->
 <view>
   <view class='title'><view class='dot'></view>管理员密码</view>
-  <view><input placeholder="请输入管理员密码"/></view>
+  <view><input type="number" bindinput="bindKeyInput" maxlength="12" value="{{password}}" placeholder="请输入管理员密码"/></view>
   <view class='tip_text'>提示：锁体管理员拥有智能锁的最高权限，请输入长度为6-12位的数字密码，默认密码为【123456】，手机与智能锁绑定成功后管理员密码生效。</view>
-  <navigator url="/pages/search/index" class='add_apparatus'>下一步</navigator>
+  <view bindtap="goNext" class='add_apparatus'>下一步</view>
 </view>
