@@ -1,7 +1,7 @@
 const Moment = require('./moment.min.js')
 let rtc, seedA, seedB, seedC, key, decodedPackageData
 let hasUnlockRecord = false
-let pwNeedToAdd = ''
+var pwNeedToAdd
 const app = getApp();
 let func = {
   addPass: false,
@@ -11,6 +11,7 @@ let func = {
   delFinger: false,
   delPass: false,
   unlockRecord: false,
+  unlockAtOnce: false,
   resolve: ''
 }
 let onChangePw = {
@@ -54,8 +55,8 @@ const getBLEDeviceServices = (deviceId, funcKey) => {
     }
   })
 }
-const doBLEConnection = (funcKey, resolve, pwNeedToAdd = '') => {
-  pwNeedToAdd = pwNeedToAdd
+const doBLEConnection = (funcKey, resolve, pwAdded = '') => {
+  pwNeedToAdd = pwAdded
   func.resolve = resolve
   let deviceId = wx.getStorageSync('_deviceId')
   wx.createBLEConnection({
@@ -337,6 +338,10 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       }
       if (func['unlockRecord']) {
         let hex = '552C000000000000000000000000000000000000'
+        writeBle(hex)
+      }
+      if (func['unlockAtOnce']) {
+        let hex = '5533000031323334353600000000000000000000'
         writeBle(hex)
       }
     }
