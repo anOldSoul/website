@@ -148,6 +148,9 @@ video{
   width: 305px;
   height: 148px;
 }
+.league_img:hover{
+	cursor:pointer;
+}
 
 .banner {
   position: relative;
