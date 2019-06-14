@@ -44,7 +44,7 @@
     </view>
     <view class="func_row">
       <navigator class="func_item" url="/pages/repair/index" hover-class="none"><image class="func_img" src='../../images/ic_yijianbaoxiu.png'></image>一键报修</navigator>
-      <navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-手机绑定.png'></image>手机绑定</navigator>
+      <navigator class="func_item" url="/pages/lockAtOnce/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-手机绑定.png'></image>手机绑定</navigator>
       <view class="func_item"  bindtap='handleDelDevice'><image class="func_img" src='../../images/ic_设备名称-删除设备.png'></image>删除设备</view>
     </view>
   </view>
