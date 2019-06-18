@@ -1,0 +1,5 @@
+<!--pages/admPw/index.wxml-->
+<view>
+  <view class='addPw_input'><input placeholder="请输入用户名" value="{{userName}}" /></view>
+  <navigator class='add_apparatus' url="{{'/pages/activateDevice/index?func=addPw&pw=' + password}}" hover-class="none">下一步</navigator>
+</view>

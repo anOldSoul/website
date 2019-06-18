@@ -1,5 +1,6 @@
 // pages/newHome/index.js
 const app = getApp()
+let isBack = false
 Page({
   data: {
     pwArr: [],
@@ -12,8 +13,13 @@ Page({
   sync_password() {
     return new Promise((resolve, reject) => {
       app.util.doBLEConnection('syncFinger', resolve)
+      wx.navigateTo({
+        url: `/pages/activateDevice/index`
+      })
     }).then(() => {
       console.log('监听成功')
+      console.log('同步成功')
+      isBack = true
       console.log(wx.getStorageSync('fingerData'))
       this.formatFinger()
     })
@@ -56,6 +62,13 @@ Page({
     }  
   },
   onShow: function () {
+    if (isBack) {
+      wx.showToast({
+        title: '同步成功',
+        icon: 'success',
+        duration: 2000
+      })
+    }
     this.formatFinger()
   },
   goDetail: function (e) {

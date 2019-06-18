@@ -116,7 +116,7 @@ Page({
       canWrite: false,
     })
   },
-  getBLEDeviceServices(deviceId) {
+  getBLEDeviceServices(deviceId = '') {
     wx.getBLEDeviceServices({
       deviceId,
       success: (res) => {

@@ -191,7 +191,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
         url: `/pages/finger/index`
       })
     }
-    if (value.slice(-4, -2) === '9d') {
+    if (value.slice(2, 4) === '30' && value.slice(-4, -2) === '9d') {
       console.log('添加密码成功~~~~~~~~~~~~')
       let str = wx.getStorageSync('pwData')
       wx.setStorageSync('pwData', str + value.slice(8, 16))
@@ -268,6 +268,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       }
     }
     if (value.slice(-4, -2) === '2c' && value !=='aa30000000000000000000000000000000002c00') {
+      console.log('oooooooooooooooo')
       hasUnlockRecord = true
       let tempData = wx.getStorageSync('unlockRecordData')
       let unlockRecordData = (tempData instanceof Array) ? tempData : []
@@ -282,6 +283,14 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       })
     }
     if (value.slice(-4, -2) === '9e' || value.slice(-4, -2) === 'a2') {
+      let pwData = ''
+      let dataKey = ''
+      if (func['syncPass']) {
+        dataKey = 'pwData'
+      }
+      if (func['syncFinger']) {
+        dataKey = 'fingerData'
+      }
       if (func['syncPass']) {
         wx.setStorageSync('pwData', '')
       }
@@ -302,6 +311,11 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
         onChangePw.onPwList = true
       } else {
         console.log('没有密码！')
+        wx.setStorageSync(dataKey, [])
+        func.resolve()
+        wx.navigateBack({
+          delta: 1
+        })
       }
     }
     if (value.slice(0, 2) === '8a') {
@@ -324,6 +338,9 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
           let result = pwData.slice(0, bytesToIntLe(hexToBytes(onChangePw.hexLen)) / 4 * 8)
           wx.setStorageSync(dataKey, result)
           func.resolve()
+          wx.navigateBack({
+            delta: 1
+          })
         }
         let hex = value
         writeBle(hex)
