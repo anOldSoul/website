@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/activateFinger/index",
+    "pages/addFinger/index",
     "pages/search/index",
     "pages/index/index",
     "pages/shopping/index",

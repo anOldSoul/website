@@ -1,0 +1,6 @@
+<!--pages/index/index.wxml-->
+<view>
+  <view><image class="no_apparatus" src='../../images/pic-input fingerprint.png'></image></view>
+  <view class='tip_text'>请触摸锁体密码键盘，唤醒设备进行通信</view>
+  <button class='add_apparatus' bindtap="handleClose">关闭</button>
+</view>
