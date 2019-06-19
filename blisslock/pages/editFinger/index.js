@@ -5,7 +5,7 @@ Page({
     pw: ''
   },
   del_finger() {
-    wx.setStorageSync('delFinger' ,this.data.pw)
+    wx.setStorageSync('delFingerId' ,this.data.pw)
     app.util.doBLEConnection('delFinger')
   },
   onLoad: function (options) {

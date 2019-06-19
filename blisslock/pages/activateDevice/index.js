@@ -8,8 +8,19 @@ Page({
     if (func === 'addPw') {
       app.util.doBLEConnection('addPass', '', options.pw)
     }
+    if (func === 'delPw') {
+      wx.setStorageSync('delPassId', options.pw)
+      app.util.doBLEConnection('delPass')
+    }
     if (func === 'unlockRecord') {
       app.util.doBLEConnection('unlockRecord')
+    }
+    if (func === 'addFinger') {
+      app.util.doBLEConnection('addFinger')
+    }
+    if (func === 'delFinger') {
+      wx.setStorageSync('delFingerId', options.pw)
+      app.util.doBLEConnection('delFinger')
     }
   },
   handleClose: function() {

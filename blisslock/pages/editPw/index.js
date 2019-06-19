@@ -4,10 +4,10 @@ Page({
   data: {
     pw: ''
   },
-  del_password() {
-    wx.setStorageSync('delPass' ,this.data.pw)
-    app.util.doBLEConnection('delPass')
-  },
+  // del_password() {
+  //   wx.setStorageSync('delPass' ,this.data.pw)
+  //   app.util.doBLEConnection('delPass')
+  // },
   onLoad: function (options) {
     this.setData({
       pw: options.pw

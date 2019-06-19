@@ -1,8 +1,11 @@
 {
   "pages": [
+    "pages/search/index",
+    "pages/finger/index",
+    
     "pages/activateFinger/index",
     "pages/addFinger/index",
-    "pages/search/index",
+    
     "pages/index/index",
     "pages/shopping/index",
     "pages/lockAtOnce/index",
@@ -10,7 +13,7 @@
     "pages/unlockRecord/index",
     "pages/activateDevice/index",
     "pages/introduction/index",
-    "pages/finger/index",
+    
     "pages/editFinger/index",
     "pages/password/index",
     "pages/editPw/index",

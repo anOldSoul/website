@@ -10,6 +10,8 @@ page{
   box-shadow:0 4rpx 8rpx 0 rgba(9,25,40,0.24);
   border-radius:12rpx;
   line-height: 94rpx;
+  text-align: center;
+  margin-left: 40rpx;
 }
 .password{
   height: -webkit-calc(100% - 300rpx);

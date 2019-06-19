@@ -2,6 +2,7 @@
   <view class='pw_item'>{{pw}}
   </view>
   <view class='fixed'>
-    <button class='add_password' bindtap="del_password">删除密码</button>
+    <navigator class='add_password' url="{{'/pages/activateDevice/index?func=delPw&pw=' + pw}}" hover-class="none">删除密码</navigator>
+    <!-- <button class='add_password' bindtap="del_password">删除密码</button> -->
   </view>
 </view>

@@ -42,29 +42,40 @@ Page({
     })
   },
   onLoad: function (options) {
-    let msg
-    let delResult = options.result
-    if (delResult === '30') {
-      msg = '删除成功'
-    }
-    if (delResult === '31') {
-      msg = '本地密码ID不存在'
-    }
-    if (delResult === '32') {
-      msg = '删除失败'
-    }
-    if (msg) {
+  },
+  onShow: function () {
+    wx.hideLoading()
+    if (isBack) {
       wx.showToast({
-        title: msg,
+        title: '同步成功',
         icon: 'success',
         duration: 2000
       })
     }
-  },
-  onShow: function () {
-    if (isBack) {
+    isBack = false
+    if (wx.getStorageSync('addPw')) {
+      let status = wx.getStorageSync('addPw')
+      let title
+      if (status === '31') {
+        title = '注册失败'
+      }
+      if (status === '32') {
+        title = '密码已满'
+      }
+      if (status === '30') {
+        title = '添加成功'
+      }
       wx.showToast({
-        title: '同步成功',
+        title: title,
+        icon: 'success',
+        duration: 2000
+      })
+      wx.setStorageSync('addPw', false)
+    }
+    if (wx.getStorageSync('delPw')) {
+      wx.setStorageSync('delPw', false)
+      wx.showToast({
+        title: '删除成功',
         icon: 'success',
         duration: 2000
       })

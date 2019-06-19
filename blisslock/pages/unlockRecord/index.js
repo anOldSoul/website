@@ -6,8 +6,9 @@ Page({
     currentMonthData: [],
     unlockRecord: []
   },
-  onLoad: function (options) {
-    if (options.result === 'noRecord') {
+  onShow: function() {
+    if (wx.getStorageSync('hasUnlockRecord') === 'noRecord') {
+      wx.setStorageSync('hasUnlockRecord', '')
       wx.showModal({
         title: '提示',
         content: '锁体中没有开锁记录数据！',
@@ -19,6 +20,14 @@ Page({
             console.log('用户点击取消')
           }
         }
+      })
+    }
+    if (wx.getStorageSync('hasUnlockRecord') === 'hasRecord') {
+      wx.setStorageSync('hasUnlockRecord', '')
+      wx.showToast({
+        title: '同步成功',
+        icon: 'success',
+        duration: 2000
       })
     }
     let unlockRecordData = wx.getStorageSync('unlockRecordData') || []
@@ -56,6 +65,8 @@ Page({
         return item.month === this.data.date
       })
     })
+  },
+  onLoad: function (options) {
   },
   syncUnlockRecord: function() {
     app.util.doBLEConnection('unlockRecord')

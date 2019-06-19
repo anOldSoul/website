@@ -135,12 +135,10 @@ Page({
     this._discoveryStarted = false
   },
   onLoad: function (options) {
-    // wx.showLoading({
-    //   title: '加载中',
-    // })
     this.openBluetoothAdapter()
   },
   onShow: function () {
+    console.log(getCurrentPages())
   },
   goDetail: function (e) {
     let item = e.currentTarget.dataset.item

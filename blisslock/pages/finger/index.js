@@ -1,6 +1,7 @@
 // pages/newHome/index.js
 const app = getApp()
-let isBack = false
+let isSycBack = false
+let isAddBack = false
 Page({
   data: {
     pwArr: [],
@@ -8,7 +9,10 @@ Page({
     chs: []
   },
   manage_password() {
-    app.util.doBLEConnection('addFinger')
+    wx.redirectTo({
+      url: '/pages/addFinger/index'
+    })
+    // app.util.doBLEConnection('addFinger')
   },
   sync_password() {
     return new Promise((resolve, reject) => {
@@ -19,7 +23,7 @@ Page({
     }).then(() => {
       console.log('监听成功')
       console.log('同步成功')
-      isBack = true
+      isSycBack = true
       console.log(wx.getStorageSync('fingerData'))
       this.formatFinger()
     })
@@ -42,29 +46,40 @@ Page({
     })
   },
   onLoad: function (options) {
-    let msg
-    let delResult = options.result
-    if (delResult === '30') {
-      msg = '删除成功'
-    }
-    if (delResult === '31') {
-      msg = '本地指纹ID不存在'
-    }
-    if (delResult === '32') {
-      msg = '删除失败'
-    }
-    if (msg) {
+  },
+  onShow: function () {
+    wx.hideLoading()
+    if (isSycBack) {
       wx.showToast({
-        title: msg,
+        title: '同步成功',
         icon: 'success',
         duration: 2000
       })
-    }  
-  },
-  onShow: function () {
-    if (isBack) {
+    }
+    isSycBack = false
+    if (wx.getStorageSync('addFinger')) {
+      let status = wx.getStorageSync('addFinger')
+      let title
+      if (status === '31') {
+        title = '注册失败'
+      }
+      if (status === '32') {
+        title = '指纹已满'
+      }
+      if (status === '30') {
+        title = '添加成功'
+      }     
       wx.showToast({
-        title: '同步成功',
+        title: title,
+        icon: 'success',
+        duration: 2000
+      })
+      wx.setStorageSync('addFinger', false)
+    }
+    if (wx.getStorageSync('delFinger')) {
+      wx.setStorageSync('delFinger', false)
+      wx.showToast({
+        title: '删除成功',
         icon: 'success',
         duration: 2000
       })
