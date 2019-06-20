@@ -1,19 +1,21 @@
 {
   "pages": [
+    "pages/index/index",
+    "pages/about/index",
+    
+    "pages/member/index",
+    "pages/activateDevice/index",
+    "pages/addPw/index",
+    "pages/shopping/index",
+    "pages/deviceName/index",
+    "pages/gesture/index",   
     "pages/search/index",
     "pages/finger/index",
-    
     "pages/activateFinger/index",
     "pages/addFinger/index",
-    
-    "pages/index/index",
-    "pages/shopping/index",
     "pages/lockAtOnce/index",
-    "pages/addPw/index",
     "pages/unlockRecord/index",
-    "pages/activateDevice/index",
     "pages/introduction/index",
-    
     "pages/editFinger/index",
     "pages/password/index",
     "pages/editPw/index",
@@ -23,7 +25,8 @@
   ],
   "window": {
     "navigationBarBackgroundColor": "white",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "disableScroll": true
   },
   "sitemapLocation": "sitemap.json"
 }

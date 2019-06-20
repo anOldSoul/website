@@ -1,0 +1,6 @@
+<view class="index-page">
+  <view class="gesture_title">{{title}}</view>
+  <view class="err">{{errMsg}}</view>
+  <mini-gesture-lock container-width="{{600}}" cycleRadius="{{70}}" bind:end="onEnd" password="{{password}}"></mini-gesture-lock>
+  <view class="result">忘记密码 ></view>
+</view>

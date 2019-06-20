@@ -19,5 +19,5 @@
       <view class='text'>3、开锁后，请立即更换电池</view>
     </view>
   </view>
-  <navigator url="/pages/admPw/index" class='add_apparatus'>电话报修</navigator>
+  <view bindtap="callPhone" class='add_apparatus'>电话报修</view>
 </view>

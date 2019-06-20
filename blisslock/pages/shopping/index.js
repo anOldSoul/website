@@ -131,6 +131,10 @@ Page({
     })
   },
   onShow: function () {
+    if (wx.getStorageSync('showAdmPw')) {
+      wx.setStorageSync('showAdmPw', false)
+      this.checkAdmPw()
+    }
   },
   handleDelDevice: function() {
     wx.showModal({
@@ -139,6 +143,7 @@ Page({
       success(res) {
         if (res.confirm) {
           console.log('用户点击确定')
+          wx.setStorageSync('deviceList', [])
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
@@ -148,7 +153,7 @@ Page({
   checkAdmPw: function() {
     wx.showModal({
       title: '提示',
-      content: '管理员密码为：123456',
+      content: `管理员密码为：${wx.getStorageSync('admPw')}`,
       showCancel: false,
       success(res) {
         if (res.confirm) {

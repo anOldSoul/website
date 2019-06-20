@@ -229,8 +229,13 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
     }
     if (value.slice(-4, -2) === 'b0') {
       console.log('绑定成功~~~~~~~~~~~~')
+      let deviceItem = {
+        type: 'M6',
+        name: 'Blisslock'
+      }
+      wx.setStorageSync('deviceList', [deviceItem])
       wx.redirectTo({
-        url: `/pages/shopping/index`
+        url: `/pages/deviceName/index`
       })
     }
     if (value.slice(-4, -2) === '1f') {

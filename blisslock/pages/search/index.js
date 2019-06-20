@@ -13,6 +13,8 @@ function inArray(arr, key, val) {
 }
 Page({
   data: {
+    findDevice: false,
+    findNoDevice: false,
     checked: true,
     devices: [],
     connected: false,
@@ -66,24 +68,24 @@ Page({
   },
   onBluetoothDeviceFound() {
     wx.onBluetoothDeviceFound((res) => {
-      wx.hideLoading()
       res.devices.forEach(device => {
-        if (device.name !== 'Blisslock') {
-          return
-        } else {
+        if (device.name === 'Blisslock') {
+          console.log('ppppppppppp')
+          let devicesFond = {}
           deviceId = device.deviceId
           name = device.name
+          devicesFond.deviceId = device.deviceId
+          devicesFond.name = device.name
+          this.setData({
+            devices: [devicesFond],
+            findDevice: true
+          })
+          wx.hideLoading()
         }
-        const foundDevices = this.data.devices
-        const idx = inArray(foundDevices, 'deviceId', device.deviceId)
-        const data = {}
-        if (idx === -1) {
-          data[`devices[${foundDevices.length}]`] = device
-        } else {
-          data[`devices[${idx}]`] = device
-        }
-        this.setData(data)
       })
+      if (!this.data.devices.length) {
+        this.data.findNoDevice = true
+      }
     })
   },
   currentInfo: function(e) {
@@ -96,6 +98,7 @@ Page({
     wx.createBLEConnection({
       deviceId,
       success: (res) => {
+        wx.hideLoading()
         this.setData({
           connected: true,
           name,
@@ -135,10 +138,12 @@ Page({
     this._discoveryStarted = false
   },
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中',
+    })
     this.openBluetoothAdapter()
   },
   onShow: function () {
-    console.log(getCurrentPages())
   },
   goDetail: function (e) {
     let item = e.currentTarget.dataset.item

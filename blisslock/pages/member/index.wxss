@@ -1,0 +1,62 @@
+.head{
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 130rpx;
+  margin-bottom: 138rpx;
+}
+.head_img{
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 75rpx;
+  overflow: hidden;
+}
+.member_name{
+  font-size: 30rpx;
+  margin-top: 40rpx;
+  line-height: 1;
+}
+.item_border{
+  width: 2rpx;
+  height: 100rpx;
+  background: #323232;
+  opacity: 0.5;
+}
+.list_text{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.icon_img{
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 20rpx;
+}
+.myList{
+  height: 120rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  border-bottom: 1rpx solid #f5f5f5;
+  font-size: 36rpx;
+  padding: 0 30rpx;
+}
+.list_right{
+  display: flex;
+  align-items: center;
+  color: #cccccc;
+}
+.list_more{
+  width: 14rpx;
+  height: 28rpx;
+}
+.support{
+  font-size: 30rpx;
+  text-align: center;
+  color: #cccccc;
+  background: #f6f6f6;
+  padding: 30rpx 0;
+}

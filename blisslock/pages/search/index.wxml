@@ -1,13 +1,8 @@
-<view class='container'>
+<view class='container' wx:if="{{findDevice}}">
   <view class='title'><view class='dot'></view>我的设备</view>
-  <!-- <button bindtap="openBluetoothAdapter">开始扫描</button>
-  <button bindtap="stopBluetoothDevicesDiscovery">停止扫描</button>
-  <button bindtap="closeBluetoothAdapter">结束流程</button> -->
-
-  <!-- <view class="devices_summary">已发现 {{devices.length}} 个外围设备：</view> -->
   <view wx:for="{{devices}}" wx:key="index"
     data-device-id="{{item.deviceId}}"
-    data-name="{{item.name || item.localName}}"
+    data-name="{{item.name}}"
     bindtap="currentInfo" 
     class="device_item"
     hover-class="device_item_hover">
@@ -16,7 +11,7 @@
         <checkbox value="{{item.name}}" checked="{{checked}}"/>
       </view>
   </view>
-
+<!-- 
   <view class="connected_info" wx:if="{{connected}}">
     <view>
       <text>已连接到 {{name}}</text>
@@ -29,6 +24,12 @@
       <view>特性UUID: {{item.uuid}}</view>
       <view>特性值: {{item.value}}</view>
     </view>
-  </view>
+  </view> -->
   <view class='add_apparatus' bindtap="createBLEConnection" >绑定</view>
+</view>
+<view wx:if="{{findNoDevice}}">
+  <view><image class="no_apparatus" src='../../images/pic-search failed.png'></image></view>
+  <view class='tip_text'>没有找到任何设备</view>
+  <view class='tips'>提示：请确认是否按下了锁体上【管理员】键 若提示验证管理员，请输入管理员密码</view>
+  <view class='add_apparatus' bindtap="createBLEConnection" >重试</view>
 </view>

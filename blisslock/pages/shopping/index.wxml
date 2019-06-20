@@ -33,19 +33,19 @@
     <view><image class="device_img" src='../../images/pic-device.png'></image></view>
     <view class='device_title'>{{device_name}}</view>
     <view class="func_row">
-      <navigator class="func_item" url="/pages/finger/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-我的指纹.png'></image>我的指纹</navigator>
-      <navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-我的密码.png'></image>我的密码</navigator>
-      <navigator class="func_item" url="/pages/password/index" hover-class="none"navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-临时密码.png'></image>临时密码</navigator>
+      <navigator class="func_item" url="/pages/gesture/index?url=finger" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-fingerprint.png'></image>我的指纹</navigator>
+      <navigator class="func_item" url="/pages/gesture/index?url=password" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-password.png'></image>我的密码</navigator>
+      <navigator class="func_item" hover-class="none"><image class="func_img" src='../../images/home-tem-password.png'></image>临时密码</navigator>
     </view>
     <view class="func_row">
-      <view class="func_item" bindtap='checkAdmPw' class="func_item"><image class="func_img" src='../../images/ic_设备名称-管理员密码.png'></image>管理员密码</view>
-      <navigator class="func_item" url="/pages/unlockRecord/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-开锁记录.png'></image>开锁记录</navigator>
-      <navigator class="func_item" url="/pages/introduction/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-使用说明.png'></image>使用说明</navigator>
+      <navigator class="func_item" url="/pages/gesture/index?url=checkAdmPw" hover-class="none" class="func_item"><image class="func_img" src='../../images/ic_equip-home-adm.png'></image>管理员密码</navigator>
+      <navigator class="func_item" url="/pages/gesture/index?url=unlockRecord" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-unlock-rec.png'></image>开锁记录</navigator>
+      <navigator class="func_item" url="/pages/introduction/index" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-instrac.png'></image>使用说明</navigator>
     </view>
     <view class="func_row">
       <navigator class="func_item" url="/pages/repair/index" hover-class="none"><image class="func_img" src='../../images/ic_yijianbaoxiu.png'></image>一键报修</navigator>
-      <navigator class="func_item" url="/pages/lockAtOnce/index" hover-class="none"><image class="func_img" src='../../images/ic_设备名称-手机绑定.png'></image>手机绑定</navigator>
-      <view class="func_item"  bindtap='handleDelDevice'><image class="func_img" src='../../images/ic_设备名称-删除设备.png'></image>删除设备</view>
+      <navigator class="func_item" url="/pages/addDevice/index" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-binding.png'></image>手机绑定</navigator>
+      <view class="func_item"  bindtap='handleDelDevice'><image class="func_img" src='../../images/ic-equip-home-delete.png'></image>删除设备</view>
     </view>
   </view>
 </view>

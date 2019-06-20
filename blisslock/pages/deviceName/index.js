@@ -13,7 +13,7 @@ Page({
     })
   },
   handleComplete: function() {
-    wx.setStorageSync('device_name', this.data.device_name)
+    wx.setStorageSync('device_name', this.data.device_name || 'M6智能锁')
     wx.redirectTo({
       url: '/pages/shopping/index'
     })

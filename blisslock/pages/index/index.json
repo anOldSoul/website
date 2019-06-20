@@ -1,5 +1,9 @@
 {
   "navigationBarTitleText": "噢蹦Lite",
   "navigationBarBackgroundColor": "#000",
-  "navigationBarTextStyle": "white"
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "white",
+    "usingComponents": {
+      "navbar": "/component/navbar/index"
+    }
 }

@@ -1,4 +1,3 @@
-@import "./component/toast/toast.wxss";
 .title{
   margin: 30rpx 40rpx;
   display: flex;

@@ -5,27 +5,31 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    deviceList: []
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-
+    // wx.login({
+    //   success(res) {
+    //     if (res.code) {
+    //       console.log(res.code)
+    //     } else {
+    //       console.log('登录失败！' + res.errMsg)
+    //     }
+    //   }
+    // })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
-
+    let deviceList = wx.getStorageSync('deviceList') || []
+    this.setData({
+      deviceList: []
+    })
+  },
+  getPhoneNumber(e) {
+    console.log(e.detail.errMsg)
+    console.log(e.detail.iv)
+    console.log(e.detail.encryptedData)
+  },
+  bindGetUserInfo(e) {
+    console.log(e.detail.userInfo)
   }
 })

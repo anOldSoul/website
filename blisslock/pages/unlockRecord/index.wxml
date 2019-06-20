@@ -10,7 +10,7 @@
   <view class='tip_text' wx:for="{{currentMonthData}}" wx:key="{{index}}">
     <view class='repair_title'>{{item.date}}</view>
     <view class='text_content'>
-      <view class='content_left'><image class="pw_record_img" src='../../images/ic_开锁记录-密码开锁.png'></image></view>
+      <view class='content_left'><image class="pw_record_img" src='../../images/ic-record-password.png'></image></view>
       <view class='content_right'>
         <view class='time'>{{item.time}}</view>
         <view class='detail'>用户名-{{item.lockType}}</view>

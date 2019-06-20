@@ -1,0 +1,12 @@
+<view>
+  <view class='nav bg-white' style='height:{{navH}}px'>
+    <view class='nav-title' wx:if="{{navType === 'activePage'}}">
+      激活设备
+      <!-- <image src='../../images/back.png' mode='aspectFit' class='back' bindtap='navBack'></image>  -->
+    </view>
+    <view class='nav-title' wx:if="{{navType === 'homePage'}}">
+      噢蹦Lite
+      <view bindtap='goMePage'><open-data type="userAvatarUrl" class='back'></open-data></view>
+    </view>
+  </view>
+</view>

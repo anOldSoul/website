@@ -4,14 +4,19 @@ const http = require("./utils/http.js");
 const util = require("./utils/util.js");
 const Moment = require('./utils/moment.min.js')
 import Functions from './common/common.js'
-import { ToastPannel } from './component/toast/toast'
 App({
   util: util,
   Moment: Moment,
-  ToastPannel,
   functions: Functions,
   onLaunch: function (options) {
-    console.log(options)
+    wx.getSystemInfo({
+      success: res => {
+        //导航高度
+        this.globalData.navHeight = res.statusBarHeight + 46;
+      }, fail(err) {
+        console.log(err);
+      }
+    })
   },
   watch: function (method) {
     var obj = this.globalData;
@@ -37,6 +42,7 @@ App({
   Apis: Api,
   post: http.post,
   globalData: {
+    navHeight: 0,
     name: 'msr',
     userInfo: null,
     userId: '',

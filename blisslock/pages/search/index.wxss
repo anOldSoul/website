@@ -32,3 +32,20 @@
 checkbox .wx-checkbox-input {
   border: 0;
 }
+.no_apparatus{
+  width: 472rpx;
+  height: 307rpx;
+  margin-left: 139rpx;
+  margin-top: 94rpx;
+  margin-bottom: 78rpx;
+}
+.tip_text{
+  font-size: 34rpx;
+  text-align: center;
+}
+.tips{
+  margin: 30rpx 95rpx;
+  color: #999999;
+  font-size: 28rpx;
+  text-align: center;
+}
