@@ -92,13 +92,14 @@ Page({
     ds = e.currentTarget.dataset
     deviceId = ds.deviceId
     name = ds.name
-    this.createBLEConnection()
   },
   createBLEConnection() {
+    wx.showLoading({
+      title: '加载中',
+    })
     wx.createBLEConnection({
       deviceId,
       success: (res) => {
-        wx.hideLoading()
         this.setData({
           connected: true,
           name,

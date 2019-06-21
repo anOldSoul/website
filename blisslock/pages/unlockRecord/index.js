@@ -2,7 +2,7 @@
 const app = getApp()
 Page({
   data: {
-    date: app.Moment().format('YYYY-MM'),
+    month: app.Moment().format('YYYY-MM'),
     currentMonthData: [],
     unlockRecord: []
   },
@@ -61,9 +61,13 @@ Page({
     console.log(unlockRecord)
     this.data.unlockRecord = unlockRecord
     this.setData({
-      currentMonthData: unlockRecord.filter((item, index) => {
-        return item.month === this.data.date
-      })
+      currentMonthData: [{
+        date: '222',
+        lockType: '指纹开锁'
+      }]
+      // currentMonthData: unlockRecord.filter((item, index) => {
+      //   return item.month === this.data.month
+      // })
     })
   },
   onLoad: function (options) {

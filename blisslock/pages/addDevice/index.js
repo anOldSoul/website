@@ -8,7 +8,9 @@ Page({
     hasChecked: false
   },
   checkboxChange: function () {
-    this.data.hasChecked = !this.data.hasChecked
+    this.setData({
+      hasChecked: !this.data.hasChecked
+    })
   },
   goNext: function() {
     if (!this.data.hasChecked) {

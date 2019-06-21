@@ -55,6 +55,14 @@ const getBLEDeviceServices = (deviceId, funcKey) => {
     }
   })
 }
+const closeConnection = () => {
+  wx.closeBLEConnection({
+    deviceId: wx.getStorageSync('_deviceId'),
+    success(res) {
+      console.log('蓝牙连接断开')
+    }
+  })
+}
 const doBLEConnection = (funcKey, resolve, pwAdded = '') => {
   pwNeedToAdd = pwAdded
   func.resolve = resolve
@@ -191,7 +199,8 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
     }
     if (value.slice(-4, -2) === 'a0') {
       if (value.slice(2, 4) === '30') {
-        console.log('添加指纹成功~~~~~~~~~~~~')   
+        console.log('添加指纹成功~~~~~~~~~~~~')
+        closeConnection()
         let str = wx.getStorageSync('fingerData')
         wx.setStorageSync('fingerData', str + value.slice(8, 16))
       }
@@ -211,6 +220,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
     if (value.slice(2, 4) === '30' && value.slice(-4, -2) === '9d') {
       if (value.slice(2, 4) === '30') {
         console.log('添加密码成功~~~~~~~~~~~~')
+        closeConnection()
         let str = wx.getStorageSync('pwData')
         wx.setStorageSync('pwData', str + value.slice(8, 16))
       }
@@ -228,14 +238,9 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       })
     }
     if (value.slice(-4, -2) === 'b0') {
-      console.log('绑定成功~~~~~~~~~~~~')
-      let deviceItem = {
-        type: 'M6',
-        name: 'Blisslock'
-      }
-      wx.setStorageSync('deviceList', [deviceItem])
+      console.log('绑定成功~~~~~~~~~~~~')      
       wx.redirectTo({
-        url: `/pages/deviceName/index`
+        url: '/pages/deviceName/index',
       })
     }
     if (value.slice(-4, -2) === '1f') {
@@ -249,6 +254,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       console.log(tempData)
       wx.setStorageSync('pwData', tempData)
       wx.setStorageSync('delPw', true)
+      closeConnection()
       wx.navigateBack({
         delta: 2
       })
@@ -264,8 +270,9 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       console.log(tempData)
       wx.setStorageSync('fingerData', tempData)
       wx.setStorageSync('delFinger', true)
-      wx.redirectTo({
-        url: `/pages/finger/index`
+      closeConnection()
+      wx.navigateBack({
+        delta: 2
       })
     }
     if (value.slice(-4, -2) === '28') {
@@ -384,9 +391,23 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
             hexLen: 0
           }
           func.resolve()
-          wx.navigateBack({
-            delta: 1
-          })
+          let currentPages = getCurrentPages()
+          let prePage = currentPages[currentPages.length - 2].route
+          console.log(currentPages)
+          if (prePage === 'pages/password/index' || prePage === 'pages/finger/index') {
+            wx.navigateBack({
+              delta: 1
+            })
+            if (dataKey === 'fingerData') {
+              wx.setStorageSync('isFingerSycBack', true)
+            }
+            if (dataKey === 'pwData') {
+              wx.setStorageSync('isPwSycBack', true)
+            }
+          } else {
+            wx.setStorageSync('isFingerSycBack', false)
+            wx.setStorageSync('isPwSycBack', false)
+          }
         }
         let hex = value
         writeBle(hex)

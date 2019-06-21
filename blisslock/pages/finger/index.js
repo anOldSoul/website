@@ -15,17 +15,8 @@ Page({
     // app.util.doBLEConnection('addFinger')
   },
   sync_password() {
-    return new Promise((resolve, reject) => {
-      app.util.doBLEConnection('syncFinger', resolve)
-      wx.navigateTo({
-        url: `/pages/activateDevice/index`
-      })
-    }).then(() => {
-      console.log('监听成功')
-      console.log('同步成功')
-      isSycBack = true
-      console.log(wx.getStorageSync('fingerData'))
-      this.formatFinger()
+    wx.navigateTo({
+      url: `/pages/activateDevice/index?func=syncFinger`
     })
   },
   formatFinger: function () {
@@ -49,6 +40,8 @@ Page({
   },
   onShow: function () {
     wx.hideLoading()
+    isSycBack = wx.getStorageSync('isFingerSycBack')
+    wx.setStorageSync('isFingerSycBack', false)
     if (isSycBack) {
       wx.showToast({
         title: '同步成功',

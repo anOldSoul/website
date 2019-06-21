@@ -3,18 +3,21 @@
   <view class="section">
     <picker mode="date" fields="month" value="{{date}}" bindchange="bindDateChange">
       <view class="picker">
-        {{date}}
+        {{month}}<image class="ic-record-dropdown" src='../../images/ic-record-dropdown.png'></image>
       </view>
     </picker>
   </view>
   <view class='tip_text' wx:for="{{currentMonthData}}" wx:key="{{index}}">
     <view class='repair_title'>{{item.date}}</view>
     <view class='text_content'>
-      <view class='content_left'><image class="pw_record_img" src='../../images/ic-record-password.png'></image></view>
+      <view class='content_left'>
+        <image class="pw_record_img" src='../../images/ic-record-fingerprint.png' wx:if="{{item.lockType === '指纹开锁'}}"></image>
+        <image class="pw_record_img" src='../../images/ic-record-password.png' wx:if="{{item.lockType === '本地密码'}}"></image>
+      </view>
       <view class='content_right'>
         <view class='time'>{{item.time}}</view>
         <view class='detail'>用户名-{{item.lockType}}</view>
-      </view>
+      </view> 
     </view>
   </view>
   <navigator class='add_apparatus' url="/pages/activateDevice/index?func=unlockRecord" hover-class="none">同步数据</navigator>

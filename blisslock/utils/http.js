@@ -5,7 +5,7 @@ var vType = 'web'
 var vCode = 116
 var token = '000'
 var platform = 'web'
-var apiEntry = "https://platform.carelinker.com/clApi/entry"
+var apiEntry = "http://149.129.174.60:9020/wx/authsend/login_by_weixin"
 var _request = function (method, api, data, success, fail) {
   data.platform = platform
   data.method = api[0]
@@ -14,13 +14,9 @@ var _request = function (method, api, data, success, fail) {
   data.vCode = vCode
   data.vType = vType
   data.token = token
-  // console.log(data)
-  // console.log('--------------')
-  if (data.path !== Api.POST_WECHAT_RUN[1] && data.path !== Api.GET_COUPONS[1] && data.path !== Api.GET_USER_INFO[1]) {
-    wx.showLoading({
-      title: '加载中',
-    })
-  }
+  wx.showLoading({
+    title: '加载中',
+  })
   wx.request({
     url: apiEntry,
     method: method,

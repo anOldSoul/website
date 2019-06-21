@@ -2,7 +2,6 @@
 const app = getApp()
 Page({
   data: {
-    func: ''
   },
   closeConnection() {
     wx.closeBLEConnection({
@@ -14,7 +13,26 @@ Page({
   },
   onLoad: function (options) {
     let func = options.func
-    this.data.func = options.func
+    if (func === 'syncFinger') {
+      console.log('11111111111')
+      return new Promise((resolve, reject) => {
+        console.log('2222222222')
+        app.util.doBLEConnection('syncFinger', resolve)
+      }).then(() => {
+        console.log('监听成功')
+        console.log('同步成功')
+        this.closeConnection()
+      })
+    }
+    if (func === 'syncPw') {
+      return new Promise((resolve, reject) => {
+        app.util.doBLEConnection('syncPass', resolve)
+      }).then(() => {
+        console.log('监听成功')
+        console.log('同步成功')
+        this.closeConnection()
+      })
+    }
     if (func === 'addPw') {
       app.util.doBLEConnection('addPass', '', options.pw)
     }

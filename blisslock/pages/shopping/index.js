@@ -144,6 +144,9 @@ Page({
         if (res.confirm) {
           console.log('用户点击确定')
           wx.setStorageSync('deviceList', [])
+          wx.reLaunch({
+            url: '/pages/index/index',
+          })
         } else if (res.cancel) {
           console.log('用户点击取消')
         }

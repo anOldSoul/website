@@ -1,27 +1,32 @@
 {
   "pages": [
+    "pages/unlockRecord/index",
     "pages/index/index",
+    "pages/addFinger/index",
+    "pages/addDevice/index",
+    
+    "pages/shopping/index",    
     "pages/about/index",
     
     "pages/member/index",
     "pages/activateDevice/index",
     "pages/addPw/index",
-    "pages/shopping/index",
+    
     "pages/deviceName/index",
     "pages/gesture/index",   
     "pages/search/index",
     "pages/finger/index",
     "pages/activateFinger/index",
-    "pages/addFinger/index",
+    
     "pages/lockAtOnce/index",
-    "pages/unlockRecord/index",
+    
     "pages/introduction/index",
     "pages/editFinger/index",
     "pages/password/index",
     "pages/editPw/index",
     "pages/admPw/index",
-    "pages/repair/index",
-    "pages/addDevice/index"
+    "pages/repair/index"
+    
   ],
   "window": {
     "navigationBarBackgroundColor": "white",

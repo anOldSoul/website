@@ -5,6 +5,10 @@
   margin-bottom: 29rpx;
   font-size: 32rpx;
 }
+.ic-record-dropdown{
+  width: 36rpx;
+  height: 36rpx;
+}
 .tip_text{
   width:710rpx;
   background:rgba(255,255,255,1);

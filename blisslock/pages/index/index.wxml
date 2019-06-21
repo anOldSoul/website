@@ -7,7 +7,7 @@
     <view class='tip_text'>未添加任何设备</view>
   </view>
   <view wx:if="{{deviceList.length}}">
-    <view class='device_item' wx:for="{{deviceList}}" wx:key="{{index}}">
+    <view class='device_item' wx:for="{{deviceList}}" wx:key="{{index}}" bindtap='goHomePage'>
       <view class='device_item_left'>
         <view class='left_text'>{{item.name}}</view>
         <view class='left_text'>{{item.type}}</view>
@@ -15,7 +15,7 @@
       <view class='device_item_right'><image class="pic_M6" src='../../images/pic-home-M6.png'></image></view>
     </view>
   </view>
-  <!-- <navigator class='add_apparatus' url="/pages/addDevice/index">添加设备</navigator> -->
-  <button class='add_apparatus' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">添加设备</button>
+  <navigator class='add_apparatus' url="/pages/addDevice/index">添加设备</navigator>
+  <!-- <button class='add_apparatus' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">添加设备</button> -->
   <!-- <button class='add_apparatus' open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">添加设备</button> -->
 </view>

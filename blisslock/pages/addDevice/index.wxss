@@ -21,6 +21,21 @@
   margin-top: 45rpx;
   margin-bottom: 52rpx;
 }
+.add_apparatusChecked{
+  width:670rpx;
+  height:94rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20rpx;
+  background:rgba(9,25,40,1);
+  box-shadow:0 4rpx 8rpx 0 rgba(9,25,40,0.24);
+  border-radius:8rpx;
+  color: #fff;
+  margin-left: 40rpx;
+  font-size: 36rpx;
+  opacity: 0.5;
+}
 .tip_text{
   font-size: 30rpx;
   margin: 0 30rpx;

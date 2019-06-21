@@ -11,17 +11,20 @@ Page({
     app.util.doBLEConnection('addPass')
   },
   sync_password() {
-    return new Promise((resolve, reject) => {
-      app.util.doBLEConnection('syncPass', resolve)
-      wx.navigateTo({
-        url: `/pages/activateDevice/index`
-      })
-    }).then(() => {
-      console.log('监听成功')
-      isBack = true
-      console.log(wx.getStorageSync('pwData'))
-      this.formatPw()
+    wx.navigateTo({
+      url: `/pages/activateDevice/index?func=syncPw`
     })
+    // return new Promise((resolve, reject) => {
+    //   app.util.doBLEConnection('syncPass', resolve)
+    //   wx.navigateTo({
+    //     url: `/pages/activateDevice/index`
+    //   })
+    // }).then(() => {
+    //   console.log('监听成功')
+    //   isBack = true
+    //   console.log(wx.getStorageSync('pwData'))
+    //   this.formatPw()
+    // })
   },
   formatPw: function() {
     let str = wx.getStorageSync('pwData')
@@ -45,6 +48,8 @@ Page({
   },
   onShow: function () {
     wx.hideLoading()
+    isBack = wx.getStorageSync('isPwSycBack')
+    wx.setStorageSync('isPwSycBack', false)
     if (isBack) {
       wx.showToast({
         title: '同步成功',
