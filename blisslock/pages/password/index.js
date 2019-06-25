@@ -51,9 +51,15 @@ Page({
     isBack = wx.getStorageSync('isPwSycBack')
     wx.setStorageSync('isPwSycBack', false)
     if (isBack) {
+      let title
+      if (isBack === 'noData') {
+        title = '密码用户为空'
+      } else {
+        title = '同步成功'
+      }
       wx.showToast({
-        title: '同步成功',
-        icon: 'success',
+        title: title,
+        icon: 'none',
         duration: 2000
       })
     }

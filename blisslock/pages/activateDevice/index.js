@@ -14,9 +14,7 @@ Page({
   onLoad: function (options) {
     let func = options.func
     if (func === 'syncFinger') {
-      console.log('11111111111')
       return new Promise((resolve, reject) => {
-        console.log('2222222222')
         app.util.doBLEConnection('syncFinger', resolve)
       }).then(() => {
         console.log('监听成功')

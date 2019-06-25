@@ -1,5 +1,6 @@
 const Moment = require('./moment.min.js')
 let rtc, seedA, seedB, seedC, key, decodedPackageData
+let bindCode = '96561612'
 let hasUnlockRecord = ''
 var pwNeedToAdd
 const app = getApp();
@@ -63,7 +64,7 @@ const closeConnection = () => {
     }
   })
 }
-const doBLEConnection = (funcKey, resolve, pwAdded = '') => {
+const doBLEConnection = (funcKey, resolve, pwAdded = '') => {  
   pwNeedToAdd = pwAdded
   func.resolve = resolve
   let deviceId = wx.getStorageSync('_deviceId')
@@ -190,7 +191,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       writeBle(hex)
     }
     if (value.slice(-4, -2) === '31' && value.slice(0, 2) === 'aa') {
-      let hex = '5532000039363536313631320000000000000000'  //设置绑定码
+      let hex = `55320000${strToHexCharCode(bindCode)}0000000000000000`  //设置绑定码
       writeBle(hex)
     }
     if (value.slice(-4, -2) === '32') {
@@ -356,6 +357,12 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       } else {
         console.log('没有密码！')
         wx.setStorageSync(dataKey, [])
+        if (dataKey === 'fingerData') {
+          wx.setStorageSync('isFingerSycBack', 'noData')
+        }
+        if (dataKey === 'pwData') {
+          wx.setStorageSync('isPwSycBack', 'noData')
+        }
         func.resolve()
         wx.navigateBack({
           delta: 1
@@ -603,6 +610,46 @@ const crypt = (key, data) =>{
   }
   return data;
 }
+const generate3MinToSecond = () => {
+  let myDate = new Date();
+  let now = myDate.getTime() / (1000);
+  let begin = 0;
+  begin = new Date('2000-01-01 00:00:00').getTime() / 1000;
+  return parseInt((now - begin) / 180);
+}
+//regino 生成密码算法
+const getTempPassword = () => {
+  let bleTempBindCode = bindCode;
+  console.log("生成临时密码算法  tempbindcode = " + bleTempBindCode);
+
+  //根据绑定码生成加密密钥
+  let r = "00000000" + (parseInt(bleTempBindCode)).toString(16);
+  console.log("生成临时密码算法  r = " + r);
+  let tempHexString = r.substring(r.length() - 8);
+  console.log("生成临时密码算法  tempHexString = " + tempHexString);
+  let cryptKey = bleTempBindCode + tempHexString;
+  console.log("生成临时密码算法  cryptKey = " + cryptKey);
+  let tempSecDiff = generate3MinToSecond();
+  console.log("生成临时密码算法  tempSecDiff 时间差 = " + tempSecDiff);
+  //组合生成密码
+  let tempBCD = FillZero(tempSecDiff);
+  console.log("生成临时密码算法  时间差BCD码格式 = " + tempBCD);
+  let s = "00000000" + parseInt(tempSecDiff).toString(16);  //4b62834  ->"4b62834"
+  let tempHEX = s.substring(s.length() - 8);;
+  console.log("生成临时密码算法  时间差HEX格式 = " + tempHEX);
+  let cryptData = tempBCD + tempHEX;
+  console.log("生成临时密码算法  cryptData = " + cryptData);
+  let tempPwd = "";
+  let b = getEncryptBytes(cryptKey.trim().toUpperCase(), cryptData.trim().toUpperCase(), bleTempBindCode);
+  for (let i = 0; i < b.length; i++) {
+    tempPwd += Integer.toString(b[i]);
+    console.log("生成临时密码算法 tempPwd  = " + tempPwd);
+  }
+  return tempPwd;
+}
+const FillZero = (p) => {
+  return new Array(8 - (p + '').length + 1).join('0') + p;
+}
 module.exports = {
   formatTime: formatTime,
   getQueryString: getQueryString,
@@ -613,5 +660,6 @@ module.exports = {
   hexToBytes: hexToBytes,
   crypt: crypt,
   doBLEConnection: doBLEConnection,
+  generate3MinToSecond: generate3MinToSecond,
   getBLEDeviceCharacteristics: getBLEDeviceCharacteristics
 }

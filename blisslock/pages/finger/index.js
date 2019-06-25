@@ -43,9 +43,15 @@ Page({
     isSycBack = wx.getStorageSync('isFingerSycBack')
     wx.setStorageSync('isFingerSycBack', false)
     if (isSycBack) {
+      let title
+      if (isSycBack === 'noData') {
+        title = '指纹用户为空'
+      } else {
+        title = '同步成功'
+      }
       wx.showToast({
-        title: '同步成功',
-        icon: 'success',
+        title: title,
+        icon: 'none',
         duration: 2000
       })
     }

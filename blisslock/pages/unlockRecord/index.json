@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "开锁记录",
   "navigationBarBackgroundColor": "#000",
-  "navigationBarTextStyle": "white"
+  "navigationBarTextStyle": "white",
+  "disableScroll": false
 }

@@ -32,12 +32,14 @@ Page({
     }
     let unlockRecordData = wx.getStorageSync('unlockRecordData') || []
     let unlockRecord
+    let dateArr = []
     if (unlockRecordData instanceof Array) {
       unlockRecord = unlockRecordData.map((item, index) => {
         let type = item.slice(8, 10)
         let time = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('HH:mm:ss')
         let date = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('20YY-MM-DD')
         let month = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('20YY-MM')
+        dateArr.push(date)
         let lockType
         if (type === '23') {
           lockType = '指纹开锁'
@@ -58,16 +60,24 @@ Page({
     } else {
       unlockRecord = []
     }
-    console.log(unlockRecord)
-    this.data.unlockRecord = unlockRecord
+    dateArr = [...new Set(dateArr)]
+    let newUnlockRecord = []
+    dateArr.forEach((item, index) => {
+      newUnlockRecord[index] = {}
+      newUnlockRecord[index].date = item
+      newUnlockRecord[index].recordArr = []
+      unlockRecord.forEach((item1, index1) => {
+        if (item === item1.date) {
+          newUnlockRecord[index].recordArr.push(item1)
+          newUnlockRecord[index].month = item1.month
+        }
+      })
+    })
+    this.data.unlockRecord = newUnlockRecord.reverse()
     this.setData({
-      currentMonthData: [{
-        date: '222',
-        lockType: '指纹开锁'
-      }]
-      // currentMonthData: unlockRecord.filter((item, index) => {
-      //   return item.month === this.data.month
-      // })
+      currentMonthData: this.data.unlockRecord.filter((item, index) => {
+        return item.month === this.data.month
+      })
     })
   },
   onLoad: function (options) {
@@ -82,7 +92,7 @@ Page({
       return item.month === currentMonth
     })
     this.setData({
-      date: currentMonth,
+      month: currentMonth,
       currentMonthData: unlockRecord
     })
   }

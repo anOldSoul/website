@@ -24,6 +24,7 @@ Page({
     this.setData({
       userName: e.detail.value
     })
+    console.log(this.data.userName)
   },
   onShow: function () {
 
