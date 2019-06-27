@@ -379,9 +379,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
         dataKey = 'fingerData'
       }
       pwData = wx.getStorageSync(dataKey) || ''
-      console.log(onChangePw.onPwListLen)
-      console.log(onChangePw.pageNum)
-      console.log(onChangePw.onPwList)
       if ((onChangePw.onPwListLen) < onChangePw.pageNum && onChangePw.onPwList) {
         pwData = pwData + value.slice(4, 40)
         console.log(dataKey)
@@ -400,7 +397,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
           func.resolve()
           let currentPages = getCurrentPages()
           let prePage = currentPages[currentPages.length - 2].route
-          console.log(currentPages)
           if (prePage === 'pages/password/index' || prePage === 'pages/finger/index') {
             wx.navigateBack({
               delta: 1
@@ -611,11 +607,16 @@ const crypt = (key, data) =>{
   return data;
 }
 const generate3MinToSecond = () => {
-  Encrypt.getEncryptBytes('9523937005AD3CCA', '034034940033EEE6', '95239370')
+  // Encrypt.getEncryptBytes('9523937005AD3CCA', '034034940033EEE6', '95239370')
   let myDate = new Date();
+  console.log(myDate)
   let now = myDate.getTime() / (1000);
+  console.log(now)
   let begin = 0;
-  begin = new Date('2000-01-01 00:00:00').getTime() / 1000;
+  let newDate = ('2000-01-01 00:00:00').replace(/-/g, '/');
+  begin = (new Date(newDate).getTime()) / 1000;
+  console.log(begin)
+  console.log(now - begin)
   return parseInt((now - begin) / 180);
 }
 //regino 生成密码算法
@@ -626,7 +627,7 @@ const getTempPassword = () => {
   //根据绑定码生成加密密钥
   let r = "00000000" + (parseInt(bleTempBindCode)).toString(16);
   console.log("生成临时密码算法  r = " + r);
-  let tempHexString = r.substring(r.length() - 8);
+  let tempHexString = r.substring(r.length - 8);
   console.log("生成临时密码算法  tempHexString = " + tempHexString);
   let cryptKey = bleTempBindCode + tempHexString;
   console.log("生成临时密码算法  cryptKey = " + cryptKey);
@@ -636,16 +637,13 @@ const getTempPassword = () => {
   let tempBCD = FillZero(tempSecDiff);
   console.log("生成临时密码算法  时间差BCD码格式 = " + tempBCD);
   let s = "00000000" + parseInt(tempSecDiff).toString(16);  //4b62834  ->"4b62834"
-  let tempHEX = s.substring(s.length() - 8);;
+  let tempHEX = s.substring(s.length - 8);;
   console.log("生成临时密码算法  时间差HEX格式 = " + tempHEX);
   let cryptData = tempBCD + tempHEX;
   console.log("生成临时密码算法  cryptData = " + cryptData);
   let tempPwd = "";
-  let b = getEncryptBytes(cryptKey.trim().toUpperCase(), cryptData.trim().toUpperCase(), bleTempBindCode);
-  for (let i = 0; i < b.length; i++) {
-    tempPwd += Integer.toString(b[i]);
-    console.log("生成临时密码算法 tempPwd  = " + tempPwd);
-  }
+  let b = Encrypt.getEncryptBytes(cryptKey.trim().toUpperCase(), cryptData.trim().toUpperCase(), bleTempBindCode);
+  tempPwd = b.join("")
   return tempPwd;
 }
 const FillZero = (p) => {
@@ -661,6 +659,6 @@ module.exports = {
   hexToBytes: hexToBytes,
   crypt: crypt,
   doBLEConnection: doBLEConnection,
-  generate3MinToSecond: generate3MinToSecond,
+  getTempPassword: getTempPassword,
   getBLEDeviceCharacteristics: getBLEDeviceCharacteristics
 }

@@ -35,7 +35,7 @@
     <view class="func_row">
       <navigator class="func_item" url="/pages/gesture/index?url=finger" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-fingerprint.png'></image>我的指纹</navigator>
       <navigator class="func_item" url="/pages/gesture/index?url=password" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-password.png'></image>我的密码</navigator>
-      <navigator class="func_item" hover-class="none"><image class="func_img" src='../../images/home-tem-password.png'></image>临时密码</navigator>
+      <view class="func_item" bindtap='getTempPwd'><image class="func_img" src='../../images/home-tem-password.png'></image>临时密码</view>
     </view>
     <view class="func_row">
       <navigator class="func_item" url="/pages/gesture/index?url=checkAdmPw" hover-class="none" class="func_item"><image class="func_img" src='../../images/ic_equip-home-adm.png'></image>管理员密码</navigator>

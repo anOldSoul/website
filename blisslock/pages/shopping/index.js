@@ -153,6 +153,21 @@ Page({
       }
     })
   },
+  getTempPwd: function() {
+    let pwd = app.util.getTempPassword()
+    wx.showModal({
+      title: '提示',
+      content: `临时密码为：${pwd}`,
+      showCancel: false,
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
   checkAdmPw: function() {
     wx.showModal({
       title: '提示',

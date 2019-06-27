@@ -6,7 +6,6 @@ Page({
     deviceList: []
   },
   onLoad: function (options) {
-    console.log(app.util.generate3MinToSecond())
     wx.login({
       success: (res) => {
         if (res.code) {
