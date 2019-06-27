@@ -1,9 +1,9 @@
 const Moment = require('./moment.min.js')
+const Encrypt = require("./getEncryptBytes.js");
 let rtc, seedA, seedB, seedC, key, decodedPackageData
 let bindCode = '96561612'
 let hasUnlockRecord = ''
 var pwNeedToAdd
-const app = getApp();
 let func = {
   addPass: false,
   syncPass: false,
@@ -611,6 +611,7 @@ const crypt = (key, data) =>{
   return data;
 }
 const generate3MinToSecond = () => {
+  Encrypt.getEncryptBytes('9523937005AD3CCA', '034034940033EEE6', '95239370')
   let myDate = new Date();
   let now = myDate.getTime() / (1000);
   let begin = 0;

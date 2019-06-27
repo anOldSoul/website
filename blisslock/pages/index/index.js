@@ -11,7 +11,7 @@ Page({
       success: (res) => {
         if (res.code) {
           this.data.code = res.code
-          console.log(res.code)
+          // console.log(res.code)
         } else {
           console.log('登录失败！' + res.errMsg)
         }
