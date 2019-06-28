@@ -3,7 +3,7 @@ const Encrypt = require("./getEncryptBytes.js");
 let rtc, seedA, seedB, seedC, key, decodedPackageData
 let bindCode = '96561612'
 let hasUnlockRecord = ''
-var pwNeedToAdd
+var pwNeedToAdd = {}
 let func = {
   addPass: false,
   syncPass: false,
@@ -64,7 +64,7 @@ const closeConnection = () => {
     }
   })
 }
-const doBLEConnection = (funcKey, resolve, pwAdded = '') => {  
+const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
   pwNeedToAdd = pwAdded
   func.resolve = resolve
   let deviceId = wx.getStorageSync('_deviceId')
@@ -205,7 +205,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
         let str = wx.getStorageSync('fingerData')
         wx.setStorageSync('fingerData', str + value.slice(8, 16))
       }
-      wx.setStorageSync('addFinger', value.slice(2, 4))
+      wx.setStorageSync('addFinger', { result: value.slice(2, 4), id: value.slice(8, 16), name: pwNeedToAdd.name })
       let currentPages = getCurrentPages()
       console.log(currentPages)
       currentPages.forEach((item, index) => {
@@ -225,7 +225,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
         let str = wx.getStorageSync('pwData')
         wx.setStorageSync('pwData', str + value.slice(8, 16))
       }
-      wx.setStorageSync('addPw', value.slice(2, 4))
+      wx.setStorageSync('addPw', { result: value.slice(2, 4), id: value.slice(8, 16), name: pwNeedToAdd.name })
       let currentPages = getCurrentPages()
       console.log(currentPages)
       currentPages.forEach((item, index) => {
@@ -425,7 +425,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
     }
     if (value.slice(-4, -2) === '95') {
       if (func['addPass']) {
-        let pw = strToHexCharCode(pwNeedToAdd)
+        let pw = strToHexCharCode(pwNeedToAdd.pw)
         if (pw.length < 24) {
           for (let i = pw.length; i < 24; i++) {
             pw = pw + '0'

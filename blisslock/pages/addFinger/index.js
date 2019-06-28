@@ -17,7 +17,7 @@ Page({
       return
     }
     wx.redirectTo({
-      url: '/pages/activateDevice/index?func=addFinger'
+      url: `/pages/activateDevice/index?func=addFinger&name=${this.data.userName}`
     })
   },
   bindKeyInput: function (e) {

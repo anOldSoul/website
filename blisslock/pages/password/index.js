@@ -14,21 +14,9 @@ Page({
     wx.navigateTo({
       url: `/pages/activateDevice/index?func=syncPw`
     })
-    // return new Promise((resolve, reject) => {
-    //   app.util.doBLEConnection('syncPass', resolve)
-    //   wx.navigateTo({
-    //     url: `/pages/activateDevice/index`
-    //   })
-    // }).then(() => {
-    //   console.log('监听成功')
-    //   isBack = true
-    //   console.log(wx.getStorageSync('pwData'))
-    //   this.formatPw()
-    // })
   },
   formatPw: function() {
     let str = wx.getStorageSync('pwData')
-    console.log(str)
     var strArr = [];
     var n = 8;
     for (var i = 0, l = str.length; i < l / n; i++) {
@@ -40,8 +28,26 @@ Page({
     if (index > -1) {
       strArr.splice(index, 1);
     }
+    let formatPwArr = strArr.map((item, index) => {
+      let result = {}
+      let pwArr = wx.getStorageSync('pwArr') || []
+      let exist = pwArr.find((item1, index) => {
+        if (item1) {
+          return item === item1.id
+        }
+      })
+      if (exist) {
+        result.id = exist.id
+        result.name = exist.name
+      } else {
+        result.id = item
+        result.name = '匿名'
+      }
+      return result
+    })
+    wx.setStorageSync('pwArr', formatPwArr)
     this.setData({
-      pwArr: strArr
+      pwArr: wx.getStorageSync('pwArr')
     })
   },
   onLoad: function (options) {
@@ -64,8 +70,8 @@ Page({
       })
     }
     isBack = false
-    if (wx.getStorageSync('addPw')) {
-      let status = wx.getStorageSync('addPw')
+    if (wx.getStorageSync('addPw').result && wx.getStorageSync('addPw').id) {
+      let status = wx.getStorageSync('addPw').result
       let title
       if (status === '31') {
         title = '注册失败'
@@ -75,13 +81,19 @@ Page({
       }
       if (status === '30') {
         title = '添加成功'
+        let pwArr = wx.getStorageSync('pwArr') || []
+        pwArr.push({
+          id: wx.getStorageSync('addPw').id,
+          name: wx.getStorageSync('addPw').name
+        })
+        wx.setStorageSync('pwArr', pwArr)
       }
       wx.showToast({
         title: title,
         icon: 'success',
         duration: 2000
       })
-      wx.setStorageSync('addPw', false)
+      wx.setStorageSync('addPw', {})
     }
     if (wx.getStorageSync('delPw')) {
       wx.setStorageSync('delPw', false)

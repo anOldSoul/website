@@ -32,8 +32,26 @@ Page({
     if (index > -1) {
       strArr.splice(index, 1);
     }
+    let formatPwArr = strArr.map((item, index) => {
+      let result = {}
+      let pwArr = wx.getStorageSync('fingerArr') || []
+      let exist = pwArr.find((item1, index) => {
+        if (item1) {
+          return item === item1.id
+        }
+      })
+      if (exist) {
+        result.id = exist.id
+        result.name = exist.name
+      } else {
+        result.id = item
+        result.name = '匿名'
+      }
+      return result
+    })
+    wx.setStorageSync('fingerArr', formatPwArr)
     this.setData({
-      pwArr: strArr
+      pwArr: wx.getStorageSync('fingerArr')
     })
   },
   onLoad: function (options) {
@@ -56,8 +74,8 @@ Page({
       })
     }
     isSycBack = false
-    if (wx.getStorageSync('addFinger')) {
-      let status = wx.getStorageSync('addFinger')
+    if (wx.getStorageSync('addFinger').result && wx.getStorageSync('addFinger').id) {
+      let status = wx.getStorageSync('addFinger').result
       let title
       if (status === '31') {
         title = '注册失败'
@@ -67,13 +85,19 @@ Page({
       }
       if (status === '30') {
         title = '添加成功'
+        let pwArr = wx.getStorageSync('fingerArr') || []
+        pwArr.push({
+          id: wx.getStorageSync('addFinger').id,
+          name: wx.getStorageSync('addFinger').name
+        })
+        wx.setStorageSync('fingerArr', pwArr)
       }     
       wx.showToast({
         title: title,
         icon: 'success',
         duration: 2000
       })
-      wx.setStorageSync('addFinger', false)
+      wx.setStorageSync('addFinger', {})
     }
     if (wx.getStorageSync('delFinger')) {
       wx.setStorageSync('delFinger', false)

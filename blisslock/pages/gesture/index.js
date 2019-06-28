@@ -5,7 +5,8 @@ Page({
     toUrl: '',
     errMsg: '',
     newGes: [],
-    password: [1, 2, 3, 6, 9]
+    password: [],
+    noForget: false
   },
   onLoad: function (options) {
     let gesturePw = wx.getStorageSync('gesturePw')
@@ -13,11 +14,18 @@ Page({
     this.data.toUrl = options.url
     if (this.data.toUrl === 'member') {
       this.setData({
-        title: '请输入旧手势密码'
+        title: '请输入旧手势密码',
+        noForget: true
+      })
+    } else if (this.data.toUrl === 'init') {
+      this.setData({
+        title: '请设置手势密码',
+        noForget: false
       })
     } else {
       this.setData({
-        title: '请输入手势密码'
+        title: '请输入手势密码',
+        noForget: true
       })
     }
   },
@@ -44,7 +52,7 @@ Page({
   onEnd(data) {
     console.log(this.data.toUrl)
     let endGesture = data.detail.toString()
-    if (this.data.toUrl === 'setNew') {
+    if (this.data.toUrl === 'setNew' || this.data.toUrl === 'init') {
       this.data.newGes = data.detail
       this.data.toUrl = 'setNewAgain'
       this.setData({
@@ -82,15 +90,11 @@ Page({
           wx.navigateBack({
             delta: 1
           })
-        } else if (this.data.toUrl === 'tempPw') {
-          wx.setStorageSync('showTempPw', true)
-          wx.navigateBack({
-            delta: 1
-          })
         } else if (this.data.toUrl === 'member') {
           this.data.toUrl = 'setNew'          
           this.setData({
-            title: '请输入新手势密码'
+            title: '请输入新手势密码',
+            noForget: false
           })
         } else {
           wx.redirectTo({

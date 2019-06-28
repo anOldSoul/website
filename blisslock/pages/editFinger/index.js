@@ -2,7 +2,8 @@
 const app = getApp()
 Page({
   data: {
-    pw: ''
+    pw: '',
+    id: ''
   },
   del_finger() {
     wx.setStorageSync('delFingerId' ,this.data.pw)
@@ -10,7 +11,8 @@ Page({
   },
   onLoad: function (options) {
     this.setData({
-      pw: options.pw
+      pw: options.pw,
+      id: options.id
     })
   },
   onShow: function () {

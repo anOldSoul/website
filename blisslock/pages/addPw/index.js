@@ -25,7 +25,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: `/pages/activateDevice/index?func=addPw&pw=${this.data.password}`
+      url: `/pages/activateDevice/index?func=addPw&pw=${this.data.password}&name=${this.data.userName}`
     })
   },
   bindUserNameInput: function(e) {

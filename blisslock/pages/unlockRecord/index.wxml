@@ -12,6 +12,7 @@
       <view class='content_left'>
         <image class="pw_record_img" src='../../images/ic-record-fingerprint.png' wx:if="{{items.lockType === '指纹开锁'}}"></image>
         <image class="pw_record_img" src='../../images/ic-record-password.png' wx:if="{{items.lockType === '本地密码'}}"></image>
+        <image class="pw_record_img" src='../../images/ic-record_tempass.png' wx:if="{{items.lockType === '临时密码'}}"></image>
       </view>
       <view class='content_right'>
         <view class='time'>{{items.time}}</view>

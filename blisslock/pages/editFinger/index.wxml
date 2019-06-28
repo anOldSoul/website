@@ -1,8 +1,8 @@
 <view class='password'>
-  <view class='pw_item'>{{pw}}
+  <view class='pw_item'>{{pw}} {{id}}
   </view>
   <view class='fixed'>
-    <navigator class='add_password' url="{{'/pages/activateDevice/index?func=delFinger&pw=' + pw}}" hover-class="none">删除指纹</navigator>
+    <navigator class='add_password' url="{{'/pages/activateDevice/index?func=delFinger&pw=' + id}}" hover-class="none">删除指纹</navigator>
     <!-- <button class='add_password' bindtap="del_finger">删除指纹</button> -->
   </view>
 </view>

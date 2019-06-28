@@ -96,7 +96,7 @@ Page({
     })
     this.stopBluetoothDevicesDiscovery()
   },
-  closeBLEConnection() { 
+  closeBLEConnection() {
     wx.closeBLEConnection({
       deviceId: this.data.deviceId
     })
@@ -124,17 +124,13 @@ Page({
     wx.closeBluetoothAdapter()
     this._discoveryStarted = false
   },
-  onLoad: function (options) {  
+  onLoad: function (options) {
     let device_name = wx.getStorageSync('device_name')
     this.setData({
       device_name: device_name
     })
   },
   onShow: function () {
-    if (wx.getStorageSync('showTempPw')) {
-      wx.setStorageSync('showTempPw', false)
-      this.getTempPwd()
-    }
     if (wx.getStorageSync('showAdmPw')) {
       wx.setStorageSync('showAdmPw', false)
       this.checkAdmPw()
@@ -151,21 +147,6 @@ Page({
           wx.reLaunch({
             url: '/pages/index/index',
           })
-        } else if (res.cancel) {
-          console.log('用户点击取消')
-        }
-      }
-    })
-  },
-  getTempPwd: function() {
-    let pwd = app.util.getTempPassword()
-    wx.showModal({
-      title: '提示',
-      content: `临时密码为：${pwd}`,
-      showCancel: false,
-      success(res) {
-        if (res.confirm) {
-          console.log('用户点击确定')
         } else if (res.cancel) {
           console.log('用户点击取消')
         }

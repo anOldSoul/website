@@ -35,6 +35,7 @@ Page({
     let dateArr = []
     if (unlockRecordData instanceof Array) {
       unlockRecord = unlockRecordData.map((item, index) => {
+        console.log(item)
         let type = item.slice(8, 10)
         let time = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('HH:mm:ss')
         let date = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('20YY-MM-DD')

@@ -1,0 +1,49 @@
+/* pages/index/index.wxss */
+.section{
+  width: 100%;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32rpx;
+  position: fixed;
+  height: 88rpx;
+  background: #fff;
+}
+.record_top{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.clear{
+  font-size:30rpx;
+  color: #17BF98;
+  margin-right: 30rpx;
+}
+.tip_text{
+  width:710rpx;
+  background:rgba(255,255,255,1);
+  box-shadow:0 2rpx 12rpx 0 rgba(0,0,0,0.1);
+  border-radius:12rpx;
+  margin-left: 20rpx;
+  margin-bottom: 30rpx;
+}
+.text_content{
+  padding: 24rpx;
+  margin-bottom: 30rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.time{
+  font-size: 34rpx;
+}
+.detail{
+  font-size:28rpx;
+  color:rgba(153,153,153,1);
+  margin-top: 11rpx;
+}
+.record_list{
+  margin-bottom: 200rpx;
+}

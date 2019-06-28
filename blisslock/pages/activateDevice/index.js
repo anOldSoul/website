@@ -32,7 +32,7 @@ Page({
       })
     }
     if (func === 'addPw') {
-      app.util.doBLEConnection('addPass', '', options.pw)
+      app.util.doBLEConnection('addPass', '', { pw: options.pw, name: options.name})
     }
     if (func === 'delPw') {
       wx.setStorageSync('delPassId', options.pw)
@@ -42,7 +42,7 @@ Page({
       app.util.doBLEConnection('unlockRecord')
     }
     if (func === 'addFinger') {
-      app.util.doBLEConnection('addFinger')
+      app.util.doBLEConnection('addFinger', '', { name: options.name })
     }
     if (func === 'delFinger') {
       wx.setStorageSync('delFingerId', options.pw)
