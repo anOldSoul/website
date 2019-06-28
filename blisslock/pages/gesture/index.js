@@ -21,6 +21,26 @@ Page({
       })
     }
   },
+  handleForgerPw() {
+    wx.showModal({
+      title: '重置手势密码',
+      content: '重置后会清空已绑定设备，需重新绑定后使用',
+      confirmText: '重置',
+      confirmColor: '#16BF98',
+      success(res) {
+        if (res.confirm) {
+          wx.setStorageSync('deviceList', [])
+          wx.setStorageSync('gesturePw', [])
+          wx.reLaunch({
+            url: `/pages/index/index`
+          })
+          console.log('用户点击确定')
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
   onEnd(data) {
     console.log(this.data.toUrl)
     let endGesture = data.detail.toString()
@@ -59,6 +79,11 @@ Page({
       if (endGesture === this.data.password.toString()) {
         if (this.data.toUrl === 'checkAdmPw') {
           wx.setStorageSync('showAdmPw', true)
+          wx.navigateBack({
+            delta: 1
+          })
+        } else if (this.data.toUrl === 'tempPw') {
+          wx.setStorageSync('showTempPw', true)
           wx.navigateBack({
             delta: 1
           })

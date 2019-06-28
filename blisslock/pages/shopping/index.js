@@ -131,6 +131,10 @@ Page({
     })
   },
   onShow: function () {
+    if (wx.getStorageSync('showTempPw')) {
+      wx.setStorageSync('showTempPw', false)
+      this.getTempPwd()
+    }
     if (wx.getStorageSync('showAdmPw')) {
       wx.setStorageSync('showAdmPw', false)
       this.checkAdmPw()

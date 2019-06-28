@@ -2,17 +2,20 @@
 const app = getApp()
 Page({
   data: {
+    userInfo: {},
     code: '',
-    deviceList: []
+    deviceList: [],
+    showAuthen: false,
+    hasPhone: false
   },
   onLoad: function (options) {
-    wx.login({
+    wx.getSetting({
       success: (res) => {
-        if (res.code) {
-          this.data.code = res.code
-          // console.log(res.code)
-        } else {
-          console.log('登录失败！' + res.errMsg)
+        let hasUserInfo = res.authSetting['scope.userInfo']
+        if (!hasUserInfo) {
+          this.setData({
+            showAuthen: true
+          })
         }
       }
     })
@@ -20,35 +23,51 @@ Page({
   onShow: function () {
     let deviceList = wx.getStorageSync('deviceList') || []
     this.setData({
-      deviceList: deviceList
+      deviceList: deviceList,
+      hasPhone: wx.getStorageSync('phone') || false
     })
   },
   getPhoneNumber(e) {
-    console.log(e.detail.errMsg)
-    console.log(e.detail.iv)
-    console.log(e.detail.encryptedData)
-    let userInfo = { 
-      nickName: '9',
-      avatarUrl: 'a',
-      gender: 1,
-      city: 'a',
-      province: 'a',
-      language: 'a'
-    }
-    let data = {
-      code: this.data.code,
-      encryptedData: e.detail.encryptedData,
-      iv: e.detail.iv,
-      userInfo: userInfo
-    }
-    app.post(app.Apis.POST_WECHAT_INFO, data, result => {})
+    wx.login({
+      success: (res) => {
+        if (res.code) {
+          this.data.code = res.code
+          let userInfo = {
+            nickName: this.data.userInfo.nickName,
+            avatarUrl: this.data.userInfo.avatarUrl,
+            gender: this.data.userInfo.gender,
+            city: this.data.userInfo.city,
+            province: this.data.userInfo.province,
+            language: this.data.userInfo.language,
+          }
+          let data = {
+            code: this.data.code,
+            encryptedData: e.detail.encryptedData,
+            iv: e.detail.iv,
+            userInfo: userInfo
+          }
+          app.post(app.Apis.POST_WECHAT_INFO, data, result => {
+            if (result.errno === 0) {
+              wx.setStorageSync('phone', true)
+              this.goHomePage()
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    })
   },
   goHomePage: function() {
     wx.navigateTo({
-      url: `/pages/shopping/index`
+      url: `/pages/addDevice/index`
     })
   },
   bindGetUserInfo(e) {
+    this.setData({
+      showAuthen: false
+    })
     console.log(e.detail.userInfo)
+    this.data.userInfo = e.detail.userInfo
   }
 })
