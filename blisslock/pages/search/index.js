@@ -78,14 +78,18 @@ Page({
           devicesFond.name = device.name
           this.setData({
             devices: [devicesFond],
-            findDevice: true
+            findDevice: true,
+            findNoDevice: false
           })
-          wx.hideLoading()
+        } else {
         }
       })
       if (!this.data.devices.length) {
-        this.data.findNoDevice = true
+        this.setData({
+          findNoDevice: true
+        })
       }
+      wx.hideLoading()
     })
   },
   currentInfo: function(e) {
@@ -138,11 +142,14 @@ Page({
     wx.closeBluetoothAdapter()
     this._discoveryStarted = false
   },
-  onLoad: function (options) {
+  trySearch: function() {
     wx.showLoading({
       title: '加载中',
     })
     this.openBluetoothAdapter()
+  },
+  onLoad: function (options) {
+    this.trySearch()
   },
   onShow: function () {
   },
