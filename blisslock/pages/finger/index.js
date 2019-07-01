@@ -76,7 +76,7 @@ Page({
     isSycBack = false
     if (wx.getStorageSync('addFinger').result && wx.getStorageSync('addFinger').id) {
       let status = wx.getStorageSync('addFinger').result
-      let title
+      let title = ''
       if (status === '31') {
         title = '注册失败'
       }
@@ -94,18 +94,29 @@ Page({
       }     
       wx.showToast({
         title: title,
-        icon: 'success',
+        icon: 'none',
         duration: 2000
       })
       wx.setStorageSync('addFinger', {})
     }
     if (wx.getStorageSync('delFinger')) {
-      wx.setStorageSync('delFinger', false)
+      let status = wx.getStorageSync('delFinger')
+      let title = ''
+      if (status === '30') {
+        title = '删除成功'
+      }
+      if (status === '31') {
+        title = '删除失败'
+      }
+      if (status === '32') {
+        title = '删除本地指纹ID不存在'
+      }
       wx.showToast({
-        title: '删除成功',
-        icon: 'success',
+        title: title,
+        icon: 'none',
         duration: 2000
       })
+      wx.setStorageSync('delFinger', false)
     }
     this.formatFinger()
   },

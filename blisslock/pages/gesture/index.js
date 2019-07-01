@@ -10,7 +10,10 @@ Page({
   },
   onLoad: function (options) {
     let gesturePw = wx.getStorageSync('gesturePw')
-    this.data.password = gesturePw.length ? gesturePw : [1, 2, 3, 4, 5, 6]
+    // this.data.password = gesturePw.length ? gesturePw : [1, 2, 3, 4, 5, 6]
+    this.setData({
+      password: gesturePw.length ? gesturePw : [1, 2, 3, 4, 5, 6]
+    })
     this.data.toUrl = options.url
     if (this.data.toUrl === 'member') {
       this.setData({

@@ -90,18 +90,29 @@ Page({
       }
       wx.showToast({
         title: title,
-        icon: 'success',
+        icon: 'none',
         duration: 2000
       })
       wx.setStorageSync('addPw', {})
     }
     if (wx.getStorageSync('delPw')) {
-      wx.setStorageSync('delPw', false)
+      let status = wx.getStorageSync('delPw')
+      let title = ''
+      if (status === '30') {
+        title = '删除成功'
+      }
+      if (status === '31') {
+        title = '删除失败'
+      }
+      if (status === '32') {
+        title = '删除本地密码ID不存在'
+      }
       wx.showToast({
-        title: '删除成功',
-        icon: 'success',
+        title: title,
+        icon: 'none',
         duration: 2000
       })
+      wx.setStorageSync('delPw', false)
     }
     this.formatPw()
   },

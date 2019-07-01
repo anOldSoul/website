@@ -73,6 +73,40 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
     deviceId,
     success: (res) => {
       getBLEDeviceServices(deviceId, funcKey)
+    },
+    fail: (res) => {
+      console.log('==============')
+      console.log(res)
+      let errCode = res.errCode
+      let title = ''
+      if (errCode === 10003) {
+        title = '等待超时，请重试'
+      } else if (errCode === 10012) {
+        title = '连接超时，请重试'
+      } else if (errCode === 10000) {
+        title = '连接蓝牙失败，请重新绑定'
+      } else {
+        title = '连接失败，请重试'
+      }
+      wx.showModal({
+        title: '提示',
+        content: title,
+        showCancel: false,
+        success(res) {
+          if (res.confirm) {
+            wx.navigateBack({
+              delta: 1
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+      // wx.showToast({
+      //   title: title,
+      //   icon: 'none',
+      //   duration: 2000
+      // })
     }
   })
 }
@@ -203,7 +237,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
         console.log('添加指纹成功~~~~~~~~~~~~')
         closeConnection()
         let str = wx.getStorageSync('fingerData')
-        wx.setStorageSync('fingerData', str + value.slice(8, 16))
+        wx.setStorageSync('fingerData', value.slice(8, 16) + str)
       }
       wx.setStorageSync('addFinger', { result: value.slice(2, 4), id: value.slice(8, 16), name: pwNeedToAdd.name })
       let currentPages = getCurrentPages()
@@ -223,7 +257,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
         console.log('添加密码成功~~~~~~~~~~~~')
         closeConnection()
         let str = wx.getStorageSync('pwData')
-        wx.setStorageSync('pwData', str + value.slice(8, 16))
+        wx.setStorageSync('pwData', value.slice(8, 16) + str)
       }
       wx.setStorageSync('addPw', { result: value.slice(2, 4), id: value.slice(8, 16), name: pwNeedToAdd.name })
       let currentPages = getCurrentPages()
@@ -254,7 +288,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       tempData = tempData.substring(0, index) + tempData.substring(index + 8, tempData.length)
       console.log(tempData)
       wx.setStorageSync('pwData', tempData)
-      wx.setStorageSync('delPw', true)
+      wx.setStorageSync('delPw', value.slice(2, 4))
       closeConnection()
       wx.navigateBack({
         delta: 2
@@ -268,9 +302,8 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       console.log(str)
       let index = tempData.indexOf(str)
       tempData = tempData.substring(0, index) + tempData.substring(index + 8, tempData.length)
-      console.log(tempData)
       wx.setStorageSync('fingerData', tempData)
-      wx.setStorageSync('delFinger', true)
+      wx.setStorageSync('delFinger', value.slice(2, 4))
       closeConnection()
       wx.navigateBack({
         delta: 2

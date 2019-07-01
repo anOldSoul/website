@@ -30,6 +30,10 @@ Component({
       this.refesh();
     },
     onTouchEnd(e) {
+      console.log(this.data.error)
+      this.setData({
+        error: this.data.error
+      })
       const checkPoints = this.data.gestureLock.onTouchEnd(e);
       if (checkPoints.join("") == this.data.password.join("")) {
         console.log("密码正确");
