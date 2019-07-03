@@ -6,7 +6,7 @@ Page({
     id: ''
   },
   del_finger() {
-    wx.setStorageSync('delFingerId' ,this.data.pw)
+    app.util.updateDeviceList('delFingerId', this.data.pw)
     app.util.doBLEConnection('delFinger')
   },
   onLoad: function (options) {

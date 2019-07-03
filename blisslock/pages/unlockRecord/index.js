@@ -7,8 +7,9 @@ Page({
     unlockRecord: []
   },
   onShow: function() {
-    if (wx.getStorageSync('hasUnlockRecord') === 'noRecord') {
-      wx.setStorageSync('hasUnlockRecord', '')
+    let hasUnlockRecord = app.util.getDeviceItem('hasUnlockRecord')
+    if (hasUnlockRecord === 'noRecord') {
+      app.util.updateDeviceList('hasUnlockRecord', '')
       wx.showModal({
         title: '提示',
         content: '锁体中没有开锁记录数据！',
@@ -22,15 +23,15 @@ Page({
         }
       })
     }
-    if (wx.getStorageSync('hasUnlockRecord') === 'hasRecord') {
-      wx.setStorageSync('hasUnlockRecord', '')
+    if (hasUnlockRecord === 'hasRecord') {
+      app.util.updateDeviceList('hasUnlockRecord', '')
       wx.showToast({
         title: '同步成功',
         icon: 'success',
         duration: 2000
       })
     }
-    let unlockRecordData = wx.getStorageSync('unlockRecordData') || []
+    let unlockRecordData = app.util.getDeviceItem('unlockRecordData')|| []
     let unlockRecord
     let dateArr = []
     if (unlockRecordData instanceof Array) {

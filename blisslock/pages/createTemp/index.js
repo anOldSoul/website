@@ -32,7 +32,7 @@ Page({
         createText: '继续创建',
         tempPw: pwd
       })
-      let tempPw = wx.getStorageSync('tempPw') || []
+      let tempPw = app.util.getDeviceItem('tempPw') || []
       tempPw.push({
         userName: this.data.userName,
         tempPw: pwd,
@@ -40,7 +40,7 @@ Page({
       })
       tempPw.reverse()
       tempPw = tempPw.slice(0, 200)
-      wx.setStorageSync('tempPw', tempPw)
+      app.util.updateDeviceList('tempPw', tempPw)
       wx.showToast({
         title: '创建成功',
         icon: 'none',

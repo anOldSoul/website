@@ -21,7 +21,9 @@ Page({
     })
   },
   onShow: function () {
+    // wx.clearStorageSync()
     let deviceList = wx.getStorageSync('deviceList') || []
+    console.log(deviceList)
     this.setData({
       deviceList: deviceList,
       hasPhone: wx.getStorageSync('phone') || false
@@ -66,7 +68,10 @@ Page({
       url: `/pages/addDevice/index`
     })
   },
-  goHomePage: function () {
+  goHomePage: function (e) {
+    console.log(e)
+    let selectIndex = e.currentTarget.dataset.index
+    wx.setStorageSync('currentDeviceIndex', selectIndex)
     wx.navigateTo({
       url: `/pages/shopping/index`
     })

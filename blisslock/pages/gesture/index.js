@@ -10,7 +10,6 @@ Page({
   },
   onLoad: function (options) {
     let gesturePw = wx.getStorageSync('gesturePw')
-    // this.data.password = gesturePw.length ? gesturePw : [1, 2, 3, 4, 5, 6]
     this.setData({
       password: gesturePw.length ? gesturePw : [1, 2, 3, 4, 5, 6]
     })
@@ -40,7 +39,12 @@ Page({
       confirmColor: '#16BF98',
       success(res) {
         if (res.confirm) {
-          wx.setStorageSync('deviceList', [])
+          let currentDeviceIndex = wx.getStorageSync('currentDevice')
+          let deviceList = wx.getStorageSync('deviceList')
+          let newDeviceList = deviceList.filter((item, index) => {
+            return index !== currentDeviceIndex
+          })
+          wx.setStorageSync('deviceList', newDeviceList || [])
           wx.setStorageSync('gesturePw', [])
           wx.reLaunch({
             url: `/pages/index/index`
@@ -89,7 +93,7 @@ Page({
     } else {
       if (endGesture === this.data.password.toString()) {
         if (this.data.toUrl === 'checkAdmPw') {
-          wx.setStorageSync('showAdmPw', true)
+          app.util.updateDeviceList('showAdmPw', true)
           wx.navigateBack({
             delta: 1
           })

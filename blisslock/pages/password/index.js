@@ -16,21 +16,21 @@ Page({
     })
   },
   formatPw: function() {
-    let str = wx.getStorageSync('pwData')
+    let str = app.util.getDeviceItem('pwData') || ''
     var strArr = [];
     var n = 8;
     for (var i = 0, l = str.length; i < l / n; i++) {
       var a = str.slice(n * i, n * (i + 1));
       strArr.push(a);
     }
-    let delPass = wx.getStorageSync('delPass')
+    let delPass = app.util.getDeviceItem('delPass') || ''
     let index = strArr.indexOf(delPass);
     if (index > -1) {
       strArr.splice(index, 1);
     }
     let formatPwArr = strArr.map((item, index) => {
       let result = {}
-      let pwArr = wx.getStorageSync('pwArr') || []
+      let pwArr = app.util.getDeviceItem('pwArr') || []
       let exist = pwArr.find((item1, index) => {
         if (item1) {
           return item === item1.id
@@ -45,17 +45,17 @@ Page({
       }
       return result
     })
-    wx.setStorageSync('pwArr', formatPwArr)
+    app.util.updateDeviceList('pwArr', formatPwArr)
     this.setData({
-      pwArr: wx.getStorageSync('pwArr')
+      pwArr: app.util.getDeviceItem('pwArr')
     })
   },
   onLoad: function (options) {
   },
   onShow: function () {
     wx.hideLoading()
-    isBack = wx.getStorageSync('isPwSycBack')
-    wx.setStorageSync('isPwSycBack', false)
+    isBack = app.util.getDeviceItem('isPwSycBack')
+    app.util.updateDeviceList('isPwSycBack', false)
     if (isBack) {
       let title
       if (isBack === 'noData') {
@@ -70,8 +70,9 @@ Page({
       })
     }
     isBack = false
-    if (wx.getStorageSync('addPw').result && wx.getStorageSync('addPw').id) {
-      let status = wx.getStorageSync('addPw').result
+    let addPw = app.util.getDeviceItem('addPw') || {}
+    if (addPw.result && addPw.id) {
+      let status = addPw.result
       let title
       if (status === '31') {
         title = '注册失败'
@@ -81,22 +82,22 @@ Page({
       }
       if (status === '30') {
         title = '添加成功'
-        let pwArr = wx.getStorageSync('pwArr') || []
+        let pwArr = app.util.getDeviceItem('pwArr')|| []
         pwArr.push({
-          id: wx.getStorageSync('addPw').id,
-          name: wx.getStorageSync('addPw').name
+          id: addPw.id,
+          name: addPw.name
         })
-        wx.setStorageSync('pwArr', pwArr)
+        app.util.updateDeviceList('pwArr', pwArr)
       }
       wx.showToast({
         title: title,
         icon: 'none',
         duration: 2000
       })
-      wx.setStorageSync('addPw', {})
+      app.util.updateDeviceList('addPw', {})
     }
-    if (wx.getStorageSync('delPw')) {
-      let status = wx.getStorageSync('delPw')
+    if (app.util.getDeviceItem('delPw')) {
+      let status = app.util.getDeviceItem('delPw')
       let title = ''
       if (status === '30') {
         title = '删除成功'
@@ -112,7 +113,7 @@ Page({
         icon: 'none',
         duration: 2000
       })
-      wx.setStorageSync('delPw', false)
+      app.util.updateDeviceList('delPw', false)
     }
     this.formatPw()
   },

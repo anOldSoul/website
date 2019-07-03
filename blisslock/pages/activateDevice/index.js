@@ -4,8 +4,8 @@ Page({
   data: {
   },
   closeConnection() {
-    wx.closeBLEConnection({
-      deviceId: wx.getStorageSync('_deviceId'),
+    wx.closeBLEConnection({     
+      deviceId: app.util.getDeviceItem('_deviceId'),
       success(res) {
         console.log('蓝牙连接断开')
       }
@@ -35,7 +35,7 @@ Page({
       app.util.doBLEConnection('addPass', '', { pw: options.pw, name: options.name})
     }
     if (func === 'delPw') {
-      wx.setStorageSync('delPassId', options.pw)
+      app.util.updateDeviceList('delPassId', options.pw)
       app.util.doBLEConnection('delPass')
     }
     if (func === 'unlockRecord') {
@@ -45,7 +45,7 @@ Page({
       app.util.doBLEConnection('addFinger', '', { name: options.name })
     }
     if (func === 'delFinger') {
-      wx.setStorageSync('delFingerId', options.pw)
+      app.util.updateDeviceList('delFingerId', options.pw)
       app.util.doBLEConnection('delFinger')
     }
   },

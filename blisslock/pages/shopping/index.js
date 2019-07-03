@@ -125,14 +125,14 @@ Page({
     this._discoveryStarted = false
   },
   onLoad: function (options) {
-    let device_name = wx.getStorageSync('device_name')
+    let device_name = app.util.getDeviceItem('device_name')
     this.setData({
       device_name: device_name
     })
   },
   onShow: function () {
-    if (wx.getStorageSync('showAdmPw')) {
-      wx.setStorageSync('showAdmPw', false)
+    if (app.util.getDeviceItem('showAdmPw')) {
+      app.util.updateDeviceList('showAdmPw', false)
       this.checkAdmPw()
     }
   },
@@ -143,8 +143,12 @@ Page({
       success(res) {
         if (res.confirm) {
           console.log('用户点击确定')
-          wx.setStorageSync('deviceList', [])
-          wx.clearStorageSync()
+          let currentDeviceIndex = wx.getStorageSync('currentDeviceIndex')
+          let deviceList = wx.getStorageSync('deviceList')
+          let newDeviceList = deviceList.filter((item, index) => {
+            return index !== currentDeviceIndex
+          })
+          wx.setStorageSync('deviceList', newDeviceList || [])
           wx.reLaunch({
             url: '/pages/index/index',
           })
@@ -157,7 +161,7 @@ Page({
   checkAdmPw: function() {
     wx.showModal({
       title: '提示',
-      content: `管理员密码为：${wx.getStorageSync('admPw')}`,
+      content: `管理员密码为：${app.util.getDeviceItem('admPw')}`,
       showCancel: false,
       success(res) {
         if (res.confirm) {

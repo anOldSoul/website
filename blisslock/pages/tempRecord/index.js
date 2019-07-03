@@ -5,8 +5,7 @@ Page({
     currentMonthData: []
   },
   onShow: function() {
-    console.log(wx.getStorageSync('tempPw'))
-    if (!wx.getStorageSync('tempPw').length) {
+    if (!app.util.getDeviceItem('tempPw').length) {
       wx.showModal({
         title: '提示',
         content: '暂时没有历史记录！',
@@ -22,7 +21,7 @@ Page({
       return
     }
     this.setData({
-      currentMonthData: wx.getStorageSync('tempPw') || []
+      currentMonthData: app.util.getDeviceItem('tempPw')|| []
     })
   },
   handleClear: function() {
@@ -31,7 +30,7 @@ Page({
       content: '确定要清空历史记录吗？',
       success: (res) => {
         if (res.confirm) {
-          wx.setStorageSync('tempPw', [])
+          app.util.updateDeviceList('tempPw', [])
           this.setData({
             currentMonthData: []
           })

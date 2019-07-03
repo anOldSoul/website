@@ -1,4 +1,4 @@
-// pages/admPw/index.js
+const app = getApp()
 Page({
   data: {
     password: '123456'

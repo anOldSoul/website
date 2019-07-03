@@ -7,9 +7,9 @@
     <view class='tip_text'>未添加任何设备</view>
   </view>
   <view wx:if="{{deviceList.length}}">
-    <view class='device_item' wx:for="{{deviceList}}" wx:key="{{index}}" bindtap='goHomePage'>
+    <view class='device_item' wx:for="{{deviceList}}" wx:key="{{index}}" data-index="{{index}}" bindtap='goHomePage'>
       <view class='device_item_left'>
-        <view class='left_text'>{{item.name}}</view>
+        <view class='left_text'>{{item.device_name}}</view>
         <view class='left_text'>{{item.type}}</view>
       </view>
       <view class='device_item_right'><image class="pic_M6" src='../../images/pic-home-M6.png'></image></view>
