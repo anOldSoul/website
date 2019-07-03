@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/airQuality/index",
     "pages/index/index",
     "pages/shopping/index",
     "pages/tempRecord/index",
