@@ -1,23 +1,51 @@
 <view class='container'>
   <view class='temperature'>
-    <view><image class="device_img" src='../../images/ic-atm-tem.png'></image></view>
-    <view class='device_title'>{{device_name}}</view>
+    <view class='circle1'></view>
+    <view class='circle2'></view>
+    <view class='circle3'></view>
+    <view class='circle4'></view>
+    <view class='temper_left'>
+      <image class="device_img" src='../../images/ic-atm-tem.png'></image>
+      <view>温度</view>
+    </view>
+    <view class='temper_right'>26°</view>
   </view> 
   <view class="func_manage">
     <view class="func_row">
-      <navigator class="func_item" url="/pages/gesture/index?url=finger" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-fingerprint.png'></image>我的指纹</navigator>
-      <navigator class="func_item" url="/pages/gesture/index?url=password" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-password.png'></image>我的密码</navigator>
-      <navigator class="func_item" url="/pages/gesture/index?url=createTemp" hover-class="none"><image class="func_img" src='../../images/home-tem-password.png'></image>临时密码</navigator>
+      <view class="func_item">
+        <image class="func_img" src='../../images/ic-atm-hum.png'></image>
+        <view class="func_text">湿度</view>
+        <view class='func_num'>58%</view>
+      </view>
+      <view class="func_item">
+        <image class="func_img" src='../../images/ic-atm-tvoc.png'></image>
+        <view class="func_text">TVOC</view>
+        <view class='func_num' id='good'>58%</view>
+      </view>
     </view>
     <view class="func_row">
-      <navigator class="func_item" url="/pages/gesture/index?url=checkAdmPw" hover-class="none" class="func_item"><image class="func_img" src='../../images/ic_equip-home-adm.png'></image>管理员密码</navigator>
-      <navigator class="func_item" url="/pages/gesture/index?url=unlockRecord" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-unlock-rec.png'></image>开锁记录</navigator>
-      <navigator class="func_item" url="/pages/introduction/index" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-instrac.png'></image>使用说明</navigator>
+      <view class="func_item">
+        <image class="func_img" src='../../images/ic-atm-ch2o.png'></image>
+        <view class="func_text">CH2O</view>
+        <view class='func_num' id='good'>58%</view>
+      </view>
+      <view class="func_item">
+        <image class="func_img" src='../../images/ic-atm-pm2.5.png'></image>
+        <view class="func_text">PM2.5</view>
+        <view class='func_num'id='middle'>58%</view>
+      </view>
     </view>
     <view class="func_row">
-      <navigator class="func_item" url="/pages/repair/index" hover-class="none"><image class="func_img" src='../../images/ic_yijianbaoxiu.png'></image>一键报修</navigator>
-      <navigator class="func_item" url="/pages/addDevice/index" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-binding.png'></image>手机绑定</navigator>
-      <view class="func_item"  bindtap='handleDelDevice'><image class="func_img" src='../../images/ic-equip-home-delete.png'></image>删除设备</view>
+      <view class="func_item">
+        <image class="func_img" src='../../images/ic-atm-pm10.png'></image>
+        <view class="func_text">PM10</view>
+        <view class='func_num'id='middle'>58%</view>
+      </view>
+      <view class="func_item">
+        <image class="func_img" src='../../images/ic-atm-co2.png'></image>
+        <view class="func_text">CO2</view>
+        <view class='func_num'id='bad'>58%</view>
+      </view>
     </view>
   </view>
 </view>

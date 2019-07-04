@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/shopping/index",
     "pages/airQuality/index",
     "pages/index/index",
-    "pages/shopping/index",
+    
     "pages/tempRecord/index",
     "pages/createTemp/index",
     "pages/deviceName/index",

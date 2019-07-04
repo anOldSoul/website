@@ -25,3 +25,22 @@
   font-size: 36rpx;
   text-align: center;
 }
+.air_quality{
+  color: #17BF98;
+  font-size: 30rpx;
+  width:257rpx;
+  height:72rpx;
+  background:rgba(23,191,152,0.1886);
+  border-radius:36rpx 0 0 36rpx;
+  position: absolute;
+  right: 0;
+  top: 71rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ic-airquality{
+  width: 35rpx;
+  height: 25rpx;
+  margin-right: 10rpx;
+}

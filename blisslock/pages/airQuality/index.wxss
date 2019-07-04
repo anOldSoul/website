@@ -1,27 +1,110 @@
-
+.func_manage{
+  margin: 30rpx;
+}
 .func_row{
-  width: 614rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 68rpx;
-  font-size: 28rpx;
 }
 .func_item{
-  width: 150rpx;
-  text-align: center;
+  width:330rpx;
+  height:280rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background:rgba(255,255,255,1);
+  box-shadow:0 3rpx 43rpx 0 rgba(0,0,0,0.07);
+  border-radius:18rpx;
+  margin-bottom: 30rpx;
+  font-size: 28rpx;
 }
 .func_img{
-  width: 132rpx;
-  height: 132rpx;
+  width: 56rpx;
+  height: 56rpx;
+}
+.temperature{
+  width:690rpx;
+  height:280rpx;
+  background:rgba(255,255,255,1);
+  box-shadow:0 3rpx 43rpx 0 rgba(0,0,0,0.07);
+  border-radius:18rpx;
+  margin-top: 40rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30rpx;
+  position: relative;
+}
+.circle1{
+  width:105rpx;
+  height:105rpx;
+  background:rgba(237,250,247,1);
+  border-radius: 52.5rpx;
+  position: absolute;
+  left: 54rpx;
+  top: 44rpx;
+}
+.circle2{
+  width:31rpx;
+  height:31rpx;
+  background:rgba(209,242,234,1);
+  border-radius: 52.5rpx;
+  position: absolute;
+  left: 279rpx;
+  bottom: 49rpx;
+}
+.circle3{
+  width:57rpx;
+  height:57rpx;
+  background:rgba(237,250,247,1);
+  border-radius: 28.5rpx;
+  position: absolute;
+  top: 65rpx;
+  right: 72rpx;
+}
+.circle4{
+  width:37rpx;
+  height:37rpx;
+  background:rgba(209,242,234,1);
+  border-radius: 18.5rpx;
+  position: absolute;
+  right: 165rpx;
+  bottom: 78rpx;
 }
 .device_img{
-  width: 160rpx;
-  height: 200rpx;
-  margin-top: 70rpx;
-  margin-left: 295rpx;
+  width: 36rpx;
+  height: 70rpx;
 }
-.device_title{
-  font-size: 36rpx;
+.temper_right{
+  font-size: 130rpx;
+}
+.temper_left{
+  font-size: 28rpx;
   text-align: center;
+  margin-right: 30rpx;
+}
+.func_text{
+  margin-top: 10rpx;
+  margin-bottom: 22rpx;
+}
+.func_num{
+  width:170rpx;
+  height:70rpx;
+  background:rgba(36,37,43,1);
+  border-radius:35rpx;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#good{
+  background: #44C793;
+}
+#middle{
+  background: #FDB73D;
+}
+#bad{
+  background: #E43535;
 }
