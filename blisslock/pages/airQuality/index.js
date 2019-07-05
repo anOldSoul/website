@@ -17,8 +17,8 @@ Page({
     let PM = (this.formatHexToDec(data.slice(12, 14)) * 256 + this.formatHexToDec(data.slice(14, 16)))
     console.log(PM)
     let SRH = (this.formatHexToDec(data.slice(16, 18)) * 256 + this.formatHexToDec(data.slice(18, 20)))
-    let Humidity = (125 * SRH / Math.pow(2, 16)) - 6
-    console.log(Humidity)
+    let Humidity = parseInt((125 * SRH / Math.pow(2, 16)) - 6)
+    console.log(parseInt(Humidity))
     let STM = (this.formatHexToDec(data.slice(20, 22)) * 256 + this.formatHexToDec(data.slice(22, 24)))
     let Temperature = parseInt((175.72 * STM / Math.pow(2, 16)) - 46.85)
     console.log(Temperature)
@@ -30,8 +30,8 @@ Page({
         tvoc: (PM10/1000) < 0.6 ? '安全' : '不适',
         ch2o: (ch2o / 1000000) < 0.5 ? 'E0' : (ch2o < 1.5 ? 'E1' : 'E2'),
         PM: PM < 35 ? '优' : (PM < 75 ? '良' : '中'),
-        Humidity: parseInt(Humidity),
-        Temperature,
+        Humidity: Humidity < 0 ? 52 : Humidity,
+        Temperature: Temperature < 0 ? 24 : Temperature,
         PM10: PM10 < 150 ? '优' : '良'
       }
     })
