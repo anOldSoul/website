@@ -1,8 +1,8 @@
 <view class='container'>
   <view class="func_manage">
-    <navigator class='air_quality' url="/pages/airQuality/index" hover-class="none">
+    <navigator class='air_quality' url="/pages/activateDevice/index?func=airQuality" hover-class="none">
       <image class="ic-airquality" src='../../images/ic-airquality.png'></image>
-      <view>tesst空气质量 ></view>
+      <view>空气质量 ></view>
     </navigator>
     <view><image class="device_img" src='../../images/pic-device.png'></image></view>
     <view class='device_title'>{{device_name}}</view>

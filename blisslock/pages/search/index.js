@@ -69,7 +69,7 @@ Page({
   onBluetoothDeviceFound() {
     wx.onBluetoothDeviceFound((res) => {
       res.devices.forEach(device => {
-        if (device.name === 'Blisslock') {
+        if (device.name === 'Blisslock' || device.name === 'HealthLock') {
           console.log('ppppppppppp')
           let devicesFond = {}
           deviceId = device.deviceId

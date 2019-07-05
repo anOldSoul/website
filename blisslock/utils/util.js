@@ -13,6 +13,7 @@ let func = {
   delPass: false,
   unlockRecord: false,
   unlockAtOnce: false,
+  airQuality: false,
   resolve: ''
 }
 let onChangePw = {
@@ -90,8 +91,6 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
       getBLEDeviceServices(deviceId, funcKey)
     },
     fail: (res) => {
-      console.log('==============')
-      console.log(res)
       let errCode = res.errCode
       let title = ''
       if (errCode === 10003) {
@@ -117,11 +116,6 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
           }
         }
       })
-      // wx.showToast({
-      //   title: title,
-      //   icon: 'none',
-      //   duration: 2000
-      // })
     }
   })
 }
@@ -134,6 +128,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
   func.delPass = false
   func.unlockRecord = false
   func.unlockAtOnce = false
+  func.airQuality = false
   func[funcKey] = true
   wx.getBLEDeviceCharacteristics({
     deviceId,
@@ -246,6 +241,12 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
     if (value.slice(-4, -2) === '32') {
       let hex = '5530000000000000000000000000000000000000'  //绑定结束
       writeBle(hex)
+    }
+    if (value.slice(-4, -2) === 'a5' && value.slice(0, 8) === 'aa300014') {
+      let data = value.slice(8, 36)
+      wx.redirectTo({
+        url: `/pages/airQuality/index?airData=${data}`
+      })
     }
     if (value.slice(-4, -2) === 'a0') {
       if (value.slice(2, 4) === '30') {
@@ -510,6 +511,10 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
       }
       if (func['unlockAtOnce']) {
         let hex = '5533000031323334353600000000000000000000'
+        writeBle(hex)
+      }
+      if (func['airQuality']) {
+        let hex = '55A5000000000000000000000000000000000000'
         writeBle(hex)
       }
     }

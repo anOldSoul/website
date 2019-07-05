@@ -48,6 +48,9 @@ Page({
       app.util.updateDeviceList('delFingerId', options.pw)
       app.util.doBLEConnection('delFinger')
     }
+    if (func === 'airQuality') {
+      app.util.doBLEConnection('airQuality')
+    }
   },
   handleClose: function() {
     this.closeConnection()
