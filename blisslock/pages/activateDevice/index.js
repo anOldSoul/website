@@ -50,6 +50,9 @@ Page({
     }
     if (func === 'airQuality') {
       app.util.doBLEConnection('airQuality')
+    } 
+    if (func === 'unlockAtOnce') {
+      app.util.doBLEConnection('unlockAtOnce')
     }
   },
   handleClose: function() {
