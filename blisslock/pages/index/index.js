@@ -16,12 +16,17 @@ Page({
           this.setData({
             showAuthen: true
           })
+        } else {
+          if (!wx.getStorageSync('gesturePw').length) {
+            wx.navigateTo({
+              url: `/pages/gesture/index?url=init`
+            })
+          }
         }
       }
     })
   },
   onShow: function () {
-    // wx.clearStorageSync()
     let deviceList = wx.getStorageSync('deviceList') || []
     console.log(deviceList)
     this.setData({
