@@ -1,8 +1,8 @@
 {
   "pages": [
-    "pages/shopping/index",
+    "pages/introduction/index",
     "pages/index/index",
-    
+    "pages/shopping/index",
     "pages/airQuality/index",
     "pages/tempRecord/index",
     "pages/createTemp/index",
@@ -19,7 +19,7 @@
     "pages/finger/index",
     "pages/activateFinger/index",
     "pages/lockAtOnce/index",
-    "pages/introduction/index",
+    
     "pages/editFinger/index",
     "pages/password/index",
     "pages/editPw/index",
