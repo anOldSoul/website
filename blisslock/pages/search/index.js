@@ -75,7 +75,13 @@ Page({
           deviceId = device.deviceId
           name = device.name
           devicesFond.deviceId = device.deviceId
-          devicesFond.name = device.name
+          devicesFond.name = device.name         
+          if (device.name === 'Blisslock') {
+            wx.setStorageSync('_deviceType', 'M6')
+          }
+          if (device.name === 'HealthLock') {
+            wx.setStorageSync('_deviceType', '健康锁')
+          }
           this.setData({
             devices: [devicesFond],
             findDevice: true,

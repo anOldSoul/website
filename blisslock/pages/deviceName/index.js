@@ -4,11 +4,13 @@ Page({
     device_name: ''
   },
   onLoad: function (options) {
-    wx.showToast({
-      title: '绑定成功',
-      icon: 'none',
-      duration: 2000
-    })
+    if (options.type !== 'updateName') {
+      wx.showToast({
+        title: '绑定成功',
+        icon: 'none',
+        duration: 2000
+      })
+    }
   },
   onShow: function () {
   },
@@ -19,11 +21,12 @@ Page({
   },
   handleComplete: function() {
     let deviceItem = {
-      type: 'M6',
+      type: wx.getStorageSync('_deviceType'),
       device_name: this.data.device_name || 'M6智能锁',
       _deviceId: wx.getStorageSync('_deviceId'),
       _serviceId: wx.getStorageSync('_serviceId'),
-      _characteristicId: wx.getStorageSync('_characteristicId')
+      _characteristicId: wx.getStorageSync('_characteristicId'),
+      admPw: wx.getStorageSync('admPw')
     }
     console.log(deviceItem)
     let deviceList = wx.getStorageSync('deviceList') || []
@@ -39,9 +42,9 @@ Page({
     }
     console.log(deviceList)
     wx.setStorageSync('deviceList', deviceList)
-    wx.removeStorageSync('_deviceId')
-    wx.removeStorageSync('_serviceId')
-    wx.removeStorageSync('_characteristicId')
+    // wx.removeStorageSync('_deviceId')
+    // wx.removeStorageSync('_serviceId')
+    // wx.removeStorageSync('_characteristicId')
     wx.reLaunch({
       url: '/pages/index/index',
     })

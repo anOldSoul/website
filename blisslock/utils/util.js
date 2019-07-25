@@ -76,11 +76,13 @@ const closeConnection = () => {
   wx.closeBLEConnection({
     deviceId: wx.getStorageSync('_deviceId') || getDeviceItem('_deviceId'),
     success(res) {
+      wx.setStorageSync('isConnecting', false)
       console.log('蓝牙连接断开')
     }
   })
 }
 const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
+  wx.setStorageSync('isConnecting', true)
   pwNeedToAdd = pwAdded
   func.resolve = resolve
   let deviceId = wx.getStorageSync('_deviceId') || getDeviceItem('_deviceId')
@@ -91,35 +93,37 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
       getBLEDeviceServices(deviceId, funcKey)
     },
     fail: (res) => {
-      let errCode = res.errCode
-      let title = ''
-      if (errCode === 10003) {
-        title = '等待超时，请重试'
-      } else if (errCode === 10012) {
-        title = '连接超时，请重试'
-      } else if (errCode === 10000) {
-        title = '连接蓝牙失败，请重新绑定'
-      } else {
-        title = '连接失败，请重试'
-      }
-      wx.showModal({
-        title: '提示',
-        content: title,
-        showCancel: false,
-        success(res) {
-          if (res.confirm) {
-            wx.navigateBack({
-              delta: 1
-            })
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-          }
+      if (wx.getStorageSync('isConnecting')) {
+        let errCode = res.errCode
+        let title = ''
+        if (errCode === 10003) {
+          title = '等待超时，请重试'
+        } else if (errCode === 10012) {
+          title = '连接超时，请重试'
+        } else if (errCode === 10000) {
+          title = '连接蓝牙失败，请重新绑定'
+        } else {
+          title = '连接失败，请重试'
         }
-      })
+        wx.showModal({
+          title: '提示',
+          content: title,
+          showCancel: false,
+          success(res) {
+            if (res.confirm) {
+              wx.navigateBack({
+                delta: 1
+              })
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+      }
     }
   })
 }
-const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '') => {
+const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
   func.addPass = false
   func.syncPass = false
   func.addFinger = false

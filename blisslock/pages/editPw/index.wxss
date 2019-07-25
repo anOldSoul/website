@@ -1,6 +1,18 @@
 page{
   height: 100%;
 }
+.addPw_input{
+  margin: 40rpx 0;
+}
+input{
+  width: 630rpx;
+  height: 94rpx;
+  background-color: #F0F0F0;
+  margin-left: 30rpx;
+  padding:0 30rpx;
+  font-size: 30rpx;
+  border-radius: 12rpx;
+}
 .add_password{
   width:670rpx;
   height:94rpx;
@@ -17,7 +29,18 @@ page{
   height: -webkit-calc(100% - 300rpx);
   overflow: scroll;
 }
-
+.sync_password{
+  width:670rpx;
+  height:94rpx;
+  color:rgba(153,153,153,1);
+  border:2rpx solid rgba(153,153,153,1);
+  font-size:36rpx;
+  border-radius:12rpx;
+  line-height: 94rpx;
+  margin-top: 40rpx;
+  margin-left: 40rpx;
+  text-align: center;
+}
 .pw_item{
   width:610rpx;
   padding: 0 40rpx;

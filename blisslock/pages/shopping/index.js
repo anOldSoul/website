@@ -126,8 +126,9 @@ Page({
   },
   onLoad: function (options) {
     let device_name = app.util.getDeviceItem('device_name')
+    let type = app.util.getDeviceItem('type')
     this.setData({
-      device_name: device_name
+      device_name, type
     })
   },
   onShow: function () {

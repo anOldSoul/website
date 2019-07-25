@@ -17,10 +17,27 @@ Page({
   },
   onShow: function () {
   },
-  goDetail: function (e) {
-    let item = e.currentTarget.dataset.item
-    wx.navigateTo({
-      url: `/pages/goodDetail/index?goodsId=${item.id}&eventType=selected_hot`
+  bindUserNameInput: function(e) {
+    this.data.pw = e.detail.value
+  },
+  handleSave: function() {
+    if (!this.data.pw) {
+      wx.showToast({
+        title: '请输入名称',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    let fingerArr = app.util.getDeviceItem('fingerArr') || []
+    fingerArr.forEach((item, index) => {
+      if (item.id === this.data.id) {
+        item.name = this.data.pw
+      }
+    })
+    app.util.updateDeviceList('fingerArr', fingerArr)
+    wx.navigateBack({
+      delta: 1
     })
   }
 })

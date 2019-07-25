@@ -26,6 +26,9 @@ Page({
       }
     })
   },
+  onBind: function(status) {
+    console.log(status)
+  },
   onShow: function () {
     let deviceList = wx.getStorageSync('deviceList') || []
     console.log(deviceList)

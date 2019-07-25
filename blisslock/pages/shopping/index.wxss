@@ -21,6 +21,10 @@
   box-shadow:0 4rpx 60rpx 0 rgba(177,186,201,0.2);
   border-radius:80rpx;
   padding: 48rpx 34rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .func_item {
   width: 156rpx;
@@ -30,6 +34,7 @@
   flex-direction: column;
   font-size: 26rpx;
   border-radius:16rpx;
+  margin-bottom: 32rpx;
   border:2rpx solid rgba(238,241,247,1);
 }
 .func_img{

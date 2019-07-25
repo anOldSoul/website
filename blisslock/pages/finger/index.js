@@ -119,11 +119,5 @@ Page({
       app.util.updateDeviceList('delFinger', false)
     }
     this.formatFinger()
-  },
-  goDetail: function (e) {
-    let item = e.currentTarget.dataset.item
-    wx.navigateTo({
-      url: `/pages/goodDetail/index?goodsId=${item.id}&eventType=selected_hot`
-    })
   }
 })
