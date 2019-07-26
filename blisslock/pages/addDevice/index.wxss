@@ -7,6 +7,26 @@
   align-items: center;
   font-size: 36rpx;
 }
+.apparatus_box{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: 45rpx;
+  margin-bottom: 52rpx;
+}
+.operate_text{
+  position: absolute;
+  top: 154rpx;
+  right: 135rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+.bold_text{
+  color: black;
+  font-weight: bold;
+}
 .dot{
   width: 24rpx;
   height: 24rpx;
@@ -17,9 +37,6 @@
 .no_apparatus{
   width: 368rpx;
   height: 501rpx;
-  margin-left: 191rpx;
-  margin-top: 45rpx;
-  margin-bottom: 52rpx;
 }
 .add_apparatusChecked{
   width:670rpx;

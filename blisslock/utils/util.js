@@ -37,7 +37,7 @@ const getDeviceItem = (key) => {
   console.log(currentDeviceIndex)
   let deviceList = wx.getStorageSync('deviceList')
   console.log(deviceList)
-  let currentItem = deviceList[currentDeviceIndex]
+  let currentItem = deviceList[currentDeviceIndex] || {}
   let returnValue = currentItem[key]
   return returnValue
 }
@@ -154,8 +154,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
           let hex
           if (funcKey && func[funcKey]) {
             wx.showLoading({
-              title: '加载中',
-              mask: true
+              title: '加载中'
             })
             let time = Moment().format('ssmmHHDDMMYY')
             rtc = time

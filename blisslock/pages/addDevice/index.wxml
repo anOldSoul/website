@@ -1,11 +1,14 @@
 <!--pages/addDevice/index.wxml-->
 <view>
-  <view><image class="no_apparatus" src='../../images/pic_add_device.png'></image></view>
+  <view class='apparatus_box'>
+    <image class="no_apparatus" src='../../images/pic_add_device.png'></image>
+    <view class='operate_text'>长按4秒</view>
+  </view>
   <view class='title'><view class='dot'></view>添加步骤</view>
   <view class='tip_text'>
     <view>1、请将手机靠近锁体(确保蓝牙已打开)；</view>
     <view>2、请卸下智能锁背面的电池盖；</view>
-    <view>3、长按【添加】键4秒(如图所示)；</view>
+    <view class='bold_text'>3、长按【添加】键4秒(如图所示)；</view>
     <view>4、若提示验证管理员，请在锁体密码键盘上输入设置的管理员密码，并按#确认。</view>
   </view>
   <view class='check'><checkbox bindtap="checkboxChange" value="{{hasChecked}}" checked="{{hasChecked}}"/>已完成上述操作</view>

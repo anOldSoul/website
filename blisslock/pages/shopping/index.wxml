@@ -8,7 +8,7 @@
           <view class='device_title'>设备型号{{type}}</view>  
         </view>
       </view>
-      <navigator wx:if="{{type === '健康锁'}}" url="/pages/gesture/index?url=unlockAtOnce" hover-class="none" class='unlock_now'>一键开锁</navigator>
+      <navigator wx:if="{{false}}" url="/pages/gesture/index?url=unlockAtOnce" hover-class="none" class='unlock_now'>一键开锁</navigator>
     </view>   
     <view class='func-content'>
         <navigator class="func_item" url="/pages/gesture/index?url=finger" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-fingerprint.png'></image>我的指纹</navigator>
@@ -22,7 +22,7 @@
         <navigator class="func_item" url="/pages/repair/index" hover-class="none"><image class="func_img" src='../../images/ic_yijianbaoxiu.png'></image>一键报修</navigator>
         <navigator class="func_item" url="/pages/addDevice/index" hover-class="none"><image class="func_img" src='../../images/ic-bind-again.png'></image>再次绑定</navigator>
         <view class="func_item"  bindtap='handleDelDevice'><image class="func_img" src='../../images/ic-equip-home-delete.png'></image>删除设备</view>
-        <navigator class="func_item" hover-class="none" url="/pages/airQuality/index"><image class="func_img" src='../../images/ic-air-quality.png'></image>空气质量</navigator>
+        <navigator class="func_item" wx:if="{{type === '健康锁'}}" hover-class="none" url="/pages/airQuality/index"><image class="func_img" src='../../images/ic-air-quality.png'></image>空气质量</navigator>
     </view>
   </view>
 </view>

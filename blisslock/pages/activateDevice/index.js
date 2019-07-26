@@ -4,11 +4,12 @@ Page({
   data: {
   },
   closeConnection() {
+    console.log('1234567890')
+    wx.setStorageSync('isConnecting', false) 
     wx.closeBLEConnection({
       deviceId: app.util.getDeviceItem('_deviceId'),
       success(res) {
-        wx.setStorageSync('isConnecting', false)
-        console.log('蓝牙连接断开')
+        console.log('蓝牙连接断开成功')
       }
     })
   },

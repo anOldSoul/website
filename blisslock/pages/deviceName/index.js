@@ -1,7 +1,8 @@
-// pages/admPw/index.js
+const app = getApp()
 Page({
   data: {
-    device_name: ''
+    device_name: '',
+    placeholder: ''
   },
   onLoad: function (options) {
     if (options.type !== 'updateName') {
@@ -13,6 +14,9 @@ Page({
     }
   },
   onShow: function () {
+    this.setData({
+      placeholder: app.util.getDeviceItem('device_name') || 'M6智能锁'
+    })
   },
   bindKeyInput: function(e) {
     this.setData({
@@ -22,7 +26,7 @@ Page({
   handleComplete: function() {
     let deviceItem = {
       type: wx.getStorageSync('_deviceType'),
-      device_name: this.data.device_name || 'M6智能锁',
+      device_name: this.data.device_name || this.data.placeholder,
       _deviceId: wx.getStorageSync('_deviceId'),
       _serviceId: wx.getStorageSync('_serviceId'),
       _characteristicId: wx.getStorageSync('_characteristicId'),
@@ -32,11 +36,10 @@ Page({
     let deviceList = wx.getStorageSync('deviceList') || []
     let isExist = deviceList.find((it, index) => {
       it.index = index
-      return (it._deviceId === deviceItem._deviceId)
+      return (it._deviceId === wx.getStorageSync('_deviceId'))
     })
-    console.log(isExist)
     if (isExist) {
-      deviceList[isExist.index] = deviceItem
+      deviceList[isExist.index]['device_name'] = deviceItem['device_name']
     } else {
       deviceList.push(deviceItem)
     }
