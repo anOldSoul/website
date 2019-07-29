@@ -73,10 +73,11 @@ const getBLEDeviceServices = (deviceId, funcKey) => {
   })
 }
 const closeConnection = () => {
+  wx.hideLoading()
   wx.closeBLEConnection({
     deviceId: wx.getStorageSync('_deviceId') || getDeviceItem('_deviceId'),
     success(res) {
-      wx.setStorageSync('isConnecting', false)
+      wx.setStorageSync('isConnecting', false)      
       console.log('蓝牙连接断开')
     }
   })
@@ -90,7 +91,9 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
     // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
     deviceId,
     success: (res) => {
-      getBLEDeviceServices(deviceId, funcKey)
+      if (wx.getStorageSync('isConnecting')) {
+        getBLEDeviceServices(deviceId, funcKey)
+      }     
     },
     fail: (res) => {
       if (wx.getStorageSync('isConnecting')) {

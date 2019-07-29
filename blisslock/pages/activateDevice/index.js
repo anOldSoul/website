@@ -5,7 +5,8 @@ Page({
   },
   closeConnection() {
     console.log('1234567890')
-    wx.setStorageSync('isConnecting', false) 
+    wx.setStorageSync('isConnecting', false)
+    wx.hideLoading()
     wx.closeBLEConnection({
       deviceId: app.util.getDeviceItem('_deviceId'),
       success(res) {
