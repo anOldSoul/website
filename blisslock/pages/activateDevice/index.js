@@ -4,7 +4,6 @@ Page({
   data: {
   },
   closeConnection() {
-    console.log('1234567890')
     wx.setStorageSync('isConnecting', false)
     wx.hideLoading()
     wx.closeBLEConnection({
