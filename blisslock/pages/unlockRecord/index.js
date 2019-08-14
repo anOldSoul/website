@@ -4,7 +4,8 @@ Page({
   data: {
     month: app.Moment().format('YYYY-MM'),
     currentMonthData: [],
-    unlockRecord: []
+    unlockRecord: [],
+    type: ''
   },
   onShow: function() {
     let hasUnlockRecord = app.util.getDeviceItem('hasUnlockRecord')
@@ -36,7 +37,6 @@ Page({
     let dateArr = []
     if (unlockRecordData instanceof Array) {
       unlockRecord = unlockRecordData.map((item, index) => {
-        console.log(item)
         let type = item.slice(8, 10)
         let time = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('HH:mm:ss')
         let date = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('20YY-MM-DD')
@@ -83,6 +83,54 @@ Page({
     })
   },
   onLoad: function (options) {
+    let type = options.type
+    if (type) {
+      this.setData({
+        type
+      })
+      this.getData()
+    }
+  },
+  getData: function() {
+    app.post(app.Apis.GET_UNLOCK_RECORD, {}, result => {
+      let resultData = result.data
+      let dateArr = []
+      let unlockRecord = resultData.map((item, index) => {
+        let month = app.Moment(item.dataCheck.time, 'ssmmHHDDMMYYYY').format('YYYY-MM')
+        let date = app.Moment(item.dataCheck.time, 'ssmmHHDDMMYYYY').format('YYYY-MM-DD')
+        let time = app.Moment(item.dataCheck.time, 'ssmmHHDDMMYYYY').format('HH:mm:ss')
+        dateArr.push(date)
+        return {
+          lockType: item.dataCheck.openstat,
+          time: time,
+          month: month,
+          date: date,
+          ele: item.dataCheck.ele,
+          warnstat: item.dataCheck.warnstat,
+          keystat: item.dataCheck.keystat
+        }
+      })
+      console.log(unlockRecord)
+      dateArr = [...new Set(dateArr)]
+      let newUnlockRecord = []
+      dateArr.forEach((item, index) => {
+        newUnlockRecord[index] = {}
+        newUnlockRecord[index].date = item
+        newUnlockRecord[index].recordArr = []
+        unlockRecord.forEach((item1, index1) => {
+          if (item === item1.date) {
+            newUnlockRecord[index].recordArr.push(item1)
+            newUnlockRecord[index].month = item1.month
+          }
+        })
+      })
+      this.data.unlockRecord = newUnlockRecord.reverse()
+      this.setData({
+        currentMonthData: this.data.unlockRecord.filter((item, index) => {
+          return item.month === this.data.month
+        })
+      })
+    })
   },
   syncUnlockRecord: function() {
     app.util.doBLEConnection('unlockRecord')

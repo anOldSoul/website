@@ -5,7 +5,7 @@ var vType = 'web'
 var vCode = 116
 var token = '000'
 var platform = 'web'
-var apiEntry = "https://app.openn.cn/wx/authsend/login_by_weixin"
+var apiEntry = "https://app.openn.cn"
 var _request = function (method, api, data, success, fail) {
   data.platform = platform
   data.method = api[0]
@@ -18,8 +18,8 @@ var _request = function (method, api, data, success, fail) {
     title: '加载中',
   })
   wx.request({
-    url: apiEntry,
-    method: method,
+    url: apiEntry + api[1],
+    method: api[0],
     data: data,
     success: function (res) {
       // console.log(res)
