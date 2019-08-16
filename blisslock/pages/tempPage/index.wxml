@@ -1,0 +1,8 @@
+<!--pages/index/index.wxml-->
+<view class='tempPage'>
+  <view><image class="no_apparatus" src='../../images/pic-home-M6.png'></image></view>
+  <view class='fixed'>
+    <navigator class='add_password' url="/pages/cloudTempPw/index" hover-class="none">云端获取临时密码 >></navigator>
+    <button class='sync_password' bindtap='goUnlockRecord'>云端查看门锁记录 >></button>
+  </view>
+</view>
