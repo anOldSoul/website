@@ -16,7 +16,7 @@
           <el-menu-item index="2-1" @click="goView('/')">门锁</el-menu-item>
           <el-menu-item index="2-2" @click="goView('/gateway')">网关</el-menu-item>
         </el-submenu>
-        <el-menu-item index="3" @click="goView('/')">
+        <el-menu-item index="3" @click="goView('/userManage')">
           <i class="el-icon-menu"></i>用户管理
         </el-menu-item>
         <el-menu-item index="4" @click="goView('/')">

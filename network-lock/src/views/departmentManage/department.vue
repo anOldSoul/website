@@ -1,102 +1,67 @@
 <template>
-  <div class="page">
-    <div class="flex search-box">
-      <el-form class="form" label-width="86px">
-        <el-row>
-          <el-col :span="8">
-            <el-form-item label="名称">
-              <el-input v-model="searchModel.gateWayName" clearable @change="handleSearchChange"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="编号">
-              <el-input v-model="searchModel.gateId" clearable @change="handleSearchChange"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6" :push="2">
-            <el-button type="primary" @click="handleSearchChange">查询</el-button>
-          </el-col>
-        </el-row>
-      </el-form>
-    </div>
-    <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
-      <el-table-column prop="gatewayname" label="网关名称"></el-table-column>
-      <el-table-column prop="gateid" label="网关编号"></el-table-column>
-      <el-table-column prop="gateaddr" label="网关位置"></el-table-column>
-      <!-- <el-table-column prop="title" label="绑定数量"></el-table-column> -->
-      <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
-        <template slot-scope="scope">
-          <template>
-            <el-button type="text" @click="handleGoDetail(scope.row)">详情</el-button>
-            <!-- <el-button type="text" @click="handleDelete(scope.row)">删除</el-button> -->
-          </template>
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-pagination @current-change="handleCurrentChange" :current-page="searchModel.pageNo" :page-size="20" layout="total, prev, pager, next" :total="dataCount" class="flex pagination">
-    </el-pagination>
+  <div class="page fullH">
+    <el-row :gutter="20" class="fullH">
+      <el-col :span="7" class="fullH">
+        <el-card class="fullH">
+          <div slot="header" class="clearfix">
+            <span>公寓</span>
+            <el-button style="float: right; padding: 3px 0" type="text">添加</el-button>
+          </div>
+          <div>
+            <el-input placeholder="请输入内容" v-model="input5" class="input-with-select">
+              <el-button slot="append" icon="el-icon-search"></el-button>
+            </el-input>
+          </div>
+          <div v-for="o in 4" :key="o" class="text item">
+            <div>{{'公寓 ' + o }}</div>
+            <div><el-button type="text">编辑</el-button></div>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="16">
+        <el-tabs v-model="activeTab" @tab-click="handleClick">
+          <el-tab-pane label="全部" name="first">
+            <el-collapse v-model="activeName" accordion>
+              <el-collapse-item :title="`楼层${floorIndex + 1}`" :name="floorIndex" v-for="(i, floorIndex) in 5" class="floor">
+                <el-card class="box-card" v-for="f in 5">
+                  <div slot="header" class="clearfix">
+                    <span>房间号</span>
+                    <el-button style="float: right; padding: 3px 0" type="text">...</el-button>
+                  </div>
+                  <div>已租</div>
+                  <div>到期：2020-01-01</div>
+                </el-card>
+              </el-collapse-item>
+            </el-collapse>
+          </el-tab-pane>
+          <el-tab-pane label="已租" name="second">已租</el-tab-pane>
+          <el-tab-pane label="待租" name="third">待租</el-tab-pane>
+        </el-tabs>
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script>
 export default {
-  name: 'provisions-list',
+  name: 'Department',
   components: {
   },
   props: {
   },
   activated () {
-    // this.fetchData()
-    // this.getCount()
   },
   data () {
     return {
-      tableData: [], // 必须
-      dataCount: 0, // 必须
-      searchModel: {
-        pageNo: 1, // 必须
-        pageSize: 20, // 必须
-        gateId: '',
-        gateWayName: ''
-      },
-      countries: [],
-      query: {}
+      input5: '',
+      select: '',
+      activeName: 1,
+      activeTab: 'second'
     }
   },
   computed: {},
-
   methods: {
-    handleGoDetail: function (row) {
-      this.$router.push({
-        path: `/gateway/detail/${row.gateid}`
-      })
-    },
-    handleCurrentChange (val) {
-      this.searchModel.pageNo = +val
-      this.fetchData()
-    },
-    fetchData: function () {
-      Site.http.get(
-        '/tGateWayInfo/getGateWayListPage', this.searchModel,
-        data => {
-          this.tableData = data.data
-        }
-      )
-    },
-    getCount () {
-      Site.http.get(
-        '/tGateWayInfo/getGateWayListPageCount', this.searchModel,
-        function (data) {
-          this.dataCount = data.data
-        }.bind(this)
-      )
-    },
-    rowKey (row) {
-      return row._id
-    },
-    handleSearchChange () {
-      this.searchModel.pageNo = 1
-      this.fetchData()
-      this.getCount()
+    handleClick(tab, event) {
+      console.log(tab, event);
     }
   },
   mounted: function () {
@@ -104,10 +69,27 @@ export default {
 }
 </script>
 <style scoped>
-.form {
-  width: 80%;
+.fullH {
+  height: 100%;
 }
-.noticeContent{
-  padding: 30px;
+.box-card{
+  width: 200px;
+  margin: 10px;
+}
+.text.item{
+  height: 50px;
+  display: flex;
+  flex-direction: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.page >>> .el-collapse-item__header{
+  padding: 0 10px;
+}
+.page >>> .el-collapse-item__content{
+  /*width: 100%;*/
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 </style>
