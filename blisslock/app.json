@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/tempPage/index",
     "pages/cloudTempPw/index",
-    "pages/index/index",
+    
     "pages/finger/index",
     "pages/addDevice/index",
     "pages/activateDevice/index",

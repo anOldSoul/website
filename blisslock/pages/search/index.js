@@ -68,8 +68,9 @@ Page({
   },
   onBluetoothDeviceFound() {
     wx.onBluetoothDeviceFound((res) => {
+      let devices = []
       res.devices.forEach(device => {
-        if (device.name === 'Blisslock' || device.name === 'HealthLock') {
+        if (device.name.toLocaleLowerCase().indexOf('blisslock') > -1 || device.name === 'HealthLock') {
           console.log('ppppppppppp')
           let devicesFond = {}
           deviceId = device.deviceId
@@ -82,8 +83,9 @@ Page({
           if (device.name === 'HealthLock') {
             wx.setStorageSync('_deviceType', '健康锁')
           }
+          devices.push(devicesFond)
           this.setData({
-            devices: [devicesFond],
+            devices: devices,
             findDevice: true,
             findNoDevice: false
           })
