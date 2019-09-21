@@ -63,7 +63,7 @@ const getBLEDeviceServices = (deviceId, funcKey) => {
     deviceId,
     success: (res) => {
       for (let i = 0; i < res.services.length; i++) {
-        if (res.services[i].isPrimary) {
+        if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FFF0') > -1) {
           console.log(deviceId)
           getBLEDeviceCharacteristics(deviceId, res.services[i].uuid, funcKey)
           return
@@ -91,6 +91,7 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
     // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
     deviceId,
     success: (res) => {
+      console.log('kkkkkkkkkkkkkk')
       if (wx.getStorageSync('isConnecting')) {
         getBLEDeviceServices(deviceId, funcKey)
       }     
@@ -127,6 +128,7 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
   })
 }
 const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
+  console.log('wfwfwfwfwfffffffffffffffff') 
   func.addPass = false
   func.syncPass = false
   func.addFinger = false
@@ -137,25 +139,31 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
   func.unlockAtOnce = false
   func.airQuality = false
   func[funcKey] = true
+  console.log(funcKey)
+  console.log(func)
   wx.getBLEDeviceCharacteristics({
     deviceId,
     serviceId,
     success: (res) => {
+      console.log('qqqqqqqqqqqq')
+      console.log(res)
       for (let i = 0; i < res.characteristics.length; i++) {
         let item = res.characteristics[i]
-        if (item.properties.read) {
+        if (item.properties.read && item.uuid.indexOf('0000FFF3') > -1) {
           wx.readBLECharacteristicValue({
             deviceId,
             serviceId,
             characteristicId: item.uuid,
           })
         }
-        if (item.properties.write) {
+        if (item.properties.write && item.uuid.indexOf('0000FFF3') > -1) {
+          console.log('nnnnnnnnn')
           wx.setStorageSync('_deviceId', deviceId)
           wx.setStorageSync('_serviceId', serviceId)
           wx.setStorageSync('_characteristicId', item.uuid)
           let hex
           if (funcKey && func[funcKey]) {
+            console.log('mmmmmmmmmmmmmmmmmm')
             wx.showLoading({
               title: '加载中'
             })
@@ -163,6 +171,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
             rtc = time
             hex = `55280000${time}00000000000000000000` //重置时钟
           } else {
+            console.log('jjjjjjjjjjjjj')
             hex = '5511000031323334353637383930313233340000'  //login
           }
           writeBle(hex)
@@ -192,7 +201,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
   })
   // 操作之前先监听，保证第一时间获取数据
   wx.onBLECharacteristicValueChange((characteristic) => {
-    console.log('~~~~~~~~~~~~~')
+    console.log('55555555555555555555555555555555555555')
     console.log(ab2hex(characteristic.value))
     let value = ab2hex(characteristic.value)
     if (value.slice(-4, -2) === '11') {
@@ -565,6 +574,9 @@ const writeBle = (hex, funcKey = '') => {
     characteristicId: wx.getStorageSync('_characteristicId') || getDeviceItem('_characteristicId'),
     value: buffer1,
     success: function (res) {
+      console.log(wx.getStorageSync('_deviceId'))
+      console.log(wx.getStorageSync('_serviceId'))
+      console.log(wx.getStorageSync('_characteristicId'))
       console.log('writeBLECharacteristicValue success', res.errMsg)
     },
     fail: function (res) {

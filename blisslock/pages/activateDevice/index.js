@@ -34,7 +34,7 @@ Page({
       })
     }
     if (func === 'addPw') {
-      app.util.doBLEConnection('addPass', '', { pw: options.pw, name: options.name})
+      app.util.doBLEConnection('addPass', '', { pw: options.pw, name: options.name, userType: options.userType, validDate: options.validDate})
     }
     if (func === 'delPw') {
       app.util.updateDeviceList('delPassId', options.pw)
@@ -44,7 +44,7 @@ Page({
       app.util.doBLEConnection('unlockRecord')
     }
     if (func === 'addFinger') {
-      app.util.doBLEConnection('addFinger', '', { name: options.name })
+      app.util.doBLEConnection('addFinger', '', { name: options.name, userType: options.userType, validDate: options.validDate })
     }
     if (func === 'delFinger') {
       app.util.updateDeviceList('delFingerId', options.pw)

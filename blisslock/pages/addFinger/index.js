@@ -2,10 +2,19 @@
 const app = getApp()
 Page({
   data: {
+    index: '0',
+    date: '2016-09-01',
+    array: ['普通用户', '防劫持用户'],
     userName: ''
   },
   onLoad: function (options) {
     
+  },
+  bindPickerChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      index: e.detail.value
+    })
   },
   goNext: function() {
     if (!this.data.userName) {
@@ -17,7 +26,7 @@ Page({
       return
     }
     wx.redirectTo({
-      url: `/pages/activateDevice/index?func=addFinger&name=${this.data.userName}`
+      url: `/pages/activateDevice/index?func=addFinger&name=${this.data.userName}&userType=0${this.data.index}&validDate=${this.data.date}`
     })
   },
   bindKeyInput: function (e) {

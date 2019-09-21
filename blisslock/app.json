@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/addFinger/index",
     "pages/index/index",
     "pages/tempPage/index",
     "pages/cloudTempPw/index",
-    
     "pages/finger/index",
     "pages/addDevice/index",
     "pages/activateDevice/index",
@@ -12,8 +12,7 @@
     "pages/tempRecord/index",
     "pages/createTemp/index",
     "pages/deviceName/index",
-    "pages/unlockRecord/index",
-    "pages/addFinger/index",    
+    "pages/unlockRecord/index",   
     "pages/about/index",
     "pages/member/index",
     "pages/addPw/index",

@@ -17,11 +17,11 @@ Page({
             showAuthen: true
           })
         } else {
-          if (!wx.getStorageSync('gesturePw').length) {
-            wx.navigateTo({
-              url: `/pages/gesture/index?url=init`
-            })
-          }
+          // if (!wx.getStorageSync('gesturePw').length) {
+          //   wx.navigateTo({
+          //     url: `/pages/gesture/index?url=init`
+          //   })
+          // }
         }
       }
     })

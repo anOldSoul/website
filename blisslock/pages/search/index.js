@@ -70,8 +70,9 @@ Page({
     wx.onBluetoothDeviceFound((res) => {
       let devices = []
       res.devices.forEach(device => {
-        if (device.name.toLocaleLowerCase().indexOf('blisslock') > -1 || device.name === 'HealthLock') {
+        if (device.name === 'Blisslock006S') {
           console.log('ppppppppppp')
+          console.log(device)
           let devicesFond = {}
           deviceId = device.deviceId
           name = device.name
@@ -85,7 +86,7 @@ Page({
           }
           devices.push(devicesFond)
           this.setData({
-            devices: devices,
+            devices: [devicesFond],
             findDevice: true,
             findNoDevice: false
           })
@@ -112,6 +113,7 @@ Page({
     wx.createBLEConnection({
       deviceId,
       success: (res) => {
+        console.log('bbbbbbbbbbb')
         this.setData({
           connected: true,
           name,
@@ -136,8 +138,9 @@ Page({
     wx.getBLEDeviceServices({
       deviceId,
       success: (res) => {
+        console.log(res)
         for (let i = 0; i < res.services.length; i++) {
-          if (res.services[i].isPrimary) {
+          if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FFF0') > -1) {
             console.log(deviceId)
             app.util.getBLEDeviceCharacteristics(deviceId, res.services[i].uuid)
             return
