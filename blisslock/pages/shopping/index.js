@@ -174,22 +174,25 @@ Page({
     })
   },
   goUnlockRecord: function (e) {
-    wx.showModal({
-      title: '提示',
-      content: `请选择开锁记录`,
-      confirmText: '云端同步',
-      cancelText: '锁端同步',
-      success(res) {
-        if (res.confirm) {
-          wx.navigateTo({
-            url: `/pages/unlockRecord/index?type=cloud`
-          })          
-        } else if (res.cancel) {
-          wx.navigateTo({
-            url: `/pages/gesture/index?url=unlockRecord`
-          })
-        }
-      }
+    wx.navigateTo({
+      url: `/pages/gesture/index?url=unlockRecord`
     })
+    // wx.showModal({
+    //   title: '提示',
+    //   content: `请选择开锁记录`,
+    //   confirmText: '云端同步',
+    //   cancelText: '锁端同步',
+    //   success(res) {
+    //     if (res.confirm) {
+    //       wx.navigateTo({
+    //         url: `/pages/unlockRecord/index?type=cloud`
+    //       })          
+    //     } else if (res.cancel) {
+    //       wx.navigateTo({
+    //         url: `/pages/gesture/index?url=unlockRecord`
+    //       })
+    //     }
+    //   }
+    // })
   }
 })

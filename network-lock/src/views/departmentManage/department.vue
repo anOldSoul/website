@@ -22,11 +22,19 @@
         <el-tabs v-model="activeTab" @tab-click="handleClick">
           <el-tab-pane label="全部" name="first">
             <el-collapse v-model="activeName" accordion>
-              <el-collapse-item :title="`楼层${floorIndex + 1}`" :name="floorIndex" v-for="(i, floorIndex) in 5" class="floor">
+              <el-collapse-item :title="`楼层${floorIndex + 1}`" :name="floorIndex" v-for="(i, floorIndex) in 5" class="floor" :key="floorIndex">
                 <el-card class="box-card" v-for="f in 5">
                   <div slot="header" class="clearfix">
                     <span>房间号</span>
-                    <el-button style="float: right; padding: 3px 0" type="text">...</el-button>
+                    <el-tooltip placement="bottom" effect="light">
+                      <div slot="content">
+                        <div><el-button type="text" class="edit-room">编辑房间</el-button></div>
+                        <div><el-button type="text" class="edit-room">租客信息</el-button></div>
+                        <div><el-button type="text" class="edit-room">转为待租</el-button></div>
+                        <div><el-button type="text" class="edit-room">删除房间</el-button></div>
+                      </div>
+                      <el-button type="text" style="float: right; padding: 3px 0">...</el-button>
+                    </el-tooltip>
                   </div>
                   <div>已租</div>
                   <div>到期：2020-01-01</div>
@@ -54,8 +62,8 @@ export default {
     return {
       input5: '',
       select: '',
-      activeName: 1,
-      activeTab: 'second'
+      activeName: 0,
+      activeTab: 'first'
     }
   },
   computed: {},

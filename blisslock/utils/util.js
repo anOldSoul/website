@@ -91,7 +91,6 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
     // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
     deviceId,
     success: (res) => {
-      console.log('kkkkkkkkkkkkkk')
       if (wx.getStorageSync('isConnecting')) {
         getBLEDeviceServices(deviceId, funcKey)
       }     
@@ -128,7 +127,6 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
   })
 }
 const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
-  console.log('wfwfwfwfwfffffffffffffffff') 
   func.addPass = false
   func.syncPass = false
   func.addFinger = false
@@ -145,7 +143,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     deviceId,
     serviceId,
     success: (res) => {
-      console.log('qqqqqqqqqqqq')
       console.log(res)
       for (let i = 0; i < res.characteristics.length; i++) {
         let item = res.characteristics[i]
@@ -163,7 +160,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
           wx.setStorageSync('_characteristicId', item.uuid)
           let hex
           if (funcKey && func[funcKey]) {
-            console.log('mmmmmmmmmmmmmmmmmm')
             wx.showLoading({
               title: '加载中'
             })
@@ -171,7 +167,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
             rtc = time
             hex = `55280000${time}00000000000000000000` //重置时钟
           } else {
-            console.log('jjjjjjjjjjjjj')
             hex = '5511000031323334353637383930313233340000'  //login
           }
           writeBle(hex)
@@ -344,6 +339,16 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       let hex = '5515200000000000000000000000000000000000'  //对码
       writeBle(hex)
     }
+    if (value.slice(-4, -2) === '36') {
+      let hex = ''     
+      if (pwNeedToAdd.pw) {
+        let pw = formatPw(pwNeedToAdd.pw)
+        hex = `551D0000${pw}01000000`        
+      } else {        
+        hex = '5520000000000000000000000000000001000000'
+      }
+      writeBle(hex)
+    }
     if (value.slice(-4, -2) === '15') {
       key = seedA + seedC + rtc + seedB
       console.log('key' + key)
@@ -489,13 +494,23 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     }
     if (value.slice(-4, -2) === '95') {
       if (func['addPass']) {
-        let pw = strToHexCharCode(pwNeedToAdd.pw)
-        if (pw.length < 24) {
-          for (let i = pw.length; i < 24; i++) {
-            pw = pw + '0'
-          }
+        let pw = formatPw(pwNeedToAdd.pw)
+        let userType = pwNeedToAdd.userType
+        let validDate = pwNeedToAdd.validDate
+        let hex = ''
+        let time = Moment().format('ssmmHHDDMMYY')
+        console.log(userType)
+        console.log(pwNeedToAdd.validDate)
+        if (userType === '0' && validDate) {  //设置时效
+          let validTime = Moment(validDate, 'YYYY-MM-DD HHmm').format('00mmHHDDMMYY')
+          hex = `55360000${time}${validTime}00000000`
         }
-        let hex = `551D0000${pw}00000000`
+        if (userType === '0' && !validDate) {
+          hex = `551D0000${pw}00000000`
+        }
+        if (userType === '1') {
+          hex = `551D0000${pw}00010000`
+        }
         writeBle(hex)
       }
       if (func['syncPass']) {
@@ -508,7 +523,22 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         writeBle(hex)
       }
       if (func['addFinger']) {
-        let hex = '5520000000000000000000000000000000000000'
+        let userType = pwNeedToAdd.userType
+        let validDate = pwNeedToAdd.validDate
+        let hex = ''
+        let time = Moment().format('ssmmHHDDMMYY')
+        console.log(userType)
+        console.log(pwNeedToAdd.validDate)
+        if (userType === '0' && validDate) {  //设置时效
+          let validTime = Moment(validDate, 'YYYY-MM-DD HHmm').format('00mmHHDDMMYY')
+          hex = `55360000${time}${validTime}00000000`
+        }
+        if (userType === '0' && !validDate) {
+          hex = `5520000000000000000000000000000000000000`
+        }
+        if (userType === '1') {
+          hex = `5520000000000000000000000000000000010000`
+        }
         writeBle(hex)
       }
       if (func['syncFinger']) {
@@ -534,6 +564,15 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       }
     }
   })
+}
+function formatPw(pw) {
+  let newPw = strToHexCharCode(pw)
+  if (newPw.length < 24) {
+    for (let i = pw.length; i < 24; i++) {
+      newPw = newPw + '0'
+    }
+  }
+  return newPw
 }
 // ArrayBuffer转16进度字符串示例
 function ab2hex(buffer) {

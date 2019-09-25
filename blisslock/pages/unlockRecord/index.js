@@ -38,6 +38,7 @@ Page({
     if (unlockRecordData instanceof Array) {
       unlockRecord = unlockRecordData.map((item, index) => {
         let type = item.slice(8, 10)
+        let userType = item.slice(18, 20)
         let time = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('HH:mm:ss')
         let date = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('20YY-MM-DD')
         let month = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('20YY-MM')
@@ -52,8 +53,54 @@ Page({
         if (type === '25') {
           lockType = '临时密码'
         }
+        if (type === '13') {
+          lockType = '添加指纹'
+        }
+        if (type === '14') {
+          lockType = '添加密码'
+        }
+        if (type === '15') {
+          lockType = '添加蓝牙'
+        }
+        if (type === '03') {
+          lockType = '删除指纹'
+        }
+        if (type === '04') {
+          lockType = '删除密码'
+        }
+        if (type === '05') {
+          lockType = '删除蓝牙'
+        }
+        if (type === '02') {
+          lockType = '恢复出厂设置'
+        }
+        if (type === '30') {
+          lockType = '低电量报警'
+        }
+        if (type === '31') {
+          lockType = '连续试错报警'
+        }
+        if (type === '32') {
+          lockType = '防撬报警'
+        }
+        if (type === '33') {
+          lockType = '指纹防劫持报警'
+        }
+        if (type === '34') {
+          lockType = '密码防劫持报警'
+        }
+        if (userType === '00') {
+          userType = '普通用户'
+        }
+        if (userType === '01') {
+          userType = '管理员'
+        }
+        if (userType === '02') {
+          userType = '防劫持用户'
+        }
         return {
-          lockType: lockType,
+          lockType: lockType || '未知',
+          userType: userType,
           time: time,
           month: month,
           date: date

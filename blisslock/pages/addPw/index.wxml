@@ -1,7 +1,34 @@
 <!--pages/admPw/index.wxml-->
 <view>
-  <view class='addPw_input'><input placeholder="请输入用户名" maxlength="12" bindinput="bindUserNameInput" value="{{userName}}" /></view>
-  <view class='addPw_input'><input type="number" placeholder="请输入6-12位数字密码" bindinput="bindKeyInput" maxlength="12" value="{{password}}" /></view>
+  <view class='addPw_input'>
+    <view class="section__title">用户名</view>
+    <input maxlength="12" placeholder="请输入用户名" bindinput="bindUserNameInput" value="{{userName}}" />
+  </view>
+  <view class='addPw_input'>
+    <view class="section__title">密码</view>
+    <input maxlength="12" type="number" placeholder="请输入6-12位数字密码" bindinput="bindKeyInput" value="{{password}}" />
+  </view>
+  <view class="addPw_input">
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+      <view class="picker">
+        用户类型 {{array[index]}}
+      </view>
+    </picker>
+  </view>
+  <view class="addPw_input" wx:if="{{index === '0'}}">
+    <picker bindchange="bindPickerValidChange" value="{{validIndex}}" range="{{validArray}}">
+      <view class="picker">
+        有效类型 {{validArray[validIndex]}}
+      </view>
+    </picker>
+  </view>
+  <view class="addPw_input" wx:if="{{validIndex === '1'}}">
+    <picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
+      <view class="tui-picker-detail">
+        有效时间: {{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}
+      </view>
+    </picker>
+  </view>
   <view class='add_apparatus' bindtap='goNext'>下一步</view>
   <!-- <navigator class='add_apparatus' url="{{'/pages/activateDevice/index?func=addPw&pw=' + password}}" hover-class="none">下一步</navigator> -->
 </view>
