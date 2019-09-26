@@ -4,21 +4,21 @@
     <view class="section__title">用户名</view>
     <input maxlength="12" placeholder="请输入用户名" bindinput="bindKeyInput" value="{{userName}}" />
   </view>
-  <view class="addPw_input">
+  <view class="addPw_input" wx:if="{{deviceType === 'M6-S'}}">
     <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
       <view class="picker">
         用户类型 {{array[index]}}
       </view>
     </picker>
   </view>
-  <view class="addPw_input" wx:if="{{index === '0'}}">
+  <view class="addPw_input" wx:if="{{index === '0' && deviceType === 'M6-S'}}">
     <picker bindchange="bindPickerValidChange" value="{{validIndex}}" range="{{validArray}}">
       <view class="picker">
         有效类型 {{validArray[validIndex]}}
       </view>
     </picker>
   </view>
-  <view class="addPw_input" wx:if="{{validIndex === '1'}}">
+  <view class="addPw_input" wx:if="{{validIndex === '1' && deviceType === 'M6-S'}}">
     <picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
       <view class="tui-picker-detail">
         有效时间: {{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}

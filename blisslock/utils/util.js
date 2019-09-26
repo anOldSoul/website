@@ -154,7 +154,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
           })
         }
         if (item.properties.write && item.uuid.indexOf('0000FFF3') > -1) {
-          console.log('nnnnnnnnn')
           wx.setStorageSync('_deviceId', deviceId)
           wx.setStorageSync('_serviceId', serviceId)
           wx.setStorageSync('_characteristicId', item.uuid)
@@ -380,7 +379,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       }
     }
     if (value.slice(-4, -2) === '2c' && value !=='aa30000000000000000000000000000000002c00') {
-      console.log('oooooooooooooooo')
       hasUnlockRecord = 'hasRecord'
       let tempData = getDeviceItem('unlockRecordData')
       let unlockRecordData = (tempData instanceof Array) ? tempData : []

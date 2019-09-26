@@ -15,7 +15,7 @@ Page({
   },
   onShow: function () {
     this.setData({
-      placeholder: app.util.getDeviceItem('device_name') || 'M6智能锁'
+      placeholder: app.util.getDeviceItem('device_name') || '智能锁'
     })
   },
   bindKeyInput: function(e) {

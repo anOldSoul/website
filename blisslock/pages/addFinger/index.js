@@ -15,7 +15,8 @@ Page({
     endYear: 2050,
     array: ['普通用户', '防劫持用户'],
     validArray: ['永久有效', '临时有效'],
-    userName: ''
+    userName: '',
+    deviceType: ''
   },
   onLoad: function (options) {
     // 获取完整的年月日 时分秒，以及默认显示的数组
@@ -29,7 +30,8 @@ Page({
       dateTime: obj.dateTime,
       dateTimeArray: obj.dateTimeArray,
       dateTimeArray1: obj1.dateTimeArray,
-      dateTime1: obj1.dateTime
+      dateTime1: obj1.dateTime,
+      deviceType: app.util.getDeviceItem('type')
     });
   },
   changeDateTime1(e) {

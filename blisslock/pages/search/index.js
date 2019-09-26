@@ -13,6 +13,7 @@ function inArray(arr, key, val) {
 }
 Page({
   data: {
+    currentIndex: 0,
     findDevice: false,
     findNoDevice: false,
     checked: true,
@@ -67,26 +68,33 @@ Page({
     wx.stopBluetoothDevicesDiscovery()
   },
   onBluetoothDeviceFound() {
-    wx.onBluetoothDeviceFound((res) => {
-      let devices = []
+    let devices = []
+    let deviceIdArr = []
+    wx.onBluetoothDeviceFound((res) => {     
       res.devices.forEach(device => {
-        if (device.name === 'Blisslock006S') {
-          console.log('ppppppppppp')
-          console.log(device)
-          let devicesFond = {}
-          deviceId = device.deviceId
-          name = device.name
-          devicesFond.deviceId = device.deviceId
-          devicesFond.name = device.name         
-          if (device.name === 'Blisslock') {
-            wx.setStorageSync('_deviceType', 'M6')
+        if (device.name.toLocaleLowerCase().indexOf('blisslock') > -1) {
+          if (!deviceIdArr.includes(device.deviceId)) {
+            console.log('ppppppppppp')
+            console.log(device)
+            let devicesFond = {}
+            deviceId = device.deviceId
+            name = device.name
+            devicesFond.deviceId = device.deviceId
+            devicesFond.name = device.name
+            if (device.name === 'Blisslock') {
+              wx.setStorageSync('_deviceType', 'M6')
+            }
+            if (device.name === 'Blisslock006S') {
+              wx.setStorageSync('_deviceType', 'M6-S')
+            }
+            if (device.name === 'HealthLock') {
+              wx.setStorageSync('_deviceType', '健康锁')
+            }
+            deviceIdArr.push(deviceId)
+            devices.push(devicesFond)
           }
-          if (device.name === 'HealthLock') {
-            wx.setStorageSync('_deviceType', '健康锁')
-          }
-          devices.push(devicesFond)
           this.setData({
-            devices: [devicesFond],
+            devices: devices,
             findDevice: true,
             findNoDevice: false
           })
@@ -103,23 +111,25 @@ Page({
   },
   currentInfo: function(e) {
     ds = e.currentTarget.dataset
-    deviceId = ds.deviceId
-    name = ds.name
+    this.setData({
+      currentIndex: ds.index
+    })
   },
   createBLEConnection() {
     wx.showLoading({
       title: '加载中',
     })
+    let currentDeviceId = this.data.devices[this.data.currentIndex].deviceId
     wx.createBLEConnection({
-      deviceId,
+      deviceId: currentDeviceId,
       success: (res) => {
         console.log('bbbbbbbbbbb')
         this.setData({
           connected: true,
-          name,
-          deviceId,
+          name: this.data.devices[this.data.currentIndex].name,
+          deviceId: currentDeviceId,
         })
-        this.getBLEDeviceServices(deviceId)
+        this.getBLEDeviceServices(currentDeviceId)
       }
     })
     this.stopBluetoothDevicesDiscovery()

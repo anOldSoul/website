@@ -3,12 +3,13 @@
   <view wx:for="{{devices}}" wx:key="index"
     data-device-id="{{item.deviceId}}"
     data-name="{{item.name}}"
+    data-index="{{index}}"
     bindtap="currentInfo" 
     class="device_item"
     hover-class="device_item_hover">
       <view style="font-size: 16px; color: #333;">{{item.name}}</view>
       <view>
-        <checkbox value="{{item.name}}" checked="{{checked}}"/>
+        <checkbox value="{{item.name}}" checked="{{index === currentIndex}}"/>
       </view>
   </view>
   <view class='add_apparatus' bindtap="createBLEConnection" >绑定</view>

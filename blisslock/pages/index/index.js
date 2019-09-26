@@ -11,18 +11,18 @@ Page({
   onLoad: function (options) {
     wx.getSetting({
       success: (res) => {
-        let hasUserInfo = res.authSetting['scope.userInfo']
-        if (!hasUserInfo) {
-          this.setData({
-            showAuthen: true
-          })
-        } else {
-          // if (!wx.getStorageSync('gesturePw').length) {
-          //   wx.navigateTo({
-          //     url: `/pages/gesture/index?url=init`
-          //   })
-          // }
-        }
+        // let hasUserInfo = res.authSetting['scope.userInfo']
+        // if (!hasUserInfo) {
+        //   this.setData({
+        //     showAuthen: true
+        //   })
+        // } else {
+          if (!wx.getStorageSync('gesturePw').length) {
+            wx.navigateTo({
+              url: `/pages/gesture/index?url=init`
+            })
+          }
+        // }
       }
     })
   },
