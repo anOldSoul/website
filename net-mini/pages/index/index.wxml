@@ -1,0 +1,27 @@
+<!--pages/index/index.wxml-->
+<view>
+  <navbar navType="homePage"></navbar>
+  <view class='title'><view class='dot'></view>我的设备</view>
+  <view wx:if="{{!deviceList.length}}">
+    <view><image class="no_apparatus" src='../../images/pic-home-not-added.png'></image></view>
+    <view class='tip_text'>未添加任何设备</view>
+  </view>
+  <view wx:if="{{deviceList.length}}">
+    <view class='device_item' wx:for="{{deviceList}}" wx:key="{{index}}" data-index="{{index}}" bindtap='goHomePage'>
+      <view class='device_item_left'>
+        <view class='left_text'>{{item.device_name}}</view>
+        <view class='left_text'>{{item.type}}</view>
+      </view>
+      <view class='device_item_right'><image class="pic_M6" src='../../images/pic-home-M6.png'></image></view>
+    </view>
+  </view>
+  <navigator class='add_apparatus' url="/pages/addDevice/index" wx:if="{{hasPhone}}">添加设备</navigator>
+  <button class='add_apparatus' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" wx:else>添加设备</button>
+  <view class='authen' wx:if="{{showAuthen}}">
+    <view class='authen_modal'>
+      <view class='authen_title'>授权登录</view>
+      <view class='authen_text'>欢迎来到噢蹦小程序。请完成微信授权以体验完整功能！</view>
+      <button class='authen_btn' open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">确认</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,9 @@
+<view class='password'>
+  <view class='title'><view class='dot'></view>密码用户</view>
+  <navigator  url="{{'/pages/editPw/index?pw=' + item}}" wx:for="{{pwArr}}" wx:key="{{index}}" class='pw_item'>{{item}}
+  </navigator>
+  <view class='fixed'>
+    <navigator class='add_password' url="/pages/addPw/index" hover-class="none">添加密码</navigator>
+    <button class='sync_password' bindtap="sync_password">一键开锁</button>
+  </view>
+</view>

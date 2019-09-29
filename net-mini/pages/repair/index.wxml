@@ -1,0 +1,23 @@
+<!--pages/addDevice/index.wxml-->
+<view>
+  <view class='tip_text'>
+    <view class='repair_title'>一、指纹开不了锁</view>
+    <view class='text_content'>
+      <view class='text'>1、请尝试用密码或备用指纹开锁</view>
+      <view class='text'>2、用钥匙开锁后请立即报修</view>
+    </view>
+    <view class='repair_title'>二、密码开不了锁</view>
+    <view class='text_content'>
+      <view class='text'>1、请尝试备用密码或指纹开锁</view>
+      <view class='text'>2、用钥匙开锁后请立即报修#确认。</view>
+    </view>
+
+    <view class='repair_title'>三、锁体没有电了</view>
+    <view class='text_content'>
+      <view class='text'>1、请尝试使用Micro USB接口的电源(例如充电宝)为锁体供电，再进行开锁</view>
+      <view class='text'>2、请尝试钥匙开锁</view>
+      <view class='text'>3、开锁后，请立即更换电池</view>
+    </view>
+  </view>
+  <view bindtap="callPhone" class='add_apparatus'>电话报修</view>
+</view>

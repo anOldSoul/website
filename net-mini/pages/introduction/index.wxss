@@ -1,0 +1,36 @@
+/* pages/index/index.wxss */
+
+.tip_text{
+  background:rgba(255,255,255,1);
+  border-radius:8rpx;
+  margin-top: 30rpx;
+  margin-bottom: 40rpx;
+  padding: 30rpx;
+}
+.intro_img{
+  width: 690rpx;
+  height: 230rpx;
+}
+.repair_title{
+  font-size:38rpx;
+  color:rgba(51,51,51,1);
+  text-align: center;
+  margin-bottom: 48rpx;
+  font-weight: bold;
+}
+.text{
+  font-size:28rpx;
+  color:rgba(102,102,102,1);
+  line-height:46rpx;
+}
+.add_apparatus{
+  position: fixed;
+  bottom: 60rpx;
+}
+.text_content{
+  margin-top: 10rpx;
+  margin-bottom: 30rpx;
+}
+.attention{
+  font-size: 28rpx;
+}

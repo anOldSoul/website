@@ -1,0 +1,14 @@
+<view class='record_list'>
+  <view class='record_top'>
+    <view class='title'><view class='dot'></view>临时密码</view>
+    <view class='clear' bindtap='handleClear'>全部清空</view>
+  </view>
+  <view class='tip_text' wx:for="{{currentMonthData}}" wx:key="{{index}}">
+    <view class='text_content'>
+      <view class='content_right'>       
+        <view class='time'>{{item.userName}}【{{item.tempPw}}】</view>
+        <view class='detail'>生成时间: {{item.time}}</view>
+      </view> 
+    </view>
+  </view>
+</view>

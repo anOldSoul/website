@@ -1,0 +1,10 @@
+<!--pages/index/index.wxml-->
+<view>
+  <view><image class="no_apparatus" src='../../images/ic-logo.png'></image></view>
+  <view class='about_title'>噢蹦Lite</view>
+  <view class='about_subtitle'>版本号：V 1.0.0</view>
+  <view class='about_company'>
+    <view>互啊佑智能科技有限公司 版权所有</view>
+    <view>Copyright &#169 2014-2019 WhoAreYou.All Rights Reserved.</view>
+  </view>
+</view>

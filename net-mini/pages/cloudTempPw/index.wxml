@@ -1,0 +1,5 @@
+<!--pages/admPw/index.wxml-->
+<view>
+  <view class='title'><view class='dot'></view>临时密码</view>
+  <view class='temp_box'>147258</view>
+</view>

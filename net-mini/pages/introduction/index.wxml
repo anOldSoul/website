@@ -1,0 +1,49 @@
+<!--pages/addDevice/index.wxml-->
+<view>
+  <view class='tip_text'>
+    <view class='repair_title'>绑定智能锁</view>
+    <view><image class="intro_img" src='../../images/pic-m6-01.png'></image></view>
+    <view class='text_content'>
+      <view class='text'>1、添加设备，按小程序提示绑定智能锁；</view>
+      <view class='text'>2、绑定时输入的管理员密码需要牢记，若忘记可通过小程序查看；</view>
+      <view class='text'>3、按小程序提示完成注册后，即可对智能锁进行管理使用。</view>
+    </view>
+    <view class='repair_title'>设置与处理智能锁</view>
+    <view><image class="intro_img" src='../../images/pic-m6-2.png'></image></view>
+    <view class='text_content'>
+      <view class='text'>1、绑定智能锁后，可以设置指纹和本地密码； </view>
+      <view class='text'>2、可对智能锁的密码和指纹数据进行维护。</view>
+    </view>
+    <view class='repair_title'>密码管理</view>
+    <view><image class="intro_img" src='../../images/pic-m6-3.png'></image></view>
+    <view class='text_content'>
+      <view class='text'>用于添加、删除本地密码，可绑定密码归属人。</view>
+    </view>
+    <view class='repair_title'>临时密码管理</view>
+    <view><image class="intro_img" src='../../images/pic-m6-4.png'></image></view>
+    <view class='text_content'>
+      <view class='text'>用于创建临时密码和查看历史密码生成记录。</view>
+    </view>
+    <view class='repair_title'>管理员密码</view>
+    <view><image class="intro_img" src='../../images/pic-m6-5.png'></image></view>
+    <view class='text_content'>
+      <view class='text'>用于查看蓝牙管理员的密码。</view>
+    </view>
+    <view class='repair_title'>开锁记录</view>
+    <view><image class="intro_img" src='../../images/pic-m6-6.png'></image></view>
+    <view class='text_content'>
+      <view class='text'>用于读取锁体存储的开锁信息，可依据绑定的所属人，查看开锁人和开锁方式。</view>
+    </view>
+    <view class='repair_title'>手势密码</view>
+    <view><image class="intro_img" src='../../images/pic-m6-7.png'></image></view>
+    <view class='text_content'>
+      <view class='text'>用于修改当前的手势密码。</view>
+    </view>
+    <view class='repair_title'>一键报修</view>
+    <view><image class="intro_img" src='../../images/pic-m6-8.png'></image></view>
+    <view class='text_content'>
+      <view class='text'>用于智能锁工作不正常时，联系售后使用。</view>
+    </view>
+    <view class='attention'>注意：若小程序不能正常通信，可将手机与智能锁重新绑定。</view>
+  </view>
+</view>

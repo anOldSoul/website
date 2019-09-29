@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/addPw/index",
+    "pages/addFinger/index",
+    "pages/tempPage/index",
+    "pages/cloudTempPw/index",
+    "pages/finger/index",
+    "pages/addDevice/index",
+    "pages/activateDevice/index",
+    "pages/shopping/index",
+    "pages/airQuality/index",
+    "pages/tempRecord/index",
+    "pages/createTemp/index",
+    "pages/deviceName/index",
+    "pages/unlockRecord/index",   
+    "pages/about/index",
+    "pages/member/index",   
+    "pages/gesture/index",
+    "pages/search/index",
+    "pages/activateFinger/index",
+    "pages/lockAtOnce/index",
+    "pages/introduction/index",
+    "pages/editFinger/index",
+    "pages/password/index",
+    "pages/editPw/index",
+    "pages/admPw/index",
+    "pages/repair/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "white",
+    "navigationBarTextStyle": "black",
+    "disableScroll": true
+  },
+  "sitemapLocation": "sitemap.json"
+}

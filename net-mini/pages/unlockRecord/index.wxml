@@ -1,0 +1,36 @@
+<view class="section">
+  <picker mode="date" fields="month" value="{{date}}" bindchange="bindDateChange">
+    <view class="picker">
+      {{month}}<image class="ic-record-dropdown" src='../../images/ic-record-dropdown.png'></image>
+    </view>
+  </picker>
+</view>
+<view class='record_list'>
+  <view class='tip_text' wx:for="{{currentMonthData}}" wx:key="{{index}}">
+    <view class='repair_title'>
+      <view>{{item.date}}</view>
+      <!-- <view>开锁用户：001</view> -->
+    </view>
+    <view class='text_content' wx:for="{{item.recordArr}}" wx:for-item="items" wx:key="items">
+      <view class='content_left'>
+        <view class='left'>
+          <image class="pw_record_img" src='../../images/ic-record-fingerprint.png' wx:if="{{items.lockType === '指纹开锁'}}"></image>
+          <image class="pw_record_img" src='../../images/ic-record-password.png' wx:if="{{items.lockType === '本地密码'}}"></image>
+          <image class="pw_record_img" src='../../images/ic-record_tempass.png' wx:else="{{items.lockType !== '指纹开锁' && items.lockType !== '本地密码'}}"></image>
+        </view>
+        <view>
+          <view class='time'>{{items.time}}</view>
+          <view class='detail'>{{items.userType}}-{{items.lockType}}</view>
+        </view>
+      </view>
+      <!-- <view class='content_right'>
+        <view class='time'>电量：{{items.ele}}</view>
+        <view class='detail1' wx:if="{{items.warnstat === '无报警'}}">{{items.warnstat}}</view>
+        <view class='detail2' wx:if="{{items.warnstat === '报警'}}">{{items.warnstat}}</view>
+      </view>  -->
+    </view>
+  </view>
+</view>
+<view class='record_bottom' wx:if="{{type !== 'cloud'}}">
+  <navigator class='add_apparatus' url="/pages/activateDevice/index?func=unlockRecord" hover-class="none">同步数据</navigator>
+</view>

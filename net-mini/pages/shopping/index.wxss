@@ -1,0 +1,110 @@
+
+.func_row{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 32rpx;
+}
+.device_top{
+  width:690rpx;
+  height:478rpx;
+  background:rgba(14,19,30,1);
+  border-radius:80rpx;
+  margin-left: 30rpx;
+  margin-top: 32rpx;
+}
+.func-content{
+  width: 622rpx;
+  margin: 30rpx;
+  background:rgba(255,255,255,1);
+  box-shadow:0 4rpx 60rpx 0 rgba(177,186,201,0.2);
+  border-radius:80rpx;
+  padding: 48rpx 34rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.func_item {
+  width: 156rpx;
+  padding: 32rpx 0;
+  padding-left: 32rpx;
+  display: flex;
+  flex-direction: column;
+  font-size: 26rpx;
+  border-radius:16rpx;
+  margin-bottom: 32rpx;
+  border:2rpx solid rgba(238,241,247,1);
+}
+.func_img{
+  width: 64rpx;
+  height: 64rpx;
+  margin-bottom: 26rpx;
+}
+.device_name{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 32rpx;
+}
+.device_top_up {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  color: #fff;
+  padding-top: 64rpx;
+  padding-left: 34rpx;
+}
+.device_img{
+  width: 170rpx;
+  height: 170rpx;
+  border-radius: 86rpx;
+  background: #fff;
+}
+.device_title{
+  font-size: 24rpx;
+  color: #B1BAC9;
+}
+.device_current{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+.device_edit{
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 32rpx;
+}
+.unlock_now{
+  background: #007BFF;
+  color: #fff;
+  width: 622rpx;
+  height: 104rpx;
+  border-radius: 52rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 34rpx;
+  margin-top: 70rpx;
+}
+.air_quality{
+  color: #17BF98;
+  font-size: 30rpx;
+  width:257rpx;
+  height:72rpx;
+  background:rgba(23,191,152,0.1886);
+  border-radius:36rpx 0 0 36rpx;
+  position: absolute;
+  right: 0;
+  top: 71rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ic-airquality{
+  width: 35rpx;
+  height: 25rpx;
+  margin-right: 10rpx;
+}

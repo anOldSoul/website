@@ -1,0 +1,51 @@
+<view class='container'>
+  <view class='temperature'>
+    <view class='circle1'></view>
+    <view class='circle2'></view>
+    <view class='circle3'></view>
+    <view class='circle4'></view>
+    <view class='temper_left'>
+      <image class="device_img" src='../../images/ic-atm-tem.png'></image>
+      <view>温度</view>
+    </view>
+    <view class='temper_right'>{{airData.Temperature}}°</view>
+  </view> 
+  <view class="func_manage">
+    <view class="func_row">
+      <view class="func_item">
+        <image class="func_img" src='../../images/ic-atm-hum.png'></image>
+        <view class="func_text">湿度</view>
+        <view class='func_num'>{{airData.Humidity}}%</view>
+      </view>
+      <view class="func_item">
+        <image class="func_img" src='../../images/ic-atm-tvoc.png'></image>
+        <view class="func_text">TVOC</view>
+        <view class='func_num' id="{{'good'}}">{{airData.tvoc}}</view>
+      </view>
+    </view>
+    <view class="func_row">
+      <view class="func_item">
+        <image class="func_img" src='../../images/ic-atm-ch2o.png'></image>
+        <view class="func_text">CH2O</view>
+        <view class='func_num' id='good'>{{airData.ch2o}}</view>
+      </view>
+      <view class="func_item">
+        <image class="func_img" src='../../images/ic-atm-pm2.5.png'></image>
+        <view class="func_text">PM2.5</view>
+        <view class='func_num' id="{{airData.PM === '优' ? 'good' : (airData.PM === '良' ? 'middle' : 'bad')}}">{{airData.PM}}</view>
+      </view>
+    </view>
+    <view class="func_row">
+      <view class="func_item">
+        <image class="func_img" src='../../images/ic-atm-pm10.png'></image>
+        <view class="func_text">PM10</view>
+        <view class='func_num' id="{{airData.PM10 === '优' ? 'good' : 'middle'}}">{{airData.PM10}}</view>
+      </view>
+      <view class="func_item">
+        <image class="func_img" src='../../images/ic-atm-co2.png'></image>
+        <view class="func_text">CO2</view>
+        <view class='func_num' id="{{airData.co2 === '清新' ? 'good' : (airData.co2 === '浑浊' ? 'middle' : 'bad')}}">{{airData.co2}}</view>
+      </view>
+    </view>
+  </view>
+</view>

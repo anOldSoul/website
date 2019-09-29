@@ -1,0 +1,11 @@
+<view class='password'>
+  <view class='title'><view class='dot'></view>指纹用户</view>
+  <navigator  url="{{'/pages/editFinger/index?pw=' + item.name + '&id=' + item.id}}" wx:for="{{pwArr}}" wx:key="{{index}}" class='pw_item'>
+    <view>{{item.name}}</view>
+    <view><image class="edit" src='../../images/ic_edit.png'></image></view>
+  </navigator>
+  <view class='fixed'>
+    <navigator class='add_password' url="/pages/addFinger/index" hover-class="none">添加指纹</navigator>
+    <button class='sync_password' bindtap="sync_password">同步数据</button>
+  </view>
+</view>

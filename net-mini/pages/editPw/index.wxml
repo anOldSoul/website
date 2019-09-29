@@ -1,0 +1,7 @@
+<view class='password'>
+  <view class='addPw_input'><input placeholder="请输入名称" maxlength="12" bindinput="bindUserNameInput" value="{{pw}}" /></view>
+  <view class='fixed'>
+    <button class='add_password' bindtap="handleSave">保存</button>
+    <navigator class='sync_password' url="{{'/pages/activateDevice/index?func=delPw&pw=' + id}}" hover-class="none">删除密码</navigator>
+  </view>
+</view>
