@@ -3,18 +3,18 @@
     <view class="head_img"><open-data type="userAvatarUrl"></open-data></view>
     <view class="member_name"><open-data type="userNickName"></open-data></view>
   </view>
-  <view bindtap="goGesture" class="myList" hover-class="none">
-    <view class="list_text"><image class="icon_img" src="/images/ic-mine-password.png"></image>手势密码</view>
-    <image class="list_more" src="/images/more.png"></image>
-  </view>
-  <view>
+  <view class="list">
     <view class="myList" bindtap='goIntroduction'>
-      <view class="list_text"><image class="icon_img" src="/images/ic-mine-instrac.png"></image>使用说明</view>
+      <view class="list_text"><image class="icon_img" src="/images/ic-mine-room.png"></image>我的房间</view>
       <image class="list_more" src="/images/more.png"></image>
     </view>
-  </view>
-  <view class="myList" bindtap="goAbout">
-    <view class="list_text"><image class="icon_img" src="/images/ic-mine-about.png"></image>关于我们</view>
-    <image class="list_more" src="/images/more.png"></image>
+    <view bindtap="goGesture" class="myList" hover-class="none">
+      <view class="list_text"><image class="icon_img" src="/images/ic-mine-password.png"></image>手势密码</view>
+      <image class="list_more" src="/images/more.png"></image>
+    </view>
+    <view class="myList" bindtap="goAbout">
+      <view class="list_text"><image class="icon_img" src="/images/ic-mine-feedback.png"></image>我的反馈</view>
+      <image class="list_more" src="/images/more.png"></image>
+    </view>
   </view>
 </view>

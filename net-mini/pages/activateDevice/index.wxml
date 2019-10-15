@@ -2,6 +2,7 @@
 <view>
   <navbar navType="activePage"></navbar>
   <view><image class="no_apparatus" src='../../images/pic-activation.png'></image></view>
-  <view class='tip_text'>请触摸锁体密码键盘，唤醒设备进行通信</view>
+  <view class='tip_text' wx:if="{{deviceType === 'M6-S'}}">正在操作中，请稍等</view>
+  <view class='tip_text' wx:else>请触摸锁体密码键盘，唤醒设备进行通信</view>
   <button class='add_apparatus' bindtap="handleClose">关闭</button>
 </view>

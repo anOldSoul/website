@@ -1,32 +1,38 @@
-/* pages/index/index.wxss */
+page {
+  width: 100%;
+  height: 100%;
+  color: #ffffff;
+  background: #131929;
+}
 .section{
   width: 100%;
   top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 32rpx;
+  font-size: 28rpx;
   position: fixed;
-  height: 88rpx;
-  background: #fff;
+  height: 128rpx;
+  background: #131929;
 }
 .picker{
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #24B898;
+  width:244rpx;
+  height:56rpx;
+  border-radius:52rpx;
+  color: #fff;
 }
 .ic-record-dropdown{
-  width: 36rpx;
-  height: 36rpx;
+  width: 30rpx;
+  height: 30rpx;
   margin-left: 15rpx;
 }
 .tip_text{
   width:710rpx;
-  background:rgba(255,255,255,1);
-  box-shadow:0 2rpx 12rpx 0 rgba(0,0,0,0.1);
   border-radius:12rpx;
-  margin-left: 20rpx;
-  margin-bottom: 30rpx;
 }
 
 .repair_title{
@@ -39,16 +45,14 @@
   justify-content: space-between;
 }
 .text_content{
-  padding: 24rpx;
-  margin-bottom: 30rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
 .pw_record_img{
-  width:100rpx;
-  height:100rpx;
+  width:60rpx;
+  height:60rpx;
 }
 .left{
   margin-right: 24rpx;
@@ -57,13 +61,15 @@
   height:100rpx; 
   display: flex;
   flex-direction: row;
+  margin-left: 63rpx;
+  padding-bottom: 48rpx;
 }
 .time{
   font-size: 32rpx;
 }
 .detail{
   font-size:28rpx;
-  color:rgba(153,153,153,1);
+  color:rgba(125,144,170,1);
   margin-top: 11rpx;
 }
 .detail1{
@@ -77,8 +83,11 @@
   margin-top: 11rpx;
 }
 .record_list{
-  margin-bottom: 200rpx;
-  margin-top: 90rpx;
+  width: 685rpx;
+  margin-top: 128rpx;
+  padding-top: 32rpx;
+  background: #2F374A;
+  border-radius:0 64rpx 64rpx 0;
 }
 .record_bottom{
  width: 100%;

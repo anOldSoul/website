@@ -1,17 +1,31 @@
-.head{
+page{
+  height: 100%;
+}
+.member {
   width: 100%;
-  justify-content: center;
+  height: 100%;
+  color: #ffffff;
+  background: #131929;
+  padding-top: 38rpx;
+}
+.head {
+  height: 320rpx;
   align-items: center;
   display: flex;
-  flex-direction: column;
-  margin-top: 130rpx;
-  margin-bottom: 138rpx;
+  flex-direction: row;
+  margin-bottom: 32rpx;
+  background: #2F374A;
+  border-radius:64rpx 64rpx 64rpx 0;
+  margin-right: 64rpx;
+  
 }
 .head_img{
   width: 150rpx;
   height: 150rpx;
   border-radius: 75rpx;
   overflow: hidden;
+  margin-left: 64rpx;
+  margin-right: 32rpx;
 }
 .member_name{
   font-size: 30rpx;
@@ -35,14 +49,20 @@
   margin-right: 20rpx;
 }
 .myList{
-  height: 120rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
   text-align: left;
-  border-bottom: 1rpx solid #f5f5f5;
   font-size: 36rpx;
-  padding: 0 30rpx;
+  padding-bottom: 95rpx;
+}
+.list{
+  background: #2F374A;
+  margin-right: 64rpx;
+  border-radius:0 64rpx 64rpx 0;
+  padding-left: 88rpx;
+  padding-top: 87rpx;
+  padding-right: 43rpx;
 }
 .list_right{
   display: flex;

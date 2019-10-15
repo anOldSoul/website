@@ -56,6 +56,9 @@ Page({
     if (func === 'unlockAtOnce') {
       app.util.doBLEConnection('unlockAtOnce')
     }
+    this.setData({
+      deviceType: app.util.getDeviceItem('type')
+    })
   },
   handleClose: function() {
     this.closeConnection()

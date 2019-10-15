@@ -1,6 +1,10 @@
 {
   "pages": [
+    "pages/shopping/index",
+    "pages/unlockRecord/index",
+    "pages/member/index",
     "pages/index/index",
+     
     "pages/addPw/index",
     "pages/addFinger/index",
     "pages/tempPage/index",
@@ -8,14 +12,11 @@
     "pages/finger/index",
     "pages/addDevice/index",
     "pages/activateDevice/index",
-    "pages/shopping/index",
     "pages/airQuality/index",
     "pages/tempRecord/index",
     "pages/createTemp/index",
     "pages/deviceName/index",
-    "pages/unlockRecord/index",   
     "pages/about/index",
-    "pages/member/index",   
     "pages/gesture/index",
     "pages/search/index",
     "pages/activateFinger/index",
@@ -31,6 +32,31 @@
     "navigationBarBackgroundColor": "white",
     "navigationBarTextStyle": "black",
     "disableScroll": true
+  },
+  "tabBar": {
+    "backgroundColor": "#474F62",
+    "color": "#ffffff",
+    "selectedColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/shopping/index",
+        "iconPath": "images/ic-tab-lock-unselected.png",
+        "selectedIconPath": "images/ic-tab-lock-selected.png",
+        "text": "门锁"
+      },
+      {
+        "pagePath": "pages/unlockRecord/index",
+        "iconPath": "images/ic-tab-news-unselected.png",
+        "selectedIconPath": "images/ic-tab-news-selected.png",
+        "text": "消息"
+      },
+      {
+        "pagePath": "pages/member/index",
+        "iconPath": "images/ic-tab-mine-unselected.png",
+        "selectedIconPath": "images/ic-tab-mine-selected.png",
+        "text": "我的"
+      }
+    ]
   },
   "sitemapLocation": "sitemap.json"
 }

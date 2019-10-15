@@ -136,9 +136,11 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
   func.unlockRecord = false
   func.unlockAtOnce = false
   func.airQuality = false
-  func[funcKey] = true
-  console.log(funcKey)
-  console.log(func)
+  if (funcKey) {
+    func[funcKey] = true
+    console.log(funcKey)
+    console.log(func)
+  }
   wx.getBLEDeviceCharacteristics({
     deviceId,
     serviceId,
@@ -196,6 +198,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
   // 操作之前先监听，保证第一时间获取数据
   wx.onBLECharacteristicValueChange((characteristic) => {
     console.log('55555555555555555555555555555555555555')
+    console.log(characteristic)
     console.log(ab2hex(characteristic.value))
     let value = ab2hex(characteristic.value)
     if (value.slice(-4, -2) === '11') {
@@ -446,12 +449,15 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         dataKey = 'fingerData'
       }
       pwData = getDeviceItem(dataKey) || ''
+      console.log('ttttttttttttttttttttttttttttttt')
+      console.log(onChangePw)
       if ((onChangePw.onPwListLen) < onChangePw.pageNum && onChangePw.onPwList) {
         pwData = pwData + value.slice(4, 40)
         console.log(dataKey)
         console.log(pwData)
         updateDeviceList(dataKey, pwData)
         onChangePw.onPwListLen ++
+        console.log(onChangePw)
         if (onChangePw.onPwListLen === onChangePw.pageNum) {
           let result = pwData.slice(0, bytesToIntLe(hexToBytes(onChangePw.hexLen)) / 4 * 8)
           updateDeviceList(dataKey, result)
