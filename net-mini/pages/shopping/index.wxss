@@ -82,6 +82,7 @@ page{
   background:#2F374A;
   border-radius:0 64rpx 64rpx 0;
   margin-top: 32rpx;
+  margin-bottom: 32rpx;
 }
 .func-list{
   display: flex;

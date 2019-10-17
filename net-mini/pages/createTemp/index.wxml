@@ -1,12 +1,14 @@
 <!--pages/admPw/index.wxml-->
-<view>
-  <view class='title'><view class='dot'></view>临时密码用户</view>
-  <view class='addPw_input'><input maxlength="12" placeholder="请输入用户名" bindinput="bindKeyInput" value="{{userName}}" /></view>
+<view> 
+  <view class='addPw_input'>
+    <view class='title'>临时密码用户</view>
+    <input maxlength="12" placeholder="请输入用户名" bindinput="bindKeyInput" value="{{userName}}" />
+  </view>
   <view class='title' wx:if="{{tempPw}}"><view class='dot'></view>临时密码</view>
   <view class='temp_box' wx:if="{{tempPw}}">{{tempPw}}</view>
   <view class='tip'>温馨提示：该临时密码为3分钟有效密码，请在3分钟内使用，超过3分钟请重新创建</view>
   <view class='fixed'>
-    <button class='add_password' bindtap='getTempPwd'>{{createText}}</button>
-    <button class='sync_password' bindtap="goRecord">历史记录</button>
+    <view class='add_password' bindtap='getTempPwd'>{{createText}}</view>
+    <view class='sync_password' bindtap="goRecord">历史记录</view>
   </view>
 </view>

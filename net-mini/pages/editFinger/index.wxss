@@ -1,42 +1,40 @@
 page{
   height: 100%;
+  background: #131929;
 }
 .addPw_input{
-  margin: 40rpx 0;
+  margin-bottom: 48rpx;
 }
 input{
-  width: 630rpx;
-  height: 94rpx;
-  background-color: #F0F0F0;
-  margin-left: 30rpx;
-  padding:0 30rpx;
-  font-size: 30rpx;
-  border-radius: 12rpx;
-}
-.add_password{
-  width:670rpx;
-  height:94rpx;
-  color: #fff;
-  background:rgba(9,25,40,1);
-  font-size:36rpx;
-  box-shadow:0 4rpx 8rpx 0 rgba(9,25,40,0.24);
-  border-radius:12rpx;
-  line-height: 94rpx;
-  text-align: center;
-  margin-left: 40rpx;
-  margin-top: 30rpx;
+  height: 56rpx;
+  padding:0 64rpx;
+  padding-top: 64rpx;
+  font-size: 48rpx;
+  color: #7D90AA;
 }
 .sync_password{
-  width:670rpx;
-  height:94rpx;
-  color:rgba(153,153,153,1);
-  border:2rpx solid rgba(153,153,153,1);
-  font-size:36rpx;
-  border-radius:12rpx;
-  line-height: 94rpx;
-  margin-top: 40rpx;
-  margin-left: 40rpx;
-  text-align: center;
+  width: 263rpx;
+  height: 104rpx;
+  color: #fff;
+  background:#D42647;
+  font-size:32rpx;
+  box-shadow:0 4rpx 8rpx 0 rgba(9,25,40,0.24);
+  border-radius:52rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.add_password {
+  width: 263rpx;
+  height: 104rpx;
+  color:#ffffff;
+  background: #24B898;
+  font-size:32rpx;
+  border-radius:52rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 32rpx;
 }
 .password{
   height: -webkit-calc(100% - 300rpx);
@@ -56,11 +54,14 @@ input{
   margin-top: 40rpx;
 }
 .fixed{
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  padding-bottom: 60rpx;
-  padding-top: 30rpx;
-  z-index: 99;
-  background: #fff;
+  width: 686rpx;
+  height: 336rpx;
+  background: #2F374A;
+  border-radius:64rpx 64rpx 64rpx 0;
+  margin-top: 32rpx;
+}
+.operation{
+  margin-left: 64rpx;
+  display: flex;
+  flex-direction: row;
 }

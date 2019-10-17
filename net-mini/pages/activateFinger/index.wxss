@@ -1,10 +1,14 @@
 /* pages/index/index.wxss */
+page {
+  background: #131929;
+  color: #fff;
+}
 .no_apparatus{
-  width: 480rpx;
-  height: 293rpx;
-  margin-left: 135rpx;
-  margin-top: 263rpx;
-  margin-bottom: 122rpx;
+  width: 430rpx;
+  height: 363rpx;
+  margin-left: 160rpx;
+  margin-top: 157rpx;
+  margin-bottom: 155rpx;
 }
 .tip_text{
   font-size: 32rpx;

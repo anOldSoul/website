@@ -1,3 +1,6 @@
+page {
+  background: #131929;
+}
 .index-page {
   box-sizing: border-box;
   padding-top: 180rpx;
@@ -7,6 +10,7 @@
 .gesture_title{
   font-size: 36rpx;
   text-align: center;
+  color: #fff;
 }
 .err{
   font-size: 34rpx;

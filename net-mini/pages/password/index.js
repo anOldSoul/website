@@ -3,7 +3,7 @@ const app = getApp()
 let isBack = false
 Page({
   data: {
-    pwArr: [],
+    pwArr: [{name: '1111'}, {name: '22222'}],
     connected: false,
     chs: []
   },

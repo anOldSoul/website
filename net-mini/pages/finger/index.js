@@ -4,7 +4,7 @@ let isSycBack = false
 let isAddBack = false
 Page({
   data: {
-    pwArr: [],
+    pwArr: [{ name: 1 }, { name: 2 }, { name: 3 }],
     connected: false,
     chs: []
   },

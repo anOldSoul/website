@@ -1,7 +1,7 @@
 <!--pages/admPw/index.wxml-->
 <view>
   <view class='addPw_input'>
-    <view class="section__title">用户名</view>
+    <view class="section__title">指纹用户</view>
     <input maxlength="12" placeholder="请输入用户名" bindinput="bindKeyInput" value="{{userName}}" />
   </view>
   <view class="addPw_input" wx:if="{{deviceType === 'M6-S'}}">

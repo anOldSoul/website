@@ -1,11 +1,16 @@
-/* pages/admPw/index.wxss */
+page{
+  background: #131929;
+}
 .addPw_input{
+  width:686rpx;
+  height:448rpx;
+  background:rgba(47,55,74,1);
+  border-radius:52rpx 64rpx 64rpx 0;
   margin: 40rpx 0;
 }
 input{
   width: 630rpx;
   height: 94rpx;
-  background-color: #F0F0F0;
   margin-left: 30rpx;
   padding:0 30rpx;
   font-size: 30rpx;
@@ -18,7 +23,9 @@ input{
   padding-bottom: 60rpx;
   padding-top: 30rpx;
   z-index: 99;
-  background: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 .tip{
   font-size:28rpx;
@@ -39,25 +46,25 @@ input{
   font-size: 60rpx;
 }
 .add_password{
-  width:670rpx;
-  height:94rpx;
+  width:295rpx;
+  height:104rpx;
+  background:rgba(36,184,152,1);
+  border-radius:52rpx;
   color: #fff;
-  background:rgba(9,25,40,1);
-  font-size:36rpx;
-  box-shadow:0 4rpx 8rpx 0 rgba(9,25,40,0.24);
-  border-radius:12rpx;
-  line-height: 94rpx;
-  text-align: center;
-  margin-left: 40rpx;
-  margin-top: 40rpx;
+  font-size:32rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 32rpx;
 }
 .sync_password{
-  width:670rpx;
-  height:94rpx;
-  color:rgba(153,153,153,1);
-  border:2rpx solid rgba(153,153,153,1);
-  font-size:36rpx;
-  border-radius:12rpx;
-  line-height: 94rpx;
-  margin-top: 40rpx;
+  width:295rpx;
+  height:104rpx;
+  background:rgba(71,79,98,1);
+  border-radius:52rpx;
+  color:#fff;
+  font-size:32rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,5 +1,5 @@
 <!--pages/index/index.wxml-->
 <view>
-  <view><image class="no_apparatus" src='../../images/pic-input-fingerprint.png'></image></view>
+  <view><image class="no_apparatus" src='../../images/pic-fingerprint.png'></image></view>
   <view class='tip_text'>请根据锁体语音提示，完成指纹录入</view>
 </view>

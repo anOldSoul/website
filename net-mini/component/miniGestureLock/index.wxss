@@ -8,7 +8,7 @@
 .gesture-lock .cycle {
   box-sizing: border-box;
   position: absolute;
-  background: rgba(9,25,40,0.3);
+  background: #2F374A;
   border-radius: 50%;
 }
 
@@ -18,7 +18,7 @@
   position: absolute;
   width: 32%;
   height: 32%;
-  background: #091928;
+  background: #16BF98;
   border-radius: 50%;
   top: 50%;
   left: 50%;
@@ -27,7 +27,7 @@
 
 .gesture-lock .line {
   height: 0;
-  border-top: 6rpx solid #091928;
+  border-top: 6rpx solid #16BF98;
   position: absolute;
   transform-origin: left center;
 }

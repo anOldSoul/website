@@ -1,9 +1,11 @@
 <view class='password'>
-  <view class='addPw_input'><input placeholder="请输入名称" maxlength="12" bindinput="bindUserNameInput" value="{{pw}}" /></view>
-  <!-- <view class='pw_item'>{{pw}}
-  </view> -->
   <view class='fixed'>
-    <button class='add_password' bindtap="handleSave">保存</button>
-    <navigator class='sync_password' url="{{'/pages/activateDevice/index?func=delFinger&pw=' + id}}" hover-class="none">删除指纹</navigator>
+    <view class='addPw_input'>
+      <input placeholder="请输入名称" maxlength="12" bindinput="bindUserNameInput" value="{{pw}}" />
+    </view>
+    <view class="operation">
+      <view class='add_password' bindtap="handleSave">保存</view>
+      <navigator class='sync_password' url="{{'/pages/activateDevice/index?func=delFinger&pw=' + id}}" hover-class="none">删除指纹</navigator>
+    </view>
   </view>
 </view>

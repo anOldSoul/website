@@ -11,8 +11,8 @@
       <view class="apartment_list">
         <view class="apartment_img_box"><image class="elec_img" src='../../images/ic-lock-state-electric.png'></image></view>
         <view class="apartment_img_box"><image class="net_img" src='../../images/ic-lock-state-network.png'></image></view>
-        <view class="apartment_img_box"><image class="apartment_img" src='../../images/ic-equip-home-my-fingerprint.png'></image></view>
-        <view class="apartment_img_box"><image class="apartment_img" src='../../images/ic-equip-home-my-fingerprint.png'></image></view>
+        <view class="apartment_img_box"><image class="apartment_img" src='../../images/ic-lock-state-unlocked.png'></image></view>
+        <view class="apartment_img_box"><image class="apartment_img" src='../../images/ic-lock-state-fault.png'></image></view>
       </view>
     </view>
     <view class='func-content'>
@@ -20,7 +20,7 @@
       <view class="func-list">
         <navigator class="func_item" url="/pages/gesture/index?url=finger" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-fingerprint.png'></image>我的指纹</navigator>
         <navigator class="func_item" url="/pages/gesture/index?url=password" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-password.png'></image>我的密码</navigator>
-        <!-- <navigator class="func_item" url="/pages/gesture/index?url=createTemp" hover-class="none"><image class="func_img" src='../../images/ic-lock-devices-tempassword.png'></image>临时密码</navigator> -->
+        <navigator class="func_item" url="/pages/gesture/index?url=createTemp" hover-class="none"><image class="func_img" src='../../images/ic-lock-devices-tempassword.png'></image>临时密码</navigator>
       </view>
     </view>
   </view>
