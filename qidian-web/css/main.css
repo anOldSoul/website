@@ -1412,7 +1412,7 @@ input::-moz-focus-inner {
   -webkit-transform: translate3d(0, -50%, 0);
   transform: translate3d(0, -50%, 0);
   position: absolute;
-  right: 8rem;
+  left: 8rem;
   top: 50%;
 }
 
@@ -1439,7 +1439,7 @@ input::-moz-focus-inner {
   transform: translate3d(0, -50%, 0);
   position: absolute;
   top: 50%;
-  left: 8rem;
+  right: 8rem;
 }
 
 .header-email svg {
@@ -2894,4 +2894,11 @@ html.no-csstransitions .intro-content__bottom {
   font-weight: bold;
   margin-top: 2vh;
   margin-bottom: 1vh;
+}
+.language{
+  color: #ffffff;
+  float: right;
+  margin-right: 8rem;
+  font-size: 16px;
+  cursor: pointer;
 }
