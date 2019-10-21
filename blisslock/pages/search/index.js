@@ -81,15 +81,6 @@ Page({
             name = device.name
             devicesFond.deviceId = device.deviceId
             devicesFond.name = device.name
-            if (device.name === 'Blisslock') {
-              wx.setStorageSync('_deviceType', 'M6')
-            }
-            if (device.name === 'Blisslock006S') {
-              wx.setStorageSync('_deviceType', 'M6-S')
-            }
-            if (device.name === 'HealthLock') {
-              wx.setStorageSync('_deviceType', '健康锁')
-            }
             deviceIdArr.push(deviceId)
             devices.push(devicesFond)
           }
@@ -124,9 +115,19 @@ Page({
       deviceId: currentDeviceId,
       success: (res) => {
         console.log('bbbbbbbbbbb')
+        let selectName = this.data.devices[this.data.currentIndex].name
+        if (selectName === 'Blisslock' || selectName === 'Blisslock006') {
+          wx.setStorageSync('_deviceType', 'M6')
+        }
+        if (selectName === 'Blisslock006S') {
+          wx.setStorageSync('_deviceType', 'M6-S')
+        }
+        if (selectName === 'HealthLock') {
+          wx.setStorageSync('_deviceType', '健康锁')
+        }
         this.setData({
           connected: true,
-          name: this.data.devices[this.data.currentIndex].name,
+          name: selectName,
           deviceId: currentDeviceId,
         })
         this.getBLEDeviceServices(currentDeviceId)
