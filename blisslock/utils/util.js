@@ -64,7 +64,7 @@ const getBLEDeviceServices = (deviceId, funcKey) => {
     success: (res) => {
       for (let i = 0; i < res.services.length; i++) {
         if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FFF0') > -1) {
-          console.log(deviceId)
+          console.log('deviceId:' + deviceId)
           getBLEDeviceCharacteristics(deviceId, res.services[i].uuid, funcKey)
           return
         }
@@ -77,7 +77,7 @@ const closeConnection = () => {
   wx.closeBLEConnection({
     deviceId: wx.getStorageSync('_deviceId') || getDeviceItem('_deviceId'),
     success(res) {
-      wx.setStorageSync('isConnecting', false)      
+      wx.setStorageSync('isConnecting', false)
       console.log('蓝牙连接断开')
     }
   })
@@ -138,8 +138,8 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
   func.airQuality = false
   if (funcKey) {
     func[funcKey] = true
-    console.log(funcKey)
-    console.log(func)
+    // console.log(funcKey)
+    // console.log(func)
   }
   wx.getBLEDeviceCharacteristics({
     deviceId,
@@ -172,20 +172,25 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
           }
           writeBle(hex)
         }
-        if (item.properties.notify || item.properties.indicate) {
+        if ((item.properties.notify || item.properties.indicate) && item.uuid.indexOf('0000FFF4') > -1) {
+          console.log('66666666666666666666666666')
+          console.log(item.uuid)
           wx.notifyBLECharacteristicValueChange({
             deviceId,
             serviceId,
             characteristicId: item.uuid,
             state: true,
             success: function (res) {
-              console.log('notify success', res.errMsg)
+              console.log('~~~~~~~~~~~~~~')
+              console.log(item.uuid)
+              console.log(serviceId)
+              console.log('notify success', res)
             },
             fail: function (res) {
               console.log('notify fail', res.errMsg)
             },
             complete: function (res) {
-              console.log('notify complete', res.errMsg)
+              console.log('notify complete', res)
             },
           })
         }
@@ -309,12 +314,12 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     if (value.slice(-4, -2) === '1f') {
       console.log('删除密码成功~~~~~~~~~~~~')
       let tempData = getDeviceItem('pwData')
-      console.log(tempData)
+      // console.log(tempData)
       let str = getDeviceItem('delPassId')
-      console.log(str)
+      // console.log(str)
       let index = tempData.indexOf(str)
       tempData = tempData.substring(0, index) + tempData.substring(index + 8, tempData.length)
-      console.log(tempData)
+      // console.log(tempData)
       updateDeviceList('pwData', tempData)
       updateDeviceList('delPw', value.slice(2, 4))
       closeConnection()
@@ -325,9 +330,9 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     if (value.slice(-4, -2) === '21') {
       console.log('删除指纹成功~~~~~~~~~~~~')
       let tempData = getDeviceItem('fingerData')
-      console.log(tempData)
+      // console.log(tempData)
       let str = getDeviceItem('delFingerId')
-      console.log(str)
+      // console.log(str)
       let index = tempData.indexOf(str)
       tempData = tempData.substring(0, index) + tempData.substring(index + 8, tempData.length)
       updateDeviceList('fingerData', tempData)
@@ -353,7 +358,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     }
     if (value.slice(-4, -2) === '15') {
       key = seedA + seedC + rtc + seedB
-      console.log('key' + key)
+      // console.log('key' + key)
       let orgPackageData = '08805678';
       for (let i = 0; i < 8; i++) {
         orgPackageData += "00";
@@ -362,16 +367,16 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       let command = strToHexCharCode(cmd);
       orgPackageData += command;
       orgPackageData += "000000010116000000010146";
-      console.log(orgPackageData)
+      // console.log(orgPackageData)
       //计算checksum
       let checksum = getCheckSum(hexToBytes(orgPackageData));
-      console.log('checksum' + checksum)
+      // console.log('checksum' + checksum)
       //写入checksum
       orgPackageData += bytes2Str(shortToBytesLe(checksum));
-      console.log('orgPackageData@@@' + orgPackageData)
+      // console.log('orgPackageData@@@' + orgPackageData)
       //加密
       decodedPackageData = bytes2Str(crypt(hexToBytes(key), hexToBytes(orgPackageData)));
-      console.log('decodedPackageData' + decodedPackageData)
+      // console.log('decodedPackageData' + decodedPackageData)
       let hex = `a800${decodedPackageData.slice(0, 36)}`
       writeBle(hex)
     }
@@ -449,15 +454,15 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         dataKey = 'fingerData'
       }
       pwData = getDeviceItem(dataKey) || ''
-      console.log('ttttttttttttttttttttttttttttttt')
-      console.log(onChangePw)
+      // console.log('ttttttttttttttttttttttttttttttt')
+      // console.log(onChangePw)
       if ((onChangePw.onPwListLen) < onChangePw.pageNum && onChangePw.onPwList) {
         pwData = pwData + value.slice(4, 40)
-        console.log(dataKey)
-        console.log(pwData)
+        // console.log(dataKey)
+        // console.log(pwData)
         updateDeviceList(dataKey, pwData)
         onChangePw.onPwListLen ++
-        console.log(onChangePw)
+        // console.log(onChangePw)
         if (onChangePw.onPwListLen === onChangePw.pageNum) {
           let result = pwData.slice(0, bytesToIntLe(hexToBytes(onChangePw.hexLen)) / 4 * 8)
           updateDeviceList(dataKey, result)
@@ -503,8 +508,8 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         let validDate = pwNeedToAdd.validDate
         let hex = ''
         let time = Moment().format('ssmmHHDDMMYY')
-        console.log(userType)
-        console.log(pwNeedToAdd.validDate)
+        // console.log(userType)
+        // console.log(pwNeedToAdd.validDate)
         if (userType === '0' && validDate) {  //设置时效
           let validTime = Moment(validDate, 'YYYY-MM-DD HHmm').format('00mmHHDDMMYY')
           hex = `55360000${time}${validTime}00000000`
@@ -531,8 +536,8 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         let validDate = pwNeedToAdd.validDate
         let hex = ''
         let time = Moment().format('ssmmHHDDMMYY')
-        console.log(userType)
-        console.log(pwNeedToAdd.validDate)
+        // console.log(userType)
+        // console.log(pwNeedToAdd.validDate)
         if (userType === '0' && validDate) {  //设置时效
           let validTime = Moment(validDate, 'YYYY-MM-DD HHmm').format('00mmHHDDMMYY')
           hex = `55360000${time}${validTime}00000000`
@@ -617,9 +622,9 @@ const writeBle = (hex, funcKey = '') => {
     characteristicId: wx.getStorageSync('_characteristicId') || getDeviceItem('_characteristicId'),
     value: buffer1,
     success: function (res) {
-      console.log(wx.getStorageSync('_deviceId'))
-      console.log(wx.getStorageSync('_serviceId'))
-      console.log(wx.getStorageSync('_characteristicId'))
+      console.log('写入的_deviceId为' + wx.getStorageSync('_deviceId'))
+      console.log('写入的_serviceId为' + wx.getStorageSync('_serviceId'))
+      console.log('写入的_characteristicId为' + wx.getStorageSync('_characteristicId'))
       console.log('writeBLECharacteristicValue success', res.errMsg)
     },
     fail: function (res) {
@@ -721,16 +726,15 @@ const crypt = (key, data) =>{
   return data;
 }
 const generate3MinToSecond = () => {
-  // Encrypt.getEncryptBytes('9523937005AD3CCA', '034034940033EEE6', '95239370')
   let myDate = new Date();
-  console.log(myDate)
+  // console.log(myDate)
   let now = myDate.getTime() / (1000);
-  console.log(now)
+  // console.log(now)
   let begin = 0;
   let newDate = ('2000-01-01 00:00:00').replace(/-/g, '/');
   begin = (new Date(newDate).getTime()) / 1000;
-  console.log(begin)
-  console.log(now - begin)
+  // console.log(begin)
+  // console.log(now - begin)
   return parseInt((now - begin) / 180);
 }
 //regino 生成密码算法
