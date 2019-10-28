@@ -2684,7 +2684,7 @@ html.no-csstransitions .intro-content__bottom {
   text-align: center;
 }
 .company-content {
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 15px;
 }
 .company-detail{
@@ -2887,12 +2887,12 @@ html.no-csstransitions .intro-content__bottom {
   opacity: 0.5;
 }
 .s-intro--slides{
-  height: 60vh;
+  height: 50vh;
 }
 .company-title{
-  font-size: 20x;
+  font-size: 24px;
   font-weight: bold;
-  margin-top: 1vh;
+  margin-top: 2vh;
 }
 .language{
   color: #ffffff;
@@ -2902,6 +2902,7 @@ html.no-csstransitions .intro-content__bottom {
   cursor: pointer;
 }
 .logo_alcohol{
-  width: 100px;
-  margin: 0 15px;
+  width: 130px;
+  margin: 0 20px;
+  margin-bottom: 5px;
 }
