@@ -217,28 +217,28 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       }
       writeBle(hex)
     }
-    if (value.slice(-4, -2) === '13') {
+    if (value.slice(-4, -2) === '13' && value.slice(0, 2) === 'aa') {
       let hex = '5523000000000000000000000000000000000000'  //seedC
       writeBle(hex)
     }
-    if (value.slice(-4, -2) === '23') {
+    if (value.slice(-4, -2) === '23' && value.slice(0, 2) === 'aa') {
       seedC = value.slice(8, 36)
       let hex = '5512000000000000000000000000000000000000'  //seedA,获取mac
       writeBle(hex)
     }
-    if (value.slice(-4, -2) === '12') {
+    if (value.slice(-4, -2) === '12' && value.slice(0, 2) === 'aa') {
       seedA = value.slice(8, 20)
       let time = Moment().format('ssmmHHDDMMYY')
       seedB = time
       let hex = `55140000${time}00000000000000000000` //seedB,时间信息
       writeBle(hex)
     }
-    if (value.slice(-4, -2) === '14') {
+    if (value.slice(-4, -2) === '14' && value.slice(0, 2) === 'aa') {
       let hex
       hex = '5516000000000000000000000000000000000000'  //电池电量
       writeBle(hex)
     }
-    if (value.slice(-4, -2) === '16') {
+    if (value.slice(-4, -2) === '16' && value.slice(0, 2) === 'aa') {
       let admPw = wx.getStorageSync('admPw')|| '123456'
       console.log(admPw)
       let pw = strToHexCharCode(admPw)
@@ -255,7 +255,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       let hex = `55320000${strToHexCharCode(bindCode)}0000000000000000`  //设置绑定码
       writeBle(hex)
     }
-    if (value.slice(-4, -2) === '32') {
+    if (value.slice(-4, -2) === '32' && value.slice(0, 2) === 'aa') {
       let hex = '5530000000000000000000000000000000000000'  //绑定结束
       writeBle(hex)
     }
@@ -305,13 +305,13 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         }
       })
     }
-    if (value.slice(-4, -2) === 'b0') {
+    if (value.slice(-4, -2) === 'b0' && value.slice(0, 2) === 'aa') {
       console.log('绑定成功~~~~~~~~~~~~')      
       wx.redirectTo({
         url: '/pages/deviceName/index',
       })
     }
-    if (value.slice(-4, -2) === '1f') {
+    if (value.slice(-4, -2) === '1f' && value.slice(0, 2) === 'aa') {
       console.log('删除密码成功~~~~~~~~~~~~')
       let tempData = getDeviceItem('pwData')
       // console.log(tempData)
@@ -327,7 +327,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         delta: 2
       })
     }
-    if (value.slice(-4, -2) === '21') {
+    if (value.slice(-4, -2) === '21' && value.slice(0, 2) === 'aa') {
       console.log('删除指纹成功~~~~~~~~~~~~')
       let tempData = getDeviceItem('fingerData')
       // console.log(tempData)
@@ -342,21 +342,21 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         delta: 2
       })
     }
-    if (value.slice(-4, -2) === '28') {
+    if (value.slice(-4, -2) === '28' && value.slice(0, 2) === 'aa') {
       let hex = '5515200000000000000000000000000000000000'  //对码
       writeBle(hex)
     }
-    if (value.slice(-4, -2) === '36') {
+    if (value.slice(-4, -2) === '36' && value.slice(0, 2) === 'aa') {
       let hex = ''     
       if (pwNeedToAdd.pw) {
         let pw = formatPw(pwNeedToAdd.pw)
         hex = `551D0000${pw}01000000`        
-      } else {        
+      } else {
         hex = '5520000000000000000000000000000001000000'
       }
       writeBle(hex)
     }
-    if (value.slice(-4, -2) === '15') {
+    if (value.slice(-4, -2) === '15' && value.slice(0, 2) === 'aa') {
       key = seedA + seedC + rtc + seedB
       // console.log('key' + key)
       let orgPackageData = '08805678';
@@ -501,7 +501,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         }
       }
     }
-    if (value.slice(-4, -2) === '95') {
+    if (value.slice(-4, -2) === '95' && value.slice(0, 2) === 'aa') {
       if (func['addPass']) {
         let pw = formatPw(pwNeedToAdd.pw)
         let userType = pwNeedToAdd.userType
