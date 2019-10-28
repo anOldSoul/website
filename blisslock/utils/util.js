@@ -577,7 +577,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
 function formatPw(pw) {
   let newPw = strToHexCharCode(pw)
   if (newPw.length < 24) {
-    for (let i = pw.length; i < 24; i++) {
+    for (let i = newPw.length; i < 24; i++) {
       newPw = newPw + '0'
     }
   }
