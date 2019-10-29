@@ -16,6 +16,7 @@
             <div>{{'公寓 ' + o }}</div>
             <div><el-button type="text">编辑</el-button></div>
           </div>
+          <div @click="postData">登录</div>
         </el-card>
       </el-col>
       <el-col :span="16">
@@ -70,9 +71,24 @@ export default {
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
+    },
+    postData () {
+      Site.http.post('/admin-rest/auth/login', {
+        username: 'admin123',
+        password: 'admin123'
+      }, data => {
+      })
+    },
+    getApartment () {
+      Site.http.post('/admin/tRoomInfo/queryByPage', {
+        pageNo: 1,
+        pageSize: 2
+      }, data => {
+      })
     }
   },
   mounted: function () {
+    this.getApartment()
   }
 }
 </script>

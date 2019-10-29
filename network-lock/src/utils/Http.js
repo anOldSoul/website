@@ -18,12 +18,14 @@ switch (env) {
     baseURL = 'http://139.196.174.134/services-ed0edaf138'
     break
   case 'dev':
-    baseURL = 'http://149.129.174.60:9010'
+    baseURL = 'http://admin.openn.cn:8780'
     break
 }
 axios.defaults.withCredentials = false
 let logoustTimer, warnTimer
 axios.interceptors.request.use(function (config) {
+  console.log('========')
+  config.headers.Authorization = `Bearer eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJ1Y3RzZ3AiLCJzdWIiOiJhZG1pbjEyMyIsImV4cCI6MTU4MDExNjI4OSwiaWF0IjoxNTcyMzQwMjg5fQ.riXNdWlIC9gQSdUvzwPAoHLW_08P8pJb-GN1AZ31iSFjFypHUJhF5HzuodoOwVlhx7vau_LW6RoSskgdIzhhdg`
   return config
 })
 axios.interceptors.response.use(function (response) {
