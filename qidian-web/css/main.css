@@ -2257,7 +2257,7 @@ html.no-csstransitions .intro-content__bottom {
 
 @media screen and (max-width:1700px) {
   .intro-content {
-    max-width: 1200px;
+    max-width: 1500px;
   }
 
 }
@@ -2288,7 +2288,7 @@ html.no-csstransitions .intro-content__bottom {
 
 @media screen and (max-width:1400px) {
   .intro-content {
-    max-width: 900px;
+    max-width: 1200px;
   }
 
   .intro-content__text h1 {
@@ -2299,7 +2299,7 @@ html.no-csstransitions .intro-content__bottom {
 
 @media screen and (max-width:1200px) {
   .intro-content {
-    max-width: 800px;
+    max-width: 1000px;
   }
 
   .intro-content__text h1 {
