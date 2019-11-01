@@ -21,11 +21,10 @@ switch (env) {
     baseURL = 'http://admin.openn.cn:8780'
     break
 }
-axios.defaults.withCredentials = false
+axios.defaults.withCredentials = true
 let logoustTimer, warnTimer
 axios.interceptors.request.use(function (config) {
-  console.log('========')
-  config.headers.Authorization = `Bearer eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJ1Y3RzZ3AiLCJzdWIiOiJhZG1pbjEyMyIsImV4cCI6MTU4MDExNjI4OSwiaWF0IjoxNTcyMzQwMjg5fQ.riXNdWlIC9gQSdUvzwPAoHLW_08P8pJb-GN1AZ31iSFjFypHUJhF5HzuodoOwVlhx7vau_LW6RoSskgdIzhhdg`
+  config.headers.Authorization = `Bearer ${localStorage.getItem('name')}`
   return config
 })
 axios.interceptors.response.use(function (response) {
@@ -105,6 +104,7 @@ let Http = {
         if(message){
           Site.app.$notify.error(err.response.data.message)
         }else{
+          console.log(api)
           Site.app.$notify.error('接口报错-'+status)
         }
         if (errCallback) {

@@ -59,8 +59,7 @@ export default {
   	},
     getData () {
       let populate = []
-      Site.http.get('/tGateWayInfo/getOneGateWayinfo', {
-        gateId: (this.$route.params.id).toString()
+      Site.http.get(`/admin/tGatewayInfo/${this.curId}`, {
       }, data => {
         this.formData = data.data
       })
@@ -69,11 +68,7 @@ export default {
       this.patchData()
     },
     patchData () {
-      Site.http.patch('/tGateWayInfo/updateGateWay', {
-        gateid: (this.formData.gateid).toString(),
-        gatewayname: this.formData.gatewayname,
-        gateaddr: this.formData.gateaddr
-      }, data => {
+      Site.http.put(`/admin/tGatewayInfo/${this.curId}`, this.formData, data => {
         if (data.errno === 0) {
           this.$message({
             message: '保存成功',

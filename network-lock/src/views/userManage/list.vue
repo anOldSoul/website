@@ -5,12 +5,12 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="名称">
-              <el-input v-model="searchModel.gateWayName" clearable @change="handleSearchChange"></el-input>
+              <el-input v-model="searchModel.username" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="编号">
-              <el-input v-model="searchModel.gateId" clearable @change="handleSearchChange"></el-input>
+            <el-form-item label="手机号">
+              <el-input v-model="searchModel.telphoneno" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6" :push="2">
@@ -20,14 +20,19 @@
       </el-form>
     </div>
     <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
-      <el-table-column prop="gatewayname" label="网关名称"></el-table-column>
-      <el-table-column prop="gateid" label="网关编号"></el-table-column>
-      <el-table-column prop="gateaddr" label="网关位置"></el-table-column>
-      <!-- <el-table-column prop="title" label="绑定数量"></el-table-column> -->
+      <el-table-column prop="username" label="用户名"></el-table-column>
+      <el-table-column prop="telphoneno" label="手机号"></el-table-column>
+      <el-table-column label="性别">
+        <template slot-scope="scope">{{scope.row.sex === '1' ? '男' : '女'}}
+        </template>
+      </el-table-column>
+      <el-table-column prop="registtime" label="注册时间"></el-table-column>
+      <el-table-column prop="rooms" label="授权房间"></el-table-column>
+      <el-table-column prop="roomstime" label="授权时间"></el-table-column>
       <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
         <template slot-scope="scope">
           <template>
-            <el-button type="text" @click="handleGoDetail(scope.row)">详情</el-button>
+            <el-button type="text" @click="handleGoDetail(scope.row)">解除授权</el-button>
             <!-- <el-button type="text" @click="handleDelete(scope.row)">删除</el-button> -->
           </template>
         </template>
@@ -45,8 +50,7 @@ export default {
   props: {
   },
   activated () {
-    // this.fetchData()
-    // this.getCount()
+    this.fetchData()
   },
   data () {
     return {
@@ -54,9 +58,7 @@ export default {
       dataCount: 0, // 必须
       searchModel: {
         pageNo: 1, // 必须
-        pageSize: 20, // 必须
-        gateId: '',
-        gateWayName: ''
+        pageSize: 20 // 必须
       },
       countries: [],
       query: {}
@@ -75,19 +77,12 @@ export default {
       this.fetchData()
     },
     fetchData: function () {
-      Site.http.get(
-        '/tGateWayInfo/getGateWayListPage', this.searchModel,
+      Site.http.post(
+        '/admin/tUserInfo/queryByPage', this.searchModel,
         data => {
-          this.tableData = data.data
+          this.tableData = data.data.list
+          this.dataCount = data.data.total
         }
-      )
-    },
-    getCount () {
-      Site.http.get(
-        '/tGateWayInfo/getGateWayListPageCount', this.searchModel,
-        function (data) {
-          this.dataCount = data.data
-        }.bind(this)
       )
     },
     rowKey (row) {
@@ -96,7 +91,6 @@ export default {
     handleSearchChange () {
       this.searchModel.pageNo = 1
       this.fetchData()
-      this.getCount()
     }
   },
   mounted: function () {

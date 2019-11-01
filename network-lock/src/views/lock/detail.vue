@@ -61,6 +61,9 @@ export default {
   	curId () {
   	  return this.$route.params.id || ''
   	},
+    gateId () {
+      return this.$route.params.gateid || ''
+    },
   	isAdd () {
   	  return this.curId === 'add'
   	}
@@ -68,9 +71,7 @@ export default {
   methods: {
     getData () {
       let populate = []
-      Site.http.get('/tLockInfo/getDetailLockInfo', {
-        lockId: this.$route.params.id
-      }, data => {
+      Site.http.get(`/admin/tLockInfo/${this.curId}/${this.gateId}`, {}, data => {
         this.formData = data.data
       })
     },

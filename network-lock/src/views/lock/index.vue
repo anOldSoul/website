@@ -51,7 +51,6 @@ export default {
   },
   activated () {
     this.fetchData()
-    this.getCount()
   },
   data () {
     return {
@@ -64,8 +63,6 @@ export default {
       searchModel: {
         pageNo: 1, // 必须
         pageSize: 20, // 必须
-        lockName: '',
-        lockId: ''
       }
     }
   },
@@ -84,24 +81,17 @@ export default {
       this.fetchData()
     },
     fetchData: function () {
-      Site.http.get(
-        '/tLockInfo/getLockListPage', this.searchModel,
+      Site.http.post(
+        '/admin/tLockInfo/queryByPage', this.searchModel,
         data => {
-          this.tableData = data.data
+          this.tableData = data.data.list
+          this.dataCount = data.data.total
         }
-      )
-    },
-    getCount () {
-      Site.http.get(
-        '/tLockInfo/getLockListPageCount', this.searchModel,
-        function (data) {
-          this.dataCount = data.data
-        }.bind(this)
       )
     },
     handleGoDetail: function (row) {
       this.$router.push({
-        path: `/lock/detail/${row.lockid}`
+        path: `/lock/detail/${row.lockid}/${row.gateid}`
       })
     },
     rowKey (row) {
@@ -110,7 +100,6 @@ export default {
     handleSearchChange () {
       this.searchModel.pageNo = 1
       this.fetchData()
-      this.getCount()
     }
   },
   mounted: function () {

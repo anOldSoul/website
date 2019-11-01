@@ -12,7 +12,11 @@ const LockDetail = resolve => require(['../views/lock/detail'], resolve)
 const Password = resolve => require(['../views/lock/password'], resolve)
 const GateWay = resolve => require(['../views/gateway/index'], resolve)
 const GateWayDetail = resolve => require(['../views/gateway/detail'], resolve)
+
 const Department = resolve => require(['../views/departmentManage/department'], resolve)
+const DepartmentDetail = resolve => require(['../views/departmentManage/editDepart'], resolve)
+const RoomDetail = resolve => require(['../views/departmentManage/editRoom'], resolve)
+
 const SystemAdm = resolve => require(['../views/system/adm/list'], resolve)
 const SystemLog = resolve => require(['../views/system/log/list'], resolve)
 const SystemRole = resolve => require(['../views/system/role/list'], resolve)
@@ -35,7 +39,7 @@ const routers = [
       }]
     }
   }, {
-    path: '/lock/detail/:id',
+    path: '/lock/detail/:id/:gateid',
     name: 'LockDetail',
     component: LockDetail,
     meta: {
@@ -79,7 +83,7 @@ const routers = [
       breadcrumb: [{
         text: '网关'
       }, {
-        text: '列表'
+        text: '详情'
       }]
     }
   }, {
@@ -90,6 +94,42 @@ const routers = [
       keepAlive: true,
       breadcrumb: [{
         text: '公寓管理'
+      }, {
+        text: ''
+      }]
+    }
+  }, {
+    path: '/department/detail/:id',
+    name: 'DepartmentDetail',
+    component: DepartmentDetail,
+    meta: {
+      keepAlive: false,
+      breadcrumb: [{
+        text: '公寓信息'
+      }, {
+        text: ''
+      }]
+    }
+  }, {
+    path: '/room/detail/:id',
+    name: 'RoomDetail',
+    component: RoomDetail,
+    meta: {
+      keepAlive: false,
+      breadcrumb: [{
+        text: '房间信息'
+      }, {
+        text: ''
+      }]
+    }
+  }, {
+    path: '/rent/detail/:id',
+    name: 'RoomDetail',
+    component: RoomDetail,
+    meta: {
+      keepAlive: false,
+      breadcrumb: [{
+        text: '租客信息'
       }, {
         text: ''
       }]
@@ -202,6 +242,12 @@ const router = new Router({
   }]
 })
 router.beforeEach((to, from, next) => {
-  next()
+  Site.http.post('/admin-rest/auth/login', {
+    username: 'admin123',
+    password: 'admin123'
+  }, data => {
+    localStorage.setItem('name', data.data.token)
+    next()
+  })
 })
 export default router

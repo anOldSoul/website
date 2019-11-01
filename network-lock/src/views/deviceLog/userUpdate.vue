@@ -20,18 +20,14 @@
       </el-form>
     </div>
     <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
-      <el-table-column prop="gatewayname" label="网关名称"></el-table-column>
-      <el-table-column prop="gateid" label="网关编号"></el-table-column>
-      <el-table-column prop="gateaddr" label="网关位置"></el-table-column>
-      <!-- <el-table-column prop="title" label="绑定数量"></el-table-column> -->
-      <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
-        <template slot-scope="scope">
-          <template>
-            <el-button type="text" @click="handleGoDetail(scope.row)">详情</el-button>
-            <!-- <el-button type="text" @click="handleDelete(scope.row)">删除</el-button> -->
-          </template>
-        </template>
-      </el-table-column>
+      <el-table-column prop="lockname" label="门锁名称"></el-table-column>
+      <el-table-column prop="lockid" label="设备编号"></el-table-column>
+      <el-table-column prop="roomid" label="绑定房间"></el-table-column>
+      <el-table-column prop="username" label="用户名"></el-table-column>
+      <el-table-column prop="usertype" label="用户类型"></el-table-column>
+      <el-table-column prop="changetype" label="变更类型"></el-table-column>
+      <el-table-column prop="warntype" label="变更源"></el-table-column>
+      <el-table-column prop="changetime" label="变更时间"></el-table-column>
     </el-table>
     <el-pagination @current-change="handleCurrentChange" :current-page="searchModel.pageNo" :page-size="20" layout="total, prev, pager, next" :total="dataCount" class="flex pagination">
     </el-pagination>
@@ -45,7 +41,7 @@ export default {
   props: {
   },
   activated () {
-    // this.fetchData()
+    this.fetchData()
     // this.getCount()
   },
   data () {
@@ -75,19 +71,12 @@ export default {
       this.fetchData()
     },
     fetchData: function () {
-      Site.http.get(
-        '/tGateWayInfo/getGateWayListPage', this.searchModel,
+      Site.http.post(
+        '/admin/tUserchangeTxninfo/queryByPage', this.searchModel,
         data => {
-          this.tableData = data.data
+          this.tableData = data.data.list
+          this.dataCount = data.data.total
         }
-      )
-    },
-    getCount () {
-      Site.http.get(
-        '/tGateWayInfo/getGateWayListPageCount', this.searchModel,
-        function (data) {
-          this.dataCount = data.data
-        }.bind(this)
       )
     },
     rowKey (row) {

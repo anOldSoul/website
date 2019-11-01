@@ -46,7 +46,6 @@ export default {
   },
   activated () {
     this.fetchData()
-    this.getCount()
   },
   data () {
     return {
@@ -75,19 +74,12 @@ export default {
       this.fetchData()
     },
     fetchData: function () {
-      Site.http.get(
-        '/tGateWayInfo/getGateWayListPage', this.searchModel,
+      Site.http.post(
+        '/admin/tGatewayInfo/queryByPage', this.searchModel,
         data => {
-          this.tableData = data.data
+          this.tableData = data.data.list
+          this.dataCount = data.data.total
         }
-      )
-    },
-    getCount () {
-      Site.http.get(
-        '/tGateWayInfo/getGateWayListPageCount', this.searchModel,
-        function (data) {
-          this.dataCount = data.data
-        }.bind(this)
       )
     },
     rowKey (row) {
@@ -96,7 +88,6 @@ export default {
     handleSearchChange () {
       this.searchModel.pageNo = 1
       this.fetchData()
-      this.getCount()
     }
   },
   mounted: function () {
