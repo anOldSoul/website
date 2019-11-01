@@ -269,7 +269,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       if (value.slice(2, 4) === '30') {
         console.log('添加指纹成功~~~~~~~~~~~~')
         closeConnection()
-        let str = getDeviceItem('fingerData')
+        let str = getDeviceItem('fingerData') || ''
         updateDeviceList('fingerData', value.slice(8, 16) + str)
       }
       updateDeviceList('addFinger', { result: value.slice(2, 4), id: value.slice(8, 16), name: pwNeedToAdd.name })
@@ -289,7 +289,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       if (value.slice(2, 4) === '30') {
         console.log('添加密码成功~~~~~~~~~~~~')
         closeConnection()
-        let str = getDeviceItem('pwData')
+        let str = getDeviceItem('pwData') || ''
         updateDeviceList('pwData', value.slice(8, 16) + str)
       }
       updateDeviceList('addPw', { result: value.slice(2, 4), id: value.slice(8, 16), name: pwNeedToAdd.name })
@@ -407,14 +407,10 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       let dataKey = ''
       if (func['syncPass']) {
         dataKey = 'pwData'
-      }
-      if (func['syncFinger']) {
-        dataKey = 'fingerData'
-      }
-      if (func['syncPass']) {
         updateDeviceList('pwData', '')
       }
       if (func['syncFinger']) {
+        dataKey = 'fingerData'
         updateDeviceList('fingerData', '')
       }
       onChangePw.hexLen = value.slice(4, 8)      

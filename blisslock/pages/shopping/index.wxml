@@ -16,7 +16,7 @@
         <navigator wx:if="{{false}}" class="func_item" url="/pages/gesture/index?url=createTemp" hover-class="none"><image class="func_img" src='../../images/card-icon.png'></image>我的卡片</navigator>
       <navigator class="func_item" url="/pages/gesture/index?url=createTemp" hover-class="none"><image class="func_img" src='../../images/home-tem-password.png'></image>临时密码</navigator>
         <navigator class="func_item" url="/pages/gesture/index?url=checkAdmPw" hover-class="none"><image class="func_img" src='../../images/ic_equip-home-adm.png'></image>管理员密码</navigator>
-        <view class="func_item" bindtap='goUnlockRecord'><image class="func_img" src='../../images/ic-equip-home-unlock-rec.png'></image>开锁记录</view>
+        <view class="func_item" bindtap='goUnlockRecord'><image class="func_img" src='../../images/ic-equip-home-unlock-rec.png'></image>操作记录</view>
         <navigator wx:if="{{false}}" class="func_item" url="/pages/introduction/index" hover-class="none"><image class="func_img" src='../../images/ic-change-record.png'></image>用户变更</navigator>
         <navigator class="func_item" url="/pages/introduction/index" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-instrac.png'></image>使用说明</navigator>
         <navigator class="func_item" url="/pages/repair/index" hover-class="none"><image class="func_img" src='../../images/ic_yijianbaoxiu.png'></image>一键报修</navigator>

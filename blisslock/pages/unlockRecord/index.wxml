@@ -9,14 +9,14 @@
   <view class='tip_text' wx:for="{{currentMonthData}}" wx:key="{{index}}">
     <view class='repair_title'>
       <view>{{item.date}}</view>
-      <view>开锁用户：001</view>   
+      <!-- <view>开锁用户：001</view>  -->
     </view>
     <view class='text_content' wx:for="{{item.recordArr}}" wx:for-item="items" wx:key="items">
       <view class='content_left'>
         <view class='left'>
           <image class="pw_record_img" src='../../images/ic-record-fingerprint.png' wx:if="{{items.lockType === '指纹开锁'}}"></image>
-          <image class="pw_record_img" src='../../images/ic-record-password.png' wx:if="{{items.lockType === '本地密码'}}"></image>
-          <image class="pw_record_img" src='../../images/ic-record_tempass.png' wx:else="{{items.lockType !== '指纹开锁' && items.lockType !== '本地密码'}}"></image>
+          <image class="pw_record_img" src='../../images/ic-record-password.png' wx:if="{{items.lockType === '密码开锁'}}"></image>
+          <image class="pw_record_img" src='../../images/ic-record_tempass.png' wx:else="{{items.lockType !== '指纹开锁' && items.lockType !== '密码开锁'}}"></image>
         </view>
         <view>
           <view class='time'>{{items.time}}</view>
