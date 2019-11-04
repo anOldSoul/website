@@ -22,7 +22,7 @@
     <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
       <el-table-column prop="lockname" label="门锁名称"></el-table-column>
       <el-table-column prop="lockid" label="设备编号"></el-table-column>
-      <el-table-column prop="roomid" label="绑定房间"></el-table-column>
+      <el-table-column prop="roomname" label="绑定房间"></el-table-column>
       <el-table-column prop="username" label="用户名"></el-table-column>
       <el-table-column prop="usertype" label="用户类型"></el-table-column>
       <el-table-column prop="changetype" label="变更类型"></el-table-column>
@@ -39,7 +39,7 @@ export default {
   components: {
   },
   props: {
-  },
+  }, 
   activated () {
     this.fetchData()
     // this.getCount()

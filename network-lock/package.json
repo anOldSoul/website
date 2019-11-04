@@ -16,6 +16,7 @@
     "dot-prop": "^4.2.0",
     "element-ui": "^2.4.6",
     "elementui-china-area": "^1.0.1",
+    "highcharts": "^7.2.1",
     "moment": "^2.22.2",
     "vue": "^2.5.17",
     "vue-quill-editor": "^3.0.6",

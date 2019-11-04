@@ -23,7 +23,7 @@
       <el-table-column prop="warntype" label="告警类型"></el-table-column>
       <el-table-column prop="lockid" label="门锁名称"></el-table-column>
       <el-table-column prop="lockid" label="设备编号"></el-table-column>
-      <el-table-column prop="userid" label="绑定房间"></el-table-column>
+      <el-table-column prop="roomname" label="绑定房间"></el-table-column>
       <el-table-column prop="usertype" label="报错时间"></el-table-column>
     </el-table>
     <el-pagination @current-change="handleCurrentChange" :current-page="searchModel.pageNo" :page-size="20" layout="total, prev, pager, next" :total="dataCount" class="flex pagination">

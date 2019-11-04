@@ -30,7 +30,7 @@
           <el-menu-item index="5-2" @click="goView('/deviceLog/deviceWarning')">告警记录</el-menu-item>
           <el-menu-item index="5-3" @click="goView('/deviceLog/deviceUserUpdate')">用户变更</el-menu-item>
         </el-submenu>
-        <el-menu-item index="6" @click="goView('/')">
+        <el-menu-item index="6" @click="goView('/statistic')">
           <i class="el-icon-menu"></i>数据统计
         </el-menu-item>
         <el-menu-item index="7" @click="goView('/')">

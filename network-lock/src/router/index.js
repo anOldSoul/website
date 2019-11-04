@@ -16,6 +16,7 @@ const GateWayDetail = resolve => require(['../views/gateway/detail'], resolve)
 const Department = resolve => require(['../views/departmentManage/department'], resolve)
 const DepartmentDetail = resolve => require(['../views/departmentManage/editDepart'], resolve)
 const RoomDetail = resolve => require(['../views/departmentManage/editRoom'], resolve)
+const RentDetail = resolve => require(['../views/departmentManage/editRent'], resolve)
 
 const SystemAdm = resolve => require(['../views/system/adm/list'], resolve)
 const SystemLog = resolve => require(['../views/system/log/list'], resolve)
@@ -24,6 +25,7 @@ const DeviceUnlock = resolve => require(['../views/deviceLog/unlock'], resolve)
 const DeviceUserUpdate = resolve => require(['../views/deviceLog/userUpdate'], resolve)
 const DeviceWarning = resolve => require(['../views/deviceLog/warning'], resolve)
 const UserManage = resolve => require(['../views/userManage/list'], resolve)
+const Statistic = resolve => require(['../views/statistic/graph'], resolve)
 
 const routers = [
   {
@@ -124,8 +126,8 @@ const routers = [
     }
   }, {
     path: '/rent/detail/:id',
-    name: 'RoomDetail',
-    component: RoomDetail,
+    name: 'RentDetail',
+    component: RentDetail,
     meta: {
       keepAlive: false,
       breadcrumb: [{
@@ -226,6 +228,18 @@ const routers = [
       keepAlive: true,
       breadcrumb: [{
         text: '用户管理'
+      }, {
+        text: ''
+      }]
+    }
+  }, {
+    path: '/statistic',
+    name: 'Statistic',
+    component: Statistic,
+    meta: {
+      keepAlive: true,
+      breadcrumb: [{
+        text: '数据统计'
       }, {
         text: ''
       }]
