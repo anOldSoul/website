@@ -135,7 +135,7 @@ Page({
     })
     this.stopBluetoothDevicesDiscovery()
   },
-  closeBLEConnection() { 
+  closeBLEConnection() {
     wx.closeBLEConnection({
       deviceId: this.data.deviceId
     })

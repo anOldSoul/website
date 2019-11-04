@@ -32,7 +32,6 @@ Page({
       _characteristicId: wx.getStorageSync('_characteristicId'),
       admPw: wx.getStorageSync('admPw')
     }
-    console.log(deviceItem)
     let deviceList = wx.getStorageSync('deviceList') || []
     let isExist = deviceList.find((it, index) => {
       it.index = index
@@ -40,6 +39,7 @@ Page({
     })
     if (isExist) {
       deviceList[isExist.index]['device_name'] = deviceItem['device_name']
+      deviceList[isExist.index]['admPw'] = deviceItem['admPw']
     } else {
       deviceList.push(deviceItem)
     }

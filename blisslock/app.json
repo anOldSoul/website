@@ -28,7 +28,6 @@
     "pages/repair/index"
   ],
   "window": {
-    "navigationBarBackgroundColor": "white",
     "navigationBarTextStyle": "black",
     "disableScroll": true
   },
