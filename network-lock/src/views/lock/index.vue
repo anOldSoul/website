@@ -1,18 +1,19 @@
 <template>
   <div class="page">
     <div class="btn-wrap">
+      <!-- <el-button type="primary" size="small" @click="addStaff">新增 + </el-button> -->
     </div>
     <div class="flex search-box">
       <el-form class="form" label-width="86px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="名称">
-              <el-input v-model="searchModel.lockName" clearable @change="handleSearchChange"></el-input>
+            <el-form-item label="锁具名称">
+              <el-input v-model="searchModel.lockname" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="编号">
-              <el-input v-model="searchModel.lockId" clearable @change="handleSearchChange"></el-input>
+            <el-form-item label="锁具编号">
+              <el-input v-model="searchModel.lockid" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6" :push="2">
@@ -26,6 +27,7 @@
       <el-table-column prop="lockid" label="锁具编号"></el-table-column>
       <el-table-column prop="lockaddr" label="锁具位置"></el-table-column>
       <el-table-column prop="gateid" label="绑定网关"></el-table-column>
+      <el-table-column prop="roomid" label="绑定房间"></el-table-column>
       <el-table-column prop="bindingstat" label="绑定状态">
         <template slot-scope="scope">{{bindStr[scope.row.bindingstat]}}</template>
       </el-table-column>
@@ -33,7 +35,7 @@
         <template slot-scope="scope">
           <template>
             <el-button type="text" @click="handleGoDetail(scope.row)">详情</el-button>
-            <el-button type="text" @click="handleGoPassword(scope.row)">密码</el-button>
+            <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </template>
       </el-table-column>
@@ -69,12 +71,35 @@ export default {
   computed: {},
 
   methods: {
-    handleGoPassword (row) {
+    addStaff (row) {
       this.$router.push({
-        path: `/lock/password/${row.lockid}`
+        path: `/lock/detail/add/${row.gateid}`
       })
     },
     handleDelete (row) {
+      this.$confirm('确认删除改用户吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+      .then(() => {
+        Site.http.delete(`/admin/tLockInfo/${row.lockid}/${row.gateid}`, {
+        }, data => {
+          if (data.errno === 0) {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+            this.fetchData()
+          }
+        })
+      })
+      .catch((e) => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
     handleCurrentChange (val) {
       this.searchModel.pageNo = +val

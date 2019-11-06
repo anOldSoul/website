@@ -1,9 +1,11 @@
 <template>
   <el-row class="tac">
     <el-col :style="{minHeight:'100%', 'overflow-x': 'hidden'}" class="clearfix nav-menu-c-box">
-      <el-menu :default-active="activeIndex" unique-opened class="el-menu-nav">
+      <el-menu :default-active="activeIndex" unique-opened class="el-menu-nav" background-color="#091928"
+      text-color="#fff"
+      active-text-color="#1faa89">
         <div class="nav-logo">
-          联网锁
+          <img src="../../assets/logo.png">
         </div>
         <!-- 首页 -->
         <el-menu-item index="1" @click="goView('/department')">
@@ -17,10 +19,7 @@
           <el-menu-item index="2-2" @click="goView('/gateway')">网关</el-menu-item>
         </el-submenu>
         <el-menu-item index="3" @click="goView('/userManage')">
-          <i class="el-icon-menu"></i>用户管理
-        </el-menu-item>
-        <el-menu-item index="4" @click="goView('/')">
-          <i class="el-icon-menu"></i>设备告警
+          <i class="el-icon-menu"></i>租客管理
         </el-menu-item>
         <el-submenu index="5">
           <template slot="title">
@@ -28,7 +27,7 @@
           </template>
           <el-menu-item index="5-1" @click="goView('/deviceLog/deviceUnlock')">开锁记录</el-menu-item>
           <el-menu-item index="5-2" @click="goView('/deviceLog/deviceWarning')">告警记录</el-menu-item>
-          <el-menu-item index="5-3" @click="goView('/deviceLog/deviceUserUpdate')">用户变更</el-menu-item>
+          <el-menu-item index="5-3" @click="goView('/deviceLog/deviceUserUpdate')">操作记录</el-menu-item>
         </el-submenu>
         <el-menu-item index="6" @click="goView('/statistic')">
           <i class="el-icon-menu"></i>数据统计
@@ -86,8 +85,7 @@ export default {
 .nav-logo {
   text-align: center;
   padding: 20px 0;
-  background: #fff;
-  /* border: 1px solid #324157; */
+  color: #fff;
 }
 .title-badge {
   line-height: 1;

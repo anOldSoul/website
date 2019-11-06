@@ -32,7 +32,7 @@
         <el-card :body-style="{ padding: '0px' }" class="deviceItem">
           <img src="../../assets/pic-lock.png" class="image">
           <div style="padding: 14px;">
-            <div class="lockname">{{device.lockname}}<el-button type="text" class="button">删除</el-button></div>
+            <div class="lockname">{{device.lockname}}<el-button type="text" class="button" @click="delDevice(deviceIndex)">删除</el-button></div>
             <div class="bottom clearfix">
               <div class="propertie">电量：{{ device.electricity }}</div>
               <div class="propertie">连网状态：{{device.connetnstat === '1' ? '已连接' : '断开'}}</div>
@@ -69,8 +69,6 @@ export default {
       dialogTableVisible: false,
       gridData: [],
       formData: {
-        roomname: '',
-        manager: '',
         lockInfo: []
       }
     }
@@ -89,7 +87,17 @@ export default {
     }
   },
   methods: {
+    delDevice (index) {
+      this.formData.lockInfo.splice(index, 1)
+    },
     handleAdd (row) {
+      if (row.lockid === this.formData.lockInfo[0].lockid) {
+        this.$message({
+          message: '该设备已有,不可重复添加',
+          type: 'warning'
+        })
+        return
+      }
       this.formData.lockInfo.push(row)
       this.dialogTableVisible = false
     },
@@ -123,6 +131,13 @@ export default {
       this.formData.text = text
     },
     handleAddDevice () {
+      if (this.formData.lockInfo.length === 2 && this.formData.lockInfo[1]) {
+        this.$message({
+          message: '该房间已有两台设备,不可继续添加',
+          type: 'warning'
+        })
+        return
+      }
       this.dialogTableVisible = true
       this.getDevice()
     },
@@ -141,11 +156,28 @@ export default {
       Site.http.get(`/admin/tRoomInfo/${this.curId}`, {}, data => {
         if (data.data) {
           this.formData = data.data
-        }        
+          this.formData.lockInfo = data.data.lockInfo || []
+          this.formData.lockInfo.forEach((item, index) => {
+            if (!item) {
+              this.formData.lockInfo.splice(index, 1)
+            }
+          })
+        }
       })
     },
     putData () {
-      console.log(this.formData)
+      if (this.formData.lockInfo.length) {
+        this.formData.lockid1 = this.formData.lockInfo[0].lockid
+        this.formData.lockid3 = this.formData.lockInfo[0].gateid
+      }
+      if (this.formData.lockInfo.length === 2) {
+        this.formData.lockid2 = this.formData.lockInfo[1].lockid
+      }
+      this.formData.lockInfo.forEach((item, index) => {
+        delete item.tUseInfoList
+        delete item.tUserchangeTxninfoList
+      })
+      // this.formData.lockInfo = ''
       Site.http.put(`/admin/tRoomInfo/${this.curId}`, this.formData, data => {
         if (data.errno === 0) {
           this.$message({

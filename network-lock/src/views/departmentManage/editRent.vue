@@ -8,41 +8,65 @@
     </div>
     <el-card class="page-content">
       <el-row>
-        <el-col :span="3">公寓名称</el-col>
+        <el-col :span="3">租户名</el-col>
         <el-col :span="15">
-          <el-input v-model="formData.apartmentname" placeholder="请输入网关名称"></el-input>
+          <el-input v-model="formData.rentusername" placeholder="请输入租户名"></el-input>
         </el-col>
       </el-row>
-      <el-row>
-        <el-col :span="3">详细地址</el-col>
+<!--       <el-row>
+        <el-col :span="3">授权小程序</el-col>
         <el-col :span="15">
           <el-input v-model="formData.apartmentaddr" placeholder="请输入网关名称"></el-input>
         </el-col>
-      </el-row>
+      </el-row> -->
       <el-row>
-        <el-col :span="3">总楼层</el-col>
+        <el-col :span="3">联系方式</el-col>
         <el-col :span="15">
-          <el-input v-model="formData.floor" placeholder="请输入网关位置"></el-input>
+          <el-input v-model="formData.renttel" placeholder="请输入联系方式"></el-input>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3">每层房间数</el-col>
+        <el-col :span="3">紧急联系方式</el-col>
         <el-col :span="15">
-          <el-input v-model="formData.floorrooms" placeholder="请输入网关位置"></el-input>
+          <el-input v-model="formData.emergencytel" placeholder="请输入紧急联系方式"></el-input>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3">房间号前缀</el-col>
+        <el-col :span="3">证件号码</el-col>
         <el-col :span="15">
-          <el-input v-model="formData.roomsnum" placeholder="请输入网关位置"></el-input>
+          <el-input v-model="formData.certificateno" placeholder="请输入证件号码"></el-input>
         </el-col>
       </el-row>
-      <el-row>
-        <el-col :span="3">管理员</el-col>
+<!--       <el-row>
+        <el-col :span="3">证件上传</el-col>
         <el-col :span="15">
           <el-input v-model="formData.manager" placeholder="请输入网关位置"></el-input>
         </el-col>
+      </el-row> -->
+      <el-row>
+        <el-col :span="3">入住时间</el-col>
+        <el-col :span="15">
+          <el-input v-model="formData.checkintime" placeholder="请输入入住时间"></el-input>
+        </el-col>
       </el-row>
+      <el-row>
+        <el-col :span="3">合同编号</el-col>
+        <el-col :span="15">
+          <el-input v-model="formData.contract" placeholder="请输入合同编号"></el-input>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="3">授权房间</el-col>
+        <el-col :span="15">
+          <el-input v-model="formData.checkimroom" placeholder="请输入授权房间"></el-input>
+        </el-col>
+      </el-row>
+<!--       <el-row>
+        <el-col :span="3">合同上传</el-col>
+        <el-col :span="15">
+          <el-input v-model="formData.roomsnum" placeholder="请输入网关位置"></el-input>
+        </el-col>
+      </el-row> -->
     </el-card>
   </div>
 </template>
@@ -54,9 +78,6 @@ export default {
   data () {
     return {
       formData: {
-        gateid: '',
-        gatewayname: '',
-        gateaddr: ''
       }
     }
   },
@@ -81,7 +102,7 @@ export default {
         type: 'warning'
       })
       .then(() => {
-        Site.http.delete(`/admin/tLockRentuser/delete/${this.curId}`, {
+        Site.http.delete(`/admin/tLockRentuser/${this.curId}`, {
         }, data => {
           if (data.errno === 0) {
             this.$message({
@@ -105,10 +126,11 @@ export default {
     },
     getData () {
       Site.http.get(`/admin/tLockRentuser/${this.curId}`, {}, data => {
-        this.formData = data.data
+        this.formData = data.data || {}
       })
     },
     putData () {
+      console.log(this.formData)
       Site.http.put(`/admin/tLockRentuser/${this.curId}`, this.formData, data => {
         if (data.errno === 0) {
           this.$message({
@@ -120,6 +142,7 @@ export default {
       })
     },
     postData () {
+      this.formData.rsv1 = 0
       Site.http.post('/admin/tLockRentuser', this.formData, data => {
         if (data.errno === 0) {
           this.$message({

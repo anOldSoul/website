@@ -21,7 +21,7 @@
       <el-col :span="16">
         <el-tabs v-model="activeTab" @tab-click="handleClick">
           <el-tab-pane :label="tab.label" :name="tab.name" v-for="(tab, tabIndex) in tabs" :key="tabIndex">
-            <el-collapse v-model="activeName" accordion>
+            <el-collapse v-model="activeName" accordion v-if="rooms.length">
               <el-collapse-item :title="`楼层${floorIndex + 1}`" :name="floorIndex" v-for="(floor, floorIndex) in rooms" class="floor" :key="floorIndex">
                 <el-card class="box-card" v-for="(room, roomIndex) in floor" :key="roomIndex">
                   <div slot="header" class="clearfix">
@@ -30,7 +30,7 @@
                       <div slot="content">
                         <div><el-button type="text" class="edit-room" @click="editRoom(room.roomid)">编辑房间</el-button></div>
                         <div><el-button type="text" class="edit-room" @click="editCustome(room.rentid)">租客信息</el-button></div>
-                        <div><el-button type="text" class="edit-room" @click="updateStat(room.roomid)">转为待租</el-button></div>
+                        <!-- <div><el-button type="text" class="edit-room" @click="updateStat(room.roomid, room.roomstat)">转为待租</el-button></div> -->
                         <div><el-button type="text" class="edit-room" @click="delRoom(room.roomid)">删除房间</el-button></div>
                       </div>
                       <el-button type="text" style="float: right; padding: 3px 0">...</el-button>
@@ -41,6 +41,10 @@
                 </el-card>
               </el-collapse-item>
             </el-collapse>
+            <div class="empty-box" v-else>
+              <div><img src="../../assets/empty.png"></div>
+              <div class="empty-text">暂无相关房间哦...</div>
+            </div>
           </el-tab-pane>
         </el-tabs>
       </el-col>
@@ -108,7 +112,7 @@ export default {
               message: '删除成功',
               type: 'success'
             })
-            this.$router.back()
+            this.getData()
           }
         })
       })
@@ -119,8 +123,18 @@ export default {
         })
       })
     },
-    updateStat () {
-
+    updateStat (id, stat) {
+      Site.http.put(`/admin/tRoomInfo/${id}`, {
+        roomstat: stat === '02' ? '03' : '02'
+      }, data => {
+        if (data.errno === 0) {
+          this.$message({
+            message: '更新成功',
+            type: 'success'
+          })
+          this.getData()
+        }
+      })
     },
     editCustome (id) {
       this.$router.push({
@@ -143,8 +157,6 @@ export default {
         }, data => {
           this.arpartments = data.data
           if (this.arpartments.length) {
-            this.selectApartIndex = 0
-            this.apartmentid = this.arpartments[0].apartmentid
             this.getRoom ()
           }
         })
@@ -152,7 +164,12 @@ export default {
         this.getApartment()
       }
     },
+    onSearch () {
+      this.selectApartIndex = 0
+      this.getData()
+    },
     handleClick(tab, event) {
+      this.selectApartIndex = 0
       if (tab.name === 'second') {
         this.roomstat = '02'
       }
@@ -165,7 +182,7 @@ export default {
       this.floors = []
       let rooms = []
       let data = {
-        apartmentid: this.apartmentid
+        apartmentid: this.arpartments[this.selectApartIndex].apartmentid
       }
       if (this.roomstat) {
         data.roomstat = this.roomstat
@@ -193,8 +210,6 @@ export default {
       }, data => {
         this.arpartments = data.data.list
         if (this.arpartments.length) {
-          this.selectApartIndex = 0
-          this.apartmentid = this.arpartments[0].apartmentid
           this.getRoom ()
         }
       })
@@ -239,5 +254,16 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+.empty-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  flex-direction: column;
+  color: gray;
+}
+.empty-text{
+  margin-top: 15px;
 }
 </style>

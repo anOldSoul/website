@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+import { Loading } from 'element-ui';
 let env
 if (window.location.hostname === 'noah-tax.charmdeer.com') {
   env = 'prod'
@@ -18,7 +19,7 @@ switch (env) {
     baseURL = 'http://139.196.174.134/services-ed0edaf138'
     break
   case 'dev':
-    baseURL = 'http://admin.openn.cn:8780'
+    baseURL = 'https://admin.openn.cn:8780'
     break
 }
 axios.defaults.withCredentials = true
@@ -56,6 +57,12 @@ let Http = {
    * @return {[type]}
    */
   request (api, data, callback, errCallback) {
+    const loading = Loading.service({
+      lock: true,
+      text: '拼命加载中',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    });
     if (api instanceof Array) {
       var reqBody = {}
 
@@ -88,6 +95,7 @@ let Http = {
         }
       }
       return axios(req).then(function (res) {
+        loading.close()
         if (res.data && res.data.err) {
           if (data.errCallBack) {
             callback(res.data)
@@ -99,6 +107,7 @@ let Http = {
           callback(res.data)
         }
       }).catch(function (err) {
+        loading.close()
         let message = dotProp.get(err,'response.data.message')
         let status = dotProp.get(err,'response.status')
         if(message){

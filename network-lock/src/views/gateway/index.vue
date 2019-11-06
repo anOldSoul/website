@@ -1,15 +1,18 @@
 <template>
   <div class="page">
+    <div class="btn-wrap">
+      <el-button type="primary" size="small" @click="addStaff">新增 + </el-button>
+    </div>
     <div class="flex search-box">
       <el-form class="form" label-width="86px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="名称">
+            <el-form-item label="网关名称">
               <el-input v-model="searchModel.gateWayName" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="编号">
+            <el-form-item label="网关编号">
               <el-input v-model="searchModel.gateId" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
@@ -23,12 +26,13 @@
       <el-table-column prop="gatewayname" label="网关名称"></el-table-column>
       <el-table-column prop="gateid" label="网关编号"></el-table-column>
       <el-table-column prop="gateaddr" label="网关位置"></el-table-column>
+      <el-table-column prop="gateaddr" label="到期时间"></el-table-column>
       <!-- <el-table-column prop="title" label="绑定数量"></el-table-column> -->
       <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
         <template slot-scope="scope">
           <template>
             <el-button type="text" @click="handleGoDetail(scope.row)">详情</el-button>
-            <!-- <el-button type="text" @click="handleDelete(scope.row)">删除</el-button> -->
+            <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </template>
       </el-table-column>
@@ -64,6 +68,38 @@ export default {
   computed: {},
 
   methods: {
+    addStaff () {
+      this.$router.push({
+        path: `/gateway/detail/add`
+      })
+    },
+    handleDelete (row) {
+      Site.http.delete(`/admin/tGatewayInfo/${row.gateid}`, {}, data => {
+        this.$confirm('确认删除该网关吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+        .then(() => {
+          Site.http.delete(`/admin/tLockInfo/${row.lockid}/${row.gateid}`, {
+          }, data => {
+            if (data.errno === 0) {
+              this.$message({
+                message: '删除成功',
+                type: 'success'
+              })
+              this.fetchData()
+            }
+          })
+        })
+        .catch((e) => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      })
+    },
     handleGoDetail: function (row) {
       this.$router.push({
         path: `/gateway/detail/${row.gateid}`

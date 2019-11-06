@@ -4,13 +4,13 @@
       <el-form class="form" label-width="86px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="名称">
-              <el-input v-model="searchModel.gateWayName" clearable @change="handleSearchChange"></el-input>
+            <el-form-item label="设备名称">
+              <el-input v-model="searchModel.lockname" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="编号">
-              <el-input v-model="searchModel.gateId" clearable @change="handleSearchChange"></el-input>
+            <el-form-item label="设备编号">
+              <el-input v-model="searchModel.lockid" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6" :push="2">
@@ -20,14 +20,14 @@
       </el-form>
     </div>
     <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
-      <el-table-column prop="lockname" label="门锁名称"></el-table-column>
+      <el-table-column prop="lockname" label="设备名称"></el-table-column>
       <el-table-column prop="lockid" label="设备编号"></el-table-column>
       <el-table-column prop="roomname" label="绑定房间"></el-table-column>
       <el-table-column prop="username" label="用户名"></el-table-column>
       <el-table-column prop="usertype" label="用户类型"></el-table-column>
-      <el-table-column prop="changetype" label="变更类型"></el-table-column>
-      <el-table-column prop="warntype" label="变更源"></el-table-column>
-      <el-table-column prop="changetime" label="变更时间"></el-table-column>
+      <el-table-column prop="changetype" label="操作类型"></el-table-column>
+      <el-table-column prop="warntype" label="操作源"></el-table-column>
+      <el-table-column prop="changetime" label="操作时间"></el-table-column>
     </el-table>
     <el-pagination @current-change="handleCurrentChange" :current-page="searchModel.pageNo" :page-size="20" layout="total, prev, pager, next" :total="dataCount" class="flex pagination">
     </el-pagination>
@@ -42,7 +42,6 @@ export default {
   }, 
   activated () {
     this.fetchData()
-    // this.getCount()
   },
   data () {
     return {
@@ -85,7 +84,6 @@ export default {
     handleSearchChange () {
       this.searchModel.pageNo = 1
       this.fetchData()
-      this.getCount()
     }
   },
   mounted: function () {

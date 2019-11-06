@@ -25,7 +25,7 @@
       <el-table-column prop="bingdingroom" label="绑定房间"></el-table-column>
       <el-table-column prop="userid" label="开锁用户"></el-table-column>
       <el-table-column prop="usertype" label="用户类型"></el-table-column>
-      <el-table-column prop="addtype" label="添加源"></el-table-column>
+      <el-table-column prop="addtype" label="开锁类型"></el-table-column>
       <el-table-column prop="createtime" label="开锁时间"></el-table-column>
     </el-table>
     <el-pagination @current-change="handleCurrentChange" :current-page="searchModel.pageNo" :page-size="20" layout="total, prev, pager, next" :total="dataCount" class="flex pagination">

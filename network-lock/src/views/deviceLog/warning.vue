@@ -21,10 +21,10 @@
     </div>
     <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
       <el-table-column prop="warntype" label="告警类型"></el-table-column>
-      <el-table-column prop="lockid" label="门锁名称"></el-table-column>
+      <el-table-column prop="lockid" label="设备名称"></el-table-column>
       <el-table-column prop="lockid" label="设备编号"></el-table-column>
       <el-table-column prop="roomname" label="绑定房间"></el-table-column>
-      <el-table-column prop="usertype" label="报错时间"></el-table-column>
+      <el-table-column prop="usertype" label="告警时间"></el-table-column>
     </el-table>
     <el-pagination @current-change="handleCurrentChange" :current-page="searchModel.pageNo" :page-size="20" layout="total, prev, pager, next" :total="dataCount" class="flex pagination">
     </el-pagination>
@@ -71,8 +71,8 @@ export default {
       Site.http.post(
         '/admin/tWarningTxninfo/queryByPage', this.searchModel,
         data => {
-          this.tableData = data.data.list
-          this.dataCount = data.data.total
+          this.tableData = data.data
+          this.dataCount = this.tableData.length
         }
       )
     },
