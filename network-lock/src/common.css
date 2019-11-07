@@ -108,7 +108,10 @@ ul{
     background-color: #324157;
 }
 .el-menu--dark .el-submenu .el-menu {
-    background-color: #1f2d3d;
+    background-color: #1f2d3d;    
+}
+.el-menu {
+	border-right: 0;
 }
 .el-table__body .number{
 	text-align: right!important;
