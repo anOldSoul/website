@@ -13,13 +13,13 @@
         </el-menu-item>
         <el-submenu index="2">
           <template slot="title">
-            <i class="el-icon-k-manageorder"></i>设备管理
+            <i class="el-icon-printer"></i>设备管理
           </template>
           <el-menu-item index="2-1" @click="goView('/')">门锁</el-menu-item>
           <el-menu-item index="2-2" @click="goView('/gateway')">网关</el-menu-item>
         </el-submenu>
         <el-menu-item index="3" @click="goView('/userManage')">
-          <i class="el-icon-menu"></i>租客管理
+          <i class="el-icon-user"></i>租客管理
         </el-menu-item>
         <el-submenu index="5">
           <template slot="title">
@@ -30,17 +30,17 @@
           <el-menu-item index="5-3" @click="goView('/deviceLog/deviceUserUpdate')">操作记录</el-menu-item>
         </el-submenu>
         <el-menu-item index="6" @click="goView('/statistic')">
-          <i class="el-icon-menu"></i>数据统计
+          <i class="el-icon-pie-chart"></i>数据统计
         </el-menu-item>
         <el-menu-item index="7" @click="goView('/')">
-          <i class="el-icon-menu"></i>公众号管理
+          <i class="el-icon-chat-dot-round"></i>公众号管理
         </el-menu-item>
         <el-menu-item index="8" @click="goView('/')">
-          <i class="el-icon-menu"></i>小程序管理
+          <i class="el-icon-mobile-phone"></i>小程序管理
         </el-menu-item>
         <el-submenu index="9">
           <template slot="title">
-            <i class="el-icon-k-manageorder"></i>系统管理
+            <i class="el-icon-setting"></i>系统管理
           </template>
           <el-menu-item index="9-1" @click="goView('/system/adm')">管理员信息</el-menu-item>
           <el-menu-item index="9-2" @click="goView('/system/role')">角色信息</el-menu-item>
