@@ -1,7 +1,15 @@
 const Moment = require('./moment.min.js')
 const Encrypt = require("./getEncryptBytes.js");
 let rtc, seedA, seedB, seedC, key, decodedPackageData
-let bindCode = '96561612'
+const getRandomStr = (total) => {
+  let random = ''
+  for (let i = 0; i < total; i++) {
+    random = random + Math.floor(Math.random() * 10)
+  }
+  return random
+}
+
+let bindCode = getRandomStr(8)
 let hasUnlockRecord = ''
 var pwNeedToAdd = {}
 let func = {
@@ -22,6 +30,8 @@ let onChangePw = {
   pageNum: 0,
   onPwListLen: 0
 }
+
+
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -34,9 +44,7 @@ const formatTime = date => {
 }
 const getDeviceItem = (key) => {
   let currentDeviceIndex = wx.getStorageSync('currentDeviceIndex')
-  console.log(currentDeviceIndex)
   let deviceList = wx.getStorageSync('deviceList')
-  console.log(deviceList)
   let currentItem = deviceList[currentDeviceIndex] || {}
   let returnValue = currentItem[key]
   return returnValue
