@@ -1,8 +1,8 @@
 <template>
   <div style="height:100%" class="flex">
-    <nav-menu class="nav-menu-box"></nav-menu>
+    <nav-menu class="nav-menu-box" v-if="!$route.meta.hideMenu"></nav-menu>
     <div class="root-route-view-box">
-      <div class="fixed">
+      <div class="fixed" v-if="!$route.meta.hideMenu">
         <div class="header flex-a-c">
           <el-dropdown @command="userOptions">
             <span class="el-dropdown-link">
@@ -121,7 +121,7 @@ export default {
   height: 40px;
 }
 .router-view {
-  height: calc(100% - 105px);
+  height: calc(100%);
   overflow: auto;
   overflow-x: hidden;
 }

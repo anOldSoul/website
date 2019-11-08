@@ -26,6 +26,7 @@ const DeviceUserUpdate = resolve => require(['../views/deviceLog/userUpdate'], r
 const DeviceWarning = resolve => require(['../views/deviceLog/warning'], resolve)
 const UserManage = resolve => require(['../views/userManage/list'], resolve)
 const Statistic = resolve => require(['../views/statistic/graph'], resolve)
+const Platform = resolve => require(['../views/statistic/platform'], resolve)
 
 const routers = [
   {
@@ -237,6 +238,19 @@ const routers = [
     name: 'Statistic',
     component: Statistic,
     meta: {
+      keepAlive: true,
+      breadcrumb: [{
+        text: '数据统计'
+      }, {
+        text: ''
+      }]
+    }
+  }, {
+    path: '/platform',
+    name: 'Platform',
+    component: Platform,
+    meta: {
+      hideMenu: true,
       keepAlive: true,
       breadcrumb: [{
         text: '数据统计'
