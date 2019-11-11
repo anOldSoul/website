@@ -3,7 +3,7 @@
     <div class="btn-wrap">
       <el-button type="primary" size="small" @click="putData" v-if="!isAdd">保存</el-button>
       <el-button type="primary" size="small" @click="postData" v-if="isAdd">新增</el-button>
-      <el-button type="danger" size="small" @click="handleDelete">删除</el-button>
+      <el-button type="danger" size="small" @click="handleDelete" v-if="!isAdd">删除</el-button>
       <el-button size="small" @click="$router.back()">返回</el-button>
     </div>
     <el-card class="page-content">
@@ -13,23 +13,23 @@
       <el-row>
         <el-col :span="3">设备名称</el-col>
         <el-col :span="7">
-          <el-input v-model="formData.lockname" placeholder="请输入房间号"></el-input>
+          <el-input v-model="formData.lockname" placeholder="请输入设备名称"></el-input>
         </el-col>
         <el-col :span="3" :push="1">绑定网关</el-col>
         <el-col :span="8" :push="1">
-          <el-input v-model="formData.gateid" placeholder="请输入管理员"></el-input>
+          <el-input v-model="formData.gateid" placeholder="请输入绑定网关"></el-input>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">设备编号</el-col>
         <el-col :span="7">
-          <el-input v-model="formData.lockid" placeholder="请输入房间号"></el-input>
+          <el-input v-model="formData.lockid" placeholder="请输入设备编号"></el-input>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">绑定房间</el-col>
         <el-col :span="7">
-          <el-input v-model="formData.roomid" placeholder="请输入房间号"></el-input>
+          <el-input v-model="formData.roomid" placeholder="请输入绑定房间"></el-input>
         </el-col>
       </el-row>
     </el-card>
@@ -82,7 +82,7 @@
             <el-option label="卡片用户" value="03"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="密码" :label-width="formLabelWidth">
+        <el-form-item :label="form.pwtype === '03' ? '卡号' : '密码'" :label-width="formLabelWidth">
           <el-input v-model="form.pwd" auto-complete="off" class="dialog-input"></el-input>
         </el-form-item>
         <el-form-item label="时限" :label-width="formLabelWidth">

@@ -28,9 +28,23 @@ const UserManage = resolve => require(['../views/userManage/list'], resolve)
 const Statistic = resolve => require(['../views/statistic/graph'], resolve)
 const Platform = resolve => require(['../views/statistic/platform'], resolve)
 
+const Lookforward = resolve => require(['../views/lookforward'], resolve)
+
 const routers = [
   {
     path: '/',
+    name: 'Statistic',
+    component: Statistic,
+    meta: {
+      keepAlive: true,
+      breadcrumb: [{
+        text: '数据统计'
+      }, {
+        text: ''
+      }]
+    }
+  }, {
+    path: '/lock',
     name: 'Lock',
     component: Lock,
     meta: {
@@ -256,6 +270,16 @@ const routers = [
         text: '数据统计'
       }, {
         text: ''
+      }]
+    }
+  }, {
+    path: '/lookforward',
+    name: 'Lookforward',
+    component: Lookforward,
+    meta: {
+      keepAlive: true,
+      breadcrumb: [{
+        text: '敬请期待'
       }]
     }
   }

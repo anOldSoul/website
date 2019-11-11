@@ -3,44 +3,44 @@
     <div class="btn-wrap">
       <el-button type="primary" size="small" @click="putData" v-if="!isAdd">保存</el-button>
       <el-button type="primary" size="small" @click="postData" v-if="isAdd">新增</el-button>
-      <el-button type="danger" size="small" @click="handleDelete">删除</el-button>
+      <el-button type="danger" size="small" @click="handleDelete" v-if="!isAdd">删除</el-button>
       <el-button size="small" @click="$router.back()">返回</el-button>
     </div>
     <el-card class="page-content">
       <el-row>
         <el-col :span="3">公寓名称</el-col>
         <el-col :span="15">
-          <el-input v-model="formData.apartmentname" placeholder="请输入网关名称"></el-input>
+          <el-input v-model="formData.apartmentname" placeholder="请输入公寓名称"></el-input>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">详细地址</el-col>
         <el-col :span="15">
-          <el-input v-model="formData.apartmentaddr" placeholder="请输入网关名称"></el-input>
+          <el-input v-model="formData.apartmentaddr" placeholder="请输入详细地址"></el-input>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">总楼层</el-col>
         <el-col :span="15">
-          <el-input v-model="formData.floor" placeholder="请输入网关位置"></el-input>
+          <el-input v-model="formData.floor" placeholder="请输入总楼层"></el-input>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">每层房间数</el-col>
         <el-col :span="15">
-          <el-input v-model="formData.floorrooms" placeholder="请输入网关位置"></el-input>
+          <el-input v-model="formData.floorrooms" placeholder="请输入每层房间数"></el-input>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">房间号前缀</el-col>
         <el-col :span="15">
-          <el-input v-model="formData.roomsnum" placeholder="请输入网关位置"></el-input>
+          <el-input v-model="formData.roomsnum" placeholder="请输入房间号前缀"></el-input>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">管理员</el-col>
         <el-col :span="15">
-          <el-input v-model="formData.manager" placeholder="请输入网关位置"></el-input>
+          <el-input v-model="formData.manager" placeholder="请输入管理员"></el-input>
         </el-col>
       </el-row>
     </el-card>

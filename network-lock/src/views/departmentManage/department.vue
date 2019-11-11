@@ -8,7 +8,7 @@
             <el-button style="float: right; padding: 3px 0" type="text" @click="addDepart">添加</el-button>
           </div>
           <div class="searchBox">
-            <el-input placeholder="请输入内容" v-model="apartKey" class="input-with-select">
+            <el-input placeholder="请输入公寓名称" v-model="apartKey" class="input-with-select">
               <el-button slot="append" icon="el-icon-search" @click="getData"></el-button>
             </el-input>
           </div>

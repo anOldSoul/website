@@ -3,7 +3,7 @@
     <div class="btn-wrap">
       <el-button type="primary" size="small" @click="putData" v-if="!isAdd">保存</el-button>
       <el-button type="primary" size="small" @click="postData" v-if="isAdd">新增</el-button>
-      <el-button type="danger" size="small" @click="handleDelete">删除</el-button>
+      <el-button type="danger" size="small" @click="handleDelete" v-if="!isAdd">删除</el-button>
       <el-button size="small" @click="$router.back()">返回</el-button>
     </div>
     <el-card class="page-content">
