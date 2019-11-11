@@ -23,22 +23,26 @@
           <el-tab-pane :label="tab.label" :name="tab.name" v-for="(tab, tabIndex) in tabs" :key="tabIndex">
             <el-collapse v-model="activeName" accordion v-if="rooms.length">
               <el-collapse-item :title="`楼层${floorIndex + 1}`" :name="floorIndex" v-for="(floor, floorIndex) in rooms" class="floor" :key="floorIndex">
-                <el-card class="box-card" v-for="(room, roomIndex) in floor" :key="roomIndex">
+                <template slot="title">
+                  <div class="tab-title">楼层 {{floorIndex + 1}} <i v-if="floor && floor.length" class="el-icon-zoom-in"></i></div>
+                </template>
+                <el-card class="box-card" v-for="(room, roomIndex) in floor" :key="roomIndex" v-if="floor && floor.length > 0">
                   <div slot="header" class="clearfix">
                     <span>房间号 {{room.roomname}}</span>
                     <el-tooltip placement="bottom" effect="light">
                       <div slot="content">
                         <div><el-button type="text" class="edit-room" @click="editRoom(room.roomid)">编辑房间</el-button></div>
                         <div><el-button type="text" class="edit-room" @click="editCustome(room.rentid)">租客信息</el-button></div>
-                        <!-- <div><el-button type="text" class="edit-room" @click="updateStat(room.roomid, room.roomstat)">转为待租</el-button></div> -->
                         <div><el-button type="text" class="edit-room" @click="delRoom(room.roomid)">删除房间</el-button></div>
                       </div>
-                      <el-button type="text" style="float: right; padding: 3px 0">...</el-button>
+                      <el-button type="text" style="float: right; padding: 3px 0"><i class="el-icon-more"></i></el-button>
                     </el-tooltip>
                   </div>
-                  <div>{{room.roomstat === '02' ? '入住' : '空置'}}</div>
+                  <div>状态：{{room.roomstat === '02' ? '入住' : '空置'}}</div>
                   <div>到期：{{room.endtime}}</div>
+                  <div class="lock-icon"><img src="../../assets/lock.png"></div>
                 </el-card>
+                <div class="noroom" v-if="!floor || floor.length === 0"><img class="room-img" src="../../assets/noroom.png">该楼层暂无房间</div>
               </el-collapse-item>
             </el-collapse>
             <div class="empty-box" v-else>
@@ -232,6 +236,13 @@ export default {
 .box-card{
   width: 200px;
   margin: 10px;
+  position: relative;
+}
+.lock-icon {
+  position: absolute;
+  bottom: 15px;
+  right: 0;
+  opacity: 0.75;
 }
 .text.item{
   height: 50px;
@@ -250,10 +261,17 @@ export default {
   padding: 0 10px;
 }
 .page >>> .el-collapse-item__content{
-  /*width: 100%;*/
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+.page >>> .el-tabs__content {
+  height: 75vh;
+  overflow: scroll;
+}
+.headerL >>> .el-card__body {
+  height: 75vh;
+  overflow-y: scroll;
 }
 .empty-box{
   display: flex;
@@ -265,5 +283,25 @@ export default {
 }
 .empty-text{
   margin-top: 15px;
+}
+.floor {
+  position: relative;
+}
+.tab-title {
+  position: absolute;
+  left: 15px;
+}
+.noroom {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.room-img {
+  margin-right: 10px;
+}
+.el-icon-zoom-in {
+  color: #1faa89;
+  font-size: 18px;
 }
 </style>
