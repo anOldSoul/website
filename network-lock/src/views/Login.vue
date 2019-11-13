@@ -98,6 +98,7 @@ export default {
             username: this.loginForm.username,
             password: this.loginForm.password
           }, data => {
+            _this.$store.commit('login', true)
             localStorage.setItem('name', data.data.token)
             this.$router.push({
               path: '/'

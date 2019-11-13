@@ -4,12 +4,12 @@
       <el-form class="form" label-width="86px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="名称">
+            <el-form-item label="设备名称">
               <el-input v-model="searchModel.gateWayName" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="编号">
+            <el-form-item label="设备编号">
               <el-input v-model="searchModel.gateId" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
@@ -47,9 +47,7 @@ export default {
       dataCount: 0, // 必须
       searchModel: {
         pageNo: 1, // 必须
-        pageSize: 20, // 必须
-        gateId: '',
-        gateWayName: ''
+        pageSize: 10
       },
       countries: [],
       query: {}

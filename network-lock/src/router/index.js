@@ -299,12 +299,19 @@ const router = new Router({
   }]
 })
 router.beforeEach((to, from, next) => {
-  Site.http.post('/admin-rest/auth/login', {
-    username: 'admin123',
-    password: 'admin123'
-  }, data => {
-    localStorage.setItem('name', data.data.token)
+  console.log(store.state.hasLoad)
+  if (to.path.indexOf('login') > -1 || store.state.hasLoad) {
     next()
-  })
+  } else {
+    Site.http.post('/admin-rest/auth/login', {
+      username: 'admin123',
+      password: 'admin123'
+    }, data => {
+      localStorage.setItem('name', data.data.token)
+      next({
+        path: '/login'
+      })
+    })
+  }
 })
 export default router

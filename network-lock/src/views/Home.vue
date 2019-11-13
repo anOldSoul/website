@@ -61,6 +61,7 @@ export default {
   methods: {
     userOptions (command) {
       if (command === 'logout') {
+        this.$store.commit('logout', true)
         this.$router.push({
           path: '/login'
         })

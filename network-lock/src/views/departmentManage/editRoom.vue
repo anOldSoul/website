@@ -73,10 +73,10 @@
               <div class="lockname">{{device.lockname.length > 6 ? device.lockname.substring(0, 6) + '...' : device.lockname}}<el-button type="text" class="button" @click="delDevice(deviceIndex)">删除</el-button></div>
             </el-tooltip>            
             <div class="bottom clearfix">
-              <div class="propertie">电量：{{ device.electricity }}</div>
-              <div class="propertie">连网状态：{{device.connetnstat === '1' ? '已连接' : '断开'}}</div>
-              <div class="propertie">闭合状态：{{device.closestat === '1' ? '已闭合' : '未闭合'}}</div>
-              <div class="propertie">故障情况：{{device.faultstat === '1' ? '有故障' : '无故障'}}</div>              
+              <div class="propertie">电量：<span :style="{ color: device.electricity > 30 ? 'green' : 'red'}">{{ device.electricity || 0 }}%</span></div>
+              <div class="propertie">连网状态：<span :style="{ color: device.connetnstat === '1' ? 'green' : 'red'}">{{device.connetnstat === '1' ? '已连接' : '断开'}}</span></div>
+              <!-- <div class="propertie">闭合状态：{{device.closestat === '1' ? '已闭合' : '未闭合'}}</div> -->
+              <div class="propertie">故障情况：<span :style="{ color: device.faultstat === '1' ? 'red' : 'green'}">{{device.faultstat === '1' ? '有故障' : '无故障'}}</span></div>              
             </div>
           </div>
         </el-card>
