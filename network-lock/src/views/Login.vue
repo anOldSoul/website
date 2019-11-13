@@ -1,5 +1,41 @@
 <template>
-  <div class="login-main">
+  <div class="home">
+    <div class="top outer_box">
+      <div class="saas_left_img" :style="{'background-image': `url(${imgurlL})`}">
+      </div>
+      <div class="saas_right_img" :style="{'background-image': `url(${imgurlR})`}"></div>
+      <div class="section max-width-1440">
+        <div class="saas_content">         
+          <div class="saas_left">       
+            <div class="saas_title">与万千企业共同开启智能时代</div>
+            <div class="saas_sub_title">噢蹦智能锁管理云平台</div>
+            <div class="saas_contact">
+              <div class="saas_contact_item"><img class="saas_icon_ke" src="../assets/ic_service.png">客服专线：800-8208820</div>
+              <div class="saas_contact_item"><img class="saas_icon_you" src="../assets/ic_mail.png">邮箱：bd@whoareyou.live</div>
+            </div>
+            <div class="saas_company">©2014-2019 上海互啊佑智能科技有限公司 版权所有</div>
+          </div>
+          <el-form class="saas_box" :model="loginForm" :rules="rules" ref="loginForm">
+            <div class="saas_right">
+              <div class="login_top">                
+                <div class="login_by_account">账号登录</div>
+              </div>
+              <el-form-item class="account_input" prop="username">
+                <el-input v-model="loginForm.username" placeholder="您的账号"></el-input>
+              </el-form-item>
+              <el-form-item class="password_input" prop="password">
+                <el-input type="password" v-model="loginForm.password" placeholder="您的密码"></el-input>
+              </el-form-item>
+              <div class="saas_login_btn" @click="submitForm('loginForm')">登录</div>
+              <div class="saas_login_forget">忘记密码 <i class="el-icon-question"></i></div>
+              <div class="saas_login_apply">还没有开通帐号？ 点此申请开通 >></div>
+            </div>
+          </el-form>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--   <div class="login-main">
     <div class="login-from">
       <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="100px" class="demo-ruleForm" label-position="top">
         <el-form-item label="用户名" prop="username">
@@ -13,23 +49,18 @@
         </el-form-item>
       </el-form>
     </div>
-    <svg jsname="BUfzDd" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 810" preserveAspectRatio="xMinYMin slice" aria-hidden="true">
-      <path fill="#efefee" d="M592.66 0c-15 64.092-30.7 125.285-46.598 183.777C634.056 325.56 748.348 550.932 819.642 809.5h419.672C1184.518 593.727 1083.124 290.064 902.637 0H592.66z"></path>
-      <path fill="#f6f6f6" d="M545.962 183.777c-53.796 196.576-111.592 361.156-163.49 490.74 11.7 44.494 22.8 89.49 33.1 134.883h404.07c-71.294-258.468-185.586-483.84-273.68-625.623z"></path>
-      <path fill="#f7f7f7" d="M153.89 0c74.094 180.678 161.088 417.448 228.483 674.517C449.67 506.337 527.063 279.465 592.56 0H153.89z"></path>
-      <path fill="#fbfbfc" d="M153.89 0H0v809.5h415.57C345.477 500.938 240.884 211.874 153.89 0z"></path>
-      <path fill="#ebebec" d="M1144.22 501.538c52.596-134.583 101.492-290.964 134.09-463.343 1.2-6.1 2.3-12.298 3.4-18.497 0-.2.1-.4.1-.6 1.1-6.3 2.3-12.7 3.4-19.098H902.536c105.293 169.28 183.688 343.158 241.684 501.638v-.1z"></path>
-      <path fill="#e1e1e1" d="M1285.31 0c-2.2 12.798-4.5 25.597-6.9 38.195C1321.507 86.39 1379.603 158.98 1440 257.168V0h-154.69z"></path>
-      <path fill="#e7e7e7" d="M1278.31,38.196C1245.81,209.874 1197.22,365.556 1144.82,499.838L1144.82,503.638C1185.82,615.924 1216.41,720.211 1239.11,809.6L1439.7,810L1439.7,256.768C1379.4,158.78 1321.41,86.288 1278.31,38.195L1278.31,38.196z"></path>
-    </svg>
-  </div>
+  </div> -->
 </template>
 <script>
 import { MessageBox } from 'element-ui'
+import imgurlR from '../assets/bg_saas_right.png'
+import imgurlL from '../assets/bg_saas_left.png'
 export default {
   name: 'Login',
   data () {
     return {
+      imgurlL: imgurlL,
+      imgurlR: imgurlR,
       loginForm: {
         username: '',
         password: '',
@@ -63,43 +94,13 @@ export default {
       var _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          let user = {
-            name: this.loginForm.username
-          }
-          // _this.$store.commit('login',user)
-          const req = Site.http.login({
-            'username': this.loginForm.username,
-            'password': this.loginForm.password
-          })
-          req.then(function (res) {
-            if (res.data) {
-              if (res.data.err) {
-                this.$notify.error({
-                  title: 'error',
-                  message: res.data.err.message
-                })
-              } else {
-                // var userData = Site.http.execUserData(res.data.staff)
-                _this.$store.commit('login', res.data)
-                if (res.data.invalidPassword) {
-                  this.$alert('请更换默认密码', {
-                    showClose: false,
-                    callback: res => {
-                      if (res === 'confirm') {
-                        this.$router.push({
-                          path: '/system/changepwd'
-                        })
-                      }
-                    }
-                  })
-                }
-                this.goView(res.data.staff)
-              }
-            }
-          }.bind(this)).catch(function (err) {
-            _this.$notify.error({
-              title: 'error',
-              message: 'api error'
+          Site.http.post('/admin-rest/auth/login', {
+            username: this.loginForm.username,
+            password: this.loginForm.password
+          }, data => {
+            localStorage.setItem('name', data.data.token)
+            this.$router.push({
+              path: '/'
             })
           })
         } else {
@@ -136,7 +137,6 @@ export default {
   left: 50%;
   margin-left: -150px;
   width: 350px;
-  /* height: 240px; */
   background-color: rgba(255, 255, 255, 0.3);
   padding: 20px 30px 10px;
   box-shadow: 0 0 2px 3px #e8e8e8;
@@ -148,5 +148,126 @@ export default {
 
 .login-btn button {
   width: 120px;
+}
+.home {
+  background: #fff;
+}
+.saas_left_img{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 349px;
+  height: 585px;
+  background-size: 100% auto;
+  z-index: 1;
+}
+.saas_content{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 132px 0;
+}
+.saas_title{
+  width: 298px;
+  font-size: 36px;
+  line-height: 2;
+}
+.saas_sub_title{
+  font-size: 24px;
+  margin-top: 40px;
+}
+.saas_contact{
+  font-size: 14px;
+  margin-top: 80px;
+  line-height: 3;
+}
+.saas_company{
+  font-size: 12px;
+  color: #676C75;
+  padding-top: 60px;
+}
+.saas_right{
+  padding: 35px 70px;
+}
+.saas_box{
+  width: 570px;
+  height: 570px;
+  box-shadow: 0px 1px 10px 0px rgba(32,33,39,0.1);
+  border-radius:6px;
+  margin-right: 5px;
+  background-color: #fff;
+}
+.outer_box {
+  max-width: 1110px;
+  margin: 0 auto;
+}
+.saas_right_img{
+  position: absolute;
+  right: 0;
+  top: 204px;
+  width: 349px;
+  height: 585px;
+  background-size: 100% auto;
+  z-index: 1;
+}
+.saas_right{
+  padding: 35px 70px;
+}
+.saas_box{
+  width: 570px;
+  height: 570px;
+  box-shadow: 0px 1px 10px 0px rgba(32,33,39,0.1);
+  border-radius:6px;
+  margin-right: 5px;
+  background-color: #fff;
+}
+.login_top{
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  margin-bottom: 36px;
+}
+.login_by_password{
+  color: #999EA8;
+  margin-left: 56px;
+}
+.account_input , .password_input{
+  margin-bottom: 30px;
+}
+.account_input input, .password_input input{
+  width:410px;
+  height:50px;
+  background:rgba(248,249,250,1);
+  border:1px solid rgba(231, 232, 234, 1);
+  border-radius:6px;
+  outline: none;
+  padding-left: 20px;
+}
+.saas_login_btn{
+  width:430px;
+  height:50px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:rgba(9,25,40,1);
+  font-size:17px;
+  box-shadow:0px 6px 12px 0px rgba(40,43,49,0.08);
+  border-radius:6px;
+}
+.saas_login_forget{
+  text-align: right;
+  font-size: 14px;
+  margin-top: 20px;
+  margin-bottom: 56px;
+}
+.saas_login_apply{
+  text-align: center;
+  font-size: 14px;
+}
+.saas_icon_ke{
+  width: 20px;
+  height: 22px;
+  margin-right: 9px;
 }
 </style>

@@ -11,19 +11,56 @@
         <span class="headerTitle">房间信息</span>
       </div>
       <el-row>
-        <el-col :span="3">房间号</el-col>
-        <el-col :span="15">
+        <el-col :span="2">公寓名称</el-col>
+        <el-col :span="5">
+          <el-select v-model="formData.apartmentid" placeholder="请选择公寓">
+            <el-option :label="apart.apartmentname" :value="apart.apartmentid" v-for="apart in apartments" :key="apart.apartmentid"></el-option>
+          </el-select>
+        </el-col> 
+        <el-col :span="2" :push="1">房间地址</el-col>
+        <el-col :span="13" :push="1">
+          <el-input type="textarea" v-model="formData.roomaddr"></el-input>
+        </el-col>        
+      </el-row>
+      <el-row>
+        <el-col :span="2">房间号</el-col>
+        <el-col :span="5">
           <el-input v-model="formData.roomname" placeholder="请输入房间号"></el-input>
+        </el-col>
+        <el-col :span="2" :push="1">管理员</el-col>
+        <el-col :span="5" :push="1">
+          <el-input v-model="formData.manager" placeholder="请输入管理员"></el-input>
+        </el-col>
+        <el-col :span="2" :push="2">所在楼层</el-col>
+        <el-col :span="5" :push="2">
+          <el-input v-model="formData.floor" placeholder="请输入所在楼层"></el-input>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3">管理员</el-col>
-        <el-col :span="15">
-          <el-input v-model="formData.manager" placeholder="请输入管理员"></el-input>
+        <el-col :span="2">房间状态</el-col>
+        <el-col :span="5">
+          <el-select v-model="formData.roomstat" placeholder="请选择房间状态">
+            <el-option label="入住" value="02"></el-option>
+            <el-option label="空置" value="03"></el-option>
+          </el-select>
+        </el-col>
+      </el-row>
+      <el-row v-if="formData.roomstat === '02'">
+        <el-col :span="2">租户名</el-col>
+        <el-col :span="5">
+          <el-input class="dialog-input" v-model="formData.rentname" auto-complete="off"></el-input>
+        </el-col>
+        <el-col :span="2" :push="1">开始时间</el-col>
+        <el-col :span="5" :push="1">
+          <el-date-picker v-model="formData.begintime" type="date" placeholder="选择日期"></el-date-picker>
+        </el-col>
+        <el-col :span="2" :push="2">结束时间</el-col>
+        <el-col :span="5" :push="2">
+          <el-date-picker v-model="formData.endtime" type="date" placeholder="选择日期"></el-date-picker>
         </el-col>
       </el-row>
     </el-card>
-    <el-card class="page-content">
+    <el-card class="page-content" style="margin-bottom: 100px !important;">
       <div slot="header" class="clearfix">
         <span class="headerTitle">房间设备</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="handleAddDevice">新增+</el-button>
@@ -32,7 +69,9 @@
         <el-card :body-style="{ padding: '0px' }" class="deviceItem">
           <img src="../../assets/pic-lock.png" class="image">
           <div style="padding: 14px;">
-            <div class="lockname">{{device.lockname}}<el-button type="text" class="button" @click="delDevice(deviceIndex)">删除</el-button></div>
+            <el-tooltip class="item" effect="dark" :content="device.lockname" placement="top-start">
+              <div class="lockname">{{device.lockname.length > 6 ? device.lockname.substring(0, 6) + '...' : device.lockname}}<el-button type="text" class="button" @click="delDevice(deviceIndex)">删除</el-button></div>
+            </el-tooltip>            
             <div class="bottom clearfix">
               <div class="propertie">电量：{{ device.electricity }}</div>
               <div class="propertie">连网状态：{{device.connetnstat === '1' ? '已连接' : '断开'}}</div>
@@ -66,9 +105,11 @@ export default {
   },
   data () {
     return {
+      apartments: [],
       dialogTableVisible: false,
       gridData: [],
       formData: {
+        apartmentid: '',
         lockInfo: []
       }
     }
@@ -82,16 +123,28 @@ export default {
     curId () {
       return this.$route.params.id || ''
     },
+    apartmentid () {
+      return this.$route.params.apartmentid || ''
+    },
     isAdd () {
       return this.curId === 'add'
     }
   },
   methods: {
+    getApartment () {
+      Site.http.post('/admin/apartmeninfo/queryByPage', {
+        pageNo: 1,
+        pageSize: 2000
+      }, data => {
+        this.apartments = data.data.list
+        this.formData.apartmentid = Number(this.apartmentid)
+      })
+    },
     delDevice (index) {
       this.formData.lockInfo.splice(index, 1)
     },
     handleAdd (row) {
-      if (row.lockid === this.formData.lockInfo[0].lockid) {
+      if (this.formData.lockInfo.length && row.lockid === this.formData.lockInfo[0].lockid) {
         this.$message({
           message: '该设备已有,不可重复添加',
           type: 'warning'
@@ -189,6 +242,29 @@ export default {
       })
     },
     postData () {
+      this.formData.begintime = this.$moment(this.formData.begintime).format('YYYY-MM-DD')
+      this.formData.endtime = this.$moment(this.formData.endtime).format('YYYY-MM-DD')
+      this.formData.apartmentid = this.apartmentid
+      if (this.formData.lockInfo.length) {
+        this.formData.lockid1 = this.formData.lockInfo[0].lockid
+        this.formData.lockid3 = this.formData.lockInfo[0].gateid
+      }
+      if (this.formData.lockInfo.length === 2) {
+        this.formData.lockid2 = this.formData.lockInfo[1].lockid
+      }
+      this.formData.lockInfo.forEach((item, index) => {
+        delete item.tUseInfoList
+        delete item.tUserchangeTxninfoList
+      })
+      Site.http.post('/admin/tRoomInfo', this.formData, data => {
+        if (data.data) {
+          this.$message({
+            message: '新增成功',
+            type: 'success'
+          })
+          this.$router.back()
+        }
+      })
       Site.http.post('/admin/tRoomInfo', this.formData, data => {
         if (data.errno === 0) {
           this.$message({
@@ -201,9 +277,9 @@ export default {
     }
   },
   mounted: function () {
+    this.getApartment()
     if (!this.isAdd) {
       this.getData()
-
     }   
   }
 }
@@ -219,7 +295,7 @@ export default {
   margin-bottom: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /*justify-content: center;*/
 }
 .button {
     padding: 0;

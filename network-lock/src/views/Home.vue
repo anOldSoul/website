@@ -6,12 +6,12 @@
         <div class="header flex-a-c">
           <el-dropdown @command="userOptions">
             <span class="el-dropdown-link">
-              {{realname || '用户名'}}
+              {{realname || 'admin123'}}
               <el-badge class="mark" :value="noticeCount" v-if="noticeCount > 0"/>
               <i class="el-icon-caret-bottom el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="a">{{realname || '用户名'}}</el-dropdown-item>
+              <el-dropdown-item command="a">{{realname || 'admin123'}}</el-dropdown-item>
               <template v-if="!isYueHui">
                 <el-dropdown-item command="notice">通知<el-badge  v-if="noticeCount > 0"  class="mark" :value="noticeCount" /></el-dropdown-item>
                 <el-dropdown-item command="chpwd">修改密码</el-dropdown-item>
@@ -59,6 +59,13 @@ export default {
   created () {
   },
   methods: {
+    userOptions (command) {
+      if (command === 'logout') {
+        this.$router.push({
+          path: '/login'
+        })
+      }
+    },
   },
   mounted: function () {
   }

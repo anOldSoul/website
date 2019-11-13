@@ -90,7 +90,7 @@
 <script>
 import Highcharts from 'highcharts'
 import Highmaps from 'highcharts/modules/map'
-import HighchartsMore from 'highcharts/highcharts-more';
+import HighchartsMore from 'highcharts/highcharts-more'
 import SolidGauge from 'highcharts/modules/solid-gauge.js'
 import china from './china'
 Highmaps(Highcharts);

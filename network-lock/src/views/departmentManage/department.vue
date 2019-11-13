@@ -18,7 +18,10 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="16" style="position: relative;">
+        <div style="position: absolute; right: 20px; z-index: 99;">
+          <el-button type="primary" size="small" @click="handleAddRoom">新增房间</el-button>
+        </div>
         <el-tabs v-model="activeTab" @tab-click="handleClick">
           <el-tab-pane :label="tab.label" :name="tab.name" v-for="(tab, tabIndex) in tabs" :key="tabIndex">
             <el-collapse v-model="activeName" accordion v-if="rooms.length">
@@ -68,10 +71,11 @@ export default {
   },
   data () {
     return {
+      formLabelWidth: '120px',
       apartmentid: '',
       selectApartIndex: 0,
       tabs: [{
-        label: '全部',       
+        label: '全部',
         name: 'first'
       }, {
         label: '已租',
@@ -92,6 +96,11 @@ export default {
   },
   computed: {},
   methods: {
+    handleAddRoom () {
+      this.$router.push({
+        path: `room/detail/add/${this.arpartments[this.selectApartIndex].apartmentid}`
+      })
+    },
     selectApart (index,  id) {
       this.selectApartIndex = index
       this.apartmentid = id
@@ -147,7 +156,7 @@ export default {
     },
     editRoom (id) {
       this.$router.push({
-        path: `room/detail/${id}`
+        path: `room/detail/${id}/${this.arpartments[this.selectApartIndex].apartmentid}`
       })
     },
     editDepart (id) {
@@ -179,6 +188,9 @@ export default {
       }
       if (tab.name === 'third') {
         this.roomstat = '03'
+      }
+      if (tab.name === 'first') {
+        this.roomstat = ''
       }
       this.getRoom ()
     },
@@ -302,6 +314,8 @@ export default {
 }
 .el-icon-zoom-in {
   color: #1faa89;
-  font-size: 18px;
+}
+.dialog-input {
+  width: 200px;
 }
 </style>

@@ -128,7 +128,7 @@ const routers = [
       }]
     }
   }, {
-    path: '/room/detail/:id',
+    path: '/room/detail/:id/:apartmentid',
     name: 'RoomDetail',
     component: RoomDetail,
     meta: {
@@ -291,6 +291,11 @@ const router = new Router({
     path: '/',
     component: Home,
     children: routerList
+  }, {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    permission: []
   }]
 })
 router.beforeEach((to, from, next) => {

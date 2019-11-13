@@ -31,9 +31,10 @@
       <el-table-column prop="bindingstat" label="绑定状态">
         <template slot-scope="scope">{{bindStr[scope.row.bindingstat]}}</template>
       </el-table-column>
-      <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
+      <el-table-column label="操作" width="200" class-name="cell-cneter" fixed="right">
         <template slot-scope="scope">
           <template>
+            <el-button type="text" @click="handleOpenImmediately(scope.row)">一键开锁</el-button>
             <el-button type="text" @click="handleGoDetail(scope.row)">编辑</el-button>
             <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
           </template>
@@ -71,6 +72,22 @@ export default {
   computed: {},
 
   methods: {
+    handleOpenImmediately (row) {
+      Site.http.post(
+        '/admin/tUserInfo/openLock', {
+          "lockid": row.lockid,
+          "rsv1": row.gateid 
+        },
+        data => {
+          if (data.errno === 0) {
+            this.$message({
+              message: '开锁成功',
+              type: 'success'
+            })
+          }
+        }
+      )
+    },
     addStaff (row) {
       this.$router.push({
         path: `/lock/detail/add/${row.gateid}`
