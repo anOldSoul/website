@@ -20,11 +20,15 @@
       </el-form>
     </div>
     <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
-      <el-table-column prop="warntype" label="告警类型"></el-table-column>
+      <el-table-column prop="warndesc" label="告警类型"></el-table-column>
       <el-table-column prop="lockid" label="设备名称"></el-table-column>
       <el-table-column prop="lockid" label="设备编号"></el-table-column>
       <el-table-column prop="roomname" label="绑定房间"></el-table-column>
-      <el-table-column prop="usertype" label="告警时间"></el-table-column>
+      <el-table-column prop="uploadtime" label="告警时间">
+        <template slot-scope="scope">
+          {{$moment(scope.row.uploadtime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss')}}
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination @current-change="handleCurrentChange" :current-page="searchModel.pageNo" :page-size="20" layout="total, prev, pager, next" :total="dataCount" class="flex pagination">
     </el-pagination>

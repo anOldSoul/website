@@ -20,13 +20,19 @@
       </el-form>
     </div>
     <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
-      <el-table-column prop="lockname" label="门锁名称"></el-table-column>
       <el-table-column prop="lockid" label="设备编号"></el-table-column>
+      <el-table-column prop="lockname" label="门锁名称"></el-table-column>
       <el-table-column prop="bingdingroom" label="绑定房间"></el-table-column>
       <el-table-column prop="userid" label="开锁用户"></el-table-column>
-      <el-table-column prop="usertype" label="用户类型"></el-table-column>
-      <el-table-column prop="addtype" label="开锁类型"></el-table-column>
-      <el-table-column prop="createtime" label="开锁时间"></el-table-column>
+      <el-table-column prop="usertype" label="用户类型">
+        <template slot-scope="scope">{{usertypeStr[scope.row.usertype]}}</template>
+      </el-table-column>
+      <el-table-column prop="addtype" label="开锁类型" width="220">
+        <template slot-scope="scope">{{opentypeStr[scope.row.opentype]}}</template>
+      </el-table-column>
+      <el-table-column prop="rsv2" label="开锁时间">
+        <template slot-scope="scope">{{$moment(scope.row.createtime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss')}}</template>
+      </el-table-column>
     </el-table>
     <el-pagination @current-change="handleCurrentChange" :current-page="searchModel.pageNo" :page-size="20" layout="total, prev, pager, next" :total="dataCount" class="flex pagination">
     </el-pagination>
@@ -45,6 +51,17 @@ export default {
   },
   data () {
     return {
+      usertypeStr: {
+        '00': '管理员',
+        '01': '普通用户'
+      },
+      opentypeStr: {
+        '01': '下端数字普通密码开锁成功',
+        '02': '下端临时密码开锁成功',
+        '03': '下端管理员密码开锁成功',
+        '04': '下端指纹开锁成功',
+        '05': '远程开锁成功',
+      },
       tableData: [], // 必须
       dataCount: 0, // 必须
       searchModel: {

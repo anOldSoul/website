@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="btn-wrap">
-      <el-button type="primary" size="small" @click="addStaff">新增 + </el-button>
+      <!-- <el-button type="primary" size="small" @click="addStaff">新增 + </el-button> -->
     </div>
     <div class="flex search-box">
       <el-form class="form" label-width="86px">
@@ -26,8 +26,9 @@
       <el-table-column prop="gatewayname" label="网关名称"></el-table-column>
       <el-table-column prop="gateid" label="网关编号"></el-table-column>
       <el-table-column prop="gateaddr" label="网关位置"></el-table-column>
-      <el-table-column prop="gateaddr" label="到期时间"></el-table-column>
-      <!-- <el-table-column prop="title" label="绑定数量"></el-table-column> -->
+      <el-table-column prop="rsv2" label="到期时间">
+        <template slot-scope="scope">{{$moment(scope.row.rsv2, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss')}}</template>
+      </el-table-column>
       <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
         <template slot-scope="scope">
           <template>

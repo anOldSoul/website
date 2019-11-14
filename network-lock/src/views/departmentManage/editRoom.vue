@@ -16,25 +16,17 @@
           <el-select v-model="formData.apartmentid" placeholder="请选择公寓">
             <el-option :label="apart.apartmentname" :value="apart.apartmentid" v-for="apart in apartments" :key="apart.apartmentid"></el-option>
           </el-select>
-        </el-col> 
-        <el-col :span="2" :push="1">房间地址</el-col>
-        <el-col :span="13" :push="1">
-          <el-input type="textarea" v-model="formData.roomaddr"></el-input>
-        </el-col>        
-      </el-row>
-      <el-row>
-        <el-col :span="2">房间号</el-col>
-        <el-col :span="5">
-          <el-input v-model="formData.roomname" placeholder="请输入房间号"></el-input>
         </el-col>
-        <el-col :span="2" :push="1">管理员</el-col>
+        <el-col :span="2" :push="1">所在楼层</el-col>
         <el-col :span="5" :push="1">
-          <el-input v-model="formData.manager" placeholder="请输入管理员"></el-input>
+          <el-select v-model="formData.floor" clearable placeholder="请选择所在楼层">
+            <el-option :label="`${item}楼`" :value="item" v-for="item in floor" :key="item"></el-option>
+          </el-select>
         </el-col>
-        <el-col :span="2" :push="2">所在楼层</el-col>
+        <el-col :span="2" :push="2">房间号</el-col>
         <el-col :span="5" :push="2">
-          <el-input v-model="formData.floor" placeholder="请输入所在楼层"></el-input>
-        </el-col>
+          <el-input v-model="formData.roomname" placeholder="请输入房间号"></el-input>
+        </el-col>   
       </el-row>
       <el-row>
         <el-col :span="2">房间状态</el-col>
@@ -43,6 +35,17 @@
             <el-option label="入住" value="02"></el-option>
             <el-option label="空置" value="03"></el-option>
           </el-select>
+        </el-col>
+        <el-col :span="2" :push="1">管理员</el-col>
+        <el-col :span="5" :push="1">
+          <el-input v-model="formData.manager" placeholder="请输入管理员"></el-input>
+        </el-col>
+      </el-row>
+      <el-row>
+
+        <el-col :span="2">房间地址</el-col>
+        <el-col :span="13">
+          <el-input type="textarea" v-model="formData.roomaddr"></el-input>
         </el-col>
       </el-row>
       <el-row v-if="formData.roomstat === '02'">
@@ -109,6 +112,7 @@ export default {
       dialogTableVisible: false,
       gridData: [],
       formData: {
+        floor: '',
         apartmentid: '',
         lockInfo: []
       }
@@ -125,6 +129,9 @@ export default {
     },
     apartmentid () {
       return this.$route.params.apartmentid || ''
+    },
+    floor () {
+      return Number(this.$route.params.floor) || ''
     },
     isAdd () {
       return this.curId === 'add'
@@ -210,11 +217,9 @@ export default {
         if (data.data) {
           this.formData = data.data
           this.formData.lockInfo = data.data.lockInfo || []
-          this.formData.lockInfo.forEach((item, index) => {
-            if (!item) {
-              this.formData.lockInfo.splice(index, 1)
-            }
-          })
+          if (!this.formData.lockInfo[0]) {
+            this.formData.lockInfo = []
+          }
         }
       })
     },

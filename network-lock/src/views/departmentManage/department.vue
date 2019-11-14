@@ -156,7 +156,7 @@ export default {
     },
     editRoom (id) {
       this.$router.push({
-        path: `room/detail/${id}/${this.arpartments[this.selectApartIndex].apartmentid}`
+        path: `room/detail/${id}/${this.arpartments[this.selectApartIndex].apartmentid}/${this.arpartments[this.selectApartIndex].floor}`
       })
     },
     editDepart (id) {

@@ -13,30 +13,34 @@
       <el-row>
         <el-col :span="3">设备名称</el-col>
         <el-col :span="7">
-          <el-input v-model="formData.lockname" placeholder="请输入设备名称"></el-input>
+          <el-input v-model="formData.lockname" clearable placeholder="请输入设备名称"></el-input>
         </el-col>
         <el-col :span="3" :push="1">绑定网关</el-col>
         <el-col :span="8" :push="1">
-          <el-input v-model="formData.gateid" placeholder="请输入绑定网关"></el-input>
+          <el-input disabled v-model="formData.gateid" clearable placeholder="请输入绑定网关"></el-input>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">设备编号</el-col>
         <el-col :span="7">
-          <el-input v-model="formData.lockid" placeholder="请输入设备编号"></el-input>
+          <el-input disabled v-model="formData.lockid" clearable placeholder="请输入设备编号"></el-input>
+        </el-col>
+        <el-col :span="3" :push="1">设备位置</el-col>
+        <el-col :span="8" :push="1">
+          <el-input v-model="formData.lockaddr" clearable placeholder="请输入设备位置"></el-input>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">绑定房间</el-col>
         <el-col :span="7">
-          <el-input v-model="formData.roomid" placeholder="请输入绑定房间"></el-input>
+          <el-input v-model="formData.roomid" clearable placeholder="请输入绑定房间"></el-input>
         </el-col>
       </el-row>
     </el-card>
     <el-card class="page-content">
       <div slot="header" class="clearfix">
         <span class="headerTitle">密钥管理</span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="dialogTableVisible = true">新增+</el-button>
+        <el-button style="float: right; padding: 3px 0" type="text" @click="handleOpenAddPw">新增+</el-button>
       </div>
       <el-table :data="formData.tUseInfoList" style="width: 100%" :row-key="rowKey">
         <el-table-column prop="pwtype" label="密码类型">
@@ -48,16 +52,24 @@
           </template>
         </el-table-column>
         <el-table-column prop="username" label="用户名"></el-table-column>
-        <el-table-column prop="validate" label="有效时间"></el-table-column>
-        <el-table-column prop="gateid" label="添加源"></el-table-column>
-        <el-table-column prop="gateid" label="状态"></el-table-column>
+        <el-table-column prop="validate" label="有效时间" min-width="120"></el-table-column>
+        <el-table-column prop="changetype" label="状态">
+          <template slot-scope="scope">{{changetypeStr[scope.row.changetype]}}
+          </template>
+        </el-table-column>
+        <el-table-column prop="changetime" label="创建时间" min-width="120">
+          <template slot-scope="scope">{{scope.row.changetime ? $moment(scope.row.changetime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : ''}}
+          </template>
+        </el-table-column>
         <el-table-column prop="registtime" label="创建时间" min-width="120">
           <template slot-scope="scope">{{scope.row.registtime ? $moment(scope.row.registtime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : ''}}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
           <template slot-scope="scope">
-            <el-button type="text" @click="handlePwStats(scope.row)">{{scope.row.disstatus === '2' ? '禁用' : '启用'}}</el-button>
+            <el-button type="text" @click="handlePwStats(scope.row)" :disabled="scope.row.changetype !== '1' && scope.row.changetype !== '3'">
+              {{scope.row.changetype === '1' ? '禁用' : (scope.row.changetype === '3' ? '启用' : changetypeStr[scope.row.changetype])}}
+            </el-button>
             <el-button type="text" @click="handleDelPw(scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -78,15 +90,20 @@
           <el-select v-model="form.pwtype" placeholder="请选择密码类型">
             <el-option label="密码用户" value="00"></el-option>
             <el-option label="临时密码" value="01"></el-option>
-            <el-option label="指纹用户" value="02"></el-option>
-            <el-option label="卡片用户" value="03"></el-option>
+            <el-option label="卡片用户" value="02"></el-option>
+            <el-option label="指纹用户" value="03"></el-option>
+            <el-option label="身份证用户" value="04"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="form.pwtype === '03' ? '卡号' : '密码'" :label-width="formLabelWidth">
-          <el-input v-model="form.pwd" auto-complete="off" class="dialog-input"></el-input>
+        <el-form-item :label="form.pwtype === '03' ? '卡号' : '密码'" :label-width="formLabelWidth" v-if="form.pwtype !== '03'">
+          <el-input v-model="form.pwd" clearable :maxlength="pwtypeStr[form.pwtype]" class="dialog-input"></el-input> 
+          <span v-if="form.pwtype">*长度必须为{{pwtypeStr[form.pwtype]}}位</span>
         </el-form-item>
         <el-form-item label="时限" :label-width="formLabelWidth">
-          <el-input v-model="form.validate" auto-complete="off" class="dialog-input"></el-input>
+          <el-time-picker
+            v-model="form.validate"
+            placeholder="选择时间">
+          </el-time-picker>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -103,6 +120,18 @@ export default {
   },
   data () {
     return {
+      changetypeStr: {
+        '0': '启用中',
+        '1': '已启用',
+        '2': '禁用中',
+        '3': '已禁用'
+      },
+      pwtypeStr: {
+        '00': 6,
+        '01': 6,
+        '02': 8,
+        '04': 16,
+      },
       formLabelWidth: '120px',
       form: {
       },
@@ -130,6 +159,10 @@ export default {
     }
   },
   methods: {
+    handleOpenAddPw () {
+      this.dialogTableVisible = true
+      this.form = {}
+    },
     handleDelPw (row) {
       this.$confirm('确认删除该密码？', '提示', {
         confirmButtonText: '确定',
@@ -156,7 +189,7 @@ export default {
       })
     },
     handlePwStats (row) {
-      row.disstatus = row.disstatus === '1' ? '2' : '1'
+      row.changetype = row.changetype === '0' ? '2' : '0'
       Site.http.put(`/admin/tUserInfo/${row.id}`, row, data => {
         if (data.errno === 0) {
           this.$message({
@@ -168,10 +201,39 @@ export default {
       })
     },
     handleAddPw () {
-      this.form.rsv1 = '0'
+      if (!this.form.username) {
+        this.$message({
+          message: '请输入用户名',
+          type: 'warning'
+        })
+        return
+      }
+      if (!this.form.usertype) {
+        this.$message({
+          message: '请选择用户类型',
+          type: 'warning'
+        })
+        return
+      }
+      if (!this.form.pwtype) {
+        this.$message({
+          message: '请选择密码类型',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.form.pwd.length !== this.pwtypeStr[this.form.pwtype]) {
+        this.$message({
+          message: '密码长度不正确',
+          type: 'warning'
+        })
+        return
+      }
       this.form.pwd = this.form.pwd || '888888'
       this.form.lockid = this.curId
       this.form.rsv1 = this.formData.gateid
+      this.form.changetype = '0'
+      this.form.validate = this.$moment(this.formData.validate).format('YYYY-MM-DD HH:mm:ss')
       Site.http.post('/admin/tUserInfo', this.form, data => {
         if (data.errno === 0) {
           this.$message({

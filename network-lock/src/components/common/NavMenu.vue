@@ -18,7 +18,7 @@
           <template slot="title">
             <i class="el-icon-printer"></i>设备管理
           </template>
-          <el-menu-item index="2-1" @click="goView('/lock')">门锁</el-menu-item>
+          <el-menu-item index="2-1" @click="goView('/lock')">锁具</el-menu-item>
           <el-menu-item index="2-2" @click="goView('/gateway')">网关</el-menu-item>
         </el-submenu>
         <el-menu-item index="3" @click="goView('/userManage')">
@@ -30,7 +30,7 @@
           </template>
           <el-menu-item index="5-1" @click="goView('/deviceLog/deviceUnlock')">开锁记录</el-menu-item>
           <el-menu-item index="5-2" @click="goView('/deviceLog/deviceWarning')">告警记录</el-menu-item>
-          <el-menu-item index="5-3" @click="goView('/deviceLog/deviceUserUpdate')">操作记录</el-menu-item>
+          <!-- <el-menu-item index="5-3" @click="goView('/deviceLog/deviceUserUpdate')">操作记录</el-menu-item> -->
         </el-submenu>
         <el-menu-item index="7" @click="goView('/lookforward')">
           <i class="el-icon-chat-dot-round"></i>公众号管理

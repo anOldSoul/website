@@ -38,9 +38,9 @@ const routers = [
     meta: {
       keepAlive: true,
       breadcrumb: [{
-        text: '数据统计'
+        text: '首页'
       }, {
-        text: ''
+        text: '数据统计'
       }]
     }
   }, {
@@ -50,9 +50,9 @@ const routers = [
     meta: {
       keepAlive: true,
       breadcrumb: [{
-        text: '锁具'
+        text: '设备管理'
       }, {
-        text: '列表'
+        text: '锁具'
       }]
     }
   }, {
@@ -62,9 +62,9 @@ const routers = [
     meta: {
       keepAlive: false,
       breadcrumb: [{
-        text: '锁具'
+        text: '设备管理'
       }, {
-        text: '详情'
+        text: '门锁详情'
       }]
     }
   }, {
@@ -74,7 +74,7 @@ const routers = [
     meta: {
       keepAlive: true,
       breadcrumb: [{
-        text: '锁具'
+        text: '设备管理'
       }, {
         text: '密码'
       }]
@@ -86,9 +86,9 @@ const routers = [
     meta: {
       keepAlive: true,
       breadcrumb: [{
-        text: '网关'
+        text: '设备管理'
       }, {
-        text: '列表'
+        text: '网关'
       }]
     }
   }, {
@@ -98,9 +98,9 @@ const routers = [
     meta: {
       keepAlive: false,
       breadcrumb: [{
-        text: '网关'
+        text: '设备管理'
       }, {
-        text: '详情'
+        text: '网关详情'
       }]
     }
   }, {
@@ -111,8 +111,6 @@ const routers = [
       keepAlive: true,
       breadcrumb: [{
         text: '公寓管理'
-      }, {
-        text: ''
       }]
     }
   }, {
@@ -122,21 +120,21 @@ const routers = [
     meta: {
       keepAlive: false,
       breadcrumb: [{
-        text: '公寓信息'
+        text: '公寓管理'
       }, {
-        text: ''
+        text: '公寓信息'
       }]
     }
   }, {
-    path: '/room/detail/:id/:apartmentid',
+    path: '/room/detail/:id/:apartmentid/:floor',
     name: 'RoomDetail',
     component: RoomDetail,
     meta: {
       keepAlive: false,
       breadcrumb: [{
-        text: '房间信息'
+        text: '公寓管理'
       }, {
-        text: ''
+        text: '房间信息'
       }]
     }
   }, {
@@ -146,9 +144,9 @@ const routers = [
     meta: {
       keepAlive: false,
       breadcrumb: [{
-        text: '租客信息'
+        text: '公寓管理'
       }, {
-        text: ''
+        text: '租客信息'
       }]
     }
   }, {
@@ -158,9 +156,9 @@ const routers = [
     meta: {
       keepAlive: true,
       breadcrumb: [{
-        text: '开锁记录'
+        text: '设备日志'
       }, {
-        text: ''
+        text: '开锁记录'
       }]
     }
   }, {
@@ -170,9 +168,9 @@ const routers = [
     meta: {
       keepAlive: true,
       breadcrumb: [{
-        text: '告警记录'
+        text: '设备日志'
       }, {
-        text: ''
+        text: '告警记录'
       }]
     }
   }, {
@@ -182,9 +180,9 @@ const routers = [
     meta: {
       keepAlive: true,
       breadcrumb: [{
-        text: '用户变更'
+        text: '设备日志'
       }, {
-        text: ''
+        text: '操作记录'
       }]
     }
   }, {
@@ -194,9 +192,9 @@ const routers = [
     meta: {
       keepAlive: true,
       breadcrumb: [{
-        text: '系统日志'
+        text: '系统管理'
       }, {
-        text: ''
+        text: '系统日志'
       }]
     }
   }, {
@@ -206,9 +204,9 @@ const routers = [
     meta: {
       keepAlive: true,
       breadcrumb: [{
-        text: '管理员管理'
+        text: '系统管理'
       }, {
-        text: ''
+        text: '管理员信息'
       }]
     }
   }, {
@@ -218,9 +216,9 @@ const routers = [
     meta: {
       keepAlive: true,
       breadcrumb: [{
-        text: '角色管理'
+        text: '系统管理'
       }, {
-        text: ''
+        text: '角色信息'
       }]
     }
   }, {
@@ -242,9 +240,7 @@ const routers = [
     meta: {
       keepAlive: true,
       breadcrumb: [{
-        text: '用户管理'
-      }, {
-        text: ''
+        text: '租客管理'
       }]
     }
   }, {

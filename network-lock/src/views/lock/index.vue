@@ -7,13 +7,28 @@
       <el-form class="form" label-width="86px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="锁具名称">
+            <el-form-item label="名称">
               <el-input v-model="searchModel.lockname" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="锁具编号">
+            <el-form-item label="编号">
               <el-input v-model="searchModel.lockid" clearable @change="handleSearchChange"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="绑定网关">
+              <el-input v-model="searchModel.gateid" clearable @change="handleSearchChange"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="绑定房间">
+              <el-input v-model="searchModel.roomname" clearable @change="handleSearchChange"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="故障状态">
+              <el-input v-model="searchModel.faultstat" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6" :push="2">
@@ -23,13 +38,19 @@
       </el-form>
     </div>
     <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
-      <el-table-column prop="lockname" label="锁具名称"></el-table-column>
-      <el-table-column prop="lockid" label="锁具编号"></el-table-column>
-      <el-table-column prop="lockaddr" label="锁具位置"></el-table-column>
+      <el-table-column prop="lockid" label="编号" width="70"></el-table-column>
+      <el-table-column prop="lockname" label="名称" width="170"></el-table-column>
+      <el-table-column prop="lockaddr" label="位置" width="170"></el-table-column>
       <el-table-column prop="gateid" label="绑定网关"></el-table-column>
-      <el-table-column prop="roomid" label="绑定房间"></el-table-column>
-      <el-table-column prop="bindingstat" label="绑定状态">
-        <template slot-scope="scope">{{bindStr[scope.row.bindingstat]}}</template>
+      <el-table-column prop="roomname" label="绑定房间"></el-table-column>
+      <el-table-column prop="faultstat" label="故障状态">
+        <template slot-scope="scope"><span :style="{'color': scope.row.faultstat === '00' ? 'green' : 'red'}">{{connectStr[scope.row.faultstat]}}</span></template>
+      </el-table-column>
+      <el-table-column prop="connetnstat" label="联网状态">
+        <template slot-scope="scope"><span :style="{'color': scope.row.connetnstat === '00' ? 'green' : 'red'}">{{connectStr[scope.row.connetnstat]}}</span></template>
+      </el-table-column>
+      <el-table-column prop="updatetime" label="最后通讯时间" width="150">
+        <template slot-scope="scope">{{$moment(scope.row.updatetime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss')}}</template>
       </el-table-column>
       <el-table-column label="操作" width="200" class-name="cell-cneter" fixed="right">
         <template slot-scope="scope">
@@ -57,9 +78,9 @@ export default {
   },
   data () {
     return {
-      bindStr: {
-        '1': '锁具与网关已绑定',
-        '0': '锁具与网关已解绑'
+      connectStr: {
+        '00': '正常',
+        '01': '故障'
       },
       tableData: [], // 必须
       dataCount: 0, // 必须

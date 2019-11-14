@@ -9,7 +9,7 @@
 		  <el-row>
 		    <el-col :span="3">网关编号</el-col>
 		    <el-col :span="15">
-          <el-input v-model="formData.gateid" placeholder="请输入网关编号"></el-input>
+          <el-input v-model="formData.gateid" disabled placeholder="请输入网关编号"></el-input>
 		    </el-col>
 		  </el-row>
 		  <el-row>

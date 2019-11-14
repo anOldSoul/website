@@ -6,17 +6,22 @@
     <div class="flex search-box">
       <el-form class="form" label-width="86px">
         <el-row>
-          <el-col :span="8">
+          <el-col :span="7">
             <el-form-item label="租户名">
               <el-input v-model="searchModel.rentusername" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="7">
             <el-form-item label="手机号">
               <el-input v-model="searchModel.renttel" clearable @change="handleSearchChange"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6" :push="2">
+          <el-col :span="7">
+            <el-form-item label="授权房间">
+              <el-input v-model="searchModel.checkimroom" clearable @change="handleSearchChange"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="3" :push="2">
             <el-button type="primary" icon="el-icon-search" @click="handleSearchChange">查询</el-button>
           </el-col>
         </el-row>
