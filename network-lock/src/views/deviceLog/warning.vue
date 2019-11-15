@@ -21,7 +21,8 @@
     </div>
     <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
       <el-table-column prop="warndesc" label="告警类型"></el-table-column>
-      <el-table-column prop="lockid" label="设备名称"></el-table-column>
+      <el-table-column prop="rsv1" label="设备名称"></el-table-column>
+      <el-table-column prop="gateid" label="网关编号"></el-table-column>
       <el-table-column prop="lockid" label="设备编号"></el-table-column>
       <el-table-column prop="roomname" label="绑定房间"></el-table-column>
       <el-table-column prop="uploadtime" label="告警时间">
@@ -84,7 +85,7 @@ export default {
     handleSearchChange () {
       this.searchModel.pageNo = 1
       this.fetchData()
-      this.getCount()
+      // this.getCount()
     }
   },
   mounted: function () {

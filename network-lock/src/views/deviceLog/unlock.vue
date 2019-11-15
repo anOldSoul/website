@@ -22,6 +22,7 @@
     <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
       <el-table-column prop="lockid" label="设备编号"></el-table-column>
       <el-table-column prop="lockname" label="门锁名称"></el-table-column>
+      <el-table-column prop="rsv1" label="网关编号"></el-table-column>
       <el-table-column prop="bingdingroom" label="绑定房间"></el-table-column>
       <el-table-column prop="userid" label="开锁用户"></el-table-column>
       <el-table-column prop="usertype" label="用户类型">

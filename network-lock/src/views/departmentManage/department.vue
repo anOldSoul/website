@@ -35,7 +35,7 @@
                     <el-tooltip placement="bottom" effect="light">
                       <div slot="content">
                         <div><el-button type="text" class="edit-room" @click="editRoom(room.roomid)">编辑房间</el-button></div>
-                        <div><el-button type="text" class="edit-room" @click="editCustome(room.rentid)">租客信息</el-button></div>
+                        <div v-if="room.rentid"><el-button type="text" class="edit-room" @click="editCustome(room.rentid)">租客信息</el-button></div>
                         <div><el-button type="text" class="edit-room" @click="delRoom(room.roomid)">删除房间</el-button></div>
                       </div>
                       <el-button type="text" style="float: right; padding: 3px 0"><i class="el-icon-more"></i></el-button>
@@ -98,7 +98,7 @@ export default {
   methods: {
     handleAddRoom () {
       this.$router.push({
-        path: `room/detail/add/${this.arpartments[this.selectApartIndex].apartmentid}`
+        path: `room/detail/add/${this.arpartments[this.selectApartIndex].apartmentid}/${this.arpartments[this.selectApartIndex].floor}`
       })
     },
     selectApart (index,  id) {

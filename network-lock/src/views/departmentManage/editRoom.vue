@@ -36,10 +36,10 @@
             <el-option label="空置" value="03"></el-option>
           </el-select>
         </el-col>
-        <el-col :span="2" :push="1">管理员</el-col>
+    <!--     <el-col :span="2" :push="1">管理员</el-col>
         <el-col :span="5" :push="1">
           <el-input v-model="formData.manager" placeholder="请输入管理员"></el-input>
-        </el-col>
+        </el-col> -->
       </el-row>
       <el-row>
 

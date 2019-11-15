@@ -28,7 +28,10 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="故障状态">
-              <el-input v-model="searchModel.faultstat" clearable @change="handleSearchChange"></el-input>
+              <el-select v-model="searchModel.faultstat" clearable placeholder="">
+                <el-option label="正常" value="00"></el-option>
+                <el-option label="故障" value="01"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="6" :push="2">

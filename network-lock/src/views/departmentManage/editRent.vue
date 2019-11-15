@@ -46,7 +46,11 @@
       <el-row>
         <el-col :span="3">入住时间</el-col>
         <el-col :span="15">
-          <el-input v-model="formData.checkintime" placeholder="请输入入住时间"></el-input>
+          <el-date-picker @change="onchange"
+            v-model="formData.checkintime"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
         </el-col>
       </el-row>
       <el-row>
@@ -56,9 +60,16 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3">授权房间</el-col>
-        <el-col :span="15">
-          <el-input v-model="formData.checkimroom" placeholder="请输入授权房间"></el-input>
+        <el-col :span="3">授权公寓</el-col>
+        <el-col :span="5">
+          <el-select v-model="formData.rsv1" @change="onchangeDepart" clearable placeholder="请选择公寓">
+            <el-option :label="item.apartmentname" :value="item.apartmentid" v-for="item in arpartments" :key="item.apartmentid"></el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="8">
+          <el-select v-model="formData.checkimroom" filterable clearable placeholder="请选择授权房间">
+            <el-option :label="item.roomname" :value="item.roomid" v-for="item in rooms" :key="item.roomid"></el-option>
+          </el-select>
         </el-col>
       </el-row>
 <!--       <el-row>
@@ -77,7 +88,13 @@ export default {
   },
   data () {
     return {
+      apartmentid: '',
+      rooms: [],
+      arpartments: [],
       formData: {
+        checkintime: '',
+        checkimroom: 6,
+        rsv1: ''
       }
     }
   },
@@ -95,6 +112,27 @@ export default {
     }
   },
   methods: {
+    onchangeDepart () {
+      this.formData.checkimroom = ''
+      console.log(this.formData)
+      this.getRoom()
+    },
+    getRoom () {
+      let data = {
+        apartmentid: this.formData.rsv1
+      }
+      Site.http.get('/admin/tRoomInfo/queryByApart', data, data => {
+        this.rooms = data.data
+      })
+    },
+    getApartment () {
+      Site.http.post('/admin/apartmeninfo/queryByPage', {
+        pageNo: 1,
+        pageSize: 2000
+      }, data => {
+        this.arpartments = data.data.list
+      })
+    },
     handleDelete () {
       this.$confirm('确认删除？', '提示', {
         confirmButtonText: '确定',
@@ -127,10 +165,14 @@ export default {
     getData () {
       Site.http.get(`/admin/tLockRentuser/${this.curId}`, {}, data => {
         this.formData = data.data || {}
+        this.formData.rsv1 = Number(this.formData.rsv1)
+        if (this.formData.checkimroom) {
+        this.formData.checkimroom = Number(this.formData.checkimroom)
+          this.getRoom()
+        }
       })
     },
     putData () {
-      console.log(this.formData)
       Site.http.put(`/admin/tLockRentuser/${this.curId}`, this.formData, data => {
         if (data.errno === 0) {
           this.$message({
@@ -143,6 +185,7 @@ export default {
     },
     postData () {
       this.formData.rsv1 = 0
+      this.formData.checkintime = this.$moment(this.formData.checkintime).format('YYYY-MM-DD')
       Site.http.post('/admin/tLockRentuser', this.formData, data => {
         if (data.errno === 0) {
           this.$message({
@@ -155,9 +198,10 @@ export default {
     }
   },
   mounted: function () {
+    this.getApartment ()
     if (!this.isAdd) {
       this.getData()
-    }   
+    }
   }
 }
 </script>
@@ -172,6 +216,5 @@ export default {
   margin-bottom: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 </style>

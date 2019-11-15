@@ -31,9 +31,16 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3">绑定房间</el-col>
-        <el-col :span="7">
-          <el-input v-model="formData.roomid" clearable placeholder="请输入绑定房间"></el-input>
+        <el-col :span="3">授权公寓</el-col>
+        <el-col :span="5">
+          <el-select v-model="formData.rsv1" @change="onchangeDepart" clearable placeholder="请选择公寓">
+            <el-option :label="item.apartmentname" :value="item.apartmentid" v-for="item in arpartments" :key="item.apartmentid"></el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="8">
+          <el-select v-model="formData.roomid" filterable clearable placeholder="请选择授权房间">
+            <el-option :label="item.roomname" :value="item.roomid" v-for="item in rooms" :key="item.roomid"></el-option>
+          </el-select>
         </el-col>
       </el-row>
     </el-card>
@@ -44,7 +51,7 @@
       </div>
       <el-table :data="formData.tUseInfoList" style="width: 100%" :row-key="rowKey">
         <el-table-column prop="pwtype" label="密码类型">
-          <template slot-scope="scope">{{scope.row.pwtype === '00' ? '密码用户' : (scope.row.pwtype === '01' ? '临时密码' : '指纹密码')}}
+          <template slot-scope="scope">{{pwtypeStr[scope.row.pwtype]}}
           </template>
         </el-table-column>
         <el-table-column prop="usertype" label="用户类型">
@@ -52,14 +59,15 @@
           </template>
         </el-table-column>
         <el-table-column prop="username" label="用户名"></el-table-column>
-        <el-table-column prop="validate" label="有效时间" min-width="120"></el-table-column>
+        <el-table-column label="有效时间" min-width="120">
+          <template slot-scope="scope">{{scope.row.validate ? $moment(scope.row.validate, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : ''}}
+          </template>
+        </el-table-column>
         <el-table-column prop="changetype" label="状态">
           <template slot-scope="scope">{{changetypeStr[scope.row.changetype]}}
           </template>
         </el-table-column>
-        <el-table-column prop="changetime" label="创建时间" min-width="120">
-          <template slot-scope="scope">{{scope.row.changetime ? $moment(scope.row.changetime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : ''}}
-          </template>
+        <el-table-column prop="pwd" label="密码/卡号" min-width="120">
         </el-table-column>
         <el-table-column prop="registtime" label="创建时间" min-width="120">
           <template slot-scope="scope">{{scope.row.registtime ? $moment(scope.row.registtime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : ''}}
@@ -67,7 +75,7 @@
         </el-table-column>
         <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
           <template slot-scope="scope">
-            <el-button type="text" @click="handlePwStats(scope.row)" :disabled="scope.row.changetype !== '1' && scope.row.changetype !== '3'">
+            <el-button v-if="scope.row.pwtype !== '01'" type="text" @click="handlePwStats(scope.row)" :disabled="scope.row.changetype !== '1' && scope.row.changetype !== '3'">
               {{scope.row.changetype === '1' ? '禁用' : (scope.row.changetype === '3' ? '启用' : changetypeStr[scope.row.changetype])}}
             </el-button>
             <el-button type="text" @click="handleDelPw(scope.row)">删除</el-button>
@@ -75,7 +83,7 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <el-dialog title="添加密码" :visible.sync="dialogTableVisible">
+    <el-dialog title="新增密钥" :visible.sync="dialogTableVisible">
       <el-form :model="form">
         <el-form-item label="用户名" :label-width="formLabelWidth">
           <el-input v-model="form.username" auto-complete="off" class="dialog-input"></el-input>
@@ -96,8 +104,8 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="form.pwtype === '03' ? '卡号' : '密码'" :label-width="formLabelWidth" v-if="form.pwtype !== '03'">
-          <el-input v-model="form.pwd" clearable :maxlength="pwtypeStr[form.pwtype]" class="dialog-input"></el-input> 
-          <span v-if="form.pwtype">*长度必须为{{pwtypeStr[form.pwtype]}}位</span>
+          <el-input v-model="form.pwd" clearable :maxlength="pwtypeLengthStr[form.pwtype]" class="dialog-input"></el-input> 
+          <span v-if="form.pwtype">*长度必须为{{pwtypeLengthStr[form.pwtype]}}位</span>
         </el-form-item>
         <el-form-item label="时限" :label-width="formLabelWidth">
           <el-time-picker
@@ -120,6 +128,8 @@ export default {
   },
   data () {
     return {
+      rooms: [],
+      arpartments: [],
       changetypeStr: {
         '0': '启用中',
         '1': '已启用',
@@ -127,6 +137,13 @@ export default {
         '3': '已禁用'
       },
       pwtypeStr: {
+        '00': '密码用户',
+        '01': '临时密码',
+        '02': '卡片用户',
+        '03': '指纹用户',
+        '04': '身份证用户',
+      },
+      pwtypeLengthStr: {
         '00': 6,
         '01': 6,
         '02': 8,
@@ -159,6 +176,26 @@ export default {
     }
   },
   methods: {
+    onchangeDepart () {
+      this.formData.roomid = ''
+      this.getRoom()
+    },
+    getRoom () {
+      let data = {
+        apartmentid: this.formData.rsv1
+      }
+      Site.http.get('/admin/tRoomInfo/queryByApart', data, data => {
+        this.rooms = data.data
+      })
+    },
+    getApartment () {
+      Site.http.post('/admin/apartmeninfo/queryByPage', {
+        pageNo: 1,
+        pageSize: 2000
+      }, data => {
+        this.arpartments = data.data.list
+      })
+    },
     handleOpenAddPw () {
       this.dialogTableVisible = true
       this.form = {}
@@ -189,7 +226,7 @@ export default {
       })
     },
     handlePwStats (row) {
-      row.changetype = row.changetype === '0' ? '2' : '0'
+      row.changetype = row.changetype === '1' ? '2' : '0'
       Site.http.put(`/admin/tUserInfo/${row.id}`, row, data => {
         if (data.errno === 0) {
           this.$message({
@@ -222,7 +259,7 @@ export default {
         })
         return
       }
-      if (this.form.pwd.length !== this.pwtypeStr[this.form.pwtype]) {
+      if (this.form.pwd && this.form.pwd.length !== this.pwtypeLengthStr[this.form.pwtype]) {
         this.$message({
           message: '密码长度不正确',
           type: 'warning'
@@ -288,6 +325,11 @@ export default {
         if (data.data) {
           this.formData = data.data
           this.formData.tUseInfoList = this.formData.tUseInfoList.reverse()
+          this.formData.rsv1 = Number(this.formData.rsv1)
+          if (this.formData.roomid) {
+          this.formData.roomid = Number(this.formData.roomid)
+            this.getRoom()
+          }
         }        
       })
     },
@@ -316,6 +358,7 @@ export default {
     }
   },
   mounted: function () {
+    this.getApartment ()
     if (!this.isAdd) {
       this.getData()
 

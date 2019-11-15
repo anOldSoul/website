@@ -24,10 +24,14 @@
     </div>
     <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
       <el-table-column prop="gatewayname" label="网关名称"></el-table-column>
-      <el-table-column prop="gateid" label="网关编号"></el-table-column>
+      <el-table-column prop="gateid" label="网关系统编号"></el-table-column>
       <el-table-column prop="gateaddr" label="网关位置"></el-table-column>
       <el-table-column prop="rsv2" label="到期时间">
         <template slot-scope="scope">{{$moment(scope.row.rsv2, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss')}}</template>
+      </el-table-column>
+      <el-table-column prop="rsv1" label="网关物理编号" width="220"></el-table-column>
+      <el-table-column prop="createtime" label="最后通讯时间">
+        <template slot-scope="scope">{{$moment(scope.row.createtime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss')}}</template>
       </el-table-column>
       <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
         <template slot-scope="scope">

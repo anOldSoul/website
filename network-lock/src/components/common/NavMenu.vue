@@ -4,11 +4,11 @@
       <el-menu :default-active="activeIndex" unique-opened class="el-menu-nav" background-color="#091928"
       text-color="#fff"
       active-text-color="#1faa89">
-        <div class="nav-logo">
+        <div class="nav-logo" @click="clickLogo">
           <img src="../../assets/logo.png">
         </div>
         <!-- 首页 -->
-        <el-menu-item index="6" @click="goView('/')">
+        <el-menu-item index="6">
           <i class="el-icon-pie-chart"></i>首页
         </el-menu-item>
         <el-menu-item index="1" @click="goView('/department')">
@@ -56,7 +56,7 @@ export default {
   name: 'nav-menu',
   data () {
     return {
-      activeIndex: '1-1'
+      activeIndex: '6'
     }
   },
   computed: {
@@ -64,6 +64,10 @@ export default {
   watch: {
   },
   methods: {
+    clickLogo () {
+      this.activeIndex = '6'
+      this.goView('/')
+    },
     goView: function (path) {
       this.$router.push({
         path: path
@@ -85,6 +89,7 @@ export default {
 .nav-logo {
   text-align: center;
   padding: 20px 0;
+  padding-top: 30px;
   color: #fff;
 }
 .title-badge {
