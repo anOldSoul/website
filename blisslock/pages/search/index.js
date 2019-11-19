@@ -39,18 +39,6 @@ Page({
       }
     })
   },
-  getBluetoothAdapterState() {
-    wx.getBluetoothAdapterState({
-      success: (res) => {
-        console.log('getBluetoothAdapterState', res)
-        if (res.discovering) {
-          this.onBluetoothDeviceFound()
-        } else if (res.available) {
-          this.startBluetoothDevicesDiscovery()
-        }
-      }
-    })
-  },
   startBluetoothDevicesDiscovery() {
     if (this._discoveryStarted) {
       return
@@ -74,7 +62,6 @@ Page({
       res.devices.forEach(device => {
         if (device.name.toLocaleLowerCase().indexOf('blisslock') > -1) {
           if (!deviceIdArr.includes(device.deviceId)) {
-            console.log('ppppppppppp')
             console.log(device)
             let devicesFond = {}
             deviceId = device.deviceId
@@ -114,7 +101,6 @@ Page({
     wx.createBLEConnection({
       deviceId: currentDeviceId,
       success: (res) => {
-        console.log('bbbbbbbbbbb')
         let selectName = this.data.devices[this.data.currentIndex].name
         if (selectName === 'Blisslock' || selectName === 'Blisslock006') {
           wx.setStorageSync('_deviceType', 'M6')
@@ -149,7 +135,6 @@ Page({
     wx.getBLEDeviceServices({
       deviceId,
       success: (res) => {
-        console.log(res)
         for (let i = 0; i < res.services.length; i++) {
           if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FFF0') > -1) {
             console.log(deviceId)

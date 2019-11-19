@@ -13,7 +13,7 @@ Page({
       app.util.updateDeviceList('hasUnlockRecord', '')
       wx.showModal({
         title: '提示',
-        content: '锁体中没有开锁记录数据！',
+        content: '锁体中暂无新开门记录数据',
         showCancel: false,
         success(res) {
           if (res.confirm) {

@@ -80,6 +80,50 @@ const getBLEDeviceServices = (deviceId, funcKey) => {
     }
   })
 }
+const openBluetoothAdapter = (resolve, reject) => {
+  wx.openBluetoothAdapter({
+    success: (res) => {
+      console.log('openBluetoothAdapter success', res)
+      startBluetoothDevicesDiscovery(resolve, reject)
+    },
+    fail: (res) => {
+      if (res.errCode === 10001) {
+        wx.onBluetoothAdapterStateChange(function (res) {
+          console.log('onBluetoothAdapterStateChange', res)
+          if (res.available) {
+            startBluetoothDevicesDiscovery(resolve, reject)
+          }
+        })
+      }
+    }
+  })
+}
+const startBluetoothDevicesDiscovery = (resolve, reject) => {
+  // if (this._discoveryStarted) {
+  //   return
+  // }
+  // this._discoveryStarted = true
+  wx.startBluetoothDevicesDiscovery({
+    allowDuplicatesKey: true,
+    success: (res) => {
+      console.log('startBluetoothDevicesDiscovery success', res)
+      onBluetoothDeviceFound(resolve, reject)
+    },
+  })
+}
+const onBluetoothDeviceFound = (resolve, reject) => { 
+  let devices = []
+  let deviceIdArr = []
+  wx.onBluetoothDeviceFound((res) => {
+    res.devices.forEach(device => {
+      let tempdeviceid = wx.getStorageSync('_deviceId') || getDeviceItem('_deviceId')
+      if (device.deviceId === tempdeviceid) {
+        wx.stopBluetoothDevicesDiscovery()
+        resolve()
+      }
+    })
+  })
+}
 const closeConnection = () => {
   wx.hideLoading()
   wx.closeBLEConnection({
@@ -113,6 +157,11 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
           title = '连接超时，请重试'
         } else if (errCode === 10000) {
           title = '连接蓝牙失败，请重新绑定'
+          new Promise((resolve1, reject) => {
+            openBluetoothAdapter(resolve1, reject)
+          }).then(() => {
+            doBLEConnection(funcKey, resolve, pwAdded)
+          })
         } else {
           title = '连接失败，请重试'
         }
@@ -146,14 +195,11 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
   func.airQuality = false
   if (funcKey) {
     func[funcKey] = true
-    // console.log(funcKey)
-    // console.log(func)
   }
   wx.getBLEDeviceCharacteristics({
     deviceId,
     serviceId,
     success: (res) => {
-      console.log(res)
       for (let i = 0; i < res.characteristics.length; i++) {
         let item = res.characteristics[i]
         if (item.properties.read && item.uuid.indexOf('0000FFF3') > -1) {
@@ -181,7 +227,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
           writeBle(hex)
         }
         if ((item.properties.notify || item.properties.indicate) && item.uuid.indexOf('0000FFF4') > -1) {
-          console.log('66666666666666666666666666')
           console.log(item.uuid)
           wx.notifyBLECharacteristicValueChange({
             deviceId,
@@ -189,9 +234,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
             characteristicId: item.uuid,
             state: true,
             success: function (res) {
-              console.log('~~~~~~~~~~~~~~')
-              console.log(item.uuid)
-              console.log(serviceId)
+              console.log('serviceId是' + serviceId)
               console.log('notify success', res)
             },
             fail: function (res) {
@@ -210,9 +253,8 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
   })
   // 操作之前先监听，保证第一时间获取数据
   wx.onBLECharacteristicValueChange((characteristic) => {
-    console.log('55555555555555555555555555555555555555')
-    console.log(characteristic)
-    console.log(ab2hex(characteristic.value))
+    console.log('特征值有变化。。。。。')
+    console.log('监听到变化特征值为' + ab2hex(characteristic.value))
     let value = ab2hex(characteristic.value)
     if (value.slice(-4, -2) === '11') {
       let hex
@@ -230,14 +272,14 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       writeBle(hex)
     }
     if (value.slice(-4, -2) === '23' && value.slice(0, 2) === 'aa') {
-      seedC = value.slice(8, 36)
+      wx.setStorageSync('seedC', value.slice(8, 36))
       let hex = '5512000000000000000000000000000000000000'  //seedA,获取mac
       writeBle(hex)
     }
     if (value.slice(-4, -2) === '12' && value.slice(0, 2) === 'aa') {
-      seedA = value.slice(8, 20)
+      wx.setStorageSync('seedA', value.slice(8, 20))
       let time = Moment().format('ssmmHHDDMMYY')
-      seedB = time
+      wx.setStorageSync('seedB', time)
       let hex = `55140000${time}00000000000000000000` //seedB,时间信息
       writeBle(hex)
     }
@@ -248,9 +290,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     }
     if (value.slice(-4, -2) === '16' && value.slice(0, 2) === 'aa') {
       let admPw = wx.getStorageSync('admPw')|| '123456'
-      console.log(admPw)
       let pw = strToHexCharCode(admPw)
-      console.log(pw)
       if (pw.length < 24) {
         for (let i = pw.length; i < 24; i++) {
           pw = pw + '0'
@@ -314,20 +354,17 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       })
     }
     if (value.slice(-4, -2) === 'b0' && value.slice(0, 2) === 'aa') {
-      console.log('绑定成功~~~~~~~~~~~~')      
+      console.log('绑定成功')      
       wx.redirectTo({
         url: '/pages/deviceName/index',
       })
     }
     if (value.slice(-4, -2) === '1f' && value.slice(0, 2) === 'aa') {
-      console.log('删除密码成功~~~~~~~~~~~~')
+      console.log('删除密码成功')
       let tempData = getDeviceItem('pwData')
-      // console.log(tempData)
       let str = getDeviceItem('delPassId')
-      // console.log(str)
       let index = tempData.indexOf(str)
       tempData = tempData.substring(0, index) + tempData.substring(index + 8, tempData.length)
-      // console.log(tempData)
       updateDeviceList('pwData', tempData)
       updateDeviceList('delPw', value.slice(2, 4))
       closeConnection()
@@ -336,11 +373,9 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       })
     }
     if (value.slice(-4, -2) === '21' && value.slice(0, 2) === 'aa') {
-      console.log('删除指纹成功~~~~~~~~~~~~')
+      console.log('删除指纹成功')
       let tempData = getDeviceItem('fingerData')
-      // console.log(tempData)
       let str = getDeviceItem('delFingerId')
-      // console.log(str)
       let index = tempData.indexOf(str)
       tempData = tempData.substring(0, index) + tempData.substring(index + 8, tempData.length)
       updateDeviceList('fingerData', tempData)
@@ -365,8 +400,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       writeBle(hex)
     }
     if (value.slice(-4, -2) === '15' && value.slice(0, 2) === 'aa') {
-      key = seedA + seedC + rtc + seedB
-      // console.log('key' + key)
+      key = wx.getStorageSync('seedA') + wx.getStorageSync('seedC') + rtc + wx.getStorageSync('seedB')
       let orgPackageData = '08805678';
       for (let i = 0; i < 8; i++) {
         orgPackageData += "00";
@@ -458,15 +492,10 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         dataKey = 'fingerData'
       }
       pwData = getDeviceItem(dataKey) || ''
-      // console.log('ttttttttttttttttttttttttttttttt')
-      // console.log(onChangePw)
       if ((onChangePw.onPwListLen) < onChangePw.pageNum && onChangePw.onPwList) {
         pwData = pwData + value.slice(4, 40)
-        // console.log(dataKey)
-        // console.log(pwData)
         updateDeviceList(dataKey, pwData)
         onChangePw.onPwListLen ++
-        // console.log(onChangePw)
         if (onChangePw.onPwListLen === onChangePw.pageNum) {
           let result = pwData.slice(0, bytesToIntLe(hexToBytes(onChangePw.hexLen)) / 4 * 8)
           updateDeviceList(dataKey, result)
@@ -512,8 +541,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         let validDate = pwNeedToAdd.validDate
         let hex = ''
         let time = Moment().format('ssmmHHDDMMYY')
-        // console.log(userType)
-        // console.log(pwNeedToAdd.validDate)
         if (userType === '0' && validDate) {  //设置时效
           let validTime = Moment(validDate, 'YYYY-MM-DD HHmm').format('00mmHHDDMMYY')
           hex = `55360000${time}${validTime}00000000`
@@ -540,8 +567,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         let validDate = pwNeedToAdd.validDate
         let hex = ''
         let time = Moment().format('ssmmHHDDMMYY')
-        // console.log(userType)
-        // console.log(pwNeedToAdd.validDate)
         if (userType === '0' && validDate) {  //设置时效
           let validTime = Moment(validDate, 'YYYY-MM-DD HHmm').format('00mmHHDDMMYY')
           hex = `55360000${time}${validTime}00000000`
@@ -605,15 +630,13 @@ const getCheckSum = (data) => {
   return ret;
 }
 const writeBle = (hex, funcKey = '') => {
-  console.log('写。。。。。。。。。。。')
-  console.log(hex)
+  console.log('写数据为：' + hex)
   if (hex === '5520000000000000000000000000000000000000') {
     wx.redirectTo({
       url: `/pages/activateFinger/index`
     })
   }
   func[funcKey] = true
-  console.log(func)
   var typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
     return parseInt(h, 16)
   }))
@@ -626,9 +649,6 @@ const writeBle = (hex, funcKey = '') => {
     characteristicId: wx.getStorageSync('_characteristicId') || getDeviceItem('_characteristicId'),
     value: buffer1,
     success: function (res) {
-      console.log('写入的_deviceId为' + wx.getStorageSync('_deviceId'))
-      console.log('写入的_serviceId为' + wx.getStorageSync('_serviceId'))
-      console.log('写入的_characteristicId为' + wx.getStorageSync('_characteristicId'))
       console.log('writeBLECharacteristicValue success', res.errMsg)
     },
     fail: function (res) {
@@ -731,14 +751,10 @@ const crypt = (key, data) =>{
 }
 const generate3MinToSecond = () => {
   let myDate = new Date();
-  // console.log(myDate)
   let now = myDate.getTime() / (1000);
-  // console.log(now)
   let begin = 0;
   let newDate = ('2000-01-01 00:00:00').replace(/-/g, '/');
   begin = (new Date(newDate).getTime()) / 1000;
-  // console.log(begin)
-  // console.log(now - begin)
   return parseInt((now - begin) / 180);
 }
 //regino 生成密码算法
