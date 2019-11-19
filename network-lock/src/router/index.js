@@ -296,7 +296,7 @@ const router = new Router({
 })
 router.beforeEach((to, from, next) => {
   console.log(store.state.hasLoad)
-  if (to.path.indexOf('login') > -1 || store.state.hasLoad) {
+  if (to.path.indexOf('login') > -1 || to.path.indexOf('platform') > -1) {
     next()
   } else {
     Site.http.post('/admin-rest/auth/login', {

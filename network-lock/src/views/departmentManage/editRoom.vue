@@ -77,7 +77,7 @@
             </el-tooltip>            
             <div class="bottom clearfix">
               <div class="propertie">电量：<span :style="{ color: device.electricity > 30 ? 'green' : 'red'}">{{ device.electricity || 0 }}%</span></div>
-              <div class="propertie">连网状态：<span :style="{ color: device.connetnstat === '1' ? 'green' : 'red'}">{{device.connetnstat === '1' ? '已连接' : '断开'}}</span></div>
+              <div class="propertie">连网状态：<span :style="{ color: device.connetnstat === '00' ? 'green' : 'red'}">{{device.connetnstat === '00' ? '已连接' : '断开'}}</span></div>
               <!-- <div class="propertie">闭合状态：{{device.closestat === '1' ? '已闭合' : '未闭合'}}</div> -->
               <div class="propertie">故障情况：<span :style="{ color: device.faultstat === '1' ? 'red' : 'green'}">{{device.faultstat === '1' ? '有故障' : '无故障'}}</span></div>              
             </div>
@@ -285,7 +285,7 @@ export default {
     this.getApartment()
     if (!this.isAdd) {
       this.getData()
-    }   
+    }
   }
 }
 </script>
