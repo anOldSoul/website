@@ -1,15 +1,8 @@
 const Moment = require('./moment.min.js')
-const Encrypt = require("./getEncryptBytes.js");
+const Encrypt = require("./getEncryptBytes.js")
+const Format = require("./format.js")
 let rtc, seedA, seedB, seedC, key, decodedPackageData
-const getRandomStr = (total) => {
-  let random = ''
-  for (let i = 0; i < total; i++) {
-    random = random + Math.floor(Math.random() * 10)
-  }
-  return random
-}
 
-let bindCode = getRandomStr(8)
 let hasUnlockRecord = ''
 var pwNeedToAdd = {}
 let func = {
@@ -31,17 +24,6 @@ let onChangePw = {
   onPwListLen: 0
 }
 
-
-const formatTime = date => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
-
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
-}
 const getDeviceItem = (key) => {
   let currentDeviceIndex = wx.getStorageSync('currentDeviceIndex')
   let deviceList = wx.getStorageSync('deviceList')
@@ -56,16 +38,7 @@ const updateDeviceList = (key, value) => {
   currentItem[key] = value
   wx.setStorageSync('deviceList', deviceList)
 }
-const formatNumber = n => {
-  n = n.toString()
-  return n[1] ? n : '0' + n
-}
-const getQueryString = (url, name) => {
-  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-  var r = url.match(reg);
-  if (r != null) return unescape(r[2]);
-  return null;
-}
+
 const getBLEDeviceServices = (deviceId, funcKey) => {
   wx.getBLEDeviceServices({
     deviceId,
@@ -99,10 +72,6 @@ const openBluetoothAdapter = (resolve, reject) => {
   })
 }
 const startBluetoothDevicesDiscovery = (resolve, reject) => {
-  // if (this._discoveryStarted) {
-  //   return
-  // }
-  // this._discoveryStarted = true
   wx.startBluetoothDevicesDiscovery({
     allowDuplicatesKey: true,
     success: (res) => {
@@ -151,34 +120,35 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
       if (wx.getStorageSync('isConnecting')) {
         let errCode = res.errCode
         let title = ''
-        if (errCode === 10003) {
-          title = '等待超时，请重试'
-        } else if (errCode === 10012) {
-          title = '连接超时，请重试'
-        } else if (errCode === 10000) {
-          title = '连接蓝牙失败，请重新绑定'
+        if (errCode === 10000) {
           new Promise((resolve1, reject) => {
             openBluetoothAdapter(resolve1, reject)
           }).then(() => {
             doBLEConnection(funcKey, resolve, pwAdded)
           })
         } else {
-          title = '连接失败，请重试'
-        }
-        wx.showModal({
-          title: '提示',
-          content: title,
-          showCancel: false,
-          success(res) {
-            if (res.confirm) {
-              wx.navigateBack({
-                delta: 1
-              })
-            } else if (res.cancel) {
-              console.log('用户点击取消')
-            }
+          if (errCode === 10003) {
+            title = '等待超时，请重试'
+          } else if (errCode === 10012) {
+            title = '连接超时，请重试'
+          } else {
+            title = '连接失败，请重试'
           }
-        })
+          wx.showModal({
+            title: '提示',
+            content: title,
+            showCancel: false,
+            success(res) {
+              if (res.confirm) {
+                wx.navigateBack({
+                  delta: 1
+                })
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
       }
     }
   })
@@ -254,8 +224,8 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
   // 操作之前先监听，保证第一时间获取数据
   wx.onBLECharacteristicValueChange((characteristic) => {
     console.log('特征值有变化。。。。。')
-    console.log('监听到变化特征值为' + ab2hex(characteristic.value))
-    let value = ab2hex(characteristic.value)
+    console.log('监听到变化特征值为' + Format.ab2hex(characteristic.value))
+    let value = Format.ab2hex(characteristic.value)
     if (value.slice(-4, -2) === '11') {
       let hex
       if (funcKey && func[funcKey]) {
@@ -290,7 +260,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     }
     if (value.slice(-4, -2) === '16' && value.slice(0, 2) === 'aa') {
       let admPw = wx.getStorageSync('admPw')|| '123456'
-      let pw = strToHexCharCode(admPw)
+      let pw = Format.strToHexCharCode(admPw)
       if (pw.length < 24) {
         for (let i = pw.length; i < 24; i++) {
           pw = pw + '0'
@@ -300,7 +270,9 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       writeBle(hex)
     }
     if (value.slice(-4, -2) === '31' && value.slice(0, 2) === 'aa') {
-      let hex = `55320000${strToHexCharCode(bindCode)}0000000000000000`  //设置绑定码
+      wx.setStorageSync('bindCode', Format.getRandomStr(8)) //获取8位随机数
+      console.log('bindCode为qqqqqqqqqqqqqqqqq:' + Format.getRandomStr(8))
+      let hex = `55320000${Format.strToHexCharCode(wx.getStorageSync('bindCode'))}0000000000000000`  //设置绑定码
       writeBle(hex)
     }
     if (value.slice(-4, -2) === '32' && value.slice(0, 2) === 'aa') {
@@ -392,7 +364,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     if (value.slice(-4, -2) === '36' && value.slice(0, 2) === 'aa') {
       let hex = ''     
       if (pwNeedToAdd.pw) {
-        let pw = formatPw(pwNeedToAdd.pw)
+        let pw = Format.formatPw(pwNeedToAdd.pw)
         hex = `551D0000${pw}01000000`        
       } else {
         hex = '5520000000000000000000000000000001000000'
@@ -406,19 +378,15 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         orgPackageData += "00";
       }
       let cmd = 'logind';
-      let command = strToHexCharCode(cmd);
+      let command = Format.strToHexCharCode(cmd);
       orgPackageData += command;
       orgPackageData += "000000010116000000010146";
-      // console.log(orgPackageData)
       //计算checksum
-      let checksum = getCheckSum(hexToBytes(orgPackageData));
-      // console.log('checksum' + checksum)
+      let checksum = Format.getCheckSum(Format.hexToBytes(orgPackageData));
       //写入checksum
-      orgPackageData += bytes2Str(shortToBytesLe(checksum));
-      // console.log('orgPackageData@@@' + orgPackageData)
+      orgPackageData += Format.bytes2Str(Format.shortToBytesLe(checksum));
       //加密
-      decodedPackageData = bytes2Str(crypt(hexToBytes(key), hexToBytes(orgPackageData)));
-      // console.log('decodedPackageData' + decodedPackageData)
+      decodedPackageData = Format.bytes2Str(Encrypt.crypt(Format.hexToBytes(key), Format.hexToBytes(orgPackageData)));
       let hex = `a800${decodedPackageData.slice(0, 36)}`
       writeBle(hex)
     }
@@ -456,7 +424,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         updateDeviceList('fingerData', '')
       }
       onChangePw.hexLen = value.slice(4, 8)      
-      let len = bytesToIntLe(hexToBytes(onChangePw.hexLen))
+      let len = Format.bytesToIntLe(Format.hexToBytes(onChangePw.hexLen))
       console.log('数量为：' + len)
       if (len > 0) {
         //原包返回，接收数据包
@@ -497,7 +465,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         updateDeviceList(dataKey, pwData)
         onChangePw.onPwListLen ++
         if (onChangePw.onPwListLen === onChangePw.pageNum) {
-          let result = pwData.slice(0, bytesToIntLe(hexToBytes(onChangePw.hexLen)) / 4 * 8)
+          let result = pwData.slice(0, Format.bytesToIntLe(Format.hexToBytes(onChangePw.hexLen)) / 4 * 8)
           updateDeviceList(dataKey, result)
           onChangePw = {
             onPwList: false,
@@ -536,7 +504,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     }
     if (value.slice(-4, -2) === '95' && value.slice(0, 2) === 'aa') {
       if (func['addPass']) {
-        let pw = formatPw(pwNeedToAdd.pw)
+        let pw = Format.formatPw(pwNeedToAdd.pw)
         let userType = pwNeedToAdd.userType
         let validDate = pwNeedToAdd.validDate
         let hex = ''
@@ -603,32 +571,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     }
   })
 }
-function formatPw(pw) {
-  let newPw = strToHexCharCode(pw)
-  if (newPw.length < 24) {
-    for (let i = newPw.length; i < 24; i++) {
-      newPw = newPw + '0'
-    }
-  }
-  return newPw
-}
-// ArrayBuffer转16进度字符串示例
-function ab2hex(buffer) {
-  var hexArr = Array.prototype.map.call(
-    new Uint8Array(buffer),
-    function (bit) {
-      return ('00' + bit.toString(16)).slice(-2)
-    }
-  )
-  return hexArr.join('');
-}
-const getCheckSum = (data) => {
-  let ret = 0;
-  for (let i = 0; i < data.length; i++) {
-    ret += data[i];
-  }
-  return ret;
-}
+
 const writeBle = (hex, funcKey = '') => {
   console.log('写数据为：' + hex)
   if (hex === '5520000000000000000000000000000000000000') {
@@ -659,145 +602,10 @@ const writeBle = (hex, funcKey = '') => {
     }
   })
 }
-const strToHexCharCode = (str) => { //ascii转16进制
-  if (str === "") {
-    return "";
-  } else {
-    var hexCharCode = [];
-    for (var i = 0; i < str.length; i++) {
-      hexCharCode.push((str.charCodeAt(i)).toString(16));
-    }
-    return hexCharCode.join("");
-  }
-}
-//字节数组转十六进制字符串
-const bytes2Str = (arr) => {
-  var str = "";
-  for (var i = 0; i < arr.length; i++) {
-    var tmp = arr[i].toString(16);
-    if (tmp.length == 1) {
-      tmp = "0" + tmp;
-    }
-    str += tmp;
-  }
-  return str;
-}
-const shortToBytesLe = (shortValue) => {
-  let arr = new Array();
-  for (let i = 0; i < 2; ++i) {
-    arr[i] = (shortValue >> i * 8 & 0xFF);
-  }
-  return arr;
-}
 
-const bytesToIntLe = (bytes) => {
-  let ret = 0;
-  for (let i = 0; i < bytes.length; ++i) {
-    ret += ((bytes[i] & 0xFF) << i * 8);
-  }
-
-  return ret;
-}
-
-//十六进制转byte数组
-const hexToBytes = (str) => {
-  var pos = 0;
-  var len = str.length;
-  if (len % 2 != 0) {
-    return null;
-  }
-  len /= 2;
-  var hexA = new Array();
-  for (var i = 0; i < len; i++) {
-    var s = str.substr(pos, 2);
-    var v = parseInt(s, 16);
-    hexA.push(v);
-    pos += 2;
-  }
-  return hexA;
-}
-//加密
-const crypt = (key, data) =>{
-  let charArray = [
-    0x9C, 0x90, 0x4E, 0xF2, 0x29, 0xD4, 0xE6, 0xD4, 0xF9, 0xBD, 0xA4, 0x33,
-    0xE5, 0x85, 0xBC, 0xA9, 0x77, 0x38, 0x93, 0x0A, 0x2B, 0xCE, 0xB0, 0x67,
-    0x53, 0x7D, 0x5D, 0x6C, 0x8A, 0x46, 0x48, 0x42, 0xB1, 0x0E, 0x99, 0x47,
-    0x45, 0x34, 0xCB, 0xCA, 0x8C, 0x37, 0x6D, 0xDC, 0xB4, 0x9D, 0x05, 0xE2,
-    0xC3, 0xAB, 0x81, 0xCB, 0xB4, 0xB4, 0x0F, 0xAF, 0xDE, 0xE8, 0xA2, 0xC2,
-    0x4F, 0x5F, 0x11, 0x50, 0x3B, 0x34, 0x2B, 0xCE, 0xB0, 0xCF, 0x16, 0x19,
-    0xE8, 0x52, 0x43, 0x03, 0x3C, 0xC2, 0xBD, 0xE2, 0x4C, 0x43, 0x55, 0x5D,
-    0x0B, 0xEF, 0x27, 0x03, 0x4B, 0x1E, 0xE0, 0x31, 0xCC, 0x54, 0x2D, 0xFB,
-    0xBC, 0x90, 0xFE, 0x2C, 0xCA, 0x9A, 0xF8, 0xC2, 0xD3, 0x36, 0x3A, 0xE3,
-    0x65, 0x8B, 0x9E, 0xB1, 0x51, 0x8F, 0xCB, 0x94, 0xE5, 0x95, 0x49, 0xBA,
-    0x36, 0xCD, 0xDC, 0xB5, 0xCD, 0xC2, 0xB3, 0x17, 0x1C, 0x31, 0xD4, 0x3D,
-    0xFB, 0x3F, 0x1D, 0xA0, 0x68, 0xF6, 0xD2, 0x84, 0x57, 0xD7, 0x54, 0xDD,
-    0xF2, 0x72, 0xE5, 0x0F, 0x56, 0x5C, 0x6A, 0xD7, 0xA6, 0x5C, 0xFB, 0xE2,
-    0x25, 0x74, 0xED, 0xA3, 0x1D, 0x31, 0x87, 0xF2, 0x37, 0x4E, 0xF3, 0xFC,
-    0x2C, 0xA2, 0x91, 0xE2, 0x7D, 0xFE, 0xB9, 0xA5, 0x77, 0x55, 0x08, 0x17,
-    0x48, 0x29, 0x2C, 0xF6, 0xD1, 0xFC, 0xC7, 0x51, 0x59, 0x27, 0x1B, 0xA4,
-    0x04, 0x95, 0xDD, 0x1B, 0xD1, 0x44, 0x28, 0xA1, 0xA6, 0xF2, 0xF5, 0xBB,
-    0x3F, 0xE4, 0xBB, 0xFA, 0xE7, 0xB8, 0x96, 0x69, 0xBA, 0x27, 0x15, 0xFF,
-    0x7C, 0xD7, 0x62, 0x54, 0xBE, 0x7E, 0x57, 0x09, 0xBF, 0x36, 0x01, 0x96,
-    0x69, 0x05, 0xF0, 0x6A, 0x2A, 0xDB, 0xDB, 0x12, 0xA2, 0x63, 0x30, 0x01,
-    0xBB, 0xF9, 0x99, 0xD2, 0xDC, 0x50, 0x96, 0xBE, 0xDA, 0x7A, 0x0A, 0x01,
-    0xCD, 0x9E, 0x03, 0xF1]
-  if (key.length != data.length) {
-    return data;
-  }
-  for (let i = 0; i < data.length; i++) {
-    data[i] = (data[i] ^ charArray[key[i] & 0xFF]);
-  }
-  return data;
-}
-const generate3MinToSecond = () => {
-  let myDate = new Date();
-  let now = myDate.getTime() / (1000);
-  let begin = 0;
-  let newDate = ('2000-01-01 00:00:00').replace(/-/g, '/');
-  begin = (new Date(newDate).getTime()) / 1000;
-  return parseInt((now - begin) / 180);
-}
-//regino 生成密码算法
-const getTempPassword = () => {
-  let bleTempBindCode = bindCode;
-  console.log("生成临时密码算法  tempbindcode = " + bleTempBindCode);
-
-  //根据绑定码生成加密密钥
-  let r = "00000000" + (parseInt(bleTempBindCode)).toString(16);
-  console.log("生成临时密码算法  r = " + r);
-  let tempHexString = r.substring(r.length - 8);
-  console.log("生成临时密码算法  tempHexString = " + tempHexString);
-  let cryptKey = bleTempBindCode + tempHexString;
-  console.log("生成临时密码算法  cryptKey = " + cryptKey);
-  let tempSecDiff = generate3MinToSecond();
-  console.log("生成临时密码算法  tempSecDiff 时间差 = " + tempSecDiff);
-  //组合生成密码
-  let tempBCD = FillZero(tempSecDiff);
-  console.log("生成临时密码算法  时间差BCD码格式 = " + tempBCD);
-  let s = "00000000" + parseInt(tempSecDiff).toString(16);  //4b62834  ->"4b62834"
-  let tempHEX = s.substring(s.length - 8);;
-  console.log("生成临时密码算法  时间差HEX格式 = " + tempHEX);
-  let cryptData = tempBCD + tempHEX;
-  console.log("生成临时密码算法  cryptData = " + cryptData);
-  let tempPwd = "";
-  let b = Encrypt.getEncryptBytes(cryptKey.trim().toUpperCase(), cryptData.trim().toUpperCase(), bleTempBindCode);
-  tempPwd = b.join("")
-  return tempPwd;
-}
-const FillZero = (p) => {
-  return new Array(8 - (p + '').length + 1).join('0') + p;
-}
 module.exports = {
-  formatTime: formatTime,
-  getQueryString: getQueryString,
-  writeBle: writeBle,
-  strToHexCharCode: strToHexCharCode,
-  bytes2Str: bytes2Str,
-  shortToBytesLe: shortToBytesLe,
-  hexToBytes: hexToBytes,
-  crypt: crypt,
   doBLEConnection: doBLEConnection,
-  getTempPassword: getTempPassword,
+  getTempPassword: Format.getTempPassword,
   getBLEDeviceCharacteristics: getBLEDeviceCharacteristics,
   updateDeviceList: updateDeviceList,
   getDeviceItem: getDeviceItem

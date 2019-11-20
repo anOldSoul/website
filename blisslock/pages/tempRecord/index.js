@@ -20,8 +20,16 @@ Page({
       })
       return
     }
+    let arr = app.util.getDeviceItem('tempPw') || []
+    arr.forEach((item, index) => {
+      item.newtime = app.Moment(item.time, 'YYYY-MM-DD HH:mm:ss').format()
+    })
+    arr.sort((a, b) => {
+      return b.newtime > a.newtime ? 1 : -1
+    })
+    console.log(arr)
     this.setData({
-      currentMonthData: app.util.getDeviceItem('tempPw')|| []
+      currentMonthData: arr
     })
   },
   handleClear: function() {
