@@ -2,9 +2,13 @@ const app = getApp()
 Page({
   data: {
     device_name: '',
-    placeholder: ''
+    placeholder: '',
+    pagetype: ''
   },
   onLoad: function (options) {
+    this.setData({
+      pagetype: options.type
+    })
     if (options.type !== 'updateName') {
       wx.showToast({
         title: '绑定成功',
@@ -24,27 +28,37 @@ Page({
     })
   },
   handleComplete: function() {
-    let deviceItem = {
-      type: wx.getStorageSync('_deviceType'),
-      device_name: this.data.device_name || this.data.placeholder,
-      _deviceId: wx.getStorageSync('_deviceId'),
-      _serviceId: wx.getStorageSync('_serviceId'),
-      _characteristicId: wx.getStorageSync('_characteristicId'),
-      admPw: wx.getStorageSync('admPw')
-    }
     let deviceList = wx.getStorageSync('deviceList') || []
-    let isExist = deviceList.find((it, index) => {
-      it.index = index
-      return (it._deviceId === wx.getStorageSync('_deviceId'))
-    })
-    if (isExist) {
-      deviceList[isExist.index]['device_name'] = deviceItem['device_name']
-      deviceList[isExist.index]['admPw'] = deviceItem['admPw']
+    if (this.data.pagetype === 'updateName') {
+      deviceList[wx.getStorageSync('currentDeviceIndex')].device_name = this.data.device_name || this.data.placeholder
     } else {
-      deviceList.push(deviceItem)
+      let deviceItem = {
+        type: wx.getStorageSync('_deviceType'),
+        device_name: this.data.device_name || this.data.placeholder,
+        _deviceId: wx.getStorageSync('_deviceId'),
+        _serviceId: wx.getStorageSync('_serviceId'),
+        _characteristicId: wx.getStorageSync('_characteristicId'),
+        admPw: wx.getStorageSync('admPw'),
+        seedA: wx.getStorageSync('seedA'),
+        seedB: wx.getStorageSync('seedB'),
+        seedC: wx.getStorageSync('seedC'),
+        bindCode: wx.getStorageSync('bindCode')
+      }
+      let isExist = deviceList.find((it, index) => {
+        it.index = index
+        return (it._deviceId === wx.getStorageSync('_deviceId'))
+      })
+      if (isExist) {
+        deviceList[isExist.index] = deviceItem
+      } else {
+        deviceList.push(deviceItem)
+      }
     }
     console.log(deviceList)
     wx.setStorageSync('deviceList', deviceList)
+    wx.removeStorageSync('seedA')
+    wx.removeStorageSync('seedB')
+    wx.removeStorageSync('seedC')
     // wx.removeStorageSync('_deviceId')
     // wx.removeStorageSync('_serviceId')
     // wx.removeStorageSync('_characteristicId')

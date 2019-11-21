@@ -1,4 +1,5 @@
 const Encrypt = require("./getEncryptBytes.js")
+
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -9,9 +10,25 @@ const formatTime = date => {
 
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
+
+const getDeviceItem = (key) => {
+  let currentDeviceIndex = wx.getStorageSync('currentDeviceIndex')
+  let deviceList = wx.getStorageSync('deviceList')
+  let currentItem = deviceList[currentDeviceIndex] || {}
+  let returnValue = currentItem[key]
+  return returnValue
+}
+const updateDeviceList = (key, value) => {
+  let currentDeviceIndex = wx.getStorageSync('currentDeviceIndex')
+  let deviceList = wx.getStorageSync('deviceList')
+  let currentItem = deviceList[currentDeviceIndex]
+  currentItem[key] = value
+  wx.setStorageSync('deviceList', deviceList)
+}
+
 //regino 生成密码算法
 const getTempPassword = () => {
-  let bleTempBindCode = wx.getStorageSync('bindCode');
+  let bleTempBindCode = getDeviceItem('bindCode');
   console.log("生成临时密码算法  tempbindcode = " + bleTempBindCode);
 
   //根据绑定码生成加密密钥
@@ -154,6 +171,8 @@ const getRandomStr = (total) => {
 module.exports = {
   formatTime: formatTime,
   getTempPassword: getTempPassword,
+  getDeviceItem: getDeviceItem,
+  updateDeviceList: updateDeviceList,
   formatPw: formatPw,
   ab2hex: ab2hex,
   getCheckSum: getCheckSum,

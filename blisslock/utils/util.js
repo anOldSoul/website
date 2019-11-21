@@ -1,7 +1,7 @@
 const Moment = require('./moment.min.js')
 const Encrypt = require("./getEncryptBytes.js")
 const Format = require("./format.js")
-let rtc, seedA, seedB, seedC, key, decodedPackageData
+let rtc, decodedPackageData
 
 let hasUnlockRecord = ''
 var pwNeedToAdd = {}
@@ -24,28 +24,12 @@ let onChangePw = {
   onPwListLen: 0
 }
 
-const getDeviceItem = (key) => {
-  let currentDeviceIndex = wx.getStorageSync('currentDeviceIndex')
-  let deviceList = wx.getStorageSync('deviceList')
-  let currentItem = deviceList[currentDeviceIndex] || {}
-  let returnValue = currentItem[key]
-  return returnValue
-}
-const updateDeviceList = (key, value) => {
-  let currentDeviceIndex = wx.getStorageSync('currentDeviceIndex')
-  let deviceList = wx.getStorageSync('deviceList')
-  let currentItem = deviceList[currentDeviceIndex]
-  currentItem[key] = value
-  wx.setStorageSync('deviceList', deviceList)
-}
-
 const getBLEDeviceServices = (deviceId, funcKey) => {
   wx.getBLEDeviceServices({
     deviceId,
     success: (res) => {
       for (let i = 0; i < res.services.length; i++) {
         if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FFF0') > -1) {
-          console.log('deviceId:' + deviceId)
           getBLEDeviceCharacteristics(deviceId, res.services[i].uuid, funcKey)
           return
         }
@@ -85,8 +69,9 @@ const onBluetoothDeviceFound = (resolve, reject) => {
   let deviceIdArr = []
   wx.onBluetoothDeviceFound((res) => {
     res.devices.forEach(device => {
-      let tempdeviceid = wx.getStorageSync('_deviceId') || getDeviceItem('_deviceId')
+      let tempdeviceid = Format.getDeviceItem('_deviceId')
       if (device.deviceId === tempdeviceid) {
+        wx.setStorageSync('_deviceId', Format.getDeviceItem('_deviceId'))
         wx.stopBluetoothDevicesDiscovery()
         resolve()
       }
@@ -96,7 +81,7 @@ const onBluetoothDeviceFound = (resolve, reject) => {
 const closeConnection = () => {
   wx.hideLoading()
   wx.closeBLEConnection({
-    deviceId: wx.getStorageSync('_deviceId') || getDeviceItem('_deviceId'),
+    deviceId: wx.getStorageSync('_deviceId') || Format.getDeviceItem('_deviceId'),
     success(res) {
       wx.setStorageSync('isConnecting', false)
       console.log('蓝牙连接断开')
@@ -107,51 +92,59 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
   wx.setStorageSync('isConnecting', true)
   pwNeedToAdd = pwAdded
   func.resolve = resolve
-  let deviceId = wx.getStorageSync('_deviceId') || getDeviceItem('_deviceId')
-  wx.createBLEConnection({
-    // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
-    deviceId,
-    success: (res) => {
-      if (wx.getStorageSync('isConnecting')) {
-        getBLEDeviceServices(deviceId, funcKey)
-      }     
-    },
-    fail: (res) => {
-      if (wx.getStorageSync('isConnecting')) {
-        let errCode = res.errCode
-        let title = ''
-        if (errCode === 10000) {
-          new Promise((resolve1, reject) => {
-            openBluetoothAdapter(resolve1, reject)
-          }).then(() => {
-            doBLEConnection(funcKey, resolve, pwAdded)
-          })
-        } else {
-          if (errCode === 10003) {
-            title = '等待超时，请重试'
-          } else if (errCode === 10012) {
-            title = '连接超时，请重试'
+  if (wx.getStorageSync('_deviceId') && wx.getStorageSync('_deviceId') !== Format.getDeviceItem('_deviceId')) {
+    new Promise((resolve1, reject) => {
+      openBluetoothAdapter(resolve1, reject)
+    }).then(() => {
+      doBLEConnection(funcKey, resolve, pwAdded)
+    })
+  } else {
+    let deviceId = wx.getStorageSync('_deviceId') || Format.getDeviceItem('_deviceId')
+    wx.createBLEConnection({
+      // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
+      deviceId,
+      success: (res) => {
+        if (wx.getStorageSync('isConnecting')) {
+          getBLEDeviceServices(deviceId, funcKey)
+        }
+      },
+      fail: (res) => {
+        if (wx.getStorageSync('isConnecting')) {
+          let errCode = res.errCode
+          let title = ''
+          if (errCode === 10000) {
+            new Promise((resolve1, reject) => {
+              openBluetoothAdapter(resolve1, reject)
+            }).then(() => {
+              doBLEConnection(funcKey, resolve, pwAdded)
+            })
           } else {
-            title = '连接失败，请重试'
-          }
-          wx.showModal({
-            title: '提示',
-            content: title,
-            showCancel: false,
-            success(res) {
-              if (res.confirm) {
-                wx.navigateBack({
-                  delta: 1
-                })
-              } else if (res.cancel) {
-                console.log('用户点击取消')
-              }
+            if (errCode === 10003) {
+              title = '等待超时，请重试'
+            } else if (errCode === 10012) {
+              title = '连接超时，请重试'
+            } else {
+              title = '连接失败，请重试'
             }
-          })
+            wx.showModal({
+              title: '提示',
+              content: title,
+              showCancel: false,
+              success(res) {
+                if (res.confirm) {
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
+          }
         }
       }
-    }
-  })
+    })
+  }
 }
 const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
   func.addPass = false
@@ -271,7 +264,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     }
     if (value.slice(-4, -2) === '31' && value.slice(0, 2) === 'aa') {
       wx.setStorageSync('bindCode', Format.getRandomStr(8)) //获取8位随机数
-      console.log('bindCode为qqqqqqqqqqqqqqqqq:' + Format.getRandomStr(8))
       let hex = `55320000${Format.strToHexCharCode(wx.getStorageSync('bindCode'))}0000000000000000`  //设置绑定码
       writeBle(hex)
     }
@@ -289,10 +281,10 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       if (value.slice(2, 4) === '30') {
         console.log('添加指纹成功~~~~~~~~~~~~')
         closeConnection()
-        let str = getDeviceItem('fingerData') || ''
-        updateDeviceList('fingerData', value.slice(8, 16) + str)
+        let str = Format.getDeviceItem('fingerData') || ''
+        Format.updateDeviceList('fingerData', value.slice(8, 16) + str)
       }
-      updateDeviceList('addFinger', { result: value.slice(2, 4), id: value.slice(8, 16), name: pwNeedToAdd.name })
+      Format.updateDeviceList('addFinger', { result: value.slice(2, 4), id: value.slice(8, 16), name: pwNeedToAdd.name })
       let currentPages = getCurrentPages()
       console.log(currentPages)
       currentPages.forEach((item, index) => {
@@ -309,10 +301,10 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       if (value.slice(2, 4) === '30') {
         console.log('添加密码成功~~~~~~~~~~~~')
         closeConnection()
-        let str = getDeviceItem('pwData') || ''
-        updateDeviceList('pwData', value.slice(8, 16) + str)
+        let str = Format.getDeviceItem('pwData') || ''
+        Format.updateDeviceList('pwData', value.slice(8, 16) + str)
       }
-      updateDeviceList('addPw', { result: value.slice(2, 4), id: value.slice(8, 16), name: pwNeedToAdd.name })
+      Format.updateDeviceList('addPw', { result: value.slice(2, 4), id: value.slice(8, 16), name: pwNeedToAdd.name })
       let currentPages = getCurrentPages()
       console.log(currentPages)
       currentPages.forEach((item, index) => {
@@ -326,19 +318,19 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       })
     }
     if (value.slice(-4, -2) === 'b0' && value.slice(0, 2) === 'aa') {
-      console.log('绑定成功')      
+      console.log('绑定成功')
       wx.redirectTo({
         url: '/pages/deviceName/index',
       })
     }
     if (value.slice(-4, -2) === '1f' && value.slice(0, 2) === 'aa') {
       console.log('删除密码成功')
-      let tempData = getDeviceItem('pwData')
-      let str = getDeviceItem('delPassId')
+      let tempData = Format.getDeviceItem('pwData')
+      let str = Format.getDeviceItem('delPassId')
       let index = tempData.indexOf(str)
       tempData = tempData.substring(0, index) + tempData.substring(index + 8, tempData.length)
-      updateDeviceList('pwData', tempData)
-      updateDeviceList('delPw', value.slice(2, 4))
+      Format.updateDeviceList('pwData', tempData)
+      Format.updateDeviceList('delPw', value.slice(2, 4))
       closeConnection()
       wx.navigateBack({
         delta: 2
@@ -346,12 +338,12 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     }
     if (value.slice(-4, -2) === '21' && value.slice(0, 2) === 'aa') {
       console.log('删除指纹成功')
-      let tempData = getDeviceItem('fingerData')
-      let str = getDeviceItem('delFingerId')
+      let tempData = Format.getDeviceItem('fingerData')
+      let str = Format.getDeviceItem('delFingerId')
       let index = tempData.indexOf(str)
       tempData = tempData.substring(0, index) + tempData.substring(index + 8, tempData.length)
-      updateDeviceList('fingerData', tempData)
-      updateDeviceList('delFinger', value.slice(2, 4))
+      Format.updateDeviceList('fingerData', tempData)
+      Format.updateDeviceList('delFinger', value.slice(2, 4))
       closeConnection()
       wx.navigateBack({
         delta: 2
@@ -372,7 +364,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       writeBle(hex)
     }
     if (value.slice(-4, -2) === '15' && value.slice(0, 2) === 'aa') {
-      key = wx.getStorageSync('seedA') + wx.getStorageSync('seedC') + rtc + wx.getStorageSync('seedB')
+      let key = Format.getDeviceItem('seedA') + Format.getDeviceItem('seedC') + rtc + Format.getDeviceItem('seedB')
       let orgPackageData = '08805678';
       for (let i = 0; i < 8; i++) {
         orgPackageData += "00";
@@ -398,15 +390,15 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     }
     if (value.slice(-4, -2) === '2c' && value !=='aa30000000000000000000000000000000002c00') {
       hasUnlockRecord = 'hasRecord'
-      let tempData = getDeviceItem('unlockRecordData')
+      let tempData = Format.getDeviceItem('unlockRecordData')
       let unlockRecordData = (tempData instanceof Array) ? tempData : []
       unlockRecordData.push(value)
-      updateDeviceList('unlockRecordData', unlockRecordData)
+      Format.updateDeviceList('unlockRecordData', unlockRecordData)
       let hex = `552C000000000000000000000000000000000000`
       writeBle(hex)
     }
     if (value === 'aa30000000000000000000000000000000002c00') {
-      updateDeviceList('hasUnlockRecord', hasUnlockRecord || 'noRecord')
+      Format.updateDeviceList('hasUnlockRecord', hasUnlockRecord || 'noRecord')
       hasUnlockRecord = ''
       wx.navigateBack({
         delta: 1
@@ -417,11 +409,11 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       let dataKey = ''
       if (func['syncPass']) {
         dataKey = 'pwData'
-        updateDeviceList('pwData', '')
+        Format.updateDeviceList('pwData', '')
       }
       if (func['syncFinger']) {
         dataKey = 'fingerData'
-        updateDeviceList('fingerData', '')
+        Format.updateDeviceList('fingerData', '')
       }
       onChangePw.hexLen = value.slice(4, 8)      
       let len = Format.bytesToIntLe(Format.hexToBytes(onChangePw.hexLen))
@@ -437,12 +429,12 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         onChangePw.onPwList = true
       } else {
         console.log('没有密码！')
-        updateDeviceList(dataKey, [])
+        Format.updateDeviceList(dataKey, [])
         if (dataKey === 'fingerData') {
-          updateDeviceList('isFingerSycBack', 'noData')
+          Format.updateDeviceList('isFingerSycBack', 'noData')
         }
         if (dataKey === 'pwData') {
-          updateDeviceList('isPwSycBack', 'noData')
+          Format.updateDeviceList('isPwSycBack', 'noData')
         }
         func.resolve()
         wx.navigateBack({
@@ -459,14 +451,14 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       if (func['syncFinger']) {
         dataKey = 'fingerData'
       }
-      pwData = getDeviceItem(dataKey) || ''
+      pwData = Format.getDeviceItem(dataKey) || ''
       if ((onChangePw.onPwListLen) < onChangePw.pageNum && onChangePw.onPwList) {
         pwData = pwData + value.slice(4, 40)
-        updateDeviceList(dataKey, pwData)
+        Format.updateDeviceList(dataKey, pwData)
         onChangePw.onPwListLen ++
         if (onChangePw.onPwListLen === onChangePw.pageNum) {
           let result = pwData.slice(0, Format.bytesToIntLe(Format.hexToBytes(onChangePw.hexLen)) / 4 * 8)
-          updateDeviceList(dataKey, result)
+          Format.updateDeviceList(dataKey, result)
           onChangePw = {
             onPwList: false,
             pageNum: 0,
@@ -481,14 +473,14 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
               delta: 1
             })
             if (dataKey === 'fingerData') {
-              updateDeviceList('isFingerSycBack', true)
+              Format.updateDeviceList('isFingerSycBack', true)
             }
             if (dataKey === 'pwData') {
-              updateDeviceList('isPwSycBack', true)
+              Format.updateDeviceList('isPwSycBack', true)
             }
           } else {
-            updateDeviceList('isFingerSycBack', false)
-            updateDeviceList('isPwSycBack', false)
+            Format.updateDeviceList('isFingerSycBack', false)
+            Format.updateDeviceList('isPwSycBack', false)
           }
         }
         let hex = value
@@ -526,7 +518,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         writeBle(hex)
       }
       if (func['delPass']) {
-        let pw = getDeviceItem('delPassId')
+        let pw = Format.getDeviceItem('delPassId')
         let hex = `551F0000${pw}000000000000000000000000`
         writeBle(hex)
       }
@@ -552,7 +544,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         writeBle(hex)
       }
       if (func['delFinger']) {
-        let finger = getDeviceItem('delFingerId')
+        let finger = Format.getDeviceItem('delFingerId')
         let hex = `55210000${finger}000000000000000000000000`
         writeBle(hex)
       }
@@ -587,9 +579,9 @@ const writeBle = (hex, funcKey = '') => {
   var buffer1 = typedArray.buffer
   let pos = 0;
   wx.writeBLECharacteristicValue({
-    deviceId: wx.getStorageSync('_deviceId') || getDeviceItem('_deviceId'),
-    serviceId: wx.getStorageSync('_serviceId') || getDeviceItem('_serviceId'),
-    characteristicId: wx.getStorageSync('_characteristicId') || getDeviceItem('_characteristicId'),
+    deviceId: wx.getStorageSync('_deviceId') || Format.getDeviceItem('_deviceId'),
+    serviceId: wx.getStorageSync('_serviceId') || Format.getDeviceItem('_serviceId'),
+    characteristicId: wx.getStorageSync('_characteristicId') || Format.getDeviceItem('_characteristicId'),
     value: buffer1,
     success: function (res) {
       console.log('writeBLECharacteristicValue success', res.errMsg)
@@ -605,8 +597,8 @@ const writeBle = (hex, funcKey = '') => {
 
 module.exports = {
   doBLEConnection: doBLEConnection,
-  getTempPassword: Format.getTempPassword,
   getBLEDeviceCharacteristics: getBLEDeviceCharacteristics,
-  updateDeviceList: updateDeviceList,
-  getDeviceItem: getDeviceItem
+  getTempPassword: Format.getTempPassword,
+  updateDeviceList: Format.updateDeviceList,
+  getDeviceItem: Format.getDeviceItem
 }
