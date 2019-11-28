@@ -10,6 +10,7 @@ import './assets/icon/iconfont.css'
 import ElementUI from 'element-ui'
 import './common.css'
 import VueLazyload from 'vue-lazyload'
+import '@/styles/index.scss' // global css
 // Vue.config.productionTip = false
 
 import Http from './utils/Http'

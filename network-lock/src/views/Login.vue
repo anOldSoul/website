@@ -35,21 +35,6 @@
       </div>
     </div>
   </div>
-<!--   <div class="login-main">
-    <div class="login-from">
-      <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="100px" class="demo-ruleForm" label-position="top">
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="loginForm.username" @keyup.enter.native="submitForm('loginForm')"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input type="password" v-model="loginForm.password" @keyup.enter.native="submitForm('loginForm')"></el-input>
-        </el-form-item>
-        <el-form-item class="login-btn">
-          <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-  </div> -->
 </template>
 <script>
 import { MessageBox } from 'element-ui'
@@ -94,15 +79,29 @@ export default {
       var _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          Site.http.post('/admin-rest/auth/login', {
+          // Site.http.post('/admin-rest/auth/login', {
+          //   username: this.loginForm.username,
+          //   password: this.loginForm.password
+          // }, data => {
+          //   _this.$store.commit('login', true)
+          //   localStorage.setItem('name', data.data.token)
+          //   this.$router.push({
+          //     path: '/'
+          //   })
+          // })
+          this.$store.dispatch('LoginByUsername', {
             username: this.loginForm.username,
             password: this.loginForm.password
-          }, data => {
+          }).then(() => {
             _this.$store.commit('login', true)
-            localStorage.setItem('name', data.data.token)
-            this.$router.push({
-              path: '/'
+            this.$router.push({ path: '/' })
+          }).catch(response => {
+            console.log(response)
+            this.$notify.error({
+              title: '失败',
+              message: response.errmsg
             })
+            this.loading = false
           })
         } else {
           this.$notify.error({

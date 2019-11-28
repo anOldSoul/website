@@ -22,9 +22,12 @@
         </div>
         <div class="breadcrumb-box flex-a-c">
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item v-for="(item,index) in $route.meta.breadcrumb" :key="index" :to="{ path:item.url}">{{item.text}}</el-breadcrumb-item>
+            <transition-group name="breadcrumb">
+              <el-breadcrumb-item v-for="(item,index) in $route.meta.breadcrumb" :key="index" :to="{ path:item.url}">{{item.text}}</el-breadcrumb-item>
+            </transition-group>
           </el-breadcrumb>
         </div>
+        <tags-view/>
       </div>
       <div class="router-view">
         <keep-alive>
@@ -37,11 +40,12 @@
 </template>
 <script>
 import NavMenu from '../components/common/NavMenu'
-//
+import TagsView from '../components/common/TagsView'
+
 export default {
   name: 'Home',
   components: {
-    NavMenu
+    NavMenu, TagsView
   },
   data () {
     return {

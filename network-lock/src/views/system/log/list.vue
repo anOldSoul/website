@@ -1,113 +1,98 @@
 <template>
-  <div class="page">
-    <div class="flex search-box">
-      <el-form class="form" label-width="86px">
-        <el-row>
-          <el-col :span="8">
-            <el-form-item label="名称">
-              <el-input v-model="searchModel.gateWayName" clearable @change="handleSearchChange"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="编号">
-              <el-input v-model="searchModel.gateId" clearable @change="handleSearchChange"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6" :push="2">
-            <el-button type="primary" @click="handleSearchChange">查询</el-button>
-          </el-col>
-        </el-row>
-      </el-form>
+  <div class="app-container">
+
+    <!-- 查询和其他操作 -->
+    <div class="filter-container">
+      <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 200px;" placeholder="请输入操作管理员"/>
+      <el-button v-permission="['GET /admin/log/list']" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
     </div>
-    <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
-      <el-table-column prop="gatewayname" label="网关名称"></el-table-column>
-      <el-table-column prop="gateid" label="网关编号"></el-table-column>
-      <el-table-column prop="gateaddr" label="网关位置"></el-table-column>
-      <!-- <el-table-column prop="title" label="绑定数量"></el-table-column> -->
-      <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
+
+    <!-- 查询结果 -->
+    <el-table v-loading="listLoading" :data="list" element-loading-text="正在查询中。。。" border fit highlight-current-row>
+      <el-table-column align="center" label="操作管理员" prop="admin"/>
+      <el-table-column align="center" label="IP地址" prop="ip"/>
+      <el-table-column align="center" label="操作时间" prop="addTime"/>
+      <el-table-column align="center" label="操作类别" prop="type">
         <template slot-scope="scope">
-          <template>
-            <el-button type="text" @click="handleGoDetail(scope.row)">详情</el-button>
-            <!-- <el-button type="text" @click="handleDelete(scope.row)">删除</el-button> -->
-          </template>
+          <el-tag>{{ scope.row.type | typeFilter }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column align="center" label="操作动作" prop="action"/>
+      <el-table-column align="center" label="操作状态" prop="status">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.status ? 'success' : 'error' ">{{ scope.row.status ? '成功' : '失败' }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="操作结果" prop="result"/>
+      <el-table-column align="center" label="备注信息" prop="comment"/>
+
     </el-table>
-    <el-pagination @current-change="handleCurrentChange" :current-page="searchModel.pageNo" :page-size="20" layout="total, prev, pager, next" :total="dataCount" class="flex pagination">
-    </el-pagination>
+
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+
   </div>
 </template>
-<script>
-export default {
-  name: 'provisions-list',
-  components: {
-  },
-  props: {
-  },
-  activated () {
-    // this.fetchData()
-    // this.getCount()
-  },
-  data () {
-    return {
-      tableData: [], // 必须
-      dataCount: 0, // 必须
-      searchModel: {
-        pageNo: 1, // 必须
-        pageSize: 20, // 必须
-        gateId: '',
-        gateWayName: ''
-      },
-      countries: [],
-      query: {}
-    }
-  },
-  computed: {},
 
-  methods: {
-    handleGoDetail: function (row) {
-      this.$router.push({
-        path: `/gateway/detail/${row.gateid}`
-      })
-    },
-    handleCurrentChange (val) {
-      this.searchModel.pageNo = +val
-      this.fetchData()
-    },
-    fetchData: function () {
-      Site.http.get(
-        '/tGateWayInfo/getGateWayListPage', this.searchModel,
-        data => {
-          this.tableData = data.data
-        }
-      )
-    },
-    getCount () {
-      Site.http.get(
-        '/tGateWayInfo/getGateWayListPageCount', this.searchModel,
-        function (data) {
-          this.dataCount = data.data
-        }.bind(this)
-      )
-    },
-    rowKey (row) {
-      return row._id
-    },
-    handleSearchChange () {
-      this.searchModel.pageNo = 1
-      this.fetchData()
-      this.getCount()
+<script>
+import { listLog } from '@/api/log'
+import Pagination from '@/components/Pagination'
+
+const typeMap = {
+  0: '一般操作',
+  1: '安全操作',
+  2: '订单操作',
+  3: '其他操作'
+}
+
+export default {
+  name: 'Log',
+  components: { Pagination },
+  filters: {
+    typeFilter(type) {
+      return typeMap[type]
     }
   },
-  mounted: function () {
+  data() {
+    return {
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 20,
+        name: undefined,
+        sort: 'add_time',
+        order: 'desc'
+      },
+      rules: {
+        name: [
+          { required: true, message: '角色名称不能为空', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  created() {
+    this.getList()
+  },
+  methods: {
+    getList() {
+      this.listLoading = true
+      listLog(this.listQuery)
+        .then(response => {
+          this.list = response.data.data.list
+          this.total = response.data.data.total
+          this.listLoading = false
+        })
+        .catch(() => {
+          this.list = []
+          this.total = 0
+          this.listLoading = false
+        })
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
+    }
   }
 }
 </script>
-<style scoped>
-.form {
-  width: 80%;
-}
-.noticeContent{
-  padding: 30px;
-}
-</style>

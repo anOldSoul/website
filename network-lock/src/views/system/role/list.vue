@@ -1,113 +1,249 @@
 <template>
-  <div class="page">
-    <div class="flex search-box">
-      <el-form class="form" label-width="86px">
-        <el-row>
-          <el-col :span="8">
-            <el-form-item label="名称">
-              <el-input v-model="searchModel.gateWayName" clearable @change="handleSearchChange"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="编号">
-              <el-input v-model="searchModel.gateId" clearable @change="handleSearchChange"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6" :push="2">
-            <el-button type="primary" @click="handleSearchChange">查询</el-button>
-          </el-col>
-        </el-row>
-      </el-form>
+  <div class="app-container">
+
+    <!-- 查询和其他操作 -->
+    <div class="filter-container">
+      <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 200px;" placeholder="请输入角色名称"/>
+      <el-button v-permission="['GET /admin/role/list']" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
+      <el-button v-permission="['POST /admin/role/create']" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
     </div>
-    <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
-      <el-table-column prop="gatewayname" label="网关名称"></el-table-column>
-      <el-table-column prop="gateid" label="网关编号"></el-table-column>
-      <el-table-column prop="gateaddr" label="网关位置"></el-table-column>
-      <!-- <el-table-column prop="title" label="绑定数量"></el-table-column> -->
-      <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
+
+    <!-- 查询结果 -->
+    <el-table v-loading="listLoading" :data="list" element-loading-text="正在查询中。。。" border fit highlight-current-row>
+      <el-table-column align="center" label="角色名称" prop="name" sortable/>
+
+      <el-table-column align="center" label="说明" prop="desc"/>
+
+      <el-table-column align="center" label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <template>
-            <el-button type="text" @click="handleGoDetail(scope.row)">详情</el-button>
-            <!-- <el-button type="text" @click="handleDelete(scope.row)">删除</el-button> -->
-          </template>
+          <el-button v-permission="['POST /admin/role/update']" type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button v-permission="['POST /admin/role/delete']" type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button v-permission="['GET /admin/role/permissions']" type="primary" size="mini" @click="handlePermission(scope.row)">授权</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination @current-change="handleCurrentChange" :current-page="searchModel.pageNo" :page-size="20" layout="total, prev, pager, next" :total="dataCount" class="flex pagination">
-    </el-pagination>
+
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+
+    <!-- 添加或修改对话框 -->
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" :rules="rules" :model="dataForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="角色名称" prop="name">
+          <el-input v-model="dataForm.name"/>
+        </el-form-item>
+        <el-form-item label="说明" prop="desc">
+          <el-input v-model="dataForm.desc"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">确定</el-button>
+        <el-button v-else type="primary" @click="updateData">确定</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 权限配置对话框 -->
+    <el-dialog :visible.sync="permissionDialogFormVisible" title="权限配置">
+      <el-tree
+        ref="tree"
+        :data="systemPermissions"
+        :default-checked-keys="assignedPermissions"
+        show-checkbox
+        node-key="id"
+        highlight-current>
+        <span slot-scope="{ node, data }" class="custom-tree-node">
+          <span>{{ data.label }}</span>
+          <el-tag v-if="data.api" type="success" size="mini">{{ data.api }}</el-tag>
+        </span>
+      </el-tree>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="permissionDialogFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="updatePermission">确定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
+
 <script>
+import { listRole, createRole, updateRole, deleteRole, getPermission, updatePermission } from '@/api/role'
+import Pagination from '@/components/Pagination'
 export default {
-  name: 'provisions-list',
-  components: {
-  },
-  props: {
-  },
-  activated () {
-    // this.fetchData()
-    // this.getCount()
-  },
-  data () {
+  name: 'Role',
+  components: { Pagination },
+  data() {
     return {
-      tableData: [], // 必须
-      dataCount: 0, // 必须
-      searchModel: {
-        pageNo: 1, // 必须
-        pageSize: 20, // 必须
-        gateId: '',
-        gateWayName: ''
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 20,
+        name: undefined,
+        sort: 'add_time',
+        order: 'desc'
       },
-      countries: [],
-      query: {}
+      dataForm: {
+        id: undefined,
+        name: undefined,
+        desc: undefined
+      },
+      dialogFormVisible: false,
+      dialogStatus: '',
+      textMap: {
+        update: '编辑',
+        create: '创建'
+      },
+      rules: {
+        name: [
+          { required: true, message: '角色名称不能为空', trigger: 'blur' }
+        ]
+      },
+      permissionDialogFormVisible: false,
+      systemPermissions: null,
+      assignedPermissions: null,
+      permissionForm: {
+        roleId: undefined,
+        permissions: []
+      }
     }
   },
-  computed: {},
-
+  created() {
+    this.getList()
+  },
   methods: {
-    handleGoDetail: function (row) {
-      this.$router.push({
-        path: `/gateway/detail/${row.gateid}`
+    getList() {
+      this.listLoading = true
+      listRole(this.listQuery)
+        .then(response => {
+          this.list = response.data.data.list
+          this.total = response.data.data.total
+          this.listLoading = false
+        })
+        .catch(() => {
+          this.list = []
+          this.total = 0
+          this.listLoading = false
+        })
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
+    },
+    resetForm() {
+      this.dataForm = {
+        id: undefined,
+        name: undefined,
+        desc: undefined
+      }
+    },
+    handleCreate() {
+      this.resetForm()
+      this.dialogStatus = 'create'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
       })
     },
-    handleCurrentChange (val) {
-      this.searchModel.pageNo = +val
-      this.fetchData()
-    },
-    fetchData: function () {
-      Site.http.get(
-        '/tGateWayInfo/getGateWayListPage', this.searchModel,
-        data => {
-          this.tableData = data.data
+    createData() {
+      this.$refs['dataForm'].validate(valid => {
+        if (valid) {
+          createRole(this.dataForm)
+            .then(response => {
+              this.list.unshift(response.data.data)
+              this.dialogFormVisible = false
+              this.$notify.success({
+                title: '成功',
+                message: '添加角色成功'
+              })
+            })
+            .catch(response => {
+              this.$notify.error({
+                title: '失败',
+                message: response.data.errmsg
+              })
+            })
         }
-      )
+      })
     },
-    getCount () {
-      Site.http.get(
-        '/tGateWayInfo/getGateWayListPageCount', this.searchModel,
-        function (data) {
-          this.dataCount = data.data
-        }.bind(this)
-      )
+    handleUpdate(row) {
+      this.dataForm = Object.assign({}, row)
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
     },
-    rowKey (row) {
-      return row._id
+    updateData() {
+      this.$refs['dataForm'].validate(valid => {
+        if (valid) {
+          updateRole(this.dataForm)
+            .then(() => {
+              for (const v of this.list) {
+                if (v.id === this.dataForm.id) {
+                  const index = this.list.indexOf(v)
+                  this.list.splice(index, 1, this.dataForm)
+                  break
+                }
+              }
+              this.dialogFormVisible = false
+              this.$notify.success({
+                title: '成功',
+                message: '更新管理员成功'
+              })
+            })
+            .catch(response => {
+              this.$notify.error({
+                title: '失败',
+                message: response.data.errmsg
+              })
+            })
+        }
+      })
     },
-    handleSearchChange () {
-      this.searchModel.pageNo = 1
-      this.fetchData()
-      this.getCount()
+    handleDelete(row) {
+      deleteRole(row)
+        .then(response => {
+          this.$notify.success({
+            title: '成功',
+            message: '删除管理员成功'
+          })
+          const index = this.list.indexOf(row)
+          this.list.splice(index, 1)
+        })
+        .catch(response => {
+          this.$notify.error({
+            title: '失败',
+            message: response.data.errmsg
+          })
+        })
+    },
+    handlePermission(row) {
+      this.permissionDialogFormVisible = true
+      this.permissionForm.roleId = row.id
+      getPermission({ roleId: row.id })
+        .then(response => {
+          this.systemPermissions = response.data.data.systemPermissions
+          this.assignedPermissions = response.data.data.assignedPermissions
+        })
+    },
+    updatePermission() {
+      this.permissionForm.permissions = this.$refs.tree.getCheckedKeys(true)
+      updatePermission(this.permissionForm)
+        .then(response => {
+          this.permissionDialogFormVisible = false
+          this.$notify.success({
+            title: '成功',
+            message: '授权成功'
+          })
+        })
+        .catch(response => {
+          this.$notify.error({
+            title: '失败',
+            message: response.data.errmsg
+          })
+        })
     }
-  },
-  mounted: function () {
   }
 }
 </script>
-<style scoped>
-.form {
-  width: 80%;
-}
-.noticeContent{
-  padding: 30px;
-}
-</style>
