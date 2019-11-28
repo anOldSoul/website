@@ -31,7 +31,6 @@ Page({
   },
   onShow: function () {
     let deviceList = wx.getStorageSync('deviceList') || []
-    console.log(deviceList)
     this.setData({
       deviceList: deviceList,
       hasPhone: wx.getStorageSync('phone') || false

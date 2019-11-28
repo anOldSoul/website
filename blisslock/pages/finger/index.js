@@ -42,11 +42,16 @@ Page({
       if (exist) {
         result.id = exist.id
         result.name = exist.name
+        result.no = app.util.hexToFromBytes(exist.id)
       } else {
         result.id = item
         result.name = '匿名'
+        result.no = app.util.hexToFromBytes(item)
       }
       return result
+    })
+    formatPwArr.sort((a, b) => {
+      return b.no > a.no ? 1 : -1
     })
     app.util.updateDeviceList('fingerArr', formatPwArr)
     this.setData({

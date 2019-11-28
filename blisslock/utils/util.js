@@ -2,6 +2,7 @@ const Moment = require('./moment.min.js')
 const Encrypt = require("./getEncryptBytes.js")
 const Format = require("./format.js")
 let rtc, decodedPackageData
+let response = ''
 
 let hasUnlockRecord = ''
 var pwNeedToAdd = {}
@@ -135,8 +136,6 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
                   wx.navigateBack({
                     delta: 1
                   })
-                } else if (res.cancel) {
-                  console.log('用户点击取消')
                 }
               }
             })
@@ -190,7 +189,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
           writeBle(hex)
         }
         if ((item.properties.notify || item.properties.indicate) && item.uuid.indexOf('0000FFF4') > -1) {
-          console.log(item.uuid)
           wx.notifyBLECharacteristicValueChange({
             deviceId,
             serviceId,
@@ -218,6 +216,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
   wx.onBLECharacteristicValueChange((characteristic) => {
     console.log('特征值有变化。。。。。')
     console.log('监听到变化特征值为' + Format.ab2hex(characteristic.value))
+    response = 'success'
     let value = Format.ab2hex(characteristic.value)
     if (value.slice(-4, -2) === '11') {
       let hex
@@ -286,7 +285,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       }
       Format.updateDeviceList('addFinger', { result: value.slice(2, 4), id: value.slice(8, 16), name: pwNeedToAdd.name })
       let currentPages = getCurrentPages()
-      console.log(currentPages)
       currentPages.forEach((item, index) => {
         if (item.route === 'pages/finger/index') {
           if (currentPages.length - index !== 1) {
@@ -306,7 +304,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       }
       Format.updateDeviceList('addPw', { result: value.slice(2, 4), id: value.slice(8, 16), name: pwNeedToAdd.name })
       let currentPages = getCurrentPages()
-      console.log(currentPages)
       currentPages.forEach((item, index) => {
         if (item.route === 'pages/password/index') {
           if (currentPages.length - index !== 1) {
@@ -400,6 +397,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     if (value === 'aa30000000000000000000000000000000002c00') {
       Format.updateDeviceList('hasUnlockRecord', hasUnlockRecord || 'noRecord')
       hasUnlockRecord = ''
+      closeConnection()
       wx.navigateBack({
         delta: 1
       })
@@ -482,9 +480,10 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
             Format.updateDeviceList('isFingerSycBack', false)
             Format.updateDeviceList('isPwSycBack', false)
           }
-        }
-        let hex = value
-        writeBle(hex)
+        } else {
+          let hex = value
+          writeBle(hex)
+        }        
       } else {
         onChangePw = {
           onPwList: false,
@@ -566,6 +565,34 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
 
 const writeBle = (hex, funcKey = '') => {
   console.log('写数据为：' + hex)
+  response = ''
+  setTimeout(() => {
+    if (response !== 'success') {
+      response = 'success'
+      closeConnection()
+      wx.showModal({
+        title: '提示',
+        content: '连接超时，请重试',
+        showCancel: false,
+        success(res) {
+          if (res.confirm) {
+            let currentPages = getCurrentPages()
+            let currentPage = currentPages[currentPages.length - 1].route
+            if (currentPage === 'pages/search/index') {
+              wx.navigateBack({
+                delta: 2
+              })
+            } else {
+              wx.navigateBack({
+                delta: 1
+              })
+            }
+          }
+        }
+      })
+      return
+    }
+  }, 5000)
   if (hex === '5520000000000000000000000000000000000000') {
     wx.redirectTo({
       url: `/pages/activateFinger/index`
@@ -600,5 +627,6 @@ module.exports = {
   getBLEDeviceCharacteristics: getBLEDeviceCharacteristics,
   getTempPassword: Format.getTempPassword,
   updateDeviceList: Format.updateDeviceList,
-  getDeviceItem: Format.getDeviceItem
+  getDeviceItem: Format.getDeviceItem,
+  hexToFromBytes: Format.hexToFromBytes
 }

@@ -17,7 +17,7 @@
           </div>
           <el-form class="saas_box" :model="loginForm" :rules="rules" ref="loginForm">
             <div class="saas_right">
-              <div class="login_top">                
+              <div class="login_top">
                 <div class="login_by_account">账号登录</div>
               </div>
               <el-form-item class="account_input" prop="username">

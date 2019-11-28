@@ -137,6 +137,9 @@ Page({
       })
       this.getData()
     }
+    this.setData({
+      deviceType: app.util.getDeviceItem('type')
+    })
   },
   getData: function() {
     app.post(app.Apis.GET_UNLOCK_RECORD, {}, result => {

@@ -94,6 +94,7 @@ const strToHexCharCode = (str) => { //ascii转16进制
     return hexCharCode.join("");
   }
 }
+
 //字节数组转十六进制字符串
 const bytes2Str = (arr) => {
   var str = "";
@@ -141,6 +142,32 @@ const hexToBytes = (str) => {
   return hexA;
 }
 
+//十六进制转ascii字符
+const hexToFromBytes = (str) => {
+  var pos = 0;
+  var len = str.length;
+  if (len % 2 != 0) {
+    return null;
+  }
+  len /= 2;
+  var hexA = new Array();
+  for (var i = 0; i < len; i++) {
+    var s = '0x' + str.substr(pos, 2);
+    var v = String.fromCharCode(s)
+    hexA.push(v);
+    pos += 2;
+  }
+  let result = ''
+  hexA.forEach((item, index) => {
+    if (item !== '0') {
+      result = hexA.join('')
+      result = result.substring(index, result.length)
+      return
+    }
+  })
+  return result
+}
+
 const generate3MinToSecond = () => {
   let myDate = new Date();
   let now = myDate.getTime() / (1000);
@@ -182,5 +209,6 @@ module.exports = {
   hexToBytes: hexToBytes,
   getQueryString: getQueryString,
   getRandomStr: getRandomStr,
-  bytesToIntLe: bytesToIntLe
+  bytesToIntLe: bytesToIntLe,
+  hexToFromBytes: hexToFromBytes
 }

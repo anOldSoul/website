@@ -58,16 +58,18 @@ Page({
   onBluetoothDeviceFound() {
     let devices = []
     let deviceIdArr = []
-    wx.onBluetoothDeviceFound((res) => {     
+    wx.onBluetoothDeviceFound((res) => {
       res.devices.forEach(device => {
-        if (device.name.toLocaleLowerCase().indexOf('blisslock') > -1) {
+        let name = device.name.toLocaleLowerCase()
+        let localName = device.localName ? device.localName.toLocaleLowerCase() : ''
+        if (name.indexOf('blisslock') > -1 || localName.indexOf('blisslock') > -1) {
           if (!deviceIdArr.includes(device.deviceId)) {
             console.log(device)
             let devicesFond = {}
             deviceId = device.deviceId
-            name = device.name
+            name = name.indexOf('blisslock') > -1 ? name : localName
             devicesFond.deviceId = device.deviceId
-            devicesFond.name = device.name
+            devicesFond.name = name.indexOf('blisslock') > -1 ? name : localName
             deviceIdArr.push(deviceId)
             devices.push(devicesFond)
           }
@@ -102,13 +104,13 @@ Page({
       deviceId: currentDeviceId,
       success: (res) => {
         let selectName = this.data.devices[this.data.currentIndex].name
-        if (selectName === 'Blisslock' || selectName === 'Blisslock006') {
+        if (selectName === 'blisslock' || selectName === 'blisslock006') {
           wx.setStorageSync('_deviceType', 'M6')
         }
-        if (selectName === 'Blisslock006S') {
+        if (selectName.indexOf('blisslock6s') > -1 || selectName === 'blisslock006s') {
           wx.setStorageSync('_deviceType', 'M6-S')
         }
-        if (selectName === 'HealthLock') {
+        if (selectName === 'healthlock') {
           wx.setStorageSync('_deviceType', '健康锁')
         }
         this.setData({

@@ -16,11 +16,11 @@
         <view class='left'>
           <image class="pw_record_img" src='../../images/ic-record-fingerprint.png' wx:if="{{items.lockType === '指纹开锁'}}"></image>
           <image class="pw_record_img" src='../../images/ic-record-password.png' wx:if="{{items.lockType === '密码开锁'}}"></image>
-          <image class="pw_record_img" src='../../images/ic-record_tempass.png' wx:else="{{items.lockType !== '指纹开锁' && items.lockType !== '密码开锁'}}"></image>
+          <image class="pw_record_img" src='../../images/ic-record_tempass.png' wx:if="{{items.lockType !== '指纹开锁' && items.lockType !== '密码开锁'}}"></image>
         </view>
         <view>
           <view class='time'>{{items.time}}</view>
-          <view class='detail'>{{items.userType}}-{{items.lockType}}</view>
+          <view class='detail'><span wx:if="{{deviceType === 'M6-S'}}">{{items.userType}}-</span>{{items.lockType}}</view>
         </view>
       </view>
       <!-- <view class='content_right'>
