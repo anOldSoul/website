@@ -15,7 +15,8 @@ service.interceptors.request.use(
     // Do something before request is sent
     if (store.getters.token) {
       // 让每个请求携带token-- ['Fplan-admin-Token']为自定义key 请根据实际情况自行修改
-      config.headers['Fplan-admin-Token'] = getToken()
+      config.headers.Authorization = `Bearer ${localStorage.getItem('name')}`
+      // config.headers['Fplan-admin-Token'] = getToken()
     }
     return config
   },
