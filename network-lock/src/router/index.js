@@ -37,6 +37,7 @@ const routers = [
     component: Statistic,
     meta: {
       keepAlive: true,
+      title: '数据统计',
       breadcrumb: [{
         text: '首页'
       }, {
@@ -48,6 +49,7 @@ const routers = [
     name: 'Lock',
     component: Lock,
     meta: {
+      title: '锁具',
       keepAlive: true,
       breadcrumb: [{
         text: '设备管理'
@@ -60,11 +62,12 @@ const routers = [
     name: 'LockDetail',
     component: LockDetail,
     meta: {
+      title: '锁具详情',
       keepAlive: false,
       breadcrumb: [{
         text: '设备管理'
       }, {
-        text: '门锁详情'
+        text: '锁具详情'
       }]
     }
   }, {
@@ -72,11 +75,12 @@ const routers = [
     name: 'Password',
     component: Password,
     meta: {
+      title: '密码管理',
       keepAlive: true,
       breadcrumb: [{
         text: '设备管理'
       }, {
-        text: '密码'
+        text: '密码管理'
       }]
     }
   }, {
@@ -84,6 +88,7 @@ const routers = [
     name: 'GateWay',
     component: GateWay,
     meta: {
+      title: '网关',
       keepAlive: true,
       breadcrumb: [{
         text: '设备管理'
@@ -96,6 +101,7 @@ const routers = [
     name: 'GateWayDetail',
     component: GateWayDetail,
     meta: {
+      title: '网关详情',
       keepAlive: false,
       breadcrumb: [{
         text: '设备管理'
@@ -108,6 +114,7 @@ const routers = [
     name: 'Department',
     component: Department,
     meta: {
+      title: '公寓管理',
       keepAlive: true,
       breadcrumb: [{
         text: '公寓管理'
@@ -118,6 +125,7 @@ const routers = [
     name: 'DepartmentDetail',
     component: DepartmentDetail,
     meta: {
+      title: '公寓信息',
       keepAlive: false,
       breadcrumb: [{
         text: '公寓管理'
@@ -130,6 +138,7 @@ const routers = [
     name: 'RoomDetail',
     component: RoomDetail,
     meta: {
+      title: '房间信息',
       keepAlive: false,
       breadcrumb: [{
         text: '公寓管理'
@@ -142,6 +151,7 @@ const routers = [
     name: 'RentDetail',
     component: RentDetail,
     meta: {
+      title: '租客信息',
       keepAlive: false,
       breadcrumb: [{
         text: '公寓管理'
@@ -154,6 +164,7 @@ const routers = [
     name: 'DeviceUnlock',
     component: DeviceUnlock,
     meta: {
+      title: '开锁记录',
       keepAlive: true,
       breadcrumb: [{
         text: '设备日志'
@@ -166,6 +177,7 @@ const routers = [
     name: 'DeviceWarning',
     component: DeviceWarning,
     meta: {
+      title: '告警记录',
       keepAlive: true,
       breadcrumb: [{
         text: '设备日志'
@@ -178,6 +190,7 @@ const routers = [
     name: 'DeviceUserUpdate',
     component: DeviceUserUpdate,
     meta: {
+      title: '操作记录',
       keepAlive: true,
       breadcrumb: [{
         text: '设备日志'
@@ -190,6 +203,7 @@ const routers = [
     name: 'SystemLog',
     component: SystemLog,
     meta: {
+      title: '系统日志',
       keepAlive: true,
       breadcrumb: [{
         text: '系统管理'
@@ -202,6 +216,7 @@ const routers = [
     name: 'SystemAdm',
     component: SystemAdm,
     meta: {
+      title: '管理员信息',
       keepAlive: true,
       breadcrumb: [{
         text: '系统管理'
@@ -214,6 +229,7 @@ const routers = [
     name: 'SystemRole',
     component: SystemRole,
     meta: {
+      title: '角色信息',
       keepAlive: true,
       breadcrumb: [{
         text: '系统管理'
@@ -226,11 +242,10 @@ const routers = [
     name: 'SystemLog',
     component: SystemLog,
     meta: {
+      title: '系统日志',
       keepAlive: true,
       breadcrumb: [{
         text: '系统日志'
-      }, {
-        text: ''
       }]
     }
   }, {
@@ -238,6 +253,7 @@ const routers = [
     name: 'UserManage',
     component: UserManage,
     meta: {
+      title: '租客管理',
       keepAlive: true,
       breadcrumb: [{
         text: '租客管理'
@@ -248,11 +264,10 @@ const routers = [
     name: 'Statistic',
     component: Statistic,
     meta: {
+      title: '数据统计',
       keepAlive: true,
       breadcrumb: [{
         text: '数据统计'
-      }, {
-        text: ''
       }]
     }
   }, {
@@ -264,8 +279,6 @@ const routers = [
       keepAlive: true,
       breadcrumb: [{
         text: '数据统计'
-      }, {
-        text: ''
       }]
     }
   }, {
@@ -273,6 +286,7 @@ const routers = [
     name: 'Lookforward',
     component: Lookforward,
     meta: {
+      title: '敬请期待',
       keepAlive: true,
       breadcrumb: [{
         text: '敬请期待'

@@ -133,7 +133,7 @@ export default {
   height: 40px;
 }
 .router-view {
-  height: calc(100%);
+  height: calc(100% - 150px);
   overflow: auto;
   overflow-x: hidden;
 }

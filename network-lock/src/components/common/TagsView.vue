@@ -122,8 +122,8 @@ export default {
       const menuMinWidth = 105
       const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
       const offsetWidth = this.$el.offsetWidth // container width
-      const maxLeft = offsetWidth - menuMinWidth // left boundary
-      const left = e.clientX - offsetLeft + 15 // 15: margin right
+      const maxLeft = offsetWidth - menuMinWidth + 250 // left boundary
+      const left = e.clientX - offsetLeft + 250 // 15: margin right
 
       if (left > maxLeft) {
         this.left = maxLeft

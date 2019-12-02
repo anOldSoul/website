@@ -60,11 +60,11 @@
         </el-table-column>
         <el-table-column prop="username" label="用户名"></el-table-column>
         <el-table-column label="有效时间" min-width="120">
-          <template slot-scope="scope">{{scope.row.validate ? $moment(scope.row.validate, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : ''}}
+          <template slot-scope="scope">{{validStr[scope.row.validate] || '——'}}
           </template>
         </el-table-column>
         <el-table-column prop="changetype" label="状态">
-          <template slot-scope="scope">{{changetypeStr[scope.row.changetype]}}
+          <template slot-scope="scope"><span :style="{'color': scope.row.changetype === '3' ? 'red' : 'green'}">{{changetypeStr[scope.row.changetype]}}</span>
           </template>
         </el-table-column>
         <el-table-column prop="pwd" label="密码/卡号" min-width="120">
@@ -75,10 +75,12 @@
         </el-table-column>
         <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
           <template slot-scope="scope">
-            <el-button v-if="scope.row.pwtype !== '01'" type="text" @click="handlePwStats(scope.row)" :disabled="scope.row.changetype !== '1' && scope.row.changetype !== '3'">
-              {{scope.row.changetype === '1' ? '禁用' : (scope.row.changetype === '3' ? '启用' : changetypeStr[scope.row.changetype])}}
-            </el-button>
-            <el-button type="text" @click="handleDelPw(scope.row)">删除</el-button>
+            <div class="opertion">              
+              <el-button type="primary" size="mini" v-if="scope.row.pwtype !== '01'" @click="handlePwStats(scope.row)" :disabled="scope.row.changetype !== '1' && scope.row.changetype !== '3'">
+                {{scope.row.changetype === '1' ? '禁用' : (scope.row.changetype === '3' ? '启用' : changetypeStr[scope.row.changetype])}}
+              </el-button>
+              <el-button type="danger" size="mini" @click="handleDelPw(scope.row)">删除</el-button>
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -107,11 +109,13 @@
           <el-input v-model="form.pwd" clearable :maxlength="pwtypeLengthStr[form.pwtype]" class="dialog-input"></el-input> 
           <span v-if="form.pwtype">*长度必须为{{pwtypeLengthStr[form.pwtype]}}位</span>
         </el-form-item>
-        <el-form-item label="时限" :label-width="formLabelWidth">
-          <el-time-picker
-            v-model="form.validate"
-            placeholder="选择时间">
-          </el-time-picker>
+        <el-form-item label="时限" :label-width="formLabelWidth" v-if="form.pwtype === '01'">
+          <el-select v-model="form.validate" placeholder="请选择时限">
+            <el-option label="3分钟" value="00"></el-option>
+            <el-option label="30分钟" value="01"></el-option>
+            <el-option label="4小时" value="02"></el-option>
+            <el-option label="24小时" value="03"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -134,14 +138,20 @@ export default {
         '0': '启用中',
         '1': '已启用',
         '2': '禁用中',
-        '3': '已禁用'
+        '3': '已失效'
+      },
+      validStr: {
+        '00': '3分钟',
+        '01': '30分钟',
+        '02': '4小时',
+        '03': '24小时'
       },
       pwtypeStr: {
         '00': '密码用户',
         '01': '临时密码',
         '02': '卡片用户',
         '03': '指纹用户',
-        '04': '身份证用户',
+        '04': '身份证用户'
       },
       pwtypeLengthStr: {
         '00': 6,
@@ -270,7 +280,6 @@ export default {
       this.form.lockid = this.curId
       this.form.rsv1 = this.formData.gateid
       this.form.changetype = '0'
-      this.form.validate = this.$moment(this.formData.validate).format('YYYY-MM-DD HH:mm:ss')
       Site.http.post('/admin/tUserInfo', this.form, data => {
         if (data.errno === 0) {
           this.$message({
@@ -407,5 +416,10 @@ export default {
 }
 .dialog-input{
   width: 300px;
+}
+.opertion {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 </style>

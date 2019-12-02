@@ -188,6 +188,8 @@ export default {
 }
 .saas_right{
   padding: 35px 70px;
+  position: relative;
+  z-index: 88;
 }
 .saas_box{
   width: 570px;
@@ -254,6 +256,7 @@ export default {
   font-size:17px;
   box-shadow:0px 6px 12px 0px rgba(40,43,49,0.08);
   border-radius:6px;
+  cursor: pointer;
 }
 .saas_login_forget{
   text-align: right;

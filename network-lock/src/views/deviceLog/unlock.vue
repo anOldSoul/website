@@ -31,7 +31,7 @@
       <el-table-column prop="addtype" label="开锁类型" width="220">
         <template slot-scope="scope">{{opentypeStr[scope.row.opentype]}}</template>
       </el-table-column>
-      <el-table-column prop="rsv2" label="开锁时间">
+      <el-table-column prop="rsv2" label="开锁时间" width="220">
         <template slot-scope="scope">{{$moment(scope.row.createtime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss')}}</template>
       </el-table-column>
     </el-table>
