@@ -40,7 +40,7 @@ import Pagination from '@/components/Pagination'
 const typeMap = {
   0: '一般操作',
   1: '安全操作',
-  2: '订单操作',
+  2: '锁具操作',
   3: '其他操作'
 }
 

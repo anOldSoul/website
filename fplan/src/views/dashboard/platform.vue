@@ -1,28 +1,28 @@
 <template>
   <div class="page">
     <div class="platform-title">图正噢蹦运营管理平台</div>
-    <div class="content">      
+    <div class="content">
       <div class="left-box">
         <div class="charts-line">
           <div class="chart-title">概览</div>
-          <div class="today-box">          
+          <div class="today-box">
             <div class="today-data">
-              <div>今日住户 <i class="el-icon-info"></i></div>
-              <div class="num"><countTo :startVal='0' :endVal='200' :duration='2000'></countTo></div>
+              <div>今日住户 <i class="el-icon-info"/></div>
+              <div class="num"><countTo :start-val="0" :end-val="200" :duration="2000"/></div>
             </div>
             <div>
-              <div>住户总量 <i class="el-icon-info"></i></div>
-              <div class="num"><countTo :startVal='0' :endVal='3278' :duration='2000'></countTo></div>
+              <div>住户总量 <i class="el-icon-info"/></div>
+              <div class="num"><countTo :start-val="0" :end-val="3278" :duration="2000"/></div>
             </div>
           </div>
         </div>
         <div class="charts-pie">
-          <div id="container0" class="chart-container" style="height: 250px;"></div>
+          <div id="container0" class="chart-container" style="height: 250px;"/>
         </div>
-        <div id="container1" class="chart-container" style="height: 400px;"></div>
+        <div id="container1" class="chart-container" style="height: 400px;"/>
       </div>
       <div class="map-box">
-        <div id="container2" class="chart-container" style="height: 450px;"></div>
+        <div id="container2" class="chart-container" style="height: 450px;"/>
         <div class="marquee">
           <div class="chart-title">
             <div class="marquee_column1">开锁房间</div>
@@ -30,20 +30,20 @@
             <div class="marquee_column3">开锁类型</div>
           </div>
           <div class="marquee_box">
-            <div class="marquee_list" :class="{'marquee_top':animate}">
-              <div v-for="(item, index) in marqueeList" class="marquee_item">
+            <div :class="{'marquee_top':animate}" class="marquee_list">
+              <div v-for="item in marqueeList" :key="item" class="marquee_item">
                 <div class="marquee_row">
-                  <div class="marquee_column1">上海市浦东大道101号万科花园1001室</div>
+                  <div class="marquee_column1">{{ item.name }}</div>
                   <div class="marquee_column2">2019-9-28 20：05：22</div>
                   <div class="marquee_column3">指纹开锁</div>
                 </div>
                 <div class="marquee_row">
-                  <div class="marquee_column1">上海市浦东大道101号万科花园1002室</div>
+                  <div class="marquee_column1">{{ item.name }}</div>
                   <div class="marquee_column2">2019-9-28 20：05：22</div>
                   <div class="marquee_column3">指纹开锁</div>
                 </div>
                 <div class="marquee_row">
-                  <div class="marquee_column1">上海市浦东大道101号万科花园1003室</div>
+                  <div class="marquee_column1">{{ item.name }}</div>
                   <div class="marquee_column2">2019-9-28 20：05：22</div>
                   <div class="marquee_column3">指纹开锁</div>
                 </div>
@@ -54,34 +54,34 @@
       </div>
       <div class="charts-box">
         <div class="charts-pie">
-          <div id="container4" class="chart-container" style="height: 250px;"></div>
+          <div id="container4" class="chart-container" style="height: 250px;"/>
         </div>
         <div class="marquee1">
           <div class="chart-title" style="color: red;">
-           <div class="marquee_column1">报警房间</div>
-           <div class="marquee_column2">报警时间</div>
+            <div class="marquee_column1">报警房间</div>
+            <div class="marquee_column2">报警时间</div>
           </div>
           <div class="marquee_box1">
-            <div class="marquee_list" :class="{'marquee_top':animate}">
-             <div v-for="(item, index) in marqueeList" class="marquee_item">
-               <div class="marquee_row">
-                 <div class="marquee_column1">上海市浦东大道101号万科花园1001室</div>
-                 <div class="marquee_column2">2019-9-28 20：05：22</div>
-               </div>
-               <div class="marquee_row">
-                 <div class="marquee_column1">上海市浦东大道101号万科花园1002室</div>
-                 <div class="marquee_column2">2019-9-28 20：05：22</div>
-               </div>
-               <div class="marquee_row">
-                 <div class="marquee_column1">上海市浦东大道101号万科花园1003室</div>
-                 <div class="marquee_column2">2019-9-28 20：05：22</div>
-               </div>
-             </div>
+            <div :class="{'marquee_top':animate}" class="marquee_list">
+              <div v-for="item in marqueeList" :key="item" class="marquee_item">
+                <div class="marquee_row">
+                  <div class="marquee_column1">{{ item.name }}</div>
+                  <div class="marquee_column2">2019-9-28 20：05：22</div>
+                </div>
+                <div class="marquee_row">
+                  <div class="marquee_column1">{{ item.name }}</div>
+                  <div class="marquee_column2">2019-9-28 20：05：22</div>
+                </div>
+                <div class="marquee_row">
+                  <div class="marquee_column1">{{ item.name }}</div>
+                  <div class="marquee_column2">2019-9-28 20：05：22</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div class="charts-bar">
-          <div id="container3" class="chart-container"></div>
+          <div id="container3" class="chart-container"/>
         </div>
       </div>
     </div>
@@ -93,9 +93,9 @@ import Highmaps from 'highcharts/modules/map'
 import HighchartsMore from 'highcharts/highcharts-more'
 import SolidGauge from 'highcharts/modules/solid-gauge.js'
 import china from './china'
-Highmaps(Highcharts);
+Highmaps(Highcharts)
 HighchartsMore(Highcharts)
-SolidGauge(Highcharts);
+SolidGauge(Highcharts)
 import countTo from 'vue-count-to'
 export default {
   name: 'Statistics',
@@ -104,29 +104,27 @@ export default {
   },
   props: {
   },
-  activated () {
-  },
-  data () {
+  data() {
     return {
       animate: false,
       marqueeList: [
         {
-          name: '1军',
+          name: '上海市浦东大道101号万科花园1001室',
           city: '北京',
           amount: '10'
         },
         {
-          name: '2军',
+          name: '上海市浦东大道101号万科花园1001室',
           city: '上海',
           amount: '20'
         },
         {
-          name: '3军',
+          name: '上海市浦东大道101号万科花园1001室',
           city: '广州',
           amount: '30'
         },
         {
-          name: '4军',
+          name: '上海市浦东大道101号万科花园1001室',
           city: '重庆',
           amount: '40'
         }
@@ -135,26 +133,36 @@ export default {
     }
   },
   computed: {},
+  activated() {
+  },
+  mounted: function() {
+    this.fetchLineChart()
+    this.fetchBarChart()
+    this.fetchPieChart()
+    this.fetchMapChart()
+    this.fetchWarning()
+    setInterval(this.showMarquee, 2000)
+  },
 
   methods: {
-    fetchMapChart () {
-      let data = [{
+    fetchMapChart() {
+      const data = [{
         city: '北京',
         value: 5000
-      },{
+      }, {
         city: '上海',
         value: 2000
-      },{
+      }, {
         city: '广东',
         value: 2200
-      },{
+      }, {
         city: '浙江',
         value: 1800
-      },{
+      }, {
         city: '福建',
         value: 1000
       }]
-      let config = {
+      const config = {
         chart: {
           backgroundColor: '#0f1e3f'
         },
@@ -179,8 +187,8 @@ export default {
       }
       Highcharts.Map('container2', config)
     },
-    fetchBarChart () {
-      let config = {
+    fetchBarChart() {
+      const config = {
         chart: {
           type: 'column',
           backgroundColor: '#0f1e3f'
@@ -193,7 +201,7 @@ export default {
         },
         xAxis: {
           categories: [
-            '一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'
+            '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'
           ],
           crosshair: true
         },
@@ -224,14 +232,14 @@ export default {
       }
       Highcharts.chart(`container3`, config)
     },
-    fetchPieChart () {
-      let config = {
+    fetchPieChart() {
+      const config = {
         chart: {
           backgroundColor: '#0f1e3f',
-          spacing : [40, 0 , 40, 0]
+          spacing: [40, 0, 40, 0]
         },
         title: {
-          floating:false,
+          floating: false,
           text: '入住率',
           style: {
             color: '#1ee5e2'
@@ -266,8 +274,8 @@ export default {
       }
       Highcharts.chart(`container0`, config)
     },
-    fetchWarning () {
-      let config = {
+    fetchWarning() {
+      const config = {
         chart: {
           backgroundColor: '#0f1e3f',
           type: 'solidgauge',
@@ -277,7 +285,7 @@ export default {
           plotShadow: false
         },
         title: {
-          text: '',
+          text: ''
         },
         pane: {
           startAngle: -150,
@@ -359,8 +367,8 @@ export default {
       }
       Highcharts.chart(`container4`, config)
     },
-    fetchLineChart: function () {
-      let config = {
+    fetchLineChart: function() {
+      const config = {
         chart: {
           backgroundColor: '#0f1e3f',
           type: 'line'
@@ -369,7 +377,7 @@ export default {
           text: '入户趋势',
           style: {
             color: '#1ee5e2'
-          }         
+          }
         },
         xAxis: {
           categories: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
@@ -384,7 +392,7 @@ export default {
           line: {
             dataLabels: {
               // 开启数据标签
-              enabled: false          
+              enabled: false
             },
             // 关闭鼠标跟踪，对应的提示框、点击事件会失效
             enableMouseTracking: true
@@ -400,13 +408,13 @@ export default {
       }
       Highcharts.chart(`container1`, config)
     },
-    fetchProvinces: function () {
+    fetchProvinces: function() {
       Site.http.get(
         '/biz/questionnaire/aggregateByProvince', {
         },
         data => {
-          let resultData = data.result
-          for (let province in resultData) {
+          const resultData = data.result
+          for (const province in resultData) {
             this.tableData.push({
               no: resultData[province],
               province: province
@@ -415,25 +423,17 @@ export default {
         }
       )
     },
-    rowKey (row) {
+    rowKey(row) {
       return row._id
     },
-    showMarquee: function () {
+    showMarquee: function() {
       this.animate = true
-      setTimeout (() => {
-          this.marqueeList.push (this.marqueeList[ 0 ])
-          this.marqueeList.shift ()
-          this.animate = false
+      setTimeout(() => {
+        this.marqueeList.push(this.marqueeList[ 0 ])
+        this.marqueeList.shift()
+        this.animate = false
       }, 500)
     }
-  },
-  mounted: function () {
-    this.fetchLineChart()
-    this.fetchBarChart()
-    this.fetchPieChart()
-    this.fetchMapChart()
-    this.fetchWarning()
-    setInterval (this.showMarquee, 2000)
   }
 }
 </script>
@@ -466,7 +466,7 @@ export default {
   display: flex;
   flex-direction: row;
   margin-top: 40px;
-  margin-left: 20px;  
+  margin-left: 20px;
 }
 .today-data {
   width: 50%;

@@ -8,12 +8,12 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="网关名称">
-              <el-input v-model="searchModel.gateWayName" clearable @change="handleSearchChange"></el-input>
+              <el-input v-model="searchModel.gateWayName" clearable @change="handleSearchChange"/>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="网关编号">
-              <el-input v-model="searchModel.gateId" clearable @change="handleSearchChange"></el-input>
+              <el-input v-model="searchModel.gateId" clearable @change="handleSearchChange"/>
             </el-form-item>
           </el-col>
           <el-col :span="6" :push="2">
@@ -22,16 +22,16 @@
         </el-row>
       </el-form>
     </div>
-    <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
-      <el-table-column prop="gatewayname" label="网关名称"></el-table-column>
-      <el-table-column prop="gateid" label="网关系统编号"></el-table-column>
-      <el-table-column prop="gateaddr" label="网关位置"></el-table-column>
+    <el-table :data="tableData" :row-key="rowKey" style="width: 100%">
+      <el-table-column prop="gatewayname" label="网关名称"/>
+      <el-table-column prop="gateid" label="网关系统编号"/>
+      <el-table-column prop="gateaddr" label="网关位置"/>
       <el-table-column prop="rsv2" label="到期时间">
-        <template slot-scope="scope">{{$moment(scope.row.rsv2, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss')}}</template>
+        <template slot-scope="scope">{{ $moment(scope.row.rsv2, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') }}</template>
       </el-table-column>
-      <el-table-column prop="rsv1" label="网关物理编号" width="220"></el-table-column>
+      <el-table-column prop="rsv1" label="网关物理编号" width="220"/>
       <el-table-column prop="createtime" label="最后通讯时间">
-        <template slot-scope="scope">{{$moment(scope.row.createtime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss')}}</template>
+        <template slot-scope="scope">{{ $moment(scope.row.createtime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') }}</template>
       </el-table-column>
       <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
         <template slot-scope="scope">
@@ -42,21 +42,17 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination @current-change="handleCurrentChange" :current-page="searchModel.pageNo" :page-size="20" layout="total, prev, pager, next" :total="dataCount" class="flex pagination">
-    </el-pagination>
+    <el-pagination :current-page="searchModel.pageNo" :page-size="20" :total="dataCount" layout="total, prev, pager, next" class="flex pagination" @current-change="handleCurrentChange"/>
   </div>
 </template>
 <script>
 export default {
-  name: 'provisions-list',
+  name: 'ProvisionsList',
   components: {
   },
   props: {
   },
-  activated () {
-    this.fetchData()
-  },
-  data () {
+  data() {
     return {
       tableData: [], // 必须
       dataCount: 0, // 必须
@@ -71,67 +67,70 @@ export default {
     }
   },
   computed: {},
+  created() {
+    this.fetchData()
+  },
+  mounted: function() {
+  },
 
   methods: {
-    addStaff () {
+    addStaff() {
       this.$router.push({
-        path: `/gateway/detail/add`
+        path: `/device/gateway/detail/add`
       })
     },
-    handleDelete (row) {
+    handleDelete(row) {
       Site.http.delete(`/admin/tGatewayInfo/${row.gateid}`, {}, data => {
         this.$confirm('确认删除该网关吗？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         })
-        .then(() => {
-          Site.http.delete(`/admin/tLockInfo/${row.lockid}/${row.gateid}`, {
-          }, data => {
-            if (data.errno === 0) {
-              this.$message({
-                message: '删除成功',
-                type: 'success'
-              })
-              this.fetchData()
-            }
+          .then(() => {
+            Site.http.delete(`/admin/tLockInfo/${row.lockid}/${row.gateid}`, {
+            }, data => {
+              if (data.errno === 0) {
+                this.$message({
+                  message: '删除成功',
+                  type: 'success'
+                })
+                this.fetchData()
+              }
+            })
           })
-        })
-        .catch((e) => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
+          .catch((e) => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
           })
-        })
       })
     },
-    handleGoDetail: function (row) {
+    handleGoDetail: function(row) {
       this.$router.push({
         path: `/gateway/detail/${row.gateid}`
       })
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.searchModel.pageNo = +val
       this.fetchData()
     },
-    fetchData: function () {
+    fetchData: function() {
       Site.http.post(
         '/admin/tGatewayInfo/queryByPage', this.searchModel,
         data => {
           this.tableData = data.data.list
-          this.dataCount = data.data.total
+          this.dataCount = Number(data.data.total)
         }
       )
     },
-    rowKey (row) {
+    rowKey(row) {
       return row._id
     },
-    handleSearchChange () {
+    handleSearchChange() {
       this.searchModel.pageNo = 1
       this.fetchData()
     }
-  },
-  mounted: function () {
   }
 }
 </script>

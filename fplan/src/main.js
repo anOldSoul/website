@@ -5,7 +5,8 @@ import Cookies from 'js-cookie'
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import Element from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import './theme/element/index.css'
+// import 'element-ui/lib/theme-chalk/index.css'
 
 import '@/styles/index.scss' // global css
 
@@ -15,6 +16,9 @@ import store from './store'
 
 import './icons' // icon
 import './permission' // permission control
+
+import Http from './utils/Http'
+import moment from 'moment'
 
 import * as filters from './filters' // global filters
 
@@ -30,10 +34,17 @@ Vue.directive('permission', permission)
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
-
+window.moment = moment
+window.Site = {
+  v: '0.1.0',
+  http: Http,
+  env: Http.env,
+  navMenuScrollBar: null
+}
+Vue.prototype.$moment = moment
 Vue.config.productionTip = false
 
-new Vue({
+Site.app = new Vue({
   el: '#app',
   router,
   store,

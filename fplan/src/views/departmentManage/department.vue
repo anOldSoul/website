@@ -1,5 +1,5 @@
 <template>
-  <div class="page fullH">
+  <div class="app-container fullH">
     <el-row :gutter="20" class="fullH">
       <el-col :span="7" class="fullH headerL">
         <el-card class="fullH">
@@ -8,11 +8,11 @@
             <el-button style="float: right; padding: 3px 0" type="text" @click="addDepart">添加</el-button>
           </div>
           <div class="searchBox">
-            <el-input placeholder="请输入公寓名称" v-model="apartKey" class="input-with-select">
-              <el-button slot="append" icon="el-icon-search" @click="getData"></el-button>
+            <el-input v-model="apartKey" placeholder="请输入公寓名称" class="input-with-select">
+              <el-button slot="append" icon="el-icon-search" @click="getData"/>
             </el-input>
           </div>
-          <div v-for="(arpartment, arpartmentIndex) in arpartments" :key="arpartmentIndex" class="text item" :class="{'isSelected': arpartmentIndex === selectApartIndex }" @click="selectApart(arpartmentIndex, arpartment.apartmentid)">
+          <div v-for="(arpartment, arpartmentIndex) in arpartments" :key="arpartmentIndex" :class="{'isSelected': arpartmentIndex === selectApartIndex }" class="text item" @click="selectApart(arpartmentIndex, arpartment.apartmentid)">
             <div>{{ arpartment.apartmentname }}</div>
             <div><el-button type="text" @click="editDepart(arpartment.apartmentid)">编辑</el-button></div>
           </div>
@@ -23,32 +23,32 @@
           <el-button type="primary" size="small" @click="handleAddRoom">新增房间</el-button>
         </div>
         <el-tabs v-model="activeTab" @tab-click="handleClick">
-          <el-tab-pane :label="tab.label" :name="tab.name" v-for="(tab, tabIndex) in tabs" :key="tabIndex">
-            <el-collapse v-model="activeName" accordion v-if="rooms.length">
-              <el-collapse-item :title="`楼层${floorIndex + 1}`" :name="floorIndex" v-for="(floor, floorIndex) in rooms" class="floor" :key="floorIndex">
+          <el-tab-pane v-for="(tab, tabIndex) in tabs" :label="tab.label" :name="tab.name" :key="tabIndex">
+            <el-collapse v-model="activeName" accordion>
+              <el-collapse-item v-for="(floor, floorIndex) in rooms" :title="`楼层${floorIndex + 1}`" :name="floorIndex" :key="floorIndex" class="floor">
                 <template slot="title">
-                  <div class="tab-title">楼层 {{floorIndex + 1}} <i v-if="floor && floor.length" class="el-icon-zoom-in"></i></div>
+                  <div class="tab-title">楼层 {{ floorIndex + 1 }} <i class="el-icon-zoom-in"/></div>
                 </template>
-                <el-card class="box-card" v-for="(room, roomIndex) in floor" :key="roomIndex" v-if="floor && floor.length > 0">
+                <el-card v-for="(room, roomIndex) in floor" :key="roomIndex" class="box-card">
                   <div slot="header" class="clearfix">
-                    <span>房间号 {{room.roomname}}</span>
+                    <span>房间号 {{ room.roomname }}</span>
                     <el-tooltip placement="bottom" effect="light">
                       <div slot="content">
                         <div><el-button type="text" class="edit-room" @click="editRoom(room.roomid)">编辑房间</el-button></div>
                         <div v-if="room.rentid"><el-button type="text" class="edit-room" @click="editCustome(room.rentid)">租客信息</el-button></div>
                         <div><el-button type="text" class="edit-room" @click="delRoom(room.roomid)">删除房间</el-button></div>
                       </div>
-                      <el-button type="text" style="float: right; padding: 3px 0"><i class="el-icon-more"></i></el-button>
+                      <el-button type="text" style="float: right; padding: 3px 0"><i class="el-icon-more"/></el-button>
                     </el-tooltip>
                   </div>
-                  <div>状态：{{room.roomstat === '02' ? '入住' : '空置'}}</div>
-                  <div>到期：{{room.endtime}}</div>
+                  <div>状态：{{ room.roomstat === '02' ? '入住' : '空置' }}</div>
+                  <div>到期：{{ room.endtime }}</div>
                   <div class="lock-icon"><img src="../../assets/lock.png"></div>
                 </el-card>
-                <div class="noroom" v-if="!floor || floor.length === 0"><img class="room-img" src="../../assets/noroom.png">该楼层暂无房间</div>
+                <div class="noroom"><img class="room-img" src="../../assets/noroom.png">该楼层暂无房间</div>
               </el-collapse-item>
             </el-collapse>
-            <div class="empty-box" v-else>
+            <div class="empty-box">
               <div><img src="../../assets/empty.png"></div>
               <div class="empty-text">暂无相关房间哦...</div>
             </div>
@@ -66,10 +66,7 @@ export default {
   },
   props: {
   },
-  activated () {
-    this.getData()
-  },
-  data () {
+  data() {
     return {
       formLabelWidth: '120px',
       apartmentid: '',
@@ -95,48 +92,53 @@ export default {
     }
   },
   computed: {},
+  created() {
+    this.getData()
+  },
+  mounted: function() {
+  },
   methods: {
-    handleAddRoom () {
+    handleAddRoom() {
       this.$router.push({
         path: `room/detail/add/${this.arpartments[this.selectApartIndex].apartmentid}/${this.arpartments[this.selectApartIndex].floor}`
       })
     },
-    selectApart (index,  id) {
+    selectApart(index, id) {
       this.selectApartIndex = index
       this.apartmentid = id
       this.getRoom()
     },
-    addDepart () {
+    addDepart() {
       this.$router.push({
         path: `department/detail/add`
       })
     },
-    delRoom (id) {
+    delRoom(id) {
       this.$confirm('确认删除改房间？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
-      .then(() => {
-        Site.http.delete(`/admin/tRoomInfo/${id}`, {
-        }, data => {
-          if (data.errno === 0) {
-            this.$message({
-              message: '删除成功',
-              type: 'success'
-            })
-            this.getData()
-          }
+        .then(() => {
+          Site.http.delete(`/admin/tRoomInfo/${id}`, {
+          }, data => {
+            if (data.errno === 0) {
+              this.$message({
+                message: '删除成功',
+                type: 'success'
+              })
+              this.getData()
+            }
+          })
         })
-      })
-      .catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
         })
-      })
     },
-    updateStat (id, stat) {
+    updateStat(id, stat) {
       Site.http.put(`/admin/tRoomInfo/${id}`, {
         roomstat: stat === '02' ? '03' : '02'
       }, data => {
@@ -149,35 +151,35 @@ export default {
         }
       })
     },
-    editCustome (id) {
+    editCustome(id) {
       this.$router.push({
-        path: `rent/detail/${id}`
+        path: `/rent/detail/${id}`
       })
     },
-    editRoom (id) {
+    editRoom(id) {
       this.$router.push({
-        path: `room/detail/${id}/${this.arpartments[this.selectApartIndex].apartmentid}/${this.arpartments[this.selectApartIndex].floor}`
+        path: `/room/detail/${id}/${this.arpartments[this.selectApartIndex].apartmentid}/${this.arpartments[this.selectApartIndex].floor}`
       })
     },
-    editDepart (id) {
+    editDepart(id) {
       this.$router.push({
-        path: `department/detail/${id}`
+        path: `/department/detail/${id}`
       })
     },
-    getData () {
+    getData() {
       if (this.apartKey) {
         Site.http.get(`/admin/apartmeninfo/likeread/${this.apartKey}`, {
         }, data => {
           this.arpartments = data.data
           if (this.arpartments.length) {
-            this.getRoom ()
+            this.getRoom()
           }
         })
       } else {
         this.getApartment()
       }
     },
-    onSearch () {
+    onSearch() {
       this.selectApartIndex = 0
       this.getData()
     },
@@ -192,12 +194,12 @@ export default {
       if (tab.name === 'first') {
         this.roomstat = ''
       }
-      this.getRoom ()
+      this.getRoom()
     },
-    getRoom () {
+    getRoom() {
       this.floors = []
-      let rooms = []
-      let data = {
+      const rooms = []
+      const data = {
         apartmentid: this.arpartments[this.selectApartIndex].apartmentid
       }
       if (this.roomstat) {
@@ -205,7 +207,7 @@ export default {
       }
       Site.http.get('/admin/tRoomInfo/queryByApart', data, data => {
         if (data.data.length > 0) {
-          data.data.forEach ((item, index) => {
+          data.data.forEach((item, index) => {
             if (!this.floors.includes(item.floor)) {
               this.floors.push(item.floor)
               rooms[item.floor - 1] = [item]
@@ -219,19 +221,17 @@ export default {
         }
       })
     },
-    getApartment () {
+    getApartment() {
       Site.http.post('/admin/apartmeninfo/queryByPage', {
         pageNo: 1,
         pageSize: 2000
       }, data => {
         this.arpartments = data.data.list
         if (this.arpartments.length) {
-          this.getRoom ()
+          this.getRoom()
         }
       })
     }
-  },
-  mounted: function () {
   }
 }
 </script>

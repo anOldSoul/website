@@ -8,9 +8,18 @@ import Layout from '@/views/layout/Layout'
 
 const Lock = resolve => require(['../views/lock/index'], resolve)
 const LockDetail = resolve => require(['../views/lock/detail'], resolve)
-const Password = resolve => require(['../views/lock/password'], resolve)
 const GateWay = resolve => require(['../views/gateway/index'], resolve)
 const GateWayDetail = resolve => require(['../views/gateway/detail'], resolve)
+
+const Department = resolve => require(['../views/departmentManage/department'], resolve)
+const DepartmentDetail = resolve => require(['../views/departmentManage/editDepart'], resolve)
+const RoomDetail = resolve => require(['../views/departmentManage/editRoom'], resolve)
+const RentDetail = resolve => require(['../views/departmentManage/editRent'], resolve)
+
+const DeviceUnlock = resolve => require(['../views/deviceLog/unlock'], resolve)
+const DeviceWarning = resolve => require(['../views/deviceLog/warning'], resolve)
+const UserManage = resolve => require(['../views/userManage/list'], resolve)
+const Statistic = resolve => require(['../views/dashboard/index'], resolve)
 
 /** note: Submenu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -69,9 +78,77 @@ export const constantRouterMap = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: () => Statistic,
         name: 'Dashboard',
         meta: { title: '首页', icon: 'dashboard', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/department',
+    component: Layout,
+    redirect: '/department',
+    children: [
+      {
+        path: '/department/list',
+        component: Department,
+        name: 'Department',
+        meta: { title: '公寓管理', icon: 'dashboard', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/userManage',
+    redirect: '/userManage/list',
+    component: Layout,
+    children: [
+      {
+        path: '/userManage/list',
+        component: UserManage,
+        name: 'UserManage',
+        meta: { title: '租客管理', icon: 'dashboard', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/department/detail',
+    component: Layout,
+    redirect: '/department/detail/:id',
+    hidden: true,
+    children: [
+      {
+        path: '/department/detail/:id',
+        component: DepartmentDetail,
+        name: 'DepartmentDetail',
+        meta: { title: '公寓信息', icon: 'dashboard', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/rent/detail',
+    component: Layout,
+    redirect: '/rent/detail/:id',
+    hidden: true,
+    children: [
+      {
+        path: '/rent/detail/:id',
+        component: RentDetail,
+        name: 'RentDetail',
+        meta: { title: '租客信息', icon: 'dashboard', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/room',
+    component: Layout,
+    redirect: '/room/detail/:id/:apartmentid/:floor',
+    hidden: true,
+    children: [
+      {
+        path: '/room/detail/:id/:apartmentid/:floor',
+        component: RoomDetail,
+        name: 'RoomDetail',
+        meta: { title: '房间信息', icon: 'dashboard', noCache: true }
       }
     ]
   }
@@ -85,20 +162,20 @@ export default new Router({
 
 export const asyncRouterMap = [
   {
-    path: '/lock',
+    path: '/',
     component: Layout,
     redirect: 'noredirect',
     alwaysShow: true,
-    name: 'sysManage',
+    name: 'device',
     meta: {
       title: '设备管理',
       icon: 'chart'
     },
     children: [
       {
-        path: 'admin',
+        path: 'lock',
         component: Lock,
-        name: 'admin',
+        name: 'Lock',
         meta: {
           perms: ['GET /admin/admin/list', 'POST /admin/admin/create', 'POST /admin/admin/update', 'POST /admin/admin/delete'],
           title: '锁具',
@@ -106,12 +183,67 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: 'log',
+        path: '/lock/detail/:id/:gateid',
+        component: LockDetail,
+        name: 'LockDetail',
+        hidden: true,
+        meta: {
+          perms: [],
+          title: '锁具详情',
+          noCache: true
+        }
+      },
+      {
+        path: 'gateway',
         component: GateWay,
         name: 'log',
         meta: {
           perms: ['GET /admin/log/list'],
           title: '网关',
+          noCache: true
+        }
+      },
+      {
+        path: '/gateway/detail/:id',
+        component: GateWayDetail,
+        name: 'GateWayDetail',
+        hidden: true,
+        meta: {
+          perms: [],
+          title: '网关详情',
+          noCache: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/deviceLog',
+    component: Layout,
+    redirect: 'noredirect',
+    alwaysShow: true,
+    name: 'DeviceLog',
+    meta: {
+      title: '设备日志',
+      icon: 'chart'
+    },
+    children: [
+      {
+        path: 'deviceLog/deviceUnlock',
+        component: DeviceUnlock,
+        name: 'DeviceUnlock',
+        meta: {
+          perms: [],
+          title: '开锁记录',
+          noCache: true
+        }
+      },
+      {
+        path: '/deviceLog/deviceWarning',
+        component: DeviceWarning,
+        name: 'DeviceWarning',
+        meta: {
+          perms: [],
+          title: '告警记录',
           noCache: true
         }
       }
@@ -139,9 +271,9 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: 'log',
+        path: 'operateLog',
         component: () => import('@/views/sys/log'),
-        name: 'log',
+        name: 'operateLog',
         meta: {
           perms: ['GET /admin/log/list'],
           title: '操作日志',

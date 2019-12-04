@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function listAdmin(query) {
   return request({
-    url: '/admin/list',
+    url: '/admin/admin/queryByPage',
     method: 'get',
     params: query
   })

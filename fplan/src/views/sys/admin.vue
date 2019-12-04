@@ -179,7 +179,7 @@ export default {
       listAdmin(this.listQuery)
         .then(response => {
           this.list = response.data.data.list
-          this.total = response.data.data.total
+          this.total = Number(response.data.data.total)
           this.listLoading = false
         })
         .catch(() => {

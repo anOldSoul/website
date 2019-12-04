@@ -40,7 +40,7 @@ import Pagination from '@/components/Pagination'
 const typeMap = {
   0: '一般操作',
   1: '安全操作',
-  2: '订单操作',
+  2: '锁具操作',
   3: '其他操作'
 }
 
@@ -80,7 +80,7 @@ export default {
       listLog(this.listQuery)
         .then(response => {
           this.list = response.data.data.list
-          this.total = response.data.data.total
+          this.total = Number(response.data.data.total)
           this.listLoading = false
         })
         .catch(() => {

@@ -8,29 +8,29 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="名称">
-              <el-input v-model="searchModel.lockname" clearable @change="handleSearchChange"></el-input>
+              <el-input v-model="searchModel.lockname" clearable @change="handleSearchChange"/>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="编号">
-              <el-input v-model="searchModel.lockid" clearable @change="handleSearchChange"></el-input>
+              <el-input v-model="searchModel.lockid" clearable @change="handleSearchChange"/>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="绑定网关">
-              <el-input v-model="searchModel.gateid" clearable @change="handleSearchChange"></el-input>
+              <el-input v-model="searchModel.gateid" clearable @change="handleSearchChange"/>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="绑定房间">
-              <el-input v-model="searchModel.roomname" clearable @change="handleSearchChange"></el-input>
+              <el-input v-model="searchModel.roomname" clearable @change="handleSearchChange"/>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="故障状态">
               <el-select v-model="searchModel.faultstat" clearable placeholder="">
-                <el-option label="正常" value="00"></el-option>
-                <el-option label="故障" value="01"></el-option>
+                <el-option label="正常" value="00"/>
+                <el-option label="故障" value="01"/>
               </el-select>
             </el-form-item>
           </el-col>
@@ -40,20 +40,20 @@
         </el-row>
       </el-form>
     </div>
-    <el-table :data="tableData" style="width: 100%" :row-key="rowKey">
-      <el-table-column prop="lockid" label="编号" width="70"></el-table-column>
-      <el-table-column prop="lockname" label="名称" width="170"></el-table-column>
-      <el-table-column prop="lockaddr" label="位置" width="170"></el-table-column>
-      <el-table-column prop="gateid" label="绑定网关"></el-table-column>
-      <el-table-column prop="roomname" label="绑定房间"></el-table-column>
+    <el-table :data="tableData" :row-key="rowKey" style="width: 100%">
+      <el-table-column prop="lockid" label="编号" width="70"/>
+      <el-table-column prop="lockname" label="名称" width="170"/>
+      <el-table-column prop="lockaddr" label="位置" width="170"/>
+      <el-table-column prop="gateid" label="绑定网关"/>
+      <el-table-column prop="roomname" label="绑定房间"/>
       <el-table-column prop="faultstat" label="故障状态">
-        <template slot-scope="scope"><span :style="{'color': scope.row.faultstat === '00' ? 'green' : 'red'}">{{connectStr[scope.row.faultstat]}}</span></template>
+        <template slot-scope="scope"><span :style="{'color': scope.row.faultstat === '00' ? 'green' : 'red'}">{{ connectStr[scope.row.faultstat] }}</span></template>
       </el-table-column>
       <el-table-column prop="connetnstat" label="联网状态">
-        <template slot-scope="scope"><span :style="{'color': scope.row.connetnstat === '00' ? 'green' : 'red'}">{{connectStr[scope.row.connetnstat]}}</span></template>
+        <template slot-scope="scope"><span :style="{'color': scope.row.connetnstat === '00' ? 'green' : 'red'}">{{ connectStr[scope.row.connetnstat] }}</span></template>
       </el-table-column>
       <el-table-column prop="updatetime" label="最后通讯时间" width="150">
-        <template slot-scope="scope">{{$moment(scope.row.updatetime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss')}}</template>
+        <template slot-scope="scope">{{ $moment(scope.row.updatetime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') }}</template>
       </el-table-column>
       <el-table-column label="操作" width="200" class-name="cell-cneter" fixed="right">
         <template slot-scope="scope">
@@ -65,21 +65,17 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination @current-change="handleCurrentChange" :current-page="searchModel.pageNo" :page-size="20" layout="total, prev, pager, next" :total="dataCount" class="flex pagination">
-    </el-pagination>
+    <el-pagination :current-page="searchModel.pageNo" :page-size="20" :total="dataCount" layout="total, prev, pager, next" class="flex pagination" @current-change="handleCurrentChange"/>
   </div>
 </template>
 <script>
 export default {
-  name: 'provisions-list',
+  name: 'ProvisionsList',
   components: {
   },
   props: {
   },
-  activated () {
-    this.fetchData()
-  },
-  data () {
+  data() {
     return {
       connectStr: {
         '00': '正常',
@@ -89,18 +85,22 @@ export default {
       dataCount: 0, // 必须
       searchModel: {
         pageNo: 1, // 必须
-        pageSize: 20, // 必须
+        pageSize: 20 // 必须
       }
     }
   },
   computed: {},
-
+  created() {
+    this.fetchData()
+  },
+  mounted: function() {
+  },
   methods: {
-    handleOpenImmediately (row) {
+    handleOpenImmediately(row) {
       Site.http.post(
         '/admin/tUserInfo/openLock', {
-          "lockid": row.lockid,
-          "rsv1": row.gateid 
+          'lockid': row.lockid,
+          'rsv1': row.gateid
         },
         data => {
           if (data.errno === 0) {
@@ -112,63 +112,61 @@ export default {
         }
       )
     },
-    addStaff (row) {
+    addStaff(row) {
       this.$router.push({
-        path: `/lock/detail/add/${row.gateid}`
+        path: `/device/lock/detail/add/${row.gateid}`
       })
     },
-    handleDelete (row) {
+    handleDelete(row) {
       this.$confirm('确认删除改用户吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
-      .then(() => {
-        Site.http.delete(`/admin/tLockInfo/${row.lockid}/${row.gateid}`, {
-        }, data => {
-          if (data.errno === 0) {
-            this.$message({
-              message: '删除成功',
-              type: 'success'
-            })
-            this.fetchData()
-          }
+        .then(() => {
+          Site.http.delete(`/admin/tLockInfo/${row.lockid}/${row.gateid}`, {
+          }, data => {
+            if (data.errno === 0) {
+              this.$message({
+                message: '删除成功',
+                type: 'success'
+              })
+              this.fetchData()
+            }
+          })
         })
-      })
-      .catch((e) => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
+        .catch((e) => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
         })
-      })
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.searchModel.pageNo = +val
       this.fetchData()
     },
-    fetchData: function () {
+    fetchData: function() {
       Site.http.post(
         '/admin/tLockInfo/queryByPage', this.searchModel,
         data => {
           this.tableData = data.data.list
-          this.dataCount = data.data.total
+          this.dataCount = Number(data.data.total)
         }
       )
     },
-    handleGoDetail: function (row) {
+    handleGoDetail: function(row) {
       this.$router.push({
         path: `/lock/detail/${row.lockid}/${row.gateid}`
       })
     },
-    rowKey (row) {
+    rowKey(row) {
       return row._id
     },
-    handleSearchChange () {
+    handleSearchChange() {
       this.searchModel.pageNo = 1
       this.fetchData()
     }
-  },
-  mounted: function () {
   }
 }
 </script>

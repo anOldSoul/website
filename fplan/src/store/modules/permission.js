@@ -55,6 +55,7 @@ const permission = {
       return new Promise(resolve => {
         const { perms } = data
         let accessedRouters
+        console.log(asyncRouterMap)
         if (perms.includes('*')) {
           accessedRouters = asyncRouterMap
         } else {
