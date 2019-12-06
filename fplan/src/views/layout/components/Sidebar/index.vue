@@ -9,6 +9,9 @@
       text-color="#bfcbd9"
       active-text-color="#1faa89"
     >
+      <div v-show="sidebar.opened" class="nav-logo">
+        <img src="../../../../assets/logo.png">
+      </div>
       <sidebar-item v-for="route in permission_routers" :key="route.path" :item="route" :base-path="route.path"/>
     </el-menu>
   </el-scrollbar>
@@ -31,3 +34,11 @@ export default {
   }
 }
 </script>
+<style scoped>
+.nav-logo {
+  text-align: center;
+  padding: 20px 0;
+  padding-top: 30px;
+  color: #fff;
+}
+</style>

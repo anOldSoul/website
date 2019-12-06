@@ -19,7 +19,6 @@ const RentDetail = resolve => require(['../views/departmentManage/editRent'], re
 const DeviceUnlock = resolve => require(['../views/deviceLog/unlock'], resolve)
 const DeviceWarning = resolve => require(['../views/deviceLog/warning'], resolve)
 const UserManage = resolve => require(['../views/userManage/list'], resolve)
-const Statistic = resolve => require(['../views/dashboard/index'], resolve)
 
 /** note: Submenu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -78,9 +77,9 @@ export const constantRouterMap = [
     children: [
       {
         path: 'dashboard',
-        component: () => Statistic,
+        component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: '首页', icon: 'dashboard', noCache: true }
+        meta: { title: '首页', icon: 'el-icon-pie-chart', noCache: true }
       }
     ]
   },
@@ -93,7 +92,7 @@ export const constantRouterMap = [
         path: '/department/list',
         component: Department,
         name: 'Department',
-        meta: { title: '公寓管理', icon: 'dashboard', noCache: true }
+        meta: { title: '公寓管理', icon: 'el-icon-menu', noCache: true }
       }
     ]
   },
@@ -106,7 +105,7 @@ export const constantRouterMap = [
         path: '/userManage/list',
         component: UserManage,
         name: 'UserManage',
-        meta: { title: '租客管理', icon: 'dashboard', noCache: true }
+        meta: { title: '租客管理', icon: 'el-icon-user', noCache: true }
       }
     ]
   },
@@ -162,20 +161,20 @@ export default new Router({
 
 export const asyncRouterMap = [
   {
-    path: '/',
+    path: '/lock',
     component: Layout,
     redirect: 'noredirect',
     alwaysShow: true,
-    name: 'device',
+    name: 'sysManage',
     meta: {
       title: '设备管理',
-      icon: 'chart'
+      icon: 'el-icon-printer'
     },
     children: [
       {
-        path: 'lock',
+        path: 'admin',
         component: Lock,
-        name: 'Lock',
+        name: 'admin',
         meta: {
           perms: ['GET /admin/admin/list', 'POST /admin/admin/create', 'POST /admin/admin/update', 'POST /admin/admin/delete'],
           title: '锁具',
@@ -194,7 +193,7 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: 'gateway',
+        path: 'log',
         component: GateWay,
         name: 'log',
         meta: {
@@ -224,7 +223,7 @@ export const asyncRouterMap = [
     name: 'DeviceLog',
     meta: {
       title: '设备日志',
-      icon: 'chart'
+      icon: 'el-icon-date'
     },
     children: [
       {
@@ -257,7 +256,7 @@ export const asyncRouterMap = [
     name: 'sysManage',
     meta: {
       title: '系统管理',
-      icon: 'chart'
+      icon: 'el-icon-setting'
     },
     children: [
       {
@@ -271,9 +270,9 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: 'operateLog',
+        path: 'log',
         component: () => import('@/views/sys/log'),
-        name: 'operateLog',
+        name: 'log',
         meta: {
           perms: ['GET /admin/log/list'],
           title: '操作日志',
