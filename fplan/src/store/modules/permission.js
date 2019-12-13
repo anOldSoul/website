@@ -1,5 +1,4 @@
 import { asyncRouterMap, constantRouterMap } from '@/router'
-console.log(asyncRouterMap)
 
 /**
  * 通过meta.perms判断是否与当前用户权限匹配
@@ -55,7 +54,6 @@ const permission = {
       return new Promise(resolve => {
         const { perms } = data
         let accessedRouters
-        console.log(asyncRouterMap)
         if (perms.includes('*')) {
           accessedRouters = asyncRouterMap
         } else {

@@ -92,6 +92,7 @@ export const constantRouterMap = [
         path: '/department/list',
         component: Department,
         name: 'Department',
+        perms: ['POST/admin/apartmeninfo/queryByPage'],
         meta: { title: '公寓管理', icon: 'el-icon-menu', noCache: true }
       }
     ]
@@ -105,6 +106,7 @@ export const constantRouterMap = [
         path: '/userManage/list',
         component: UserManage,
         name: 'UserManage',
+        perms: ['POST/admin/tLockRentuser/queryByPage'],
         meta: { title: '租客管理', icon: 'el-icon-user', noCache: true }
       }
     ]
@@ -119,6 +121,7 @@ export const constantRouterMap = [
         path: '/department/detail/:id',
         component: DepartmentDetail,
         name: 'DepartmentDetail',
+        perms: ['POST/admin/apartmeninfo/queryByPage'],
         meta: { title: '公寓信息', icon: 'dashboard', noCache: true }
       }
     ]
@@ -176,7 +179,7 @@ export const asyncRouterMap = [
         component: Lock,
         name: 'admin',
         meta: {
-          perms: ['GET /admin/admin/list', 'POST /admin/admin/create', 'POST /admin/admin/update', 'POST /admin/admin/delete'],
+          perms: ['POST/admin/tLockInfo/queryByPage'],
           title: '锁具',
           noCache: true
         }
@@ -187,17 +190,17 @@ export const asyncRouterMap = [
         name: 'LockDetail',
         hidden: true,
         meta: {
-          perms: [],
+          perms: ['POST/admin/tLockInfo/queryByPage'],
           title: '锁具详情',
           noCache: true
         }
       },
       {
-        path: 'log',
+        path: 'gateWay',
         component: GateWay,
-        name: 'log',
+        name: 'GateWay',
         meta: {
-          perms: ['GET /admin/log/list'],
+          perms: ['POST/admin/tGatewayInfo/queryByPage'],
           title: '网关',
           noCache: true
         }
@@ -208,7 +211,7 @@ export const asyncRouterMap = [
         name: 'GateWayDetail',
         hidden: true,
         meta: {
-          perms: [],
+          perms: ['POST/admin/tGatewayInfo/queryByPage'],
           title: '网关详情',
           noCache: true
         }
@@ -231,7 +234,7 @@ export const asyncRouterMap = [
         component: DeviceUnlock,
         name: 'DeviceUnlock',
         meta: {
-          perms: [],
+          perms: ['POST/admin/tWarningTxninfo/queryByPage'],
           title: '开锁记录',
           noCache: true
         }
@@ -241,7 +244,7 @@ export const asyncRouterMap = [
         component: DeviceWarning,
         name: 'DeviceWarning',
         meta: {
-          perms: [],
+          perms: ['POST/admin/tLockopenTxninfo/queryByPage'],
           title: '告警记录',
           noCache: true
         }
@@ -274,7 +277,7 @@ export const asyncRouterMap = [
         component: () => import('@/views/sys/log'),
         name: 'log',
         meta: {
-          perms: ['GET /admin/log/list'],
+          perms: ['GET /admin/log/queryByPage'],
           title: '操作日志',
           noCache: true
         }

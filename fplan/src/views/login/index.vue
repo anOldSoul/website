@@ -1,12 +1,11 @@
 <template>
   <div class="home">
     <div class="top outer_box">
-      <div class="saas_left_img" :style="{'background-image': `url(${imgurlL})`}">
-      </div>
-      <div class="saas_right_img" :style="{'background-image': `url(${imgurlR})`}"></div>
+      <div :style="{'background-image': `url(${imgurlL})`}" class="saas_left_img"/>
+      <div :style="{'background-image': `url(${imgurlR})`}" class="saas_right_img"/>
       <div class="section max-width-1440">
-        <div class="saas_content">         
-          <div class="saas_left">       
+        <div class="saas_content">
+          <div class="saas_left">
             <div class="saas_title">与万千企业共同开启智能时代</div>
             <div class="saas_sub_title">噢蹦智能锁管理云平台</div>
             <div class="saas_contact">
@@ -15,19 +14,19 @@
             </div>
             <div class="saas_company">©2014-2019 上海互啊佑智能科技有限公司 版权所有</div>
           </div>
-          <el-form class="saas_box" :model="loginForm" :rules="loginRules" ref="loginForm">
+          <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="saas_box">
             <div class="saas_right">
               <div class="login_top">
                 <div class="login_by_account">账号登录</div>
               </div>
               <el-form-item class="account_input" prop="username">
-                <el-input v-model="loginForm.username" placeholder="您的账号"></el-input>
+                <el-input v-model="loginForm.username" placeholder="您的账号"/>
               </el-form-item>
               <el-form-item class="password_input" prop="password">
-                <el-input type="password" v-model="loginForm.password" placeholder="您的密码"></el-input>
+                <el-input v-model="loginForm.password" type="password" placeholder="您的密码"/>
               </el-form-item>
               <div class="saas_login_btn" @click="handleLogin('loginForm')">登录</div>
-              <div class="saas_login_forget">忘记密码 <i class="el-icon-question"></i></div>
+              <div class="saas_login_forget">忘记密码 <i class="el-icon-question"/></div>
               <div class="saas_login_apply">还没有开通帐号？ 点此申请开通 >></div>
             </div>
           </el-form>
@@ -38,7 +37,6 @@
 </template>
 
 <script>
-import { MessageBox } from 'element-ui'
 import imgurlR from '../../assets/bg_saas_right.png'
 import imgurlL from '../../assets/bg_saas_left.png'
 export default {
@@ -251,6 +249,7 @@ export default {
   font-size:17px;
   box-shadow:0px 6px 12px 0px rgba(40,43,49,0.08);
   border-radius:6px;
+  cursor: pointer;
 }
 .saas_login_forget{
   text-align: right;
