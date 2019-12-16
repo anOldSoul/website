@@ -96,7 +96,7 @@ const Http = {
       }
       return axios(req).then(function(res) {
         loading.close()
-        if (res.data && res.data.errmsg) {
+        if (res.data && res.data.errno) {
           if (data.errCallBack) {
             callback(res.data)
           }
