@@ -67,6 +67,15 @@
               :value="item.value"/>
           </el-select>
         </el-form-item>
+        <el-form-item label="授权公寓" prop="roleIds">
+          <el-select v-model="dataForm.apartIds" multiple placeholder="请选择">
+            <el-option
+              v-for="item in apartments"
+              :key="item.apartmentid"
+              :label="item.apartmentname"
+              :value="item.apartmentid"/>
+          </el-select>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取消</el-button>
@@ -117,6 +126,7 @@ export default {
   data() {
     return {
       uploadPath,
+      apartments: [],
       list: null,
       total: 0,
       roleOptions: null,
@@ -159,6 +169,7 @@ export default {
   },
   created() {
     this.getList()
+    this.getApartment()
 
     roleOptions()
       .then(response => {
@@ -166,6 +177,15 @@ export default {
       })
   },
   methods: {
+    getApartment() {
+      Site.http.post('/admin/apartmeninfo/queryByPage', {
+        pageNo: 1,
+        pageSize: 2000
+      }, data => {
+        console.log(data)
+        this.apartments = data.data.list
+      })
+    },
     formatRole(roleId) {
       for (let i = 0; i < this.roleOptions.length; i++) {
         if (roleId === this.roleOptions[i].value) {
