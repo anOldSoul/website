@@ -39,7 +39,7 @@
       <el-row>
         <el-col :span="3">采集器密码</el-col>
         <el-col :span="7">
-          <el-input v-model="formData.collPwd" clearable placeholder="请输入设备编号"/>
+          <el-input v-model="formData.collPwd" :maxlength="6" clearable placeholder="请输入设备编号"/>
         </el-col>
       </el-row>
       <el-row>
