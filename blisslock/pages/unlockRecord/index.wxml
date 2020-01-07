@@ -9,7 +9,6 @@
   <view class='tip_text' wx:for="{{currentMonthData}}" wx:key="{{index}}">
     <view class='repair_title'>
       <view>{{item.date}}</view>
-      <!-- <view>开锁用户：001</view>  -->
     </view>
     <view class='text_content' wx:for="{{item.recordArr}}" wx:for-item="items" wx:key="items">
       <view class='content_left'>

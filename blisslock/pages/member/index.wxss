@@ -13,10 +13,17 @@
   border-radius: 75rpx;
   overflow: hidden;
 }
-.member_name{
+.member_name {
   font-size: 30rpx;
   margin-top: 40rpx;
-  line-height: 1;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-weight: bold;
+  border: 1rpx solid rgba(9,25,40,1);
+}
+.member_name1 {
+  font-size: 40rpx;
+  margin-top: 40rpx;
 }
 .item_border{
   width: 2rpx;

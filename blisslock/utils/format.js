@@ -1,4 +1,5 @@
 const Encrypt = require("./getEncryptBytes.js")
+const Moment = require('./moment.min.js')
 
 const formatTime = date => {
   const year = date.getFullYear()
@@ -169,7 +170,13 @@ const hexToFromBytes = (str) => {
 }
 
 const generate3MinToSecond = () => {
-  let myDate = new Date();
+  let myDate
+  if (getDeviceItem('type') === 'M6') {
+    let tempMoment = Moment().subtract(20, 'years');
+    myDate = new Date(tempMoment);
+  } else {
+    myDate = new Date();
+  }
   let now = myDate.getTime() / (1000);
   let begin = 0;
   let newDate = ('2000-01-01 00:00:00').replace(/-/g, '/');

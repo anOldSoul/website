@@ -2,27 +2,17 @@
 const app = getApp()
 Page({
   data: {
-    userInfo: {},
-    code: '',
     deviceList: [],
-    showAuthen: false,
-    hasPhone: false
+    showAuthen: false
   },
   onLoad: function (options) {
     wx.getSetting({
       success: (res) => {
-        // let hasUserInfo = res.authSetting['scope.userInfo']
-        // if (!hasUserInfo) {
-        //   this.setData({
-        //     showAuthen: true
-        //   })
-        // } else {
-          if (!wx.getStorageSync('gesturePw').length) {
-            wx.navigateTo({
-              url: `/pages/gesture/index?url=init`
-            })
-          }
-        // }
+        if (!wx.getStorageSync('gesturePw').length) {
+          wx.navigateTo({
+            url: `/pages/gesture/index?url=init`
+          })
+        }
       }
     })
   },
@@ -32,43 +22,8 @@ Page({
   onShow: function () {
     let deviceList = wx.getStorageSync('deviceList') || []
     this.setData({
-      deviceList: deviceList,
-      hasPhone: wx.getStorageSync('phone') || false
+      deviceList: deviceList
     })
-  },
-  getPhoneNumber(e) {
-    console.log(e)
-    if (e.detail.iv) {
-      wx.login({
-        success: (res) => {
-          if (res.code) {
-            this.data.code = res.code
-            let userInfo = {
-              nickName: this.data.userInfo.nickName,
-              avatarUrl: this.data.userInfo.avatarUrl,
-              gender: this.data.userInfo.gender,
-              city: this.data.userInfo.city,
-              province: this.data.userInfo.province,
-              language: this.data.userInfo.language,
-            }
-            let data = {
-              code: this.data.code,
-              encryptedData: e.detail.encryptedData,
-              iv: e.detail.iv,
-              userInfo: userInfo
-            }
-            app.post(app.Apis.POST_WECHAT_INFO, data, result => {
-              if (result.errno === 0) {
-                wx.setStorageSync('phone', true)
-                this.goAddDevicePage()
-              }
-            })
-          } else {
-            console.log('登录失败！' + res.errMsg)
-          }
-        }
-      })
-    }
   },
   goAddDevicePage: function() {
     wx.navigateTo({

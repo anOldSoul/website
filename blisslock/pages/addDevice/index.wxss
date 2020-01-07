@@ -18,8 +18,8 @@
 }
 .operate_text{
   position: absolute;
-  top: 154rpx;
-  right: 135rpx;
+  top: 254rpx;
+  right: 75rpx;
   font-size: 36rpx;
   font-weight: bold;
 }
@@ -35,8 +35,9 @@
   margin-right: 20rpx;
 }
 .no_apparatus{
-  width: 368rpx;
-  height: 501rpx;
+  width: 400rpx;
+  height: 306rpx;
+  margin: 100rpx 0;
 }
 .add_apparatusChecked{
   width:670rpx;

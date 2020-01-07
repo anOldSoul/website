@@ -39,9 +39,15 @@ Page({
       unlockRecord = unlockRecordData.map((item, index) => {
         let type = item.slice(8, 10)
         let userType = item.slice(18, 20)
-        let time = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('HH:mm:ss')
-        let date = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('20YY-MM-DD')
-        let month = app.Moment(item.slice(22, 34), 'ssmmHHDDMMYY').format('20YY-MM')
+        let tempTime
+        if (item.slice(32, 34) === '00') {
+          tempTime = `${item.slice(22, 32)}${app.Moment().format('YY')}`
+        } else {
+          tempTime = item.slice(22, 34)
+        }
+        let time = app.Moment(tempTime, 'ssmmHHDDMMYY').format('HH:mm:ss')
+        let date = app.Moment(tempTime, 'ssmmHHDDMMYY').format('20YY-MM-DD')
+        let month = app.Moment(tempTime, 'ssmmHHDDMMYY').format('20YY-MM')
         dateArr.push(date)
         let lockType
         if (type === '23') {
@@ -117,7 +123,7 @@ Page({
       newUnlockRecord[index].recordArr = []
       unlockRecord.forEach((item1, index1) => {
         if (item === item1.date) {
-          newUnlockRecord[index].recordArr.push(item1)
+          newUnlockRecord[index].recordArr.unshift(item1)
           newUnlockRecord[index].month = item1.month
         }
       })
@@ -130,56 +136,8 @@ Page({
     })
   },
   onLoad: function (options) {
-    let type = options.type
-    if (type) {
-      this.setData({
-        type
-      })
-      this.getData()
-    }
     this.setData({
       deviceType: app.util.getDeviceItem('type')
-    })
-  },
-  getData: function() {
-    app.post(app.Apis.GET_UNLOCK_RECORD, {}, result => {
-      let resultData = result.data
-      let dateArr = []
-      let unlockRecord = resultData.map((item, index) => {
-        let month = app.Moment(item.dataCheck.time, 'ssmmHHDDMMYYYY').format('YYYY-MM')
-        let date = app.Moment(item.dataCheck.time, 'ssmmHHDDMMYYYY').format('YYYY-MM-DD')
-        let time = app.Moment(item.dataCheck.time, 'ssmmHHDDMMYYYY').format('HH:mm:ss')
-        dateArr.push(date)
-        return {
-          lockType: item.dataCheck.openstat,
-          time: time,
-          month: month,
-          date: date,
-          ele: item.dataCheck.ele,
-          warnstat: item.dataCheck.warnstat,
-          keystat: item.dataCheck.keystat
-        }
-      })
-      console.log(unlockRecord)
-      dateArr = [...new Set(dateArr)]
-      let newUnlockRecord = []
-      dateArr.forEach((item, index) => {
-        newUnlockRecord[index] = {}
-        newUnlockRecord[index].date = item
-        newUnlockRecord[index].recordArr = []
-        unlockRecord.forEach((item1, index1) => {
-          if (item === item1.date) {
-            newUnlockRecord[index].recordArr.push(item1)
-            newUnlockRecord[index].month = item1.month
-          }
-        })
-      })
-      this.data.unlockRecord = newUnlockRecord.reverse()
-      this.setData({
-        currentMonthData: this.data.unlockRecord.filter((item, index) => {
-          return item.month === this.data.month
-        })
-      })
     })
   },
   syncUnlockRecord: function() {

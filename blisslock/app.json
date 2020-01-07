@@ -1,5 +1,5 @@
 {
-  "pages": [
+  "pages": [  
     "pages/index/index",
     "pages/addPw/index",
     "pages/addFinger/index",
@@ -15,7 +15,7 @@
     "pages/deviceName/index",
     "pages/unlockRecord/index",   
     "pages/about/index",
-    "pages/member/index",   
+    "pages/member/index",
     "pages/gesture/index",
     "pages/search/index",
     "pages/activateFinger/index",
