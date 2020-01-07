@@ -19,6 +19,9 @@ const RentDetail = resolve => require(['../views/departmentManage/editRent'], re
 const DeviceUnlock = resolve => require(['../views/deviceLog/unlock'], resolve)
 const DeviceWarning = resolve => require(['../views/deviceLog/warning'], resolve)
 const UserManage = resolve => require(['../views/userManage/list'], resolve)
+const CollectionLog = resolve => require(['../views/deviceLog/collection'], resolve)
+const Collection = resolve => require(['../views/collection/list'], resolve)
+const CollectionDetail = resolve => require(['../views/collection/detail'], resolve)
 
 /** note: Submenu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -175,6 +178,27 @@ export const asyncRouterMap = [
     },
     children: [
       {
+        path: 'gateWay',
+        component: GateWay,
+        name: 'GateWay',
+        meta: {
+          perms: ['POST/admin/tGatewayInfo/queryByPage'],
+          title: '网关',
+          noCache: true
+        }
+      },
+      {
+        path: '/gateway/detail/:id',
+        component: GateWayDetail,
+        name: 'GateWayDetail',
+        hidden: true,
+        meta: {
+          perms: ['POST/admin/tGatewayInfo/queryByPage'],
+          title: '网关详情',
+          noCache: true
+        }
+      },
+      {
         path: 'admin',
         component: Lock,
         name: 'admin',
@@ -196,23 +220,23 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: 'gateWay',
-        component: GateWay,
-        name: 'GateWay',
+        path: 'collection',
+        component: Collection,
+        name: 'collection',
         meta: {
-          perms: ['POST/admin/tGatewayInfo/queryByPage'],
-          title: '网关',
+          perms: ['POST/admin/tLockInfo/queryByPage'],
+          title: '采集器',
           noCache: true
         }
       },
       {
-        path: '/gateway/detail/:id',
-        component: GateWayDetail,
-        name: 'GateWayDetail',
+        path: '/collection/detail/:id',
+        component: CollectionDetail,
+        name: 'CollectionDetail',
         hidden: true,
         meta: {
-          perms: ['POST/admin/tGatewayInfo/queryByPage'],
-          title: '网关详情',
+          perms: ['POST/admin/tLockInfo/queryByPage'],
+          title: '采集器详情',
           noCache: true
         }
       }
@@ -235,7 +259,7 @@ export const asyncRouterMap = [
         name: 'DeviceUnlock',
         meta: {
           perms: ['POST/admin/tWarningTxninfo/queryByPage'],
-          title: '开锁记录',
+          title: '开锁日志',
           noCache: true
         }
       },
@@ -245,7 +269,17 @@ export const asyncRouterMap = [
         name: 'DeviceWarning',
         meta: {
           perms: ['POST/admin/tLockopenTxninfo/queryByPage'],
-          title: '告警记录',
+          title: '告警日志',
+          noCache: true
+        }
+      },
+      {
+        path: '/deviceLog/collectionLog',
+        component: CollectionLog,
+        name: 'CollectionLog',
+        meta: {
+          perms: ['POST/admin/tLockopenTxninfo/queryByPage'],
+          title: '采集日志',
           noCache: true
         }
       }
