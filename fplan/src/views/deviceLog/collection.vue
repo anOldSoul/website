@@ -20,6 +20,15 @@
       </el-form>
     </div>
     <el-table :data="tableData" :row-key="rowKey" style="width: 100%">
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="采集数据">
+              <span>{{ props.row.collData }}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
       <el-table-column prop="collId" label="设备编号"/>
       <el-table-column prop="collName" label="设备名称"/>
       <el-table-column prop="collUser" label="操作员编号"/>
@@ -29,9 +38,9 @@
           {{ $moment(scope.row.collTime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>
-      <el-table-column prop="stat" label="采集状态">
+      <el-table-column label="采集状态">
         <template slot-scope="scope">
-          <span :style="{ color: scope.row.stat === '00' ? 'green' : 'red'}">{{ scope.row.stat === '00' ? '成功' : '异常' }}</span>
+          <span :style="{ color: scope.row.collStatus === '00' ? 'green' : 'red'}">{{ scope.row.collStatus === '00' ? '正常' : '异常' }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="datatype" label="采集类型">
@@ -40,7 +49,6 @@
         </template>
       </el-table-column>
       <el-table-column prop="telno" label="手机号"/>
-      <el-table-column prop="collData" label="采集数据"/>
       <el-table-column prop="upIp" label="采集设备ip"/>
     </el-table>
     <el-pagination :current-page="searchModel.pageNo" :page-size="20" :total="dataCount" layout="total, prev, pager, next" class="flex pagination" @current-change="handleCurrentChange"/>

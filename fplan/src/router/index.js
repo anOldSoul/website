@@ -224,7 +224,7 @@ export const asyncRouterMap = [
         component: Collection,
         name: 'collection',
         meta: {
-          perms: ['POST/admin/tLockInfo/queryByPage'],
+          perms: ['POST/admin/tCollectorInfo/queryByPage'],
           title: '采集器',
           noCache: true
         }
@@ -235,7 +235,7 @@ export const asyncRouterMap = [
         name: 'CollectionDetail',
         hidden: true,
         meta: {
-          perms: ['POST/admin/tLockInfo/queryByPage'],
+          perms: ['POST/admin/tCollectorInfo/queryByPage'],
           title: '采集器详情',
           noCache: true
         }
@@ -278,7 +278,7 @@ export const asyncRouterMap = [
         component: CollectionLog,
         name: 'CollectionLog',
         meta: {
-          perms: ['POST/admin/tLockopenTxninfo/queryByPage'],
+          perms: ['POST/admin/tCollectorTxn/queryByPage'],
           title: '采集日志',
           noCache: true
         }
