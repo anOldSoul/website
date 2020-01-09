@@ -1,6 +1,9 @@
 import axios from 'axios'
 import dotProp from 'dot-prop'
-import { Loading } from 'element-ui'
+import { Loading, MessageBox } from 'element-ui'
+import store from '../store'
+import router from '../router'
+import { removeToken } from '@/utils/auth'
 let env
 if (window.location.hostname === 'noah-tax.charmdeer.com') {
   env = 'prod'
@@ -100,8 +103,20 @@ const Http = {
           if (data.errCallBack) {
             callback(res.data)
           }
-          if (!data.hideErrorNotify) {
-            Site.app.$notify.error(res.data.errmsg)
+          if (res.data.errno === 506) {
+            MessageBox.alert('登录超时，请重新登录', '错误', {
+              confirmButtonText: '确定',
+              type: 'error',
+              callback: action => {
+                store.commit('SET_TOKEN', '')
+                store.commit('SET_ROLES', [])
+                store.commit('SET_PERMS', [])
+                removeToken()
+                router.replace({
+                  path: '/login'
+                })
+              }
+            })
           }
         } else if (callback) {
           callback(res.data)

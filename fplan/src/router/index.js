@@ -144,7 +144,7 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/room',
+    path: '/room/detail',
     component: Layout,
     redirect: '/room/detail/:id/:apartmentid/:floor',
     hidden: true,

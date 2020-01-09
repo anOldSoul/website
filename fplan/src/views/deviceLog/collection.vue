@@ -19,12 +19,15 @@
         </el-row>
       </el-form>
     </div>
-    <el-table :data="tableData" :row-key="rowKey" style="width: 100%">
+    <el-table :data="tableData" style="width: 100%">
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
             <el-form-item label="采集数据">
-              <span>{{ props.row.collData }}</span>
+              <div class="collData">{{ props.row.collData }}</div>
+            </el-form-item>
+            <el-form-item label="指纹图像数据">
+              <div class="collData">{{ props.row.collPicture }}</div>
             </el-form-item>
           </el-form>
         </template>
@@ -50,8 +53,28 @@
       </el-table-column>
       <el-table-column prop="telno" label="手机号"/>
       <el-table-column prop="upIp" label="采集设备ip"/>
+      <el-table-column label="查看" class-name="cell-cneter" fixed="right">
+        <template slot-scope="scope">
+          <template>
+            <el-button type="text" @click="handleViewData(scope.row)">采集数据</el-button>
+            <el-button type="text" @click="handleViewImgData(scope.row)">指纹图像数据</el-button>
+          </template>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination :current-page="searchModel.pageNo" :page-size="20" :total="dataCount" layout="total, prev, pager, next" class="flex pagination" @current-change="handleCurrentChange"/>
+    <el-dialog
+      :visible.sync="dialogVisible"
+      title="采集数据"
+      width="70%">
+      <div class="dataDialog">{{ collData }}</div>
+    </el-dialog>
+    <el-dialog
+      :visible.sync="fingerDialogVisible"
+      title="指纹图像数据"
+      width="70%">
+      <div class="dataDialog">{{ collPicture }}</div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -63,6 +86,10 @@ export default {
   },
   data() {
     return {
+      collPicture: '',
+      collData: '',
+      dialogVisible: false,
+      fingerDialogVisible: false,
       tableData: [], // 必须
       dataCount: 0, // 必须
       searchModel: {
@@ -85,8 +112,15 @@ export default {
   },
   mounted: function() {
   },
-
   methods: {
+    handleViewImgData(row) {
+      this.collPicture = row.collPicture
+      this.fingerDialogVisible = true
+    },
+    handleViewData(row) {
+      this.collData = row.collData
+      this.dialogVisible = true
+    },
     handleGoDetail: function(row) {
       this.$router.push({
         path: `/gateway/detail/${row.gateid}`
@@ -105,9 +139,6 @@ export default {
         }
       )
     },
-    rowKey(row) {
-      return row._id
-    },
     handleSearchChange() {
       this.searchModel.pageNo = 1
       this.fetchData()
@@ -122,5 +153,17 @@ export default {
 }
 .noticeContent{
   padding: 30px;
+}
+.collData {
+  white-space:normal;
+  word-break:break-all;
+  word-wrap:break-word;
+}
+.el-button+.el-button{
+  margin-left: 0;
+}
+.dataDialog {
+  height: 600px;
+  overflow-y: scroll;
 }
 </style>

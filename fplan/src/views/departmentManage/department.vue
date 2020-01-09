@@ -102,7 +102,7 @@ export default {
   methods: {
     handleAddRoom() {
       this.$router.push({
-        path: `room/detail/add/${this.arpartments[this.selectApartIndex].apartmentid}/${this.arpartments[this.selectApartIndex].floor}`
+        path: `/room/detail/add/${this.arpartments[this.selectApartIndex].apartmentid}/${this.arpartments[this.selectApartIndex].floor}`
       })
     },
     selectApart(index, id) {
@@ -112,7 +112,7 @@ export default {
     },
     addDepart() {
       this.$router.push({
-        path: `department/detail/add`
+        path: `/department/detail/add`
       })
     },
     delRoom(id) {
