@@ -20,18 +20,6 @@
       </el-form>
     </div>
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column type="expand">
-        <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="采集数据">
-              <div class="collData">{{ props.row.collData }}</div>
-            </el-form-item>
-            <el-form-item label="指纹图像数据">
-              <div class="collData">{{ props.row.collPicture }}</div>
-            </el-form-item>
-          </el-form>
-        </template>
-      </el-table-column>
       <el-table-column prop="collId" label="设备编号"/>
       <el-table-column prop="collName" label="设备名称"/>
       <el-table-column prop="collUser" label="操作员编号"/>
