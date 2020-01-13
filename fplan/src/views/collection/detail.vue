@@ -16,7 +16,7 @@
           <el-input v-model="formData.collName" clearable placeholder="请输入设备名称"/>
         </el-col>
       </el-row>
-      <el-row>
+      <el-row v-if="!isAdd">
         <el-col :span="3">设备编号</el-col>
         <el-col :span="7">
           <el-input v-model="formData.collId" disabled clearable placeholder="请输入设备编号"/>
@@ -30,19 +30,19 @@
           </el-select>
         </el-col>
       </el-row>
-      <el-row>
+      <el-row v-if="!isAdd">
         <el-col :span="3">采集器登录账号</el-col>
         <el-col :span="7">
-          <el-input v-model="formData.collUserid" disabled clearable placeholder="请输入设备编号"/>
+          <el-input v-model="formData.collUserid" disabled clearable placeholder="请输入采集器登录账号"/>
         </el-col>
       </el-row>
-      <el-row>
+      <el-row v-if="!isAdd">
         <el-col :span="3">采集器密码</el-col>
         <el-col :span="7">
-          <el-input v-model="formData.collPwd" :maxlength="6" clearable placeholder="请输入设备编号"/>
+          <el-input v-model="formData.collPwd" :maxlength="6" clearable placeholder="请输入采集器密码"/>
         </el-col>
       </el-row>
-      <el-row>
+      <el-row v-if="!isAdd">
         <el-col :span="3">采集器状态</el-col>
         <el-col :span="5">
           <el-select v-model="formData.stat" clearable placeholder="请选择">
@@ -127,6 +127,7 @@ export default {
         pageSize: 2000
       }, data => {
         this.arpartments = data.data.list
+        console.log(this.arpartments)
       })
     },
     handleOpenAddPw() {
@@ -219,7 +220,11 @@ export default {
       })
     },
     putData() {
-      console.log(this.formData)
+      this.arpartments.forEach((item, index) => {
+        if (item.apartmentid === this.formData.apartid) {
+          this.formData.apartname = item.apartmentname
+        }
+      })
       Site.http.put(`/admin/tCollectorInfo/${this.curId}`, this.formData, data => {
         if (data.errno === 0) {
           this.$message({
@@ -231,6 +236,11 @@ export default {
       })
     },
     postData() {
+      this.arpartments.forEach((item, index) => {
+        if (item.apartmentid === this.formData.apartid) {
+          this.formData.apartname = item.apartmentname
+        }
+      })
       Site.http.post('/admin/tCollectorInfo', this.formData, data => {
         if (data.errno === 0) {
           this.$message({

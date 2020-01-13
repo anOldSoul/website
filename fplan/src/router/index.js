@@ -274,7 +274,7 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: '/deviceLog/collectionLog',
+        path: '/deviceLog/collectionLog/:id',
         component: CollectionLog,
         name: 'CollectionLog',
         meta: {

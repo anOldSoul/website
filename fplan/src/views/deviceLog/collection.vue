@@ -45,7 +45,7 @@
         <template slot-scope="scope">
           <template>
             <el-button type="text" @click="handleViewData(scope.row)">采集数据</el-button>
-            <el-button type="text" @click="handleViewImgData(scope.row)">指纹图像数据</el-button>
+            <el-button v-if="scope.row.datatype === '00'" type="text" @click="handleViewImgData(scope.row)">指纹图像数据</el-button>
           </template>
         </template>
       </el-table-column>
@@ -93,8 +93,15 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    collId() {
+      return this.$route.params.id || ''
+    }
+  },
   created() {
+    if (this.collId !== ':id') {
+      this.searchModel.collId = this.collId
+    }
     this.fetchData()
     // this.getCount()
   },

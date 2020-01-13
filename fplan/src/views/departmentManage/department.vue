@@ -36,7 +36,7 @@
                       <el-tooltip placement="bottom" effect="light">
                         <div slot="content">
                           <div><el-button type="text" class="edit-room" @click="editRoom(room.roomid)">编辑房间</el-button></div>
-                          <div v-if="room.rentid"><el-button type="text" class="edit-room" @click="editCustome(room.rentid)">租客信息</el-button></div>
+                          <div v-if="room.rentid"><el-button type="text" class="edit-room" @click="editCustome(room.roomid, room.roomname)">租客信息</el-button></div>
                           <div><el-button type="text" class="edit-room" @click="delRoom(room.roomid)">删除房间</el-button></div>
                         </div>
                         <el-button type="text" style="float: right; padding: 3px 0"><i class="el-icon-more"/></el-button>
@@ -58,6 +58,21 @@
         </el-tabs>
       </el-col>
     </el-row>
+    <el-dialog :title="`房间${dialogTitle}租客信息`" :visible.sync="dialogTableVisible">
+      <el-table :data="gridData">
+        <el-table-column label="授权时间">
+          <template slot-scope="scope">{{ scope.row.checkintime ? $moment(scope.row.checkintime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : '' }}</template>
+        </el-table-column>
+        <el-table-column property="rentusername" label="租户名"/>
+        <el-table-column property="sex" label="性别"/>
+        <el-table-column property="renttel" label="手机号"/>
+        <el-table-column label="操作" class-name="cell-cneter" fixed="right">
+          <template slot-scope="scope">
+            <el-button type="text" @click="viewRenter(scope.row)">详情</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -70,6 +85,9 @@ export default {
   },
   data() {
     return {
+      dialogTitle: '',
+      gridData: [],
+      dialogTableVisible: false,
       formLabelWidth: '120px',
       apartmentid: '',
       selectApartIndex: 0,
@@ -100,6 +118,11 @@ export default {
   mounted: function() {
   },
   methods: {
+    viewRenter(row) {
+      this.$router.push({
+        path: `/rent/detail/${row.rentuserid}`
+      })
+    },
     handleAddRoom() {
       this.$router.push({
         path: `/room/detail/add/${this.arpartments[this.selectApartIndex].apartmentid}/${this.arpartments[this.selectApartIndex].floor}`
@@ -153,10 +176,15 @@ export default {
         }
       })
     },
-    editCustome(id) {
-      this.$router.push({
-        path: `/rent/detail/${id}`
-      })
+    editCustome(id, name) {
+      this.dialogTableVisible = true
+      Site.http.get(
+        `/admin/tLockRentuser/getRentByRoomid/${id}`, {},
+        data => {
+          this.gridData = data.data
+          this.dialogTitle = name
+        }
+      )
     },
     editRoom(id) {
       this.$router.push({

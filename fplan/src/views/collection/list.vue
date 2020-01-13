@@ -3,25 +3,26 @@
     <div class="flex search-box">
       <el-form class="form" label-width="86px">
         <el-row>
-          <el-col :span="7">
+          <el-col :span="6">
             <el-form-item label="设备编号">
               <el-input v-model="searchModel.collId" clearable @change="handleSearchChange"/>
             </el-form-item>
           </el-col>
-          <el-col :span="7">
+          <el-col :span="6">
             <el-form-item label="设备名称">
               <el-input v-model="searchModel.collName" clearable @change="handleSearchChange"/>
             </el-form-item>
           </el-col>
-          <el-col :span="7">
+          <el-col :span="6">
             <el-form-item label="绑定公寓">
               <el-select v-model="searchModel.apartid" placeholder="请选择公寓" clearable>
                 <el-option v-for="apart in apartments" :label="apart.apartmentname" :value="apart.apartmentid" :key="apart.apartmentid"/>
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="3" :push="2">
+          <el-col :span="5" :push="2">
             <el-button type="primary" @click="handleSearchChange">查询</el-button>
+            <el-button type="warning" @click="handleAdd">新增</el-button>
           </el-col>
         </el-row>
       </el-form>
@@ -38,10 +39,9 @@
       </el-table-column>
       <el-table-column label="操作" class-name="cell-cneter" fixed="right">
         <template slot-scope="scope">
-          <template>
-            <el-button type="text" @click="handleGoDetail(scope.row)">编辑</el-button>
-            <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
-          </template>
+          <el-button type="text" @click="handleGoDetail(scope.row)">编辑</el-button>
+          <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="text" @click="handleViewLog(scope.row)">查看日志</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -78,6 +78,16 @@ export default {
   },
 
   methods: {
+    handleViewLog(row) {
+      this.$router.push({
+        path: `/deviceLog/collectionLog/${row.collId}`
+      })
+    },
+    handleAdd() {
+      this.$router.push({
+        path: `/collection/detail/add`
+      })
+    },
     handleDelete(row) {
       this.$confirm('确认删除该采集器吗？', '提示', {
         confirmButtonText: '确定',
@@ -126,7 +136,6 @@ export default {
         '/admin/tCollectorInfo/queryByPage', this.searchModel,
         data => {
           this.tableData = data.data.list
-          console.log(this.tableData)
           this.dataCount = Number(this.tableData.length)
         }
       )
