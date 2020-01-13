@@ -36,13 +36,13 @@
       </el-table-column>
       <el-table-column prop="certificateno" label="证件号"/>
       <el-table-column prop="roomname" label="授权房间"/>
-      <el-table-column prop="checkintime" label="授权时间"/>
+      <el-table-column label="授权时间">
+        <template slot-scope="scope">{{ scope.row.checkintime ? $moment(scope.row.checkintime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : '' }}</template>
+      </el-table-column>
       <el-table-column label="操作" width="160" class-name="cell-cneter" fixed="right">
         <template slot-scope="scope">
-          <template>
-            <el-button type="text" @click="handleGoDetail(scope.row)">编辑</el-button>
-            <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
-          </template>
+          <el-button type="text" @click="handleGoDetail(scope.row)">编辑</el-button>
+          <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
