@@ -61,12 +61,12 @@
       <el-row>
         <el-col :span="3">授权公寓</el-col>
         <el-col :span="5">
-          <el-select v-model="formData.rsv1" clearable placeholder="请选择公寓" @change="onchangeDepart">
+          <el-select v-model="formData.apartmentid" clearable placeholder="请选择公寓" @change="onchangeDepart">
             <el-option v-for="item in arpartments" :label="item.apartmentname" :value="item.apartmentid" :key="item.apartmentid"/>
           </el-select>
         </el-col>
         <el-col :span="8">
-          <el-select v-model="formData.checkimroom" filterable clearable placeholder="请选择授权房间">
+          <el-select v-model="formData.checkinroomid" filterable clearable placeholder="请选择授权房间">
             <el-option v-for="item in rooms" :label="item.roomname" :value="item.roomid" :key="item.roomid"/>
           </el-select>
         </el-col>
@@ -118,13 +118,12 @@ export default {
   },
   methods: {
     onchangeDepart() {
-      this.formData.checkimroom = ''
-      console.log(this.formData)
+      this.formData.checkinroomid = ''
       this.getRoom()
     },
     getRoom() {
       const data = {
-        apartmentid: this.formData.rsv1
+        apartmentid: this.formData.apartmentid
       }
       Site.http.get('/admin/tRoomInfo/queryByApart', data, data => {
         this.rooms = data.data
@@ -175,9 +174,21 @@ export default {
           this.formData.checkimroom = Number(this.formData.checkimroom)
           this.getRoom()
         }
+        if (this.formData.checkintime) {
+          this.formData.checkintime = this.$moment(this.formData.checkintime, 'YYYYMMDDhhmmss')
+        }
       })
     },
     putData() {
+      this.formData.rsv1 = 0
+      this.formData.checkintime = this.$moment(this.formData.checkintime).format('YYYY-MM-DD')
+      console.log(this.rooms)
+      console.log(this.formData.checkinroomid)
+      this.rooms.forEach((item, index) => {
+        if (item.roomid === this.formData.checkinroomid) {
+          this.formData.checkimroom = item.roomname.toString()
+        }
+      })
       Site.http.put(`/admin/tLockRentuser/${this.curId}`, this.formData, data => {
         if (data.errno === 0) {
           this.$message({
@@ -191,6 +202,13 @@ export default {
     postData() {
       this.formData.rsv1 = 0
       this.formData.checkintime = this.$moment(this.formData.checkintime).format('YYYY-MM-DD')
+      console.log(this.rooms)
+      console.log(this.checkinroomid)
+      this.rooms.forEach((item, index) => {
+        if (item.roomid === this.formData.checkinroomid) {
+          this.formData.checkimroom = item.roomname.toString()
+        }
+      })
       Site.http.post('/admin/tLockRentuser', this.formData, data => {
         if (data.errno === 0) {
           this.$message({

@@ -35,7 +35,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="certificateno" label="证件号"/>
-      <el-table-column prop="roomname" label="授权房间"/>
+      <el-table-column prop="checkimroom" label="授权房间"/>
       <el-table-column label="授权时间">
         <template slot-scope="scope">{{ scope.row.checkintime ? $moment(scope.row.checkintime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : '' }}</template>
       </el-table-column>

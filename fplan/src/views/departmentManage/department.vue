@@ -58,7 +58,7 @@
         </el-tabs>
       </el-col>
     </el-row>
-    <el-dialog :title="`房间${dialogTitle}租客信息`" :visible.sync="dialogTableVisible">
+    <el-dialog :title="`房间${dialogTitle}租客信息`" :visible.sync="dialogTableVisible" width="70%">
       <el-table :data="gridData">
         <el-table-column label="授权时间">
           <template slot-scope="scope">{{ scope.row.checkintime ? $moment(scope.row.checkintime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : '' }}</template>
@@ -69,9 +69,38 @@
         <el-table-column label="操作" class-name="cell-cneter" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="viewRenter(scope.row)">详情</el-button>
+            <el-button type="text" @click="updateStat(scope.row)">{{ scope.row.rentstat === '03' ? '入住' : '退租' }}</el-button>
           </template>
         </el-table-column>
       </el-table>
+      <el-button type="text" @click="viewRenter(scope.row)">添加租户</el-button>
+      <el-card>
+        <div class="rentUser">
+          <el-row>
+            <el-col :span="2">租户名</el-col>
+            <el-col :span="5">
+              <el-input v-model="searchModel.rentusername" placeholder="请输入租户名"/>
+            </el-col>
+            <el-col :span="2" :push="1">手机号</el-col>
+            <el-col :span="5" :push="1">
+              <el-input v-model="searchModel.renttel" placeholder="请输入手机号"/>
+            </el-col>
+          </el-row>
+        </div>
+        <el-table :data="userData">
+          <el-table-column label="授权时间">
+            <template slot-scope="scope">{{ scope.row.checkintime ? $moment(scope.row.checkintime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : '' }}</template>
+          </el-table-column>
+          <el-table-column property="rentusername" label="租户名"/>
+          <el-table-column property="sex" label="性别"/>
+          <el-table-column property="renttel" label="手机号"/>
+          <el-table-column label="操作" class-name="cell-cneter" fixed="right">
+            <template slot-scope="scope">
+              <el-button type="text" @click="viewRenter(scope.row)">添加</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-card>
     </el-dialog>
   </div>
 </template>
@@ -85,8 +114,17 @@ export default {
   },
   data() {
     return {
+      dataCount: 0,
+      searchModel: {
+        pageNo: 1,
+        pageSize: 20,
+        rentusername: '',
+        renttel: ''
+      },
+      selectId: '',
       dialogTitle: '',
       gridData: [],
+      userData: [],
       dialogTableVisible: false,
       formLabelWidth: '120px',
       apartmentid: '',
@@ -118,6 +156,15 @@ export default {
   mounted: function() {
   },
   methods: {
+    getUserData() {
+      Site.http.post(
+        '/admin/tLockRentuser/queryByPage', this.searchModel,
+        data => {
+          this.userData = data.data.list
+          this.dataCount = Number(data.data.total)
+        }
+      )
+    },
     viewRenter(row) {
       this.$router.push({
         path: `/rent/detail/${row.rentuserid}`
@@ -163,26 +210,36 @@ export default {
           })
         })
     },
-    updateStat(id, stat) {
-      Site.http.put(`/admin/tRoomInfo/${id}`, {
-        roomstat: stat === '02' ? '03' : '02'
+    updateStat(row) {
+      Site.http.put(`/admin/tLockRentuser/${row.rentuserid}`, {
+        checkinroomid: row.checkinroomid,
+        checkimroom: row.checkimroom,
+        apartmentid: row.apartmentid,
+        apartmentname: row.apartmentname,
+        endtime: row.endtime,
+        rentstat: row.rentstat === '02' ? '03' : '02'
       }, data => {
         if (data.errno === 0) {
           this.$message({
             message: '更新成功',
             type: 'success'
           })
-          this.getData()
+          this.getRentByRoomid()
         }
       })
     },
     editCustome(id, name) {
       this.dialogTableVisible = true
+      this.selectId = id
+      this.dialogTitle = name
+      this.getUserData()
+      this.getRentByRoomid()
+    },
+    getRentByRoomid() {
       Site.http.get(
-        `/admin/tLockRentuser/getRentByRoomid/${id}`, {},
+        `/admin/tLockRentuser/getRentByRoomid/${this.selectId}`, {},
         data => {
           this.gridData = data.data
-          this.dialogTitle = name
         }
       )
     },
@@ -266,6 +323,11 @@ export default {
 }
 </script>
 <style scoped>
+.rentUser >>> .el-row {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
 .headerL >>> .el-card__body {
   padding: 0;
 }

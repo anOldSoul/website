@@ -40,6 +40,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="telno" label="手机号"/>
+      <el-table-column prop="rentusername" label="客户姓名"/>
       <el-table-column prop="upIp" label="采集设备ip"/>
       <el-table-column label="查看" class-name="cell-cneter" fixed="right">
         <template slot-scope="scope">
