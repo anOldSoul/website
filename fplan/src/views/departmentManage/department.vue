@@ -59,7 +59,9 @@
       </el-col>
     </el-row>
     <el-dialog :title="`房间${dialogTitle}租客信息`" :visible.sync="dialogTableVisible" width="70%">
-      <div><el-button type="text" class="edit-room" @click="delRoom(room.roomid)"><i class="el-icon-delete"/> 空置</el-button></div>
+      <div class="add-title">
+        <el-button type="warning" size="mini" icon="el-icon-delete" class="edit-room" @click="setEmpty">空置</el-button>
+      </div>
       <el-table :data="gridData">
         <el-table-column label="授权时间">
           <template slot-scope="scope">{{ scope.row.checkintime ? $moment(scope.row.checkintime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : '' }}</template>
@@ -74,8 +76,11 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button type="text" @click="viewRenter(scope.row)"><i class="el-icon-circle-plus-outline"/> 添加租户</el-button>
-      <el-card>
+      <div class="add-title">
+        <el-button v-show="!isShowAdd" type="text" @click="handleShowAdd"><i class="el-icon-circle-plus-outline"/> 添加租户</el-button>
+        <el-button v-show="isShowAdd" type="text" @click="handleShowAdd"><i class="el-icon-caret-top"/>收起</el-button>
+      </div>
+      <el-card v-show="isShowAdd">
         <div class="rentUser">
           <el-row>
             <el-col :span="2">租户名</el-col>
@@ -122,6 +127,7 @@ export default {
   },
   data() {
     return {
+      isShowAdd: false,
       dataCount: 0,
       searchModel: {
         pageNo: 1,
@@ -164,6 +170,12 @@ export default {
   mounted: function() {
   },
   methods: {
+    setEmpty() {
+      this.gridData = []
+    },
+    handleShowAdd() {
+      this.isShowAdd = !this.isShowAdd
+    },
     handleSaveRenter() {
       const rentids = this.gridData.map((item, index) => {
         return item.rentuserid
@@ -248,6 +260,7 @@ export default {
     },
     editCustome(id, name) {
       this.dialogTableVisible = true
+      this.isShowAdd = false
       this.selectId = id
       this.dialogTitle = name
       this.getUserData()
@@ -429,5 +442,10 @@ export default {
 }
 .dialog-input {
   width: 200px;
+}
+.add-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 </style>
