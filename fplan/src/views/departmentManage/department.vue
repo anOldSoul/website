@@ -59,6 +59,7 @@
       </el-col>
     </el-row>
     <el-dialog :title="`房间${dialogTitle}租客信息`" :visible.sync="dialogTableVisible" width="70%">
+      <div><el-button type="text" class="edit-room" @click="delRoom(room.roomid)"><i class="el-icon-delete"/> 空置</el-button></div>
       <el-table :data="gridData">
         <el-table-column label="授权时间">
           <template slot-scope="scope">{{ scope.row.checkintime ? $moment(scope.row.checkintime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : '' }}</template>
@@ -69,11 +70,11 @@
         <el-table-column label="操作" class-name="cell-cneter" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="viewRenter(scope.row)">详情</el-button>
-            <el-button type="text" @click="updateStat(scope.row)">{{ scope.row.rentstat === '03' ? '入住' : '退租' }}</el-button>
+            <el-button type="text" @click="deleteRow(scope.$index, gridData)">移除</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-button type="text" @click="viewRenter(scope.row)">添加租户</el-button>
+      <el-button type="text" @click="viewRenter(scope.row)"><i class="el-icon-circle-plus-outline"/> 添加租户</el-button>
       <el-card>
         <div class="rentUser">
           <el-row>
@@ -84,6 +85,9 @@
             <el-col :span="2" :push="1">手机号</el-col>
             <el-col :span="5" :push="1">
               <el-input v-model="searchModel.renttel" placeholder="请输入手机号"/>
+            </el-col>
+            <el-col :span="5" :push="2">
+              <el-button type="primary" size="mini" @click="handleSearchChange">查询</el-button>
             </el-col>
           </el-row>
         </div>
@@ -96,11 +100,15 @@
           <el-table-column property="renttel" label="手机号"/>
           <el-table-column label="操作" class-name="cell-cneter" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="viewRenter(scope.row)">添加</el-button>
+              <el-button type="text" @click="handleAddRenter(scope.row)">添加</el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-card>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogTableVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleSaveRenter">保 存</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
@@ -156,7 +164,32 @@ export default {
   mounted: function() {
   },
   methods: {
+    handleSaveRenter() {
+      const rentids = this.gridData.map((item, index) => {
+        return item.rentuserid
+      })
+      Site.http.put(
+        `/admin/tRoomInfo/checkroom/${this.selectId}`, {
+          rentids: rentids,
+          roomstat: '02'
+        },
+        data => {
+          this.$message({
+            message: '保存成功',
+            type: 'success'
+          })
+        }
+      )
+    },
+    handleSearchChange() {
+      this.searchModel.pageNo = 1
+      this.getUserData()
+    },
+    handleAddRenter(row) {
+      this.gridData.push(row)
+    },
     getUserData() {
+      this.searchModel['rentstat'] = '03'
       Site.http.post(
         '/admin/tLockRentuser/queryByPage', this.searchModel,
         data => {
@@ -210,23 +243,8 @@ export default {
           })
         })
     },
-    updateStat(row) {
-      Site.http.put(`/admin/tLockRentuser/${row.rentuserid}`, {
-        checkinroomid: row.checkinroomid,
-        checkimroom: row.checkimroom,
-        apartmentid: row.apartmentid,
-        apartmentname: row.apartmentname,
-        endtime: row.endtime,
-        rentstat: row.rentstat === '02' ? '03' : '02'
-      }, data => {
-        if (data.errno === 0) {
-          this.$message({
-            message: '更新成功',
-            type: 'success'
-          })
-          this.getRentByRoomid()
-        }
-      })
+    deleteRow(index, rows) {
+      rows.splice(index, 1)
     },
     editCustome(id, name) {
       this.dialogTableVisible = true
@@ -237,7 +255,9 @@ export default {
     },
     getRentByRoomid() {
       Site.http.get(
-        `/admin/tLockRentuser/getRentByRoomid/${this.selectId}`, {},
+        `/admin/tLockRentuser/getRentByRoomid/${this.selectId}`, {
+
+        },
         data => {
           this.gridData = data.data
         }

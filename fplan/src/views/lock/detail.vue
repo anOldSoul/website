@@ -99,9 +99,6 @@
           <el-select v-model="form.pwtype" placeholder="请选择密码类型">
             <el-option label="密码用户" value="00"/>
             <el-option label="临时密码" value="01"/>
-            <el-option label="卡片用户" value="02"/>
-            <el-option label="指纹用户" value="03"/>
-            <el-option label="身份证用户" value="04"/>
           </el-select>
         </el-form-item>
         <el-form-item v-if="form.pwtype !== '03'" :label="form.pwtype === '03' ? '卡号' : '密码'" :label-width="formLabelWidth">
