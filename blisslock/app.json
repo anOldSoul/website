@@ -1,5 +1,6 @@
 {
-  "pages": [  
+  "pages": [
+    "pages/install/index",
     "pages/index/index",
     "pages/addPw/index",
     "pages/addFinger/index",

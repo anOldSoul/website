@@ -41,7 +41,7 @@ Page({
       success(res) {
         if (res.confirm) {
           let currentDeviceIndex = wx.getStorageSync('currentDevice')
-          let deviceList = wx.getStorageSync('deviceList')
+          let deviceList = wx.getStorageSync('deviceList') || []
           let newDeviceList = deviceList.filter((item, index) => {
             return index !== currentDeviceIndex
           })
