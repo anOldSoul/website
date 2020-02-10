@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/repair/index",
     "pages/install/index",
     "pages/index/index",
     "pages/addPw/index",
@@ -25,8 +26,7 @@
     "pages/editFinger/index",
     "pages/password/index",
     "pages/editPw/index",
-    "pages/admPw/index",
-    "pages/repair/index"
+    "pages/admPw/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",

@@ -1,7 +1,8 @@
 /* pages/admPw/index.wxss */
 .addPw_input{
   /* width: 100%; */
-  padding: 40rpx 30rpx;
+  padding: 0 30rpx;
+  padding-top: 40rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -21,8 +22,8 @@ input{
   flex-direction: row;
 }
 .tel-icon {
-  width: 100rpx;
-  height: 100rpx;
+  width: 80rpx;
+  height: 80rpx;
   margin-right: 30rpx;
 }
 .section_right {
@@ -31,4 +32,7 @@ input{
   display: flex;
   align-items: center;
   font-size: 30rpx;
+}
+.radio{
+  padding-left: 30rpx;
 }

@@ -1,6 +1,15 @@
 <!--pages/addDevice/index.wxml-->
 <view>
-  <view class='tip_text'>
+  <view class='title'><view class='dot'></view>常见故障类型</view>
+  <view class="section section_gap">
+    <radio-group class="radio-group" bindchange="radioChange">
+      <radio class="radio" wx:for-items="{{items}}" wx:key="name" value="{{item.name}}" checked="{{item.checked}}">
+        <text>{{item.value}}</text>
+      </radio>
+    </radio-group>
+  </view>
+  <textarea class='break_text' />
+  <!-- <view class='tip_text'>
     <view class='repair_title'>一、指纹开不了锁</view>
     <view class='text_content'>
       <view class='text'>1、请尝试用密码或备用指纹开锁</view>
@@ -18,6 +27,6 @@
       <view class='text'>2、请尝试钥匙开锁</view>
       <view class='text'>3、开锁后，请立即更换电池</view>
     </view>
-  </view>
+  </view> -->
   <view bindtap="callPhone" class='add_apparatus'>电话报修</view>
 </view>

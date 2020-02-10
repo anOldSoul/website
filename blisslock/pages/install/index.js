@@ -5,6 +5,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    items: [
+      { name: 'USA', value: '非常满意' },
+      { name: 'CHN', value: '满意' },
+      { name: 'BRA', value: '不满意' },
+    ],
     index: '0',
     array: ['D1', 'V6', 'V8']
   },

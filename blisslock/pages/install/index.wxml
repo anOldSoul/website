@@ -28,6 +28,13 @@
       <input maxlength="12" placeholder="小区名称和单元号" bindinput="bindKeyInput" value="{{userName}}" />
     </view>
   </view>
-  <view class='title'><view class='dot'></view>我的设备</view>
-  <button class='add_apparatus' bindtap="goNext">下一步</button>
+<view class='title'>请评价我们的服务</view>
+  <view class="section section_gap">
+    <radio-group class="radio-group" bindchange="radioChange">
+      <radio class="radio" wx:for-items="{{items}}" wx:key="name" value="{{item.name}}" checked="{{item.checked}}">
+        <text>{{item.value}}</text>
+      </radio>
+    </radio-group>
+  </view>
+<button class='add_apparatus' bindtap="goNext">下一步</button>
 </view>
