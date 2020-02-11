@@ -1,6 +1,6 @@
 <!--pages/addDevice/index.wxml-->
 <view>
-  <view class='title'><view class='dot'></view>常见故障类型</view>
+  <view class='title'>常见故障类型</view>
   <view class="section section_gap">
     <radio-group class="radio-group" bindchange="radioChange">
       <radio class="radio" wx:for-items="{{items}}" wx:key="name" value="{{item.name}}" checked="{{item.checked}}">
@@ -8,7 +8,7 @@
       </radio>
     </radio-group>
   </view>
-  <textarea class='break_text' />
+  <textarea class='break_text' placeholder="请尝试用密码或备用指纹开锁; 用钥匙开锁后请立即报修" />
   <!-- <view class='tip_text'>
     <view class='repair_title'>一、指纹开不了锁</view>
     <view class='text_content'>
