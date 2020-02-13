@@ -8,7 +8,7 @@
       </radio>
     </radio-group>
   </view>
-  <textarea class='break_text' placeholder="请尝试用密码或备用指纹开锁; 用钥匙开锁后请立即报修" />
+  <textarea class='break_text' bindinput="bindKeyInput" placeholder="请尝试用密码或备用指纹开锁; 用钥匙开锁后请立即报修" />
   <!-- <view class='tip_text'>
     <view class='repair_title'>一、指纹开不了锁</view>
     <view class='text_content'>
@@ -28,5 +28,5 @@
       <view class='text'>3、开锁后，请立即更换电池</view>
     </view>
   </view> -->
-  <view bindtap="callPhone" class='add_apparatus'>电话报修</view>
+  <view bindtap="callPhone" class='add_apparatus'>下一步</view>
 </view>

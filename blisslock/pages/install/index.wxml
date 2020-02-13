@@ -1,31 +1,30 @@
 <!--pages/admPw/index.wxml-->
 <view>
+  <picker class="addPw_input" bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+    <view class="picker">
+      <image class="tel-icon" src='../../images/lock-type-icon.png'></image>
+      <view class="section_right">
+        {{array[index]}}
+      </view>
+    </view>
+  </picker>
+  <view class='addPw_input'>
+    <view class="section__title"><image class="tel-icon" src='../../images/community-icon.png'></image></view>
+    <view class="section_right" bindtap="addAddress">
+      <text wx:if="{{!chooseAddress}}">请添加安装地址</text>
+      <input wx:if="{{chooseAddress}}" placeholder="请添加安装地址" bindinput="bindKeyInput" value="{{chooseAddress.cityName + chooseAddress.countyName + chooseAddress.detailInfo}}" />
+    </view>
+  </view>
   <view class='addPw_input'>
     <view class="section__title"><image class="tel-icon" src='../../images/tel-icon.png'></image></view>
     <view class="section_right">
-      <input maxlength="12" placeholder="请输入电话号码" bindinput="bindKeyInput" value="{{userName}}" />
+      <input maxlength="12" placeholder="请输入电话号码" bindinput="bindKeyInput" value="{{chooseAddress.telNumber}}" />
     </view>
   </view>
-  <!-- <view class="addPw_input"> -->
-    <picker class="addPw_input" placeholder="请输入电话号码" bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-      <view class="picker">
-        <image class="tel-icon" src='../../images/lock-type-icon.png'></image>
-        <view class="section_right">
-          {{array[index]}}
-        </view>
-      </view>
-    </picker>
-  <!-- </view> -->
   <view class='addPw_input'>
     <view class="section__title"><image class="tel-icon" src='../../images/owner-icon.png'></image></view>
     <view class="section_right">
-      <input maxlength="12" placeholder="业主姓名" bindinput="bindKeyInput" value="{{userName}}" />
-    </view>
-  </view>
-  <view class='addPw_input'>
-    <view class="section__title"><image class="tel-icon" src='../../images/community-icon.png'></image></view>
-    <view class="section_right">
-      <input maxlength="12" placeholder="小区名称和单元号" bindinput="bindKeyInput" value="{{userName}}" />
+      <input maxlength="12" placeholder="业主姓名" bindinput="bindKeyInput" value="{{chooseAddress.userName}}" />
     </view>
   </view>
 <view class='title'>请评价我们的服务</view>
