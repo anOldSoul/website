@@ -29,7 +29,7 @@ input{
 }
 .add_apparatus{
   width:670rpx;
-  height:94rpx;
+  height:80rpx;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,4 +40,24 @@ input{
   color: #fff;
   margin-left: 40rpx;
   font-size: 36rpx;
+}
+.phone_box {
+  position: relative;
+}
+.get_phoneNumber {
+  position: absolute;
+  z-index: 99;
+  right: 50rpx;
+  top: -5rpx;
+  width:240rpx;
+  height: 64rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20rpx;
+  color: #17BF98;
+  border: 1rpx solid #17BF98;
+  border-radius:8rpx;
+  margin-left: 40rpx;
+  font-size: 28rpx;
 }

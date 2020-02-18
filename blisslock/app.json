@@ -1,8 +1,12 @@
 {
   "pages": [
-    "pages/repair/index",
-    "pages/install/index",   
     "pages/index/index",
+    "pages/install/index",
+    "pages/admPw/index",
+    
+    "pages/shopping/index",
+    "pages/repair/index",
+    
     "pages/addPw/index",
     "pages/addFinger/index",
     "pages/tempPage/index",
@@ -10,7 +14,6 @@
     "pages/finger/index",
     "pages/addDevice/index",
     "pages/activateDevice/index",
-    "pages/shopping/index",
     "pages/airQuality/index",
     "pages/tempRecord/index",
     "pages/createTemp/index",
@@ -25,8 +28,8 @@
     "pages/introduction/index",
     "pages/editFinger/index",
     "pages/password/index",
-    "pages/editPw/index",
-    "pages/admPw/index"
+    "pages/editPw/index"
+    
   ],
   "window": {
     "navigationBarTextStyle": "black",

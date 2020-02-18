@@ -15,7 +15,7 @@
       <view class='device_item_right'><image class="pic_M6" src='../../images/pic-home-M6.png'></image></view>
     </view>
   </view>
-  <navigator class='add_apparatus' url="/pages/addDevice/index">添加设备</navigator>
+  <navigator class='add_apparatus' url="/pages/admPw/index">添加设备</navigator>
   <!-- <button class='add_apparatus' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">添加设备</button> -->
   <view class='authen' wx:if="{{showAuthen}}">
     <view class='authen_modal'>

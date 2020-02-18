@@ -28,5 +28,5 @@
       <view class='text'>3、开锁后，请立即更换电池</view>
     </view>
   </view> -->
-  <view bindtap="callPhone" class='add_apparatus'>下一步</view>
+  <view bindtap="handleText" class='add_apparatus'>下一步</view>
 </view>

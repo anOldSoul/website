@@ -29,7 +29,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: `/pages/admPw/index`
+      url: `/pages/search/index`
     })
   }
 })

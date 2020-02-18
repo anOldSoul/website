@@ -5,6 +5,11 @@ Page({
     deviceList: [],
     showAuthen: false
   },
+  onShareAppMessage: function (res) {
+    return {
+      title: '快来和我一起打开智能生活的大门吧！'
+    }
+  },
   onLoad: function (options) {
     wx.getSetting({
       success: (res) => {
@@ -27,7 +32,7 @@ Page({
   },
   goAddDevicePage: function() {
     wx.navigateTo({
-      url: `/pages/addDevice/index`
+      url: `/pages/admPw/index`
     })
   },
   goHomePage: function (e) {

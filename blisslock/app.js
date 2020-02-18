@@ -3,11 +3,9 @@ const Api = require('./config')
 const http = require("./utils/http.js");
 const util = require("./utils/util.js");
 const Moment = require('./utils/moment.min.js')
-import Functions from './common/common.js'
 App({
   util: util,
   Moment: Moment,
-  functions: Functions,
   onLaunch: function (options) {
     wx.getSystemInfo({
       success: res => {

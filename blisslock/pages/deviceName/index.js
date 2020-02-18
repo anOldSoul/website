@@ -9,13 +9,13 @@ Page({
     this.setData({
       pagetype: options.type
     })
-    if (options.type !== 'updateName') {
-      wx.showToast({
-        title: '绑定成功',
-        icon: 'none',
-        duration: 2000
-      })
-    }
+    // if (options.type !== 'updateName') {
+    //   wx.showToast({
+    //     title: '绑定成功',
+    //     icon: 'none',
+    //     duration: 2000
+    //   })
+    // }
   },
   onShow: function () {
     this.setData({

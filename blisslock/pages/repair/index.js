@@ -3,12 +3,16 @@ Page({
   data: {
     repaireDesc: '',
     chooseAddress: '',
+    repaireType: '',
     items: [
-      { name: 'USA', value: '指纹开不了锁' },
-      { name: 'CHN', value: '密码开不了锁' },
-      { name: 'BRA', value: '锁体没有电了' },
-      { name: 'BRA', value: '其他故障描述' }
+      { name: '指纹开不了锁', value: '指纹开不了锁' },
+      { name: '密码开不了锁', value: '密码开不了锁' },
+      { name: '锁体没有电了', value: '锁体没有电了' },
+      { name: '其他故障描述', value: '其他故障描述' }
     ]
+  },
+  radioChange(e) {
+    this.data.repaireType = e.detail.value
   },
   bindKeyInput: function (e) {
     this.data.repaireDesc = e.detail.value
@@ -18,7 +22,15 @@ Page({
       chooseAddress: wx.getStorageSync('chooseAddress')
     })
   },
-  callPhone: function() {
+  handleText: function() {
+    if (!this.data.repaireType) {
+      wx.showToast({
+        title: '请选择故障类型',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
     wx.getLocation({
       type: 'wgs84',
       success: (res) => {
@@ -29,18 +41,18 @@ Page({
           phone: this.data.chooseAddress.telNumber,
           owner: this.data.chooseAddress.userName,
           InstallationAddress: this.data.chooseAddress.detailInfo,
-          guaranteeType: '1',
+          guaranteeType: this.repaireType,
+          productType: app.util.getDeviceItem('type'),
           guaranteeDesc: this.data.repaireDesc,
           latitude: res.latitude,
           longitude: res.longitude
         }
         app.post(app.Apis.POST_REPAIRE, data, result => {
           if (result.errno === 0) {
-            wx.showToast({
-              title: '报修成功',
-              icon: 'none',
-              duration: 2000
+            wx.navigateBack({
+              delta: 1
             })
+            app.util.updateDeviceList('showRepair', true)
           }
         })
       }

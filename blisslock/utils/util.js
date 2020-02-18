@@ -317,7 +317,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     if (value.slice(-4, -2) === 'b0' && value.slice(0, 2) === 'aa') {
       console.log('绑定成功')
       wx.redirectTo({
-        url: '/pages/deviceName/index',
+        url: '/pages/install/index',
       })
     }
     if (value.slice(-4, -2) === '1f' && value.slice(0, 2) === 'aa') {

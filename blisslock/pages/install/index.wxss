@@ -36,3 +36,21 @@ input{
 .radio{
   padding-left: 30rpx;
 }
+radio .wx-radio-input.wx-radio-input-checked{
+  border: none;
+  background: red;
+  transform: scale(0.8);
+}
+radio .wx-radio-input{
+  transform: scale(0.8);
+}
+.choose_text {
+  /* color: #8a8a8a; */
+  line-height: 2;
+}
+.location-icon {
+  width: 30rpx;
+  height: 30rpx;
+  padding-left: 5rpx;
+  margin-bottom: -5rpx;
+}
