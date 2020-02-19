@@ -7,17 +7,17 @@
         <div class="saas_content">
           <div class="saas_left">
             <div class="saas_title">与万千企业共同开启智能时代</div>
-            <div class="saas_sub_title">噢蹦智能锁管理云平台</div>
+            <div class="saas_sub_title">噢蹦SAAS智能锁管理云平台</div>
             <div class="saas_contact">
-              <div class="saas_contact_item"><img class="saas_icon_ke" src="../../assets/ic_service.png">客服专线：800-8208820</div>
-              <div class="saas_contact_item"><img class="saas_icon_you" src="../../assets/ic_mail.png">邮箱：bd@whoareyou.live</div>
+              <div class="saas_contact_item"><img class="saas_icon_ke" src="../../assets/ic_service.png">客服专线：021-61267164 15000537688</div>
+              <div class="saas_contact_item"><img class="saas_icon_you" src="../../assets/ic_mail.png">邮箱：online.service@biosec.com.cn</div>
             </div>
             <div class="saas_company">©2014-2019 上海互啊佑智能科技有限公司 版权所有</div>
           </div>
           <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="saas_box">
             <div class="saas_right">
               <div class="login_top">
-                <div class="login_by_account">账号登录</div>
+                <div class="login_by_account">帐号登录</div>
               </div>
               <el-form-item class="account_input" prop="username">
                 <el-input v-model="loginForm.username" placeholder="您的账号"/>
@@ -264,6 +264,9 @@ export default {
 .saas_icon_ke{
   width: 20px;
   height: 22px;
+  margin-right: 9px;
+}
+.saas_icon_you{
   margin-right: 9px;
 }
 </style>
