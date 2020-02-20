@@ -7,7 +7,7 @@
         <div class="saas_content">
           <div class="saas_left">
             <div class="saas_title">与万千企业共同开启智能时代</div>
-            <div class="saas_sub_title">噢蹦SAAS智能锁管理云平台</div>
+            <div class="saas_sub_title">G端联网智能锁管理平台</div>
             <div class="saas_contact">
               <div class="saas_contact_item"><img class="saas_icon_ke" src="../../assets/ic_service.png">客服专线：021-61267164 15000537688</div>
               <div class="saas_contact_item"><img class="saas_icon_you" src="../../assets/ic_mail.png">邮箱：online.service@biosec.com.cn</div>
@@ -25,8 +25,18 @@
               <el-form-item class="password_input" prop="password">
                 <el-input v-model="loginForm.password" type="password" placeholder="您的密码"/>
               </el-form-item>
-              <div class="saas_login_btn" @click="handleLogin('loginForm')">登录</div>
-              <div class="saas_login_forget">忘记密码 <i class="el-icon-question"/></div>
+              <el-form-item class="" prop="code">
+                <el-input v-model="loginForm.code" placeholder="请输入内容">
+                  <template slot="prepend">验证码</template>
+                  <template slot="append">
+                    <div class="login-code" @click="refreshCode">
+                      <Identify :identify-code="identifyCode"/>
+                    </div>
+                  </template>
+                </el-input>
+              </el-form-item>
+              <div class="saas_login_btn" @click="submit('loginForm')">登录</div>
+              <!-- <div class="saas_login_forget">忘记密码 <i class="el-icon-question"/></div> -->
               <div class="saas_login_apply">还没有开通帐号？ 点此申请开通 >></div>
             </div>
           </el-form>
@@ -39,8 +49,10 @@
 <script>
 import imgurlR from '../../assets/bg_saas_right.png'
 import imgurlL from '../../assets/bg_saas_left.png'
+import Identify from '../../components/identify'
 export default {
   name: 'Login',
+  components: { Identify },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (validateUsername == null) {
@@ -57,9 +69,12 @@ export default {
       }
     }
     return {
+      identifyCodes: '1234567890abcdefjhijklinopqrsduvwxyz',
+      identifyCode: '',
       imgurlL: imgurlL,
       imgurlR: imgurlR,
       loginForm: {
+        code: '',
         username: 'admin123',
         password: 'admin123'
       },
@@ -80,13 +95,36 @@ export default {
     }
 
   },
-  created() {
-    // window.addEventListener('hashchange', this.afterQRScan)
-  },
-  destroyed() {
-    // window.removeEventListener('hashchange', this.afterQRScan)
+  mounted() {
+    // 初始化验证码
+    this.identifyCode = ''
+    this.makeCode(this.identifyCodes, 4)
   },
   methods: {
+    refreshCode() {
+      this.identifyCode = ''
+      this.makeCode(this.identifyCodes, 4)
+    },
+    makeCode(o, l) {
+      for (let i = 0; i < l; i++) {
+        this.identifyCode += this.identifyCodes[this.randomNum(0, this.identifyCodes.length)]
+      }
+    },
+    randomNum(min, max) {
+      return Math.floor(Math.random() * (max - min) + min)
+    },
+    /**
+     * @description 提交表单
+     */
+    // 提交登录信息
+    submit() {
+      if (this.loginForm.code.toLowerCase() !== this.identifyCode.toLowerCase()) {
+        this.$message.error('请填写正确验证码')
+        this.refreshCode()
+        return
+      }
+      this.handleLogin()
+    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -260,6 +298,7 @@ export default {
 .saas_login_apply{
   text-align: center;
   font-size: 14px;
+  margin-top: 20px;
 }
 .saas_icon_ke{
   width: 20px;
