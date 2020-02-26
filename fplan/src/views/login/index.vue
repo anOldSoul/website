@@ -12,7 +12,7 @@
               <div class="saas_contact_item"><img class="saas_icon_ke" src="../../assets/ic_service.png">客服专线：021-61267164 15000537688</div>
               <div class="saas_contact_item"><img class="saas_icon_you" src="../../assets/ic_mail.png">邮箱：online.service@biosec.com.cn</div>
             </div>
-            <div class="saas_company">©2014-2019 上海互啊佑智能科技有限公司 版权所有</div>
+            <div class="saas_company">©2014-2020 上海互啊佑智能科技有限公司 版权所有</div>
           </div>
           <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="saas_box">
             <div class="saas_right">
