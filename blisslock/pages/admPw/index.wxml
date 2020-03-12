@@ -1,9 +1,14 @@
 <!--pages/admPw/index.wxml-->
 <view>
+  <view class='title'><view class='dot'></view>管理员昵称</view>
+  <view class="phone_box">
+    <input type="number" bindinput="bindUsernameInput" maxlength="12" value="{{username}}" placeholder="请输入管理员昵称"/>
+    <button class='get_phoneNumber' open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo"><image class="wechat-icon" src='../../images/wechat.png'></image>获取微信昵称</button>
+  </view>
   <view class='title'><view class='dot'></view>管理员手机号</view>
   <view class="phone_box">
     <input type="number" bindinput="bindTelInput" maxlength="12" value="{{telephone}}" placeholder="请输入管理员手机号"/>
-    <button class='get_phoneNumber' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信一键获取</button>
+    <button class='get_phoneNumber' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"><image class="wechat-icon" src='../../images/wechat1.png'></image>微信一键获取</button>
   </view>
   <view class='title'><view class='dot'></view>管理员密码</view>
   <view><input type="number" bindinput="bindKeyInput" maxlength="12" value="{{password}}" placeholder="请输入管理员密码"/></view>

@@ -1,12 +1,10 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/install/index",
-    "pages/admPw/index",
-    
+    "pages/admPw/index",    
+    "pages/install/index",     
     "pages/shopping/index",
-    "pages/repair/index",
-    
+    "pages/repair/index",    
     "pages/addPw/index",
     "pages/addFinger/index",
     "pages/tempPage/index",
@@ -28,8 +26,7 @@
     "pages/introduction/index",
     "pages/editFinger/index",
     "pages/password/index",
-    "pages/editPw/index"
-    
+    "pages/editPw/index"   
   ],
   "window": {
     "navigationBarTextStyle": "black",

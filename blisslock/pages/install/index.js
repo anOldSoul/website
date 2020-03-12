@@ -2,10 +2,11 @@ const app = getApp()
 Page({
   data: {
     items: [
-      { name: 'USA', value: '非常满意', checked: true },
-      { name: 'CHN', value: '满意' },
-      { name: 'BRA', value: '不满意' },
+      { name: '非常满意', value: '非常满意', checked: true },
+      { name: '满意', value: '满意' },
+      { name: '不满意', value: '不满意' },
     ],
+    satisfaction: '',
     index: '0',
     chooseAddress: {},
     addressStr: '',
@@ -98,8 +99,8 @@ Page({
           area: this.data.chooseAddress.countyName,
           phone: this.data.chooseAddress.telNumber,
           owner: this.data.chooseAddress.userName,
-          InstallationAddress: this.data.chooseAddress.detailInfo,
-          statisfaction: '1',
+          installationAddress: this.data.chooseAddress.detailInfo,
+          satisfaction: '1',
           latitude: res.latitude,
           longitude: res.longitude,
           productType: app.util.getDeviceItem('type')
@@ -112,6 +113,9 @@ Page({
         })
       }
     })
+  },
+  radioChange: function (e) {
+    this.data.satisfaction = e.detail.value
   },
   bindPickerChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
