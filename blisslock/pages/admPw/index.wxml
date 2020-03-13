@@ -2,7 +2,7 @@
 <view>
   <view class='title'><view class='dot'></view>管理员昵称</view>
   <view class="phone_box">
-    <input type="number" bindinput="bindUsernameInput" maxlength="12" value="{{username}}" placeholder="请输入管理员昵称"/>
+    <input bindinput="bindUsernameInput" maxlength="12" value="{{nickName}}" placeholder="请输入管理员昵称"/>
     <button class='get_phoneNumber' open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo"><image class="wechat-icon" src='../../images/wechat.png'></image>获取微信昵称</button>
   </view>
   <view class='title'><view class='dot'></view>管理员手机号</view>

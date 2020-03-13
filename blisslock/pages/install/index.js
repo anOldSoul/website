@@ -2,11 +2,11 @@ const app = getApp()
 Page({
   data: {
     items: [
-      { name: '非常满意', value: '非常满意', checked: true },
-      { name: '满意', value: '满意' },
-      { name: '不满意', value: '不满意' },
+      { name: '1', value: '非常满意', checked: true },
+      { name: '2', value: '满意' },
+      { name: '3', value: '不满意' },
     ],
-    satisfaction: '',
+    satisfaction: '1',
     index: '0',
     chooseAddress: {},
     addressStr: '',
@@ -100,11 +100,10 @@ Page({
           phone: this.data.chooseAddress.telNumber,
           owner: this.data.chooseAddress.userName,
           installationAddress: this.data.chooseAddress.detailInfo,
-          satisfaction: '1',
+          satisfaction: this.data.satisfaction,
           latitude: res.latitude,
           longitude: res.longitude,
-          productType: app.util.getDeviceItem('type')
-         
+          productType: this.data.array[this.data.index]     
         }
         app.post(app.Apis.POST_ADDRESS, data, result => {
           wx.redirectTo({

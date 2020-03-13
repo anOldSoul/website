@@ -63,10 +63,10 @@ input{
 .wechat-icon {
   width: 40rpx;
   height: 40rpx;
-  padding-right: 15rpx;
+  margin-right: 15rpx;
 }
 .wechat-icon1 {
   width: 40rpx;
   height: 32rpx;
-  padding-right: 15rpx;
+  margin-right: 15rpx;
 }

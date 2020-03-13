@@ -7,7 +7,7 @@ Page({
       gender: ''
     },
     telephone: '',
-    username: '',
+    nickName: '',
     password: '123456'
   },
   onLoad: function (options) {
@@ -19,7 +19,7 @@ Page({
     this.data.userInfo = e.detail.userInfo
     if (this.data.userInfo) {
       this.setData({
-        username: this.data.userInfo.nickName
+        nickName: this.data.userInfo.nickName
       })
     }
   },
@@ -66,7 +66,7 @@ Page({
     this.data.nickName = e.detail.value
   },
   goNext:function() {
-    if (!this.data.username) {
+    if (!this.data.nickName) {
       wx.showModal({
         title: '提示',
         content: '请输入管理员昵称',
@@ -114,7 +114,7 @@ Page({
     wx.setStorageSync('phone', this.data.telephone)
     wx.setStorageSync('admPw', this.data.password)
     let data = {
-      nickName: this.data.username || this.data.userInfo.nickName,
+      nickName: this.data.nickName || this.data.userInfo.nickName,
       avatarUrl: this.data.userInfo.avatarUrl,
       gender: this.data.userInfo.gender,
       openId: this.data.openId,
