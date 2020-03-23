@@ -51,7 +51,7 @@ Page({
       return result
     })
     formatPwArr.sort((a, b) => {
-      return b.no > a.no ? 1 : -1
+      return Number(b.no) > Number(a.no) ? 1 : -1
     })
     app.util.updateDeviceList('fingerArr', formatPwArr)
     this.setData({

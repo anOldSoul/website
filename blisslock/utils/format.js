@@ -159,13 +159,13 @@ const hexToFromBytes = (str) => {
     pos += 2;
   }
   let result = ''
-  hexA.forEach((item, index) => {
-    if (item !== '0') {
+  for (let i = 0; i < hexA.length; i++) {
+    if (hexA[i] !== '0') {
       result = hexA.join('')
-      result = result.substring(index, result.length)
-      return
+      result = result.substring(i, result.length)
+      break;
     }
-  })
+  }
   return result
 }
 

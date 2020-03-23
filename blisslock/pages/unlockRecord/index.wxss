@@ -1,4 +1,7 @@
-/* pages/index/index.wxss */
+.record_page {
+  height: -webkit-calc(100% - 170rpx);
+  overflow: scroll;
+}
 .section{
   width: 100%;
   top: 0;

@@ -38,7 +38,7 @@ Page({
     if (unlockRecordData instanceof Array) {
       unlockRecord = unlockRecordData.map((item, index) => {
         let type = item.slice(8, 10)
-        let userType = item.slice(18, 20)
+        let userType = ''
         let tempTime
         if (item.slice(32, 34) === '00') {
           tempTime = `${item.slice(22, 32)}${app.Moment().format('YY')}`
@@ -49,12 +49,22 @@ Page({
         let date = app.Moment(tempTime, 'ssmmHHDDMMYY').format('20YY-MM-DD')
         let month = app.Moment(tempTime, 'ssmmHHDDMMYY').format('20YY-MM')
         dateArr.push(date)
-        let lockType
+        let lockType = ''
+        let id = ''
         if (type === '23') {
           lockType = '指纹开锁'
+          let tempId = item.slice(10, 18)
+          id = app.util.hexToFromBytes(tempId)
         }
-        if (type === '24') {
-          lockType = '本地密码'
+        if (type === '24') {         
+          let tempId = item.slice(18, 22)
+          if (tempId === '1001') {
+            id = '1001'
+            lockType = '临时密码开锁'
+          } else {
+            id = tempId.replace(/[f]/g, '')
+            lockType = '本地密码开锁'
+          }
         }
         if (type === '25') {
           lockType = '临时密码'
@@ -95,21 +105,31 @@ Page({
         if (type === '34') {
           lockType = '密码防劫持报警'
         }
-        if (userType === '00') {
-          userType = '普通用户'
+        if (type === '13' || type === '14' || type === '15' || type === '03') {
+          let userTypeCode = item.slice(18, 20)
+          if (userTypeCode === '00') {
+            userType = '普通用户'
+          }
+          if (userTypeCode === '01') {
+            userType = '管理员'
+          }
+          if (userTypeCode === '02') {
+            userType = '防劫持用户'
+          }
         }
-        if (userType === '01') {
-          userType = '管理员'
-        }
-        if (userType === '02') {
-          userType = '防劫持用户'
+        if (id) {
+          let num = 4 - id.length
+          for (let i = 0; i < num; i++) {
+            id = '0' + id
+          }
         }
         return {
           lockType: lockType || '未知',
           userType: userType,
           time: time,
           month: month,
-          date: date
+          date: date,
+          id: id
         }
       })
     } else {
