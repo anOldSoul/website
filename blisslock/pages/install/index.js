@@ -49,11 +49,9 @@ Page({
   addAddress: function () {
     wx.getSetting({
       success: (res) => {
-        console.log(res)
         if (!res.authSetting['scope.userLocation'] || !res.authSetting['scope.address']) {
           wx.openSetting({
             success: (res) => {
-              console.log(res.authSetting)
               res.authSetting = {
                 "scope.address": true,
                 "scope.userLocation": true
@@ -75,7 +73,6 @@ Page({
       fail() {
         wx.openSetting({
           success(res) {
-            console.log(res.authSetting)
           }
         })
       }
