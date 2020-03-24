@@ -13,6 +13,15 @@
           <el-input v-model="formData.rentusername" placeholder="请输入租户名"/>
         </el-col>
       </el-row>
+      <el-row>
+        <el-col :span="3">性别</el-col>
+        <el-col :span="15">
+          <el-select v-model="formData.sex" clearable placeholder="请选择性别">
+            <el-option label="男" value="1" />
+            <el-option label="女" value="2" />
+          </el-select>
+        </el-col>
+      </el-row>
       <!--       <el-row>
         <el-col :span="3">授权小程序</el-col>
         <el-col :span="15">
@@ -87,12 +96,20 @@ export default {
   },
   data() {
     return {
+      contract: '',
       apartmentid: '',
       rooms: [],
       arpartments: [],
       formData: {
+        certificateno: '',
+        emergencytel: '',
+        renttel: '',
+        rentusername: '',
+        sex: '',
         checkintime: '',
-        checkimroom: 6,
+        checkimroom: '',
+        checkinroomid: '',
+        apartmentid: '',
         rsv1: ''
       }
     }

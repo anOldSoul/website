@@ -40,7 +40,7 @@
         <template slot-scope="scope">{{ scope.row.rentstat === '02' ? '入住' : '退租' }}
         </template>
       </el-table-column>
-      <el-table-column label="授权时间">
+      <el-table-column label="授权时间" width="180">
         <template slot-scope="scope">{{ scope.row.checkintime ? $moment(scope.row.checkintime, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : '' }}</template>
       </el-table-column>
       <el-table-column label="操作" width="260" class-name="cell-cneter" fixed="right">
