@@ -10,6 +10,9 @@ Page({
       title: '快来和我一起打开智能生活的大门吧！'
     }
   },
+  handleExe: function () {
+    app.util.doExecuter()
+  },
   onLoad: function (options) {
     wx.getSetting({
       success: (res) => {

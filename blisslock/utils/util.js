@@ -1,8 +1,12 @@
 const Moment = require('./moment.min.js')
 const Encrypt = require("./getEncryptBytes.js")
 const Format = require("./format.js")
+const OTAexecuter = require("./OTAexecuter.js")
+const OTAbin = require("./otabin.js")
 let rtc, decodedPackageData
-let response = ''
+let response = 0
+let interval = 0
+let timer = 0
 
 let hasUnlockRecord = ''
 var pwNeedToAdd = {}
@@ -24,7 +28,11 @@ let onChangePw = {
   pageNum: 0,
   onPwListLen: 0
 }
-
+const doExecuter = () => {
+  let hex = OTAexecuter.initOTAnew()
+  console.log(hex)
+  writeBle(hex)
+}
 const getBLEDeviceServices = (deviceId, funcKey) => {
   wx.getBLEDeviceServices({
     deviceId,
@@ -65,7 +73,7 @@ const startBluetoothDevicesDiscovery = (resolve, reject) => {
     },
   })
 }
-const onBluetoothDeviceFound = (resolve, reject) => { 
+const onBluetoothDeviceFound = (resolve, reject) => {
   let devices = []
   let deviceIdArr = []
   wx.onBluetoothDeviceFound((res) => {
@@ -216,7 +224,9 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
   wx.onBLECharacteristicValueChange((characteristic) => {
     console.log('特征值有变化。。。。。')
     console.log('监听到变化特征值为' + Format.ab2hex(characteristic.value))
-    response = 'success'
+    response = 0
+    clearInterval(interval)
+    clearTimeout(timer)
     let value = Format.ab2hex(characteristic.value)
     if (value.slice(-4, -2) === '11') {
       let hex
@@ -565,14 +575,18 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
 
 const writeBle = (hex, funcKey = '') => {
   console.log('写数据为：' + hex)
-  response = ''
-  setTimeout(() => {
-    if (response !== 'success') {
-      response = 'success'
+  response = 0
+  interval = setInterval(() => {
+    response ++
+  }, 1000)
+  timer = setTimeout(() => {
+    if (response >= 5) {
+      clearInterval(interval)
+      clearTimeout(timer)
       closeConnection()
       wx.showModal({
         title: '提示',
-        content: '连接超时，请重试',
+        content: '蓝牙连接超时，请重试',
         showCancel: false,
         success(res) {
           if (res.confirm) {
@@ -624,6 +638,7 @@ const writeBle = (hex, funcKey = '') => {
 
 module.exports = {
   doBLEConnection: doBLEConnection,
+  doExecuter: doExecuter,
   getBLEDeviceCharacteristics: getBLEDeviceCharacteristics,
   getTempPassword: Format.getTempPassword,
   updateDeviceList: Format.updateDeviceList,
