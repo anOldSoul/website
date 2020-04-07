@@ -15,6 +15,10 @@ Page({
     connected: false,
     chs: []
   },
+  handleExe () {
+    console.log('~~~~~~~~~~~~')
+    app.util.doBLEConnection('OTAexecuter')
+  },
   openBluetoothAdapter() {
     wx.openBluetoothAdapter({
       success: (res) => {

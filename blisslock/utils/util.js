@@ -37,8 +37,14 @@ const getBLEDeviceServices = (deviceId, funcKey) => {
   wx.getBLEDeviceServices({
     deviceId,
     success: (res) => {
+      console.log(res)
       for (let i = 0; i < res.services.length; i++) {
-        if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FFF0') > -1) {
+        if (funcKey === 'OTAexecuter') {
+          if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FF00') > -1) {
+            getBLEDeviceCharacteristics(deviceId, res.services[i].uuid, funcKey)
+            return
+          }
+        } else if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FFF0') > -1) {
           getBLEDeviceCharacteristics(deviceId, res.services[i].uuid, funcKey)
           return
         }
@@ -170,21 +176,24 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     deviceId,
     serviceId,
     success: (res) => {
+      console.log(res)
       for (let i = 0; i < res.characteristics.length; i++) {
         let item = res.characteristics[i]
-        if (item.properties.read && item.uuid.indexOf('0000FFF3') > -1) {
+        if (item.properties.read && (item.uuid.indexOf('0000FFF3') > -1 || item.uuid.indexOf('0000FF01') > -1)) {
           wx.readBLECharacteristicValue({
             deviceId,
             serviceId,
             characteristicId: item.uuid,
           })
         }
-        if (item.properties.write && item.uuid.indexOf('0000FFF3') > -1) {
+        if (item.properties.write && (item.uuid.indexOf('0000FFF3') > -1 || item.uuid.indexOf('0000FF01') > -1)) {
           wx.setStorageSync('_deviceId', deviceId)
           wx.setStorageSync('_serviceId', serviceId)
           wx.setStorageSync('_characteristicId', item.uuid)
           let hex
-          if (funcKey && func[funcKey]) {
+          if (funcKey === 'OTAexecuter') {
+            hex = OTAexecuter.initOTA()
+          } else if (funcKey && func[funcKey]) {
             wx.showLoading({
               title: '加载中'
             })
@@ -228,6 +237,23 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     clearInterval(interval)
     clearTimeout(timer)
     let value = Format.ab2hex(characteristic.value)
+    // ota process
+    if (value.length === 42) {
+      setTimeout(() => {
+        doBLEConnection('OTAexecuter')
+        let hex = OTAexecuter.startOTAGetMtu()
+        writeBle(hex)
+      }, 1000)
+    }
+    // if (value.length === 42) {
+    //   let hex = OTAexecuter.startOTAGetMtu()
+    //   writeBle(hex)
+    // }
+    // if (value.length === 42) {
+    //   let hex = OTAexecuter.startOTAeraseFlash()
+    //   writeBle(hex)
+    // }
+    // 非ota process
     if (value.slice(-4, -2) === '11') {
       let hex
       if (funcKey && func[funcKey]) {
@@ -580,7 +606,7 @@ const writeBle = (hex, funcKey = '') => {
     response ++
   }, 1000)
   timer = setTimeout(() => {
-    if (response >= 5) {
+    if (response >= 15) {
       clearInterval(interval)
       clearTimeout(timer)
       closeConnection()
@@ -606,7 +632,7 @@ const writeBle = (hex, funcKey = '') => {
       })
       return
     }
-  }, 5000)
+  }, 15000)
   if (hex === '5520000000000000000000000000000000000000') {
     wx.redirectTo({
       url: `/pages/activateFinger/index`

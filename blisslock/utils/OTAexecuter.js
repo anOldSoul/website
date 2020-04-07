@@ -2,6 +2,7 @@ const IPCConstant = require("./IPCConstant.js").default
 const PxiBleOTAhelper = require("./OTAhelper.js")
 const Format = require("./format.js")
 const att_mtu_size = 23;
+let break_address = 0;
 
 const splitArray = (arrayToSplit, chunkSize) => {
   if (chunkSize <= 0) {
@@ -46,20 +47,18 @@ const initOTAnew = () => {
 
 const initOTA = () => {
   let writeData = [];
-  let dataFromPxiBleDevice;
-  let retryCount = 20;
 
   writeData[0] = IPCConstant.CMD_FW_INIT;
   writeData[1] = 0x00;
 
-  return writeData.join('')
+  return Format.bytes2Str(writeData)
 }
 
 const startOTAGetMtu = () => {
-  let WriteData = [];
-  WriteData[0] = IPCConstant.CMD_FW_GET_MTU_SIZE;
-  WriteData[1] = 0;
-  return writeData.join('')
+  let writeData = [];
+  writeData[0] = IPCConstant.CMD_FW_GET_MTU_SIZE;
+  writeData[1] = 0x00;
+  return Format.bytes2Str(writeData)
 }
 
 const startOTAeraseFlash = () => {
@@ -67,7 +66,7 @@ const startOTAeraseFlash = () => {
 
   WriteData[0] = IPCConstant.CMD_FW_ERASE;
   WriteData[1] = 0x00;
-  return writeData.join('')
+  return Format.bytes2Str(writeData)
 }
 
 const startRemoteDeviceConnectionUpdate = (maxInterval, minInterval, slaveLanteny, supervisionTimeOut) => {
@@ -81,7 +80,7 @@ const startRemoteDeviceConnectionUpdate = (maxInterval, minInterval, slaveLanten
   writeData[6] = (slaveLanteny >> 8) & 0xff;
   writeData[7] = supervisionTimeOut & 0xff;
   writeData[8] = (supervisionTimeOut >> 8) & 0xff;
-  return writeData.join('')
+  return Format.bytes2Str(writeData)
 }
 
 const startOTASetFlashAddress = (Address) => {
@@ -93,7 +92,7 @@ const startOTASetFlashAddress = (Address) => {
   WriteData[4] = (Address & 0x00FF0000) >> 16;
   WriteData[5] = (Address & 0xFF000000) >> 24;
 
-  return writeData.join('')
+  return Format.bytes2Str(writeData)
 }
 
 const startFastWriteFlash = (binArray, start_address, size) => {
@@ -120,9 +119,10 @@ const startFastWriteFlash = (binArray, start_address, size) => {
 
   chunckBinary = splitArray(binArray, size);
   for (let i = 0; i < chunckBinary,length; i++) {
-    writeCharacteristic(chunckBinary[i]);
+    // writeCharacteristic(chunckBinary[i]);
     currentWriteCount++;
     console.log("Update to ..." + currentWriteCount + "/" + chunckBinary.size());
+    return chunckBinary[i]
   }
 }
 
@@ -133,7 +133,7 @@ const startOTAFastWriteFlashSet = (Size) => {
   WriteData[2] = (byte)((Size & 0x0000FF00) >> 8);
   WriteData[3] = (byte)((Size & 0x00FF0000) >> 16);
   WriteData[4] = (byte)((Size & 0xFF000000) >> 24);
-  return writeData.join('')
+  return Format.bytes2Str(writeData)
 }
 
 const startOTAupgradeFlash = (Size, CRC) => {
@@ -145,10 +145,28 @@ const startOTAupgradeFlash = (Size, CRC) => {
   WriteData[4] = (byte)((Size & 0xFF000000) >> 24);
   WriteData[5] = (byte)(CRC & 0x000000FF);
   WriteData[6] = (byte)((CRC & 0x0000FF00) >> 8);
-  return writeData.join('')
+  return Format.bytes2Str(writeData)
 }
 
 const task = () => {
+  let sec_no;
+  let eraseFlashResult;
+  if (break_address != 0) {
+    break_address &= 0xFFFFF000;
+    sec_no = PxiBleOTAhelper.getSourceFile().length >> 12;
+    sec_no = ((PxiBleOTAhelper.getSourceFile().length & 0x00000FFF) != 0) ? (sec_no + 1) : sec_no;
+    sec_no = sec_no - (break_address >> 12);
+    // eraseFlashResult = startOTAsectorEraseFlash(break_address, sec_no);
+    // Log.i(TAG, "startOTAsectorEraseFlash");
+  } else {
+    // eraseFlashResult = startOTAeraseFlash();
+    // Log.i(TAG, "startOTAeraseFlash");
+  }
+  startFastWriteFlash(PxiBleOTAhelper.getSourceFile(), break_address, PxiBleOTAhelper.getPayloadSize())
+}
+
+const task2 = () => {
+  let CRC = 0;
   let FWLength = PxiBleOTAhelper.getSourceFileSize();
   WriteData = [];
 
@@ -162,5 +180,5 @@ const task = () => {
 }
 
 module.exports = {
-  splitArray, initOTAnew, startOTAupgradeFlash, startOTAFastWriteFlashSet, startFastWriteFlash
+  splitArray, initOTAnew, startOTAeraseFlash, startOTAGetMtu, initOTA, startOTAupgradeFlash, startOTAFastWriteFlashSet, startFastWriteFlash
 }

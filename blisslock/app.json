@@ -1,9 +1,10 @@
 {
   "pages": [
+    "pages/shopping/index",
     "pages/index/index",
     "pages/admPw/index",    
     "pages/install/index",
-    "pages/shopping/index",
+    
     "pages/repair/index",
     "pages/addPw/index",
     "pages/addFinger/index",

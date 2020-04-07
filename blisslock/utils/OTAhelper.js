@@ -9,6 +9,14 @@ for (let idx = tempBin.length; idx < patched_length; idx++) {
 }
 const sourceFile = BinaryData
 
+function getSourceFile() {
+  return sourceFile;
+}
+
+function getPayloadSize() {
+  return 20;
+}
+
 function getSourceFileCRC() {
   let CRC = 0;
   let i = 0;
