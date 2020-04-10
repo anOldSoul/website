@@ -79,10 +79,10 @@ Page({
           lockType = '添加蓝牙'
         }
         if (type === '03') {
-          lockType = '删除指纹'
+          lockType = '删除过期指纹'
         }
         if (type === '04') {
-          lockType = '删除密码'
+          lockType = '删除过期密码'
         }
         if (type === '05') {
           lockType = '删除蓝牙'

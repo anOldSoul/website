@@ -31,9 +31,10 @@ Page({
     if (index > -1) {
       strArr.splice(index, 1);
     }
+    strArr = Array.from(new Set(strArr))
     let formatPwArr = strArr.map((item, index) => {
       let result = {}
-      let pwArr = app.util.getDeviceItem('fingerArr')|| []
+      let pwArr = app.util.getDeviceItem('fingerArr').reverse() || []
       let exist = pwArr.find((item1, index) => {
         if (item1) {
           return item === item1.id
