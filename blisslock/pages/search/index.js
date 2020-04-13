@@ -107,6 +107,9 @@ Page({
         if (selectName === 'blisslock' || selectName === 'blisslock006') {
           wx.setStorageSync('_deviceType', 'M6')
         }
+        if (selectName === 'blisslockn') {
+          wx.setStorageSync('_deviceType', 'M6-N')
+        }
         if (selectName.indexOf('blisslock6s') > -1 || selectName === 'blisslock006s') {
           wx.setStorageSync('_deviceType', 'M6-S')
         }
