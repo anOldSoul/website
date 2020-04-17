@@ -36,6 +36,8 @@ function getSourceFileSize() {
 }
 
 module.exports = {
+  getSourceFile: getSourceFile,
+  getPayloadSize: getPayloadSize,
   getSourceFileCRC: getSourceFileCRC,
   getSourceFileSize: getSourceFileSize
 }
