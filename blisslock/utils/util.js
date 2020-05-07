@@ -2,7 +2,7 @@ const Moment = require('./moment.min.js')
 const Encrypt = require("./getEncryptBytes.js")
 const Format = require("./format.js")
 const OTAexecuter = require("./OTAexecuter.js")
-const OTAbin = require("./otabin.js")
+const OTAbin = require("./0507bin.js")
 const PxiBleOTAhelper = require("./OTAhelper.js")
 let rtc, decodedPackageData
 let response = 0
@@ -29,6 +29,8 @@ let onChangePw = {
   pageNum: 0,
   onPwListLen: 0
 }
+// let a = OTAexecuter.startOTAupgradeFlash(PxiBleOTAhelper.getSourceFileSize(), PxiBleOTAhelper.getSourceFileCRC())
+// console.log(a)
 const doExecuter = () => {
   let hex = OTAexecuter.initOTAnew()
   console.log(hex)
@@ -40,12 +42,12 @@ const getBLEDeviceServices = (deviceId, funcKey) => {
     success: (res) => {
       console.log(res)
       for (let i = 0; i < res.services.length; i++) {
-        if (funcKey === 'OTAexecuter' || funcKey === 'initOTA' || funcKey === 'startOTAGetMtu' || funcKey === 'startOTAeraseFlash' || funcKey === 'startRemoteDeviceConnectionUpdate' || funcKey === 'startOTASetFlashAddress' || funcKey === 'startOTAFastWriteFlashSet' || funcKey === 'OTAWriteProcess') {
+        if (funcKey === 'OTAexecuter' || funcKey === 'initOTA' || funcKey === 'startOTAGetMtu' || funcKey === 'startOTAeraseFlash' || funcKey === 'startRemoteDeviceConnectionUpdate' || funcKey === 'startOTASetFlashAddress' || funcKey === 'startOTAFastWriteFlashSet' || funcKey === 'startOTAupgradeFlash') {
           if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FF00') > -1) {
             getBLEDeviceCharacteristics(deviceId, res.services[i].uuid, funcKey)
             return
           }
-        } else if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FFF0') > -1) {
+        } else if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FF00') > -1) {
           getBLEDeviceCharacteristics(deviceId, res.services[i].uuid, funcKey)
           return
         }
@@ -85,7 +87,8 @@ const onBluetoothDeviceFound = (resolve, reject) => {
   let deviceIdArr = []
   wx.onBluetoothDeviceFound((res) => {
     res.devices.forEach(device => {
-      let tempdeviceid = Format.getDeviceItem('_deviceId')
+      let tempdeviceid = wx.getStorageSync('_deviceId')
+      // let tempdeviceid = Format.getDeviceItem('_deviceId')
       if (device.deviceId === tempdeviceid) {
         wx.setStorageSync('_deviceId', Format.getDeviceItem('_deviceId'))
         wx.stopBluetoothDevicesDiscovery()
@@ -108,7 +111,7 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
   wx.setStorageSync('isConnecting', true)
   pwNeedToAdd = pwAdded
   func.resolve = resolve
-  if (wx.getStorageSync('_deviceId') && wx.getStorageSync('_deviceId') !== Format.getDeviceItem('_deviceId')) {
+  if (!wx.getStorageSync('_deviceId') && wx.getStorageSync('_deviceId') !== Format.getDeviceItem('_deviceId')) {
     new Promise((resolve1, reject) => {
       openBluetoothAdapter(resolve1, reject)
     }).then(() => {
@@ -206,8 +209,8 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
             hex = OTAexecuter.startOTASetFlashAddress()
           } else if (funcKey === 'startOTAFastWriteFlashSet') {
             hex = OTAexecuter.task()
-          } else if (funcKey === 'OTAWriteProcess') {
-            hex = OTAexecuter.task()
+          } else if (funcKey === 'startOTAupgradeFlash') {
+            hex = OTAexecuter.startOTAupgradeFlash(PxiBleOTAhelper.getSourceFileSize(), PxiBleOTAhelper.getSourceFileCRC())
           } else if (funcKey && func[funcKey]) {
             wx.showLoading({
               title: '加载中'
@@ -216,7 +219,8 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
             rtc = time
             hex = `55280000${time}00000000000000000000` //重置时钟
           } else {
-            hex = '5511000031323334353637383930313233340000'  //login
+            hex = OTAexecuter.initOTAnew()
+            // hex = '5511000031323334353637383930313233340000'  //login
           }
           writeBle(hex)
         }
@@ -253,6 +257,36 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     clearTimeout(timer)
     let value = Format.ab2hex(characteristic.value)
     // ota process
+    if (value === '0e021700') {
+      let hex = OTAexecuter.startOTAupgradeFlash(PxiBleOTAhelper.getSourceFileSize(), PxiBleOTAhelper.getSourceFileCRC())
+      var typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
+        return parseInt(h, 16)
+      }))
+      var buffer1 = typedArray.buffer
+      console.log(hex)
+      wx.writeBLECharacteristicValue({
+        deviceId: wx.getStorageSync('_deviceId') || Format.getDeviceItem('_deviceId'),
+        serviceId: wx.getStorageSync('_serviceId') || Format.getDeviceItem('_serviceId'),
+        characteristicId: wx.getStorageSync('_characteristicId') || Format.getDeviceItem('_characteristicId'),
+        value: buffer1,
+        success: function (res) {
+          wx.readBLECharacteristicValue({
+            deviceId: wx.getStorageSync('_deviceId') || Format.getDeviceItem('_deviceId'),
+            serviceId: wx.getStorageSync('_serviceId') || Format.getDeviceItem('_serviceId'),
+            characteristicId: wx.getStorageSync('_characteristicId') || Format.getDeviceItem('_characteristicId'),
+            success(res) {
+              console.log('last read:', res.errCode)
+            }
+          })
+        },
+        fail: function (res) {
+          console.log('writeBLECharacteristicValue fail', res.errMsg)
+        },
+        complete: function (res) {
+          console.log('writeBLECharacteristicValue compl', res.errMsg)
+        }
+      })
+    }
     if (value === '0e022000') {
       let binArray = PxiBleOTAhelper.getSourceFile()
       let att_mtu_size = 23
@@ -270,48 +304,46 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       let chunckBinary = OTAexecuter.splitArray(binArray, size);
       console.log(chunckBinary.length)
     
-      // let i = 0
-      // let write = (() => {
-      //   let hex = Format.bytes2Str(chunckBinary[i])
-      //   var typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
-      //     return parseInt(h, 16)
-      //   }))
-      //   var buffer1 = typedArray.buffer
-      //   console.log(hex)
-      //   wx.writeBLECharacteristicValue({
-      //     deviceId: wx.getStorageSync('_deviceId') || Format.getDeviceItem('_deviceId'),
-      //     serviceId: wx.getStorageSync('_serviceId') || Format.getDeviceItem('_serviceId'),
-      //     characteristicId: wx.getStorageSync('_characteristicId') || Format.getDeviceItem('_characteristicId'),
-      //     value: buffer1,
-      //     success: function (res) {
-      //       currentWriteCount++;
-      //       i++
-      //       console.log("Update to ..." + currentWriteCount + "/" + chunckBinary.length);
-      //       console.log('writeBLECharacteristicValue success', res.errMsg)
-      //       if (i < chunckBinary.length) {
-      //         write()
-      //       }           
-      //     },
-      //     fail: function (res) {
-      //       console.log('writeBLECharacteristicValue fail', res.errMsg)
-      //     },
-      //     complete: function (res) {
-      //       console.log('writeBLECharacteristicValue compl', res.errMsg)
-      //     }
-      //   })
-      // })
-      // write()
-
-      for (let i = 0; i < chunckBinary.length; i++) {
-        ((i) => {
-          setTimeout(() => {
-            let hex = Format.bytes2Str(chunckBinary[i])
-            writeBle(hex)
+      let i = 0
+      let write = (() => {
+        let hex = Format.bytes2Str(chunckBinary[i])
+        var typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
+          return parseInt(h, 16)
+        }))
+        var buffer1 = typedArray.buffer
+        console.log(hex)
+        wx.writeBLECharacteristicValue({
+          deviceId: wx.getStorageSync('_deviceId') || Format.getDeviceItem('_deviceId'),
+          serviceId: wx.getStorageSync('_serviceId') || Format.getDeviceItem('_serviceId'),
+          characteristicId: wx.getStorageSync('_characteristicId') || Format.getDeviceItem('_characteristicId'),
+          value: buffer1,
+          success: function (res) {
             currentWriteCount++;
+            i++
             console.log("Update to ..." + currentWriteCount + "/" + chunckBinary.length);
-          }, 50 * i)
-        })(i);
-      }
+            console.log('writeBLECharacteristicValue success', res.errMsg)
+            if (i < chunckBinary.length) {
+              write()           
+            } else {
+              wx.readBLECharacteristicValue({
+                deviceId: wx.getStorageSync('_deviceId') || Format.getDeviceItem('_deviceId'),
+                serviceId: wx.getStorageSync('_serviceId') || Format.getDeviceItem('_serviceId'),
+                characteristicId: wx.getStorageSync('_characteristicId') || Format.getDeviceItem('_characteristicId'),
+                success(res) {
+                  console.log('readBLECharacteristicValue:', res.errCode)
+                }
+              })
+            }      
+          },
+          fail: function (res) {
+            console.log('writeBLECharacteristicValue fail', res.errMsg)
+          },
+          complete: function (res) {
+            console.log('writeBLECharacteristicValue compl', res.errMsg)
+          }
+        })
+      })
+      write()
     }
     if (value === '0e021100') {
       doBLEConnection('startOTAFastWriteFlashSet')
@@ -323,13 +355,17 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       doBLEConnection('startRemoteDeviceConnectionUpdate')
     }
     if (value === '0e0424170000') {
-      doBLEConnection('startOTAeraseFlash')
+      setTimeout(() => {
+        doBLEConnection('startOTAeraseFlash')
+      }, 800)
     }
     if (value === '0e021000') {
       doBLEConnection('startOTAGetMtu')
     }
     if (value.length === 42) {
-      doBLEConnection('initOTA')
+      setTimeout(() => {
+        doBLEConnection('initOTA')
+      }, 800)
     }
     // 非ota process
     if (value === 'aa30000000000000000000000000000000001100') {
@@ -729,6 +765,16 @@ const writeBle = (hex, funcKey = '') => {
     characteristicId: wx.getStorageSync('_characteristicId') || Format.getDeviceItem('_characteristicId'),
     value: buffer1,
     success: function (res) {
+      if (funcKey === 'OTA') {
+        wx.readBLECharacteristicValue({
+          deviceId: wx.getStorageSync('_deviceId') || Format.getDeviceItem('_deviceId'),
+          serviceId: wx.getStorageSync('_serviceId') || Format.getDeviceItem('_serviceId'),
+          characteristicId: wx.getStorageSync('_characteristicId') || Format.getDeviceItem('_characteristicId'),
+          success(res) {
+            console.log('readBLECharacteristicValue:', res.errCode)
+          }
+        })
+      }
       console.log('writeBLECharacteristicValue success', res.errMsg)
     },
     fail: function (res) {

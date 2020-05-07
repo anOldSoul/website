@@ -1,4 +1,4 @@
-const OTAbin = require("./otabin.js")
+const OTAbin = require("./0507bin.js")
 const Format = require("./format.js")
 let BinaryData = Format.hexToBytes(OTAbin.OTABIN)
 let patched_length = (BinaryData.length % 128) != 0 ? BinaryData.length + (128 - BinaryData.length % 128) : BinaryData.length;
@@ -8,7 +8,7 @@ for (let idx = tempBin.length; idx < patched_length; idx++) {
   BinaryData[idx] = 0;
 }
 const sourceFile = BinaryData
-
+getSourceFileCRC()
 function getSourceFile() {
   return sourceFile;
 }
@@ -19,8 +19,8 @@ function getPayloadSize() {
 
 function getSourceFileCRC() {
   let CRC = 0;
-  let i = 0;
-  for (i = 0; i < sourceFile.length; i++) {
+  console.log(sourceFile.length)
+  for (let i = 0; i < sourceFile.length; i++) {
     let CC = sourceFile[i];
     CC &= 0x000000FF;
     CRC += CC;

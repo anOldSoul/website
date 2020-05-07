@@ -20,7 +20,6 @@ const splitArray = (arrayToSplit, chunkSize) => {
   if (rest > 0) {
     arrays.push(arrayToSplit.slice((chunks - 1) * chunkSize, (chunks - 1) * chunkSize + rest));
   }
-  console.log(arrays)
   return arrays;
 }
 
@@ -98,8 +97,6 @@ const startOTASetFlashAddress = (Address) => {
 const startFastWriteFlash = (binArray, start_address, size) => {
   console.log('!!!!!!!!!!!!!!!!!!!')
   console.log(start_address)
-  let count = 0;
-  let DataArray = [];
   let WriteCount;
   let currentWriteCount;
   let idx;
