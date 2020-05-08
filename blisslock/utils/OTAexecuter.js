@@ -23,6 +23,17 @@ const splitArray = (arrayToSplit, chunkSize) => {
   return arrays;
 }
 
+const startOTAfwReset = () => {
+  let writeData = [];
+
+  writeData[0] = IPCConstant.CMD_FW_MCU_RESET;
+  writeData[1] = 0x00;
+
+  console.log("CMD FW MCU RESET");
+  return Format.bytes2Str(writeData)
+
+}
+
 const ota_version_check = () => {
   console.log("OTA Version Check");
 
@@ -202,5 +213,6 @@ module.exports = {
   startOTAupgradeFlash, 
   startOTAFastWriteFlashSet, 
   startFastWriteFlash,
+  startOTAfwReset,
   startOTASetFlashAddress
 }

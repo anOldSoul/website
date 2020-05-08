@@ -11,6 +11,7 @@ let timer = 0
 
 let hasUnlockRecord = ''
 var pwNeedToAdd = {}
+var TEST = 0
 let func = {
   addPass: false,
   syncPass: false,
@@ -29,8 +30,6 @@ let onChangePw = {
   pageNum: 0,
   onPwListLen: 0
 }
-// let a = OTAexecuter.startOTAupgradeFlash(PxiBleOTAhelper.getSourceFileSize(), PxiBleOTAhelper.getSourceFileCRC())
-// console.log(a)
 const doExecuter = () => {
   let hex = OTAexecuter.initOTAnew()
   console.log(hex)
@@ -287,6 +286,10 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         }
       })
     }
+    if (value === '0e021800') {
+      let hex = OTAexecuter.startOTAfwReset()
+      writeBle(hex)
+    }
     if (value === '0e022000') {
       let binArray = PxiBleOTAhelper.getSourceFile()
       let att_mtu_size = 23
@@ -346,26 +349,52 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       write()
     }
     if (value === '0e021100') {
-      doBLEConnection('startOTAFastWriteFlashSet')
+      TEST++
+      let hex = OTAexecuter.task()
+      writeBle(hex, 'OTA')
+      // setTimeout(() => {
+      //   doBLEConnection('startOTAFastWriteFlashSet')
+      // }, 1000)
+      // doBLEConnection('startOTAFastWriteFlashSet')
     }
     if (value === '0e022100') {
-      doBLEConnection('startOTASetFlashAddress')
+      TEST++
+      let hex = OTAexecuter.startOTASetFlashAddress()
+      writeBle(hex, 'OTA')
+      // setTimeout(() => {
+      //   doBLEConnection('startOTASetFlashAddress')
+      // }, 1000)
+      // doBLEConnection('startOTASetFlashAddress')
     }
     if (value === '0e021600') {
-      doBLEConnection('startRemoteDeviceConnectionUpdate')
+      TEST++
+      let hex = OTAexecuter.startRemoteDeviceConnectionUpdate(6, 9, 100, 300)
+      writeBle(hex, 'OTA')
+      // setTimeout(() => {
+      //   doBLEConnection('startRemoteDeviceConnectionUpdate')
+      // }, 1000)
+      // doBLEConnection('startRemoteDeviceConnectionUpdate')
     }
     if (value === '0e0424170000') {
+      TEST++
+      // let hex = OTAexecuter.startOTAeraseFlash()
+      // writeBle(hex, 'OTA')
       setTimeout(() => {
-        doBLEConnection('startOTAeraseFlash')
-      }, 800)
+        let hex = OTAexecuter.startOTAeraseFlash()
+        writeBle(hex, 'OTA')
+        // doBLEConnection('startOTAeraseFlash')
+      }, 10000)
     }
-    if (value === '0e021000') {
-      doBLEConnection('startOTAGetMtu')
+    if (value === '0e021000' && TEST === 1) {
+      TEST++
+      let hex = OTAexecuter.startOTAGetMtu()
+      writeBle(hex, 'OTA')
+      // doBLEConnection('startOTAGetMtu')
     }
-    if (value.length === 42) {
-      setTimeout(() => {
-        doBLEConnection('initOTA')
-      }, 800)
+    if (value.length === 42 && TEST === 0) {
+      TEST++
+      let hex = OTAexecuter.initOTA()
+      writeBle(hex, 'OTA')
     }
     // 非ota process
     if (value === 'aa30000000000000000000000000000000001100') {
@@ -703,10 +732,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       }
       if (func['unlockAtOnce']) {
         let hex = '5533000031323334353600000000000000000000'
-        writeBle(hex)
-      }
-      if (func['airQuality']) {
-        let hex = '55A5000000000000000000000000000000000000'
         writeBle(hex)
       }
     }
