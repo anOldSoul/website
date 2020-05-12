@@ -9,7 +9,6 @@ const splitArray = (arrayToSplit, chunkSize) => {
     return null;  // just in case :)
   }
   let rest = arrayToSplit.length % chunkSize;
-  console.log(rest)
   //分包，余数单独成一包
   let chunks = Math.floor(arrayToSplit.length / chunkSize) + (rest > 0 ? 1 : 0);
   console.log(chunks)
@@ -18,7 +17,7 @@ const splitArray = (arrayToSplit, chunkSize) => {
     arrays.push(arrayToSplit.slice(i * chunkSize, i * chunkSize + chunkSize));
   }
   if (rest > 0) {
-    arrays.push(arrayToSplit.slice((chunks - 1) * chunkSize, (chunks - 1) * chunkSize + rest));
+    arrays.push(arrayToSplit.slice(arrayToSplit, (chunks - 1) * chunkSize, (chunks - 1) * chunkSize + rest));
   }
   return arrays;
 }
@@ -73,10 +72,10 @@ const startOTAGetMtu = () => {
 }
 
 const startOTAeraseFlash = () => {
-  let writeData = [];
+  let WriteData = [];
 
-  writeData[0] = IPCConstant.CMD_FW_ERASE;
-  writeData[1] = 0x00;
+  WriteData[0] = IPCConstant.CMD_FW_ERASE;
+  WriteData[1] = 0x00;
   return Format.bytes2Str(writeData)
 }
 
@@ -95,19 +94,25 @@ const startRemoteDeviceConnectionUpdate = (maxInterval, minInterval, slaveLanten
 }
 
 const startOTASetFlashAddress = (Address) => {
-  let writeData = [];
-  writeData[0] = IPCConstant.CMD_FW_SET_ADDRESS;
-  writeData[1] = 4;
-  writeData[2] = Address & 0x000000FF;
-  writeData[3] = (Address & 0x0000FF00) >> 8;
-  writeData[4] = (Address & 0x00FF0000) >> 16;
-  writeData[5] = (Address & 0xFF000000) >> 24;
+  let WriteData = [];
+  WriteData[0] = IPCConstant.CMD_FW_SET_ADDRESS;
+  WriteData[1] = 4;
+  WriteData[2] = Address & 0x000000FF;
+  WriteData[3] = (Address & 0x0000FF00) >> 8;
+  WriteData[4] = (Address & 0x00FF0000) >> 16;
+  WriteData[5] = (Address & 0xFF000000) >> 24;
+
   return Format.bytes2Str(writeData)
 }
 
 const startFastWriteFlash = (binArray, start_address, size) => {
+<<<<<<< HEAD
   console.log('!!!!!!!!!!!!!!!!!!!')
   console.log(start_address)
+=======
+  let count = 0;
+  let DataArray = [];
+>>>>>>> parent of c02a9f2... ota
   let WriteCount;
   let currentWriteCount;
   let idx;
@@ -125,49 +130,36 @@ const startFastWriteFlash = (binArray, start_address, size) => {
 
   size = length;
   currentWriteCount = start_address / size;
-  return startOTAFastWriteFlashSet(binArray.length - start_address);
+  startOTAFastWriteFlashSet(binArray.length - start_address);
 
-  // chunckBinary = splitArray(binArray, size);
-  // for (let i = 0; i < chunckBinary.length; i++) {
-  //   // writeCharacteristic(chunckBinary[i]);
-  //   currentWriteCount++;
-  //   console.log("Update to ..." + currentWriteCount + "/" + chunckBinary.size());
-  //   return chunckBinary[i]
-  // }
+  chunckBinary = splitArray(binArray, size);
+  for (let i = 0; i < chunckBinary,length; i++) {
+    // writeCharacteristic(chunckBinary[i]);
+    currentWriteCount++;
+    console.log("Update to ..." + currentWriteCount + "/" + chunckBinary.size());
+    return chunckBinary[i]
+  }
 }
 
 const startOTAFastWriteFlashSet = (Size) => {
-  let writeData = [];
-  writeData[0] = IPCConstant.CMD_FW_FAST_WRITE_SET;
-  writeData[1] = (Size & 0x000000FF);
-  writeData[2] = ((Size & 0x0000FF00) >> 8);
-  writeData[3] = ((Size & 0x00FF0000) >> 16);
-  writeData[4] = ((Size & 0xFF000000) >> 24);
+  let WriteData = [];
+  WriteData[0] = IPCConstant.CMD_FW_FAST_WRITE_SET;
+  WriteData[1] = (byte)(Size & 0x000000FF);
+  WriteData[2] = (byte)((Size & 0x0000FF00) >> 8);
+  WriteData[3] = (byte)((Size & 0x00FF0000) >> 16);
+  WriteData[4] = (byte)((Size & 0xFF000000) >> 24);
   return Format.bytes2Str(writeData)
 }
 
 const startOTAupgradeFlash = (Size, CRC) => {
-  let writeData = [];
-  writeData[0] = IPCConstant.CMD_FW_UPGRADE;
-  writeData[1] = (Size & 0x000000FF);
-  writeData[2] = ((Size & 0x0000FF00) >> 8);
-  writeData[3] = ((Size & 0x00FF0000) >> 16);
-  writeData[4] = ((Size & 0xFF000000) >> 24);
-  writeData[5] = (CRC & 0x000000FF);
-  writeData[6] = ((CRC & 0x0000FF00) >> 8);
-  return Format.bytes2Str(writeData)
-}
-
-const startOTAsectorEraseFlash = (address_sector, nf_sector) => {
-  let writeData = [];
-  writeData[0] = IPCConstant.CMD_FW_SECTOR_ERASE;
-  writeData[1] = (address_sector & 0x000000FF);
-  writeData[2] = ((address_sector & 0x0000FF00) >> 8);
-  writeData[3] = ((address_sector & 0x00FF0000) >> 16);
-  writeData[4] = ((address_sector & 0xFF000000) >> 24);
-  writeData[5] = (nf_sector & 0x000000FF);
-  writeData[6] = ((nf_sector & 0x0000FF00) >> 8);
-  console.log('Sector Erase');
+  let WriteData = [];
+  WriteData[0] = IPCConstant.CMD_FW_UPGRADE;
+  WriteData[1] = (byte)(Size & 0x000000FF);
+  WriteData[2] = (byte)((Size & 0x0000FF00) >> 8);
+  WriteData[3] = (byte)((Size & 0x00FF0000) >> 16);
+  WriteData[4] = (byte)((Size & 0xFF000000) >> 24);
+  WriteData[5] = (byte)(CRC & 0x000000FF);
+  WriteData[6] = (byte)((CRC & 0x0000FF00) >> 8);
   return Format.bytes2Str(writeData)
 }
 
@@ -185,24 +177,25 @@ const task = () => {
     // eraseFlashResult = startOTAeraseFlash();
     // Log.i(TAG, "startOTAeraseFlash");
   }
-  return startFastWriteFlash(PxiBleOTAhelper.getSourceFile(), break_address, PxiBleOTAhelper.getPayloadSize())
+  startFastWriteFlash(PxiBleOTAhelper.getSourceFile(), break_address, PxiBleOTAhelper.getPayloadSize())
 }
 
 const task2 = () => {
   let CRC = 0;
   let FWLength = PxiBleOTAhelper.getSourceFileSize();
-  writeData = [];
+  WriteData = [];
 
-  writeData[0] = IPCConstant.CMD_FW_UPGRADE;
-  writeData[1] = FWLength & 0x000000FF;
-  writeData[2] = FWLength & 0x0000FF00 >> 8;
-  writeData[3] = FWLength & 0x00FF0000 >> 16;
-  writeData[4] = FWLength & 0xFF000000 >> 24;
-  writeData[5] = CRC & 0x000000FF;
-  writeData[6] = CRC & 0x0000FF00 >> 8;
+  WriteData[0] = IPCConstant.CMD_FW_UPGRADE;
+  WriteData[1] = FWLength & 0x000000FF;
+  WriteData[2] = FWLength & 0x0000FF00 >> 8;
+  WriteData[3] = FWLength & 0x00FF0000 >> 16;
+  WriteData[4] = FWLength & 0xFF000000 >> 24;
+  WriteData[5] = CRC & 0x000000FF;
+  WriteData[6] = CRC & 0x0000FF00 >> 8;
 }
 
 module.exports = {
+<<<<<<< HEAD
   task,
   splitArray,
   initOTAnew, 
@@ -215,4 +208,7 @@ module.exports = {
   startFastWriteFlash,
   startOTAfwReset,
   startOTASetFlashAddress
+=======
+  splitArray, initOTAnew, startOTAeraseFlash, startOTAGetMtu, initOTA, startOTAupgradeFlash, startOTAFastWriteFlashSet, startFastWriteFlash
+>>>>>>> parent of c02a9f2... ota
 }

@@ -2,8 +2,12 @@ const Moment = require('./moment.min.js')
 const Encrypt = require("./getEncryptBytes.js")
 const Format = require("./format.js")
 const OTAexecuter = require("./OTAexecuter.js")
+<<<<<<< HEAD
 const OTAbin = require("./0507bin.js")
 const PxiBleOTAhelper = require("./OTAhelper.js")
+=======
+const OTAbin = require("./otabin.js")
+>>>>>>> parent of c02a9f2... ota
 let rtc, decodedPackageData
 let response = 0
 let interval = 0
@@ -41,7 +45,11 @@ const getBLEDeviceServices = (deviceId, funcKey) => {
     success: (res) => {
       console.log(res)
       for (let i = 0; i < res.services.length; i++) {
+<<<<<<< HEAD
         if (funcKey === 'OTAexecuter' || funcKey === 'initOTA' || funcKey === 'startOTAGetMtu' || funcKey === 'startOTAeraseFlash' || funcKey === 'startRemoteDeviceConnectionUpdate' || funcKey === 'startOTASetFlashAddress' || funcKey === 'startOTAFastWriteFlashSet' || funcKey === 'startOTAupgradeFlash') {
+=======
+        if (funcKey === 'OTAexecuter') {
+>>>>>>> parent of c02a9f2... ota
           if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FF00') > -1) {
             getBLEDeviceCharacteristics(deviceId, res.services[i].uuid, funcKey)
             return
@@ -195,9 +203,8 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
           wx.setStorageSync('_characteristicId', item.uuid)
           let hex
           if (funcKey === 'OTAexecuter') {
-            hex = OTAexecuter.initOTAnew()
-          } else if (funcKey === 'initOTA') {
             hex = OTAexecuter.initOTA()
+<<<<<<< HEAD
           } else if (funcKey === 'startOTAGetMtu') {
             hex = OTAexecuter.startOTAGetMtu()
           } else if (funcKey === 'startOTAeraseFlash') {            
@@ -210,6 +217,8 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
             hex = OTAexecuter.task()
           } else if (funcKey === 'startOTAupgradeFlash') {
             hex = OTAexecuter.startOTAupgradeFlash(PxiBleOTAhelper.getSourceFileSize(), PxiBleOTAhelper.getSourceFileCRC())
+=======
+>>>>>>> parent of c02a9f2... ota
           } else if (funcKey && func[funcKey]) {
             wx.showLoading({
               title: '加载中'
@@ -256,6 +265,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     clearTimeout(timer)
     let value = Format.ab2hex(characteristic.value)
     // ota process
+<<<<<<< HEAD
     if (value === '0e021700') {
       let hex = OTAexecuter.startOTAupgradeFlash(PxiBleOTAhelper.getSourceFileSize(), PxiBleOTAhelper.getSourceFileCRC())
       var typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
@@ -395,9 +405,25 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       TEST++
       let hex = OTAexecuter.initOTA()
       writeBle(hex, 'OTA')
+=======
+    if (value.length === 42) {
+      setTimeout(() => {
+        doBLEConnection('OTAexecuter')
+        let hex = OTAexecuter.startOTAGetMtu()
+        writeBle(hex)
+      }, 1000)
+>>>>>>> parent of c02a9f2... ota
     }
+    // if (value.length === 42) {
+    //   let hex = OTAexecuter.startOTAGetMtu()
+    //   writeBle(hex)
+    // }
+    // if (value.length === 42) {
+    //   let hex = OTAexecuter.startOTAeraseFlash()
+    //   writeBle(hex)
+    // }
     // 非ota process
-    if (value === 'aa30000000000000000000000000000000001100') {
+    if (value.slice(-4, -2) === '11') {
       let hex
       if (funcKey && func[funcKey]) {
         hex = '5523000000000000000000000000000000000000'  //seedC
@@ -740,38 +766,38 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
 
 const writeBle = (hex, funcKey = '') => {
   console.log('写数据为：' + hex)
-  // response = 0
-  // interval = setInterval(() => {
-  //   response ++
-  // }, 1000)
-  // timer = setTimeout(() => {
-    // if (response >= 15) {
-    //   clearInterval(interval)
-    //   clearTimeout(timer)
-    //   closeConnection()
-    //   wx.showModal({
-    //     title: '提示',
-    //     content: '蓝牙连接超时，请重试',
-    //     showCancel: false,
-    //     success(res) {
-    //       if (res.confirm) {
-    //         let currentPages = getCurrentPages()
-    //         let currentPage = currentPages[currentPages.length - 1].route
-    //         if (currentPage === 'pages/search/index') {
-    //           wx.navigateBack({
-    //             delta: 2
-    //           })
-    //         } else {
-    //           wx.navigateBack({
-    //             delta: 1
-    //           })
-    //         }
-    //       }
-    //     }
-    //   })
-    //   return
-    // }
-  // }, 15000)
+  response = 0
+  interval = setInterval(() => {
+    response ++
+  }, 1000)
+  timer = setTimeout(() => {
+    if (response >= 15) {
+      clearInterval(interval)
+      clearTimeout(timer)
+      closeConnection()
+      wx.showModal({
+        title: '提示',
+        content: '蓝牙连接超时，请重试',
+        showCancel: false,
+        success(res) {
+          if (res.confirm) {
+            let currentPages = getCurrentPages()
+            let currentPage = currentPages[currentPages.length - 1].route
+            if (currentPage === 'pages/search/index') {
+              wx.navigateBack({
+                delta: 2
+              })
+            } else {
+              wx.navigateBack({
+                delta: 1
+              })
+            }
+          }
+        }
+      })
+      return
+    }
+  }, 15000)
   if (hex === '5520000000000000000000000000000000000000') {
     wx.redirectTo({
       url: `/pages/activateFinger/index`
