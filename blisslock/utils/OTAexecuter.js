@@ -108,9 +108,12 @@ const startOTASetFlashAddress = (Address) => {
 const startFastWriteFlash = (binArray, start_address, size) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   console.log('!!!!!!!!!!!!!!!!!!!')
   console.log(start_address)
 =======
+=======
+>>>>>>> parent of c02a9f2... ota
 =======
 >>>>>>> parent of c02a9f2... ota
   let count = 0;
@@ -200,6 +203,7 @@ const task2 = () => {
 module.exports = {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   task,
   splitArray,
   initOTAnew, 
@@ -212,6 +216,9 @@ module.exports = {
   startFastWriteFlash,
   startOTAfwReset,
   startOTASetFlashAddress
+=======
+  splitArray, initOTAnew, startOTAeraseFlash, startOTAGetMtu, initOTA, startOTAupgradeFlash, startOTAFastWriteFlashSet, startFastWriteFlash
+>>>>>>> parent of c02a9f2... ota
 =======
   splitArray, initOTAnew, startOTAeraseFlash, startOTAGetMtu, initOTA, startOTAupgradeFlash, startOTAFastWriteFlashSet, startFastWriteFlash
 >>>>>>> parent of c02a9f2... ota

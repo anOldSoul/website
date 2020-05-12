@@ -4,8 +4,12 @@ const Format = require("./format.js")
 const OTAexecuter = require("./OTAexecuter.js")
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 const OTAbin = require("./0507bin.js")
 const PxiBleOTAhelper = require("./OTAhelper.js")
+=======
+const OTAbin = require("./otabin.js")
+>>>>>>> parent of c02a9f2... ota
 =======
 const OTAbin = require("./otabin.js")
 >>>>>>> parent of c02a9f2... ota
@@ -51,7 +55,11 @@ const getBLEDeviceServices = (deviceId, funcKey) => {
       for (let i = 0; i < res.services.length; i++) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (funcKey === 'OTAexecuter' || funcKey === 'initOTA' || funcKey === 'startOTAGetMtu' || funcKey === 'startOTAeraseFlash' || funcKey === 'startRemoteDeviceConnectionUpdate' || funcKey === 'startOTASetFlashAddress' || funcKey === 'startOTAFastWriteFlashSet' || funcKey === 'startOTAupgradeFlash') {
+=======
+        if (funcKey === 'OTAexecuter') {
+>>>>>>> parent of c02a9f2... ota
 =======
         if (funcKey === 'OTAexecuter') {
 >>>>>>> parent of c02a9f2... ota
@@ -214,6 +222,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
             hex = OTAexecuter.initOTA()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           } else if (funcKey === 'startOTAGetMtu') {
             hex = OTAexecuter.startOTAGetMtu()
           } else if (funcKey === 'startOTAeraseFlash') {            
@@ -226,6 +235,8 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
             hex = OTAexecuter.task()
           } else if (funcKey === 'startOTAupgradeFlash') {
             hex = OTAexecuter.startOTAupgradeFlash(PxiBleOTAhelper.getSourceFileSize(), PxiBleOTAhelper.getSourceFileCRC())
+=======
+>>>>>>> parent of c02a9f2... ota
 =======
 >>>>>>> parent of c02a9f2... ota
 =======
@@ -276,6 +287,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
     clearTimeout(timer)
     let value = Format.ab2hex(characteristic.value)
     // ota process
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     if (value === '0e021700') {
@@ -420,6 +432,8 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
 =======
 =======
 >>>>>>> parent of c02a9f2... ota
+=======
+>>>>>>> parent of c02a9f2... ota
     if (value.length === 42) {
       setTimeout(() => {
         doBLEConnection('OTAexecuter')
@@ -427,6 +441,9 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         writeBle(hex)
       }, 1000)
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of c02a9f2... ota
+=======
 >>>>>>> parent of c02a9f2... ota
 =======
 >>>>>>> parent of c02a9f2... ota
