@@ -9,7 +9,7 @@
         </view>
       </view>
       <view class="unlock_now" bindtap='handleExe'>升级OTA</view>
-      <!-- <navigator wx:if="{{false}}" url="/pages/gesture/index?url=unlockAtOnce" hover-class="none" class='unlock_now'>一键开锁</navigator> -->
+      <view wx:if="{{true}}" bindtap="unlockAtOnce" class='unlock_now'>一键开锁</view>
     </view>   
     <view class='func-content'>
         <navigator class="func_item" url="/pages/gesture/index?url=finger" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-fingerprint.png'></image>我的指纹</navigator>

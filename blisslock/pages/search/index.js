@@ -62,7 +62,7 @@ Page({
       res.devices.forEach(device => {
         let name = device.name.toLocaleLowerCase()
         let localName = device.localName ? device.localName.toLocaleLowerCase() : ''
-        if (name.indexOf('blisslock') > -1 || localName.indexOf('blisslock') > -1) {
+        if (name.indexOf('blisslock') > -1 || localName.indexOf('blisslock') > -1 || localName.indexOf('blk') > -1) {
           if (!deviceIdArr.includes(device.deviceId)) {
             console.log(device)
             let devicesFond = {}
@@ -141,7 +141,7 @@ Page({
       deviceId,
       success: (res) => {
         for (let i = 0; i < res.services.length; i++) {
-          if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FF00') > -1) {
+          if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FFF0') > -1) {
             console.log(deviceId)
             app.util.getBLEDeviceCharacteristics(deviceId, res.services[i].uuid)
             return

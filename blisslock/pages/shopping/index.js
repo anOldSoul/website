@@ -16,7 +16,6 @@ Page({
     chs: []
   },
   handleExe () {
-    console.log('~~~~~~~~~~~~')
     app.util.doBLEConnection('OTAexecuter')
   },
   openBluetoothAdapter() {
@@ -183,6 +182,9 @@ Page({
         }
       }
     })
+  },
+  unlockAtOnce() {
+    app.util.doBLEConnection('unlockAtOnce')
   },
   goUnlockRecord: function (e) {
     wx.navigateTo({

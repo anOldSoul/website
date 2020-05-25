@@ -41,12 +41,12 @@ const getBLEDeviceServices = (deviceId, funcKey) => {
     success: (res) => {
       console.log(res)
       for (let i = 0; i < res.services.length; i++) {
-        if (funcKey === 'OTAexecuter' || funcKey === 'initOTA' || funcKey === 'startOTAGetMtu' || funcKey === 'startOTAeraseFlash' || funcKey === 'startRemoteDeviceConnectionUpdate' || funcKey === 'startOTASetFlashAddress' || funcKey === 'startOTAFastWriteFlashSet' || funcKey === 'startOTAupgradeFlash') {
+        if (funcKey === 'OTAexecuter') {
           if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FF00') > -1) {
             getBLEDeviceCharacteristics(deviceId, res.services[i].uuid, funcKey)
             return
           }
-        } else if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FF00') > -1) {
+        } else if (res.services[i].isPrimary && res.services[i].uuid.indexOf('0000FFF0') > -1) {
           getBLEDeviceCharacteristics(deviceId, res.services[i].uuid, funcKey)
           return
         }
@@ -196,20 +196,6 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
           let hex
           if (funcKey === 'OTAexecuter') {
             hex = OTAexecuter.initOTAnew()
-          } else if (funcKey === 'initOTA') {
-            hex = OTAexecuter.initOTA()
-          } else if (funcKey === 'startOTAGetMtu') {
-            hex = OTAexecuter.startOTAGetMtu()
-          } else if (funcKey === 'startOTAeraseFlash') {            
-            hex = OTAexecuter.startOTAeraseFlash()
-          } else if (funcKey === 'startRemoteDeviceConnectionUpdate') {
-            hex = OTAexecuter.startRemoteDeviceConnectionUpdate(6, 9, 100, 300)
-          } else if (funcKey === 'startOTASetFlashAddress') {
-            hex = OTAexecuter.startOTASetFlashAddress()
-          } else if (funcKey === 'startOTAFastWriteFlashSet') {
-            hex = OTAexecuter.task()
-          } else if (funcKey === 'startOTAupgradeFlash') {
-            hex = OTAexecuter.startOTAupgradeFlash(PxiBleOTAhelper.getSourceFileSize(), PxiBleOTAhelper.getSourceFileCRC())
           } else if (funcKey && func[funcKey]) {
             wx.showLoading({
               title: '加载中'
@@ -218,8 +204,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
             rtc = time
             hex = `55280000${time}00000000000000000000` //重置时钟
           } else {
-            hex = OTAexecuter.initOTAnew()
-            // hex = '5511000031323334353637383930313233340000'  //login
+            hex = '5511000031323334353637383930313233340000'  //login
           }
           writeBle(hex)
         }

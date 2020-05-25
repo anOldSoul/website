@@ -81,13 +81,13 @@
   background: #007BFF;
   color: #fff;
   width: 622rpx;
-  height: 104rpx;
+  height: 84rpx;
   border-radius: 52rpx;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 34rpx;
-  margin-top: 70rpx;
+  margin-top: 20rpx;
 }
 .air_quality{
   color: #17BF98;
