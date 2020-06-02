@@ -104,6 +104,8 @@ Page({
             title: '请输入新手势密码',
             noForget: false
           })
+        } else if (this.data.toUrl === 'unlockAtOnce') {
+          app.util.doBLEConnection('unlockAtOnce')
         } else {
           wx.redirectTo({
             url: `/pages/${this.data.toUrl}/index`

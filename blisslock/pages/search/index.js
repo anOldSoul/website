@@ -67,9 +67,9 @@ Page({
             console.log(device)
             let devicesFond = {}
             deviceId = device.deviceId
-            name = name.indexOf('blisslock') > -1 ? name : localName
+            name = localName.indexOf('blk') > -1 ? localName : (name.indexOf('blisslock') > -1 ? name : localName)
             devicesFond.deviceId = device.deviceId
-            devicesFond.name = name.indexOf('blisslock') > -1 ? name : localName
+            devicesFond.name = name
             deviceIdArr.push(deviceId)
             devices.push(devicesFond)
           }
@@ -78,7 +78,6 @@ Page({
             findDevice: true,
             findNoDevice: false
           })
-        } else {
         }
       })
       if (!this.data.devices.length) {
@@ -113,8 +112,8 @@ Page({
         if (selectName.indexOf('blisslock6s') > -1 || selectName === 'blisslock006s') {
           wx.setStorageSync('_deviceType', 'M6-S')
         }
-        if (selectName === 'healthlock') {
-          wx.setStorageSync('_deviceType', '健康锁')
+        if (selectName.includes('blk')) {
+          wx.setStorageSync('_deviceType', 'M6-T')
         }
         this.setData({
           connected: true,

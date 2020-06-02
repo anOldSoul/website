@@ -20,7 +20,7 @@
   <view class='authen' wx:if="{{showAuthen}}">
     <view class='authen_modal'>
       <view class='authen_title'>授权登录</view>
-      <view class='authen_text'>欢迎来到噢蹦小程序。请完成微信授权以体验完整功能！</view>
+      <view class='authen_text'></view>
       <button class='authen_btn' open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">确认</button>
     </view>
   </view>
