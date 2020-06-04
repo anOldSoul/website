@@ -2,7 +2,6 @@ const Moment = require('./moment.min.js')
 const Encrypt = require("./getEncryptBytes.js")
 const Format = require("./format.js")
 const OTAexecuter = require("./OTAexecuter.js")
-const OTAbin = require("./0507bin.js")
 const PxiBleOTAhelper = require("./OTAhelper.js")
 let rtc, decodedPackageData
 let response = 0

@@ -1,8 +1,7 @@
 {
   "pages": [
-    "pages/shopping/index",
     "pages/index/index",
-    
+    "pages/shopping/index",
     "pages/admPw/index",    
     "pages/install/index",    
     "pages/repair/index",

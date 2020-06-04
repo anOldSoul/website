@@ -7,13 +7,6 @@ var token = '000'
 var platform = 'web'
 var apiEntry = "https://app.openn.cn"
 var _request = function (method, api, data, success, fail) {
-  // data.platform = platform
-  // data.method = api[0]
-  // data.path = api[1]
-  // data.sign = MD5(api[0] + api[1] + MD5(vType))
-  // data.vCode = vCode
-  // data.vType = vType
-  // data.token = token
   wx.showLoading({
     title: '加载中',
   })

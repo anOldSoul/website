@@ -31,9 +31,9 @@
   </view>
   <view class='authen' wx:if="{{showAuthen}}">
     <view class='authen_modal'>
-      <view class='authen_title'>固件升级中</view>
+      <view class='authen_title'>{{authenTitle}}</view>
       <view class='authen_text'><image class="loading" src='../../images/loading.gif'></image></view>
-      <view>{{currentWriteCount}}/{{total}}</view>
+      <view wx:if="{{currentWriteCount}}">{{currentWriteCount}}/{{total}}</view>
       <button class='authen_btn' bindtap="handleCancel">取消</button>
     </view>
   </view>

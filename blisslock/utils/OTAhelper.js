@@ -1,4 +1,3 @@
-const OTAbin = require("./0507bin.js")
 const Format = require("./format.js")
 let sourceFile = ''
 

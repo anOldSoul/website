@@ -2,7 +2,6 @@
 const app = getApp()
 const Format = require("../../utils/format.js")
 const OTAexecuter = require("../../utils/OTAexecuter.js")
-const OTAbin = require("../../utils/0507bin.js")
 const PxiBleOTAhelper = require("../../utils/OTAhelper.js")
 const Moment = require('../../utils/moment.min.js')
 const Encrypt = require("../../utils/getEncryptBytes.js")
@@ -25,6 +24,7 @@ function inArray(arr, key, val) {
 }
 Page({
   data: {
+    authenTitle: '升级准备中，请稍后',
     currentWriteCount: '',
     total: '',
     showAuthen: false,
@@ -42,6 +42,8 @@ Page({
     })
   },
   handleExe () {
+    isWrite = false
+    // wx.hideLoading()
     this.setData({
       showAuthen: true
     })
@@ -264,9 +266,9 @@ Page({
               hex = OTAexecuter.initOTAnew()
               this.writeBle(hex, 'OTA')
             } else if (funcKey) {
-              wx.showLoading({
-                title: '加载中'
-              })
+              // wx.showLoading({
+              //   title: '加载中'
+              // })
               let time = Moment().format('ssmmHHDDMMYY')
               rtc = time
               hex = `55280000${time}00000000000000000000` //重置时钟
@@ -348,6 +350,7 @@ Page({
         this.writeBle(hex)
       }
       if (value === '0e022000') {
+        isWrite = true
         let binArray = PxiBleOTAhelper.getSourceFile(binData)
         let att_mtu_size = 23
         let size
@@ -382,7 +385,8 @@ Page({
               i++
               this.setData({
                 currentWriteCount: currentWriteCount,
-                total: chunckBinary.length
+                total: chunckBinary.length,
+                authenTitle: '固件升级中'
               })
               console.log("Update to ..." + currentWriteCount + "/" + chunckBinary.length);
               console.log('writeBLECharacteristicValue success', res.errMsg)
