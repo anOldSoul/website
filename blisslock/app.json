@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/qualityIndex/index",
     "pages/index/index",
     "pages/shopping/index",
     "pages/admPw/index",    

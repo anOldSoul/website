@@ -2,10 +2,6 @@
 <view>
   <navbar navType="homePage"></navbar>
   <view class='title'><view class='dot'></view>我的设备</view>
-  <navigator class='air_quality' url="/pages/airQuality/index?func=airQuality" hover-class="none">
-    <image class="ic-airquality" src='../../images/ic-airquality.png'></image>
-    <view>空气质量 ></view>
-  </navigator>
   <view wx:if="{{!deviceList.length}}">
     <view><image class="no_apparatus" src='../../images/pic-home-not-added.png'></image></view>
     <view class='tip_text'>未添加任何设备</view>
