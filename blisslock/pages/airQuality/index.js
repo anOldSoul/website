@@ -27,12 +27,12 @@ Page({
     this.setData({
       airData: {
         co2: '清新' || '浑浊' || '缺氧',
-        tvoc: tvoc < 4 ? '安全' : '不适',
-        ch2o: (ch2o / 1000000) < 0.5 ? 'E0' : (ch2o < 1.5 ? 'E1' : 'E2'),
-        PM: PM < 4 ? '良' : (PM < 8 ? '优' : '中'),
-        Humidity: Humidity < 0 ? 52 : Humidity + 10,
+        tvoc: '待检测',
+        ch2o: '优',
+        PM: '优',
+        Humidity: 55,
         Temperature: Temperature < 0 ? 24 : Temperature,
-        PM10: PM10 < 4 ? '优' : '良'
+        PM10: '优' || '良'
       }
     })
     console.log(this.data.airData.Humidity)
