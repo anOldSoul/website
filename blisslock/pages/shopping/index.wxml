@@ -12,7 +12,10 @@
           <view class='device_title'>设备型号{{type}}</view>  
         </view>
       </view>
-      <navigator wx:if="{{type === 'M6-T'}}" url="/pages/gesture/index?url=unlockAtOnce" hover-class="none" class='unlock_now'><image class="update_img" src='../../images/unlock-index.png'></image>一键开锁</navigator>
+      <view class="btn-box" wx:if="{{type === 'M6-T'}}">
+        <navigator url="/pages/gesture/index?url=unlockAtOnce" hover-class="none" class='unlock_now'><image class="update_img" src='../../images/unlock-index.png'></image>一键开锁</navigator>
+        <navigator url="/pages/gesture/index?url=lockAtOnce" hover-class="none" class='lock_now'><image class="update_img" src='../../images/lock.png'></image>一键关锁</navigator>
+      </view>
     </view>   
     <view class='func-content'>
         <navigator class="func_item" url="/pages/gesture/index?url=finger" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-fingerprint.png'></image>我的指纹</navigator>

@@ -28,7 +28,9 @@ Page({
         this.startBluetoothDevicesDiscovery()
       },
       fail: (res) => {
+        console.log(res)
         if (res.errCode === 10001) {
+          console.log('==================')
           wx.onBluetoothAdapterStateChange(function (res) {
             console.log('onBluetoothAdapterStateChange', res)
             if (res.available) {

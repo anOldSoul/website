@@ -106,8 +106,6 @@ const startOTASetFlashAddress = (Address) => {
 }
 
 const startFastWriteFlash = (binArray, start_address, size) => {
-  console.log('!!!!!!!!!!!!!!!!!!!')
-  console.log(start_address)
   let WriteCount;
   let currentWriteCount;
   let idx;

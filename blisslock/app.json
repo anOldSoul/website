@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/qualityIndex/index",
     "pages/index/index",
+    "pages/qualityIndex/index",
     "pages/shopping/index",
     "pages/admPw/index",    
     "pages/install/index",    

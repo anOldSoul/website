@@ -35,11 +35,14 @@ Page({
   getData() {
     let config = app.Apis.GET_FILEDATA
     app.post(config, {
-      "versionNumber": 1
+      "versionNumber": '8'
     }, result => {
       binData = result.data.data
       PxiBleOTAhelper.init(binData)
     })
+  },
+  onHide() {
+    app.util.closeConnection()
   },
   handleExe () {
     isWrite = false
@@ -366,54 +369,57 @@ Page({
         currentWriteCount = start_address / size;
         let chunckBinary = OTAexecuter.splitArray(binArray, size);
         console.log(chunckBinary.length)
-
-        let i = 0
-        let write = (() => {
-          let hex = Format.bytes2Str(chunckBinary[i])
-          var typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
-            return parseInt(h, 16)
-          }))
-          var buffer1 = typedArray.buffer
-          console.log(hex)
-          wx.writeBLECharacteristicValue({
-            deviceId: wx.getStorageSync('_deviceId') || Format.getDeviceItem('_deviceId'),
-            serviceId: wx.getStorageSync('_serviceId') || Format.getDeviceItem('_serviceId'),
-            characteristicId: wx.getStorageSync('_characteristicId') || Format.getDeviceItem('_characteristicId'),
-            value: buffer1,
-            success: (res) => {
-              currentWriteCount++;
-              i++
-              this.setData({
-                currentWriteCount: currentWriteCount,
-                total: chunckBinary.length,
-                authenTitle: '固件升级中'
-              })
-              console.log("Update to ..." + currentWriteCount + "/" + chunckBinary.length);
-              console.log('writeBLECharacteristicValue success', res.errMsg)
-              app.globalData.currentWriteCount = currentWriteCount
-              app.globalData.currentWriteCount = currentWriteCount
-              if (i < chunckBinary.length && isWrite) {
-                write()           
-              } else {
-                wx.readBLECharacteristicValue({
+        if (isWrite) {
+          for (let i = 0; i < chunckBinary.length; i++) {
+            ((i) => {
+              setTimeout(() => {
+                let hex = Format.bytes2Str(chunckBinary[i])
+                var typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
+                  return parseInt(h, 16)
+                }))
+                var buffer1 = typedArray.buffer
+                console.log(hex)
+                currentWriteCount++;
+                wx.writeBLECharacteristicValue({
                   deviceId: wx.getStorageSync('_deviceId') || Format.getDeviceItem('_deviceId'),
                   serviceId: wx.getStorageSync('_serviceId') || Format.getDeviceItem('_serviceId'),
                   characteristicId: wx.getStorageSync('_characteristicId') || Format.getDeviceItem('_characteristicId'),
-                  success(res) {
-                    console.log('readBLECharacteristicValue:', res.errCode)
+                  value: buffer1,
+                  success: (res) => {
+                    if (i === chunckBinary.length - 1) {
+                      wx.readBLECharacteristicValue({
+                        deviceId: wx.getStorageSync('_deviceId') || Format.getDeviceItem('_deviceId'),
+                        serviceId: wx.getStorageSync('_serviceId') || Format.getDeviceItem('_serviceId'),
+                        characteristicId: wx.getStorageSync('_characteristicId') || Format.getDeviceItem('_characteristicId'),
+                        success(res) {
+                          console.log('readBLECharacteristicValue:', res.errCode)
+                        }
+                      })
+                    } else {
+                      console.log(i)
+                    }
+                  },
+                  fail: function (res) {
+                    console.log('writeBLECharacteristicValue fail', res.errMsg)
+                  },
+                  complete: function (res) {
+                    console.log('writeBLECharacteristicValue compl', res.errMsg)
                   }
                 })
-              }
-            },
-            fail: function (res) {
-              console.log('writeBLECharacteristicValue fail', res.errMsg)
-            },
-            complete: function (res) {
-              console.log('writeBLECharacteristicValue compl', res.errMsg)
-            }
-          })
-        })
-        write()
+                console.log(i);
+                
+                // i++
+                this.setData({
+                  currentWriteCount: currentWriteCount,
+                  total: chunckBinary.length,
+                  authenTitle: '固件升级中'
+                })
+                console.log("Update to ..." + currentWriteCount + "/" + chunckBinary.length);
+                
+              }, (i + 1) * 20);
+            })(i)
+          }
+        }
       }
       if (value === '0e021100') {
         TEST++

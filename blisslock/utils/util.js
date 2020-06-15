@@ -20,6 +20,7 @@ let func = {
   delPass: false,
   unlockRecord: false,
   unlockAtOnce: false,
+  lockAtOnce: false,
   airQuality: false,
   startOTA: false,
   resolve: ''
@@ -169,6 +170,7 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
   func.delPass = false
   func.unlockRecord = false
   func.unlockAtOnce = false
+  func.lockAtOnce = false
   func.airQuality = false
   func.startOTA = false
   if (funcKey) {
@@ -595,6 +597,19 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
         }
       })
     }
+    if (value === 'aa30000000000000000000000000000000003400') {
+      closeConnection()
+      wx.navigateBack({
+        delta: 1,
+        success: () => {
+          wx.showModal({
+            title: '提示',
+            content: '已关锁',
+            showCancel: false
+          })
+        }
+      })
+    }
     if (value.slice(-4, -2) === '95' && value.slice(0, 2) === 'aa') {
       if (func['addPass']) {
         let pw = Format.formatPw(pwNeedToAdd.pw)
@@ -659,6 +674,10 @@ const getBLEDeviceCharacteristics = (deviceId, serviceId, funcKey = '',) => {
       }
       if (func['unlockAtOnce']) {
         let hex = '5533000031323334353600000000000000000000'
+        writeBle(hex)
+      }
+      if (func['lockAtOnce']) {
+        let hex = '5534000031323334353600000000000000000000'
         writeBle(hex)
       }
     }

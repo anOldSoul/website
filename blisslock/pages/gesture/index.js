@@ -106,6 +106,8 @@ Page({
           })
         } else if (this.data.toUrl === 'unlockAtOnce') {
           app.util.doBLEConnection('unlockAtOnce')
+        } else if (this.data.toUrl === 'lockAtOnce') {
+          app.util.doBLEConnection('lockAtOnce')
         } else {
           wx.redirectTo({
             url: `/pages/${this.data.toUrl}/index`
