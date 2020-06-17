@@ -37,10 +37,39 @@ Page({
   },
   goHomePage: function (e) {
     console.log(e)
-    let selectIndex = e.currentTarget.dataset.index
-    wx.setStorageSync('currentDeviceIndex', selectIndex)
-    wx.navigateTo({
-      url: `/pages/shopping/index`
+    wx.checkIsSupportSoterAuthentication({
+      success: (res) => {
+        console.log(res)
+        let supportMode = res.supportMode
+        if (supportMode.includes('fingerPrint')) {
+          wx.startSoterAuthentication({
+            requestAuthModes: ['fingerPrint'],
+            challenge: '123456',
+            authContent: '请用指纹解锁',
+            success(res) {
+              let selectIndex = e.currentTarget.dataset.index
+              wx.setStorageSync('currentDeviceIndex', selectIndex)
+              wx.navigateTo({
+                url: `/pages/shopping/index`
+              })
+            }
+          })
+        }
+        if (supportMode.includes('facial')) {
+          wx.startSoterAuthentication({
+            requestAuthModes: ['facial'],
+            challenge: '123456',
+            authContent: '请用人脸解锁',
+            success(res) {
+              let selectIndex = e.currentTarget.dataset.index
+              wx.setStorageSync('currentDeviceIndex', selectIndex)
+              wx.navigateTo({
+                url: `/pages/shopping/index`
+              })
+            }
+          })
+        }
+      }
     })
   },
   bindGetUserInfo(e) {
