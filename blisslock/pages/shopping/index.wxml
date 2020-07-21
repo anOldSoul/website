@@ -18,15 +18,18 @@
       </view>
     </view>   
     <view class='func-content'>
-        <navigator class="func_item" url="/pages/finger/index" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-fingerprint.png'></image>我的指纹</navigator>
-        <navigator class="func_item" url="/pages/password/index" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-password.png'></image>我的密码</navigator>
-      <navigator class="func_item" url="/pages/createTemp/index" hover-class="none"><image class="func_img" src='../../images/home-tem-password.png'></image>临时密码</navigator>
-        <view class="func_item" bindtap="checkAdmPw"><image class="func_img" src='../../images/ic_equip-home-adm.png'></image>管理员密码</view>
-        <navigator class="func_item" url="/pages/unlockRecord/index" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-unlock-rec.png'></image>操作记录</navigator>
+        <navigator class="func_item" url="/pages/gesture/index?url=finger" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-fingerprint.png'></image>我的指纹</navigator>
+        <navigator class="func_item" url="/pages/gesture/index?url=password" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-my-password.png'></image>我的密码</navigator>
+        <navigator wx:if="{{false}}" class="func_item" url="/pages/gesture/index?url=createTemp" hover-class="none"><image class="func_img" src='../../images/card-icon.png'></image>我的卡片</navigator>
+      <navigator class="func_item" url="/pages/gesture/index?url=createTemp" hover-class="none"><image class="func_img" src='../../images/home-tem-password.png'></image>临时密码</navigator>
+        <navigator class="func_item" url="/pages/gesture/index?url=checkAdmPw" hover-class="none"><image class="func_img" src='../../images/ic_equip-home-adm.png'></image>管理员密码</navigator>
+        <view class="func_item" bindtap='goUnlockRecord'><image class="func_img" src='../../images/ic-equip-home-unlock-rec.png'></image>操作记录</view>
+        <navigator wx:if="{{false}}" class="func_item" url="/pages/introduction/index" hover-class="none"><image class="func_img" src='../../images/ic-change-record.png'></image>用户变更</navigator>
         <navigator class="func_item" url="/pages/introduction/index" hover-class="none"><image class="func_img" src='../../images/ic-equip-home-instrac.png'></image>使用说明</navigator>
         <navigator class="func_item" url="/pages/repair/index" hover-class="none"><image class="func_img" src='../../images/ic_yijianbaoxiu.png'></image>一键报修</navigator>
         <navigator class="func_item" url="/pages/addDevice/index" hover-class="none"><image class="func_img" src='../../images/ic-bind-again.png'></image>再次绑定</navigator>
         <view class="func_item"  bindtap='handleDelDevice'><image class="func_img" src='../../images/ic-equip-home-delete.png'></image>删除设备</view>
+        <navigator class="func_item" wx:if="{{type === '健康锁'}}" hover-class="none" url="/pages/airQuality/index"><image class="func_img" src='../../images/ic-air-quality.png'></image>空气质量</navigator>
     </view>
   </view>
   <view class='authen' wx:if="{{showAuthen}}">
