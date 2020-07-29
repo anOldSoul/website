@@ -6,6 +6,13 @@ var img = '384038403840484840484040484048484848485038404848504850506060585858585
 
 Page({
   data: {
+    peopleList: [{
+      id: 1,
+      name: '张三'
+    }, {
+        id: 2,
+        name: '李四'
+    }],
     motto: 'Hello World',
     userInfo: {},
     ip: '192.168.1.113',
@@ -34,11 +41,6 @@ Page({
           }
         })
       }
-    })
-  },
-  goPeople() {
-    wx.navigateTo({
-      url: `/pages/people/index`
     })
   },
   // ArrayBuffer转为字符串，参数为ArrayBuffer对象

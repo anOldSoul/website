@@ -1,9 +1,29 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="userinfo">
+  <view class="top">
+    <view class="top-left">
+      <view class="top-title">人脸考勤</view>
+      <view class="top-subtitle">急速自动，告别排队</view>
+    </view>
+    <image class="bg1" src='../../images/bg1.png'></image>
+  </view>
+  <view bindtap="goPeople" class="myList" hover-class="none">
+    <view class="list_text"><image class="icon_img" src="/images/people.png"></image>考勤人员</view>
+    <image class="list_more" src="/images/more.png"></image>
+  </view>
+  <view class="myList" bindtap="goAbout">
+    <view class="list_text"><image class="icon_img" src="/images/chart.png"></image>考勤统计</view>
+    <image class="list_more" src="/images/more.png"></image>
+  </view>
+  <view class="myList" bindtap="goAbout">
+    <view class="list_text"><image class="icon_img" src="/images/setting.png"></image>考勤机设置</view>
+    <image class="list_more" src="/images/more.png"></image>
+  </view>
+  <!-- <view class="userinfo">
     <button bindtap="selectPhoto"> 选取照片 </button>
-  </view>
-  <view class="usermotto">
+  </view> -->
+  <!-- <view><web-view src="http://wx.ai-thinker.com/api/old/wifi/config"> </web-view></view> -->
+  <!-- <view class="usermotto">
     <text class="user-motto">{{motto}}</text>
-  </view>
+  </view> -->
 </view>

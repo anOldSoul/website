@@ -1,0 +1,13 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="add"><image class="add_img" src="/images/add.png"></image>添加员工</view>
+  <view class="top">
+    <view>人脸管理</view>
+    <view class="text">录入人脸，即可在设备上人脸打卡</view>
+  </view>
+  <view bindtap="goGesture" class="myList" hover-class="none">
+    <view class="person" wx:for="{{peopleList}}">
+      <image class="icon_img" src="/images/face.png"></image>
+    </view>
+  </view>
+</view>

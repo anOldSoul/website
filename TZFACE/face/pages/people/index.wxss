@@ -1,0 +1,43 @@
+
+.top {
+  margin: 30rpx;
+  font-size: 36rpx;
+}
+.person {
+  width: 170rpx;
+  height: 170rpx;
+  background: #ececec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icon_img{
+  width: 48rpx;
+  height: 48rpx;
+}
+.myList {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10rpx;
+}
+.person {
+  margin-right: 10rpx;
+}
+.text {
+  color: gray;
+  font-size: 26rpx;
+  padding-top: 5rpx;
+}
+.add {
+  border-top: 1rpx solid #ececec;
+  padding: 30rpx;
+  display: flex;
+  align-items: center;
+  color: #012573;
+  border-bottom: 20rpx solid #ececec;
+}
+.add_img {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 15rpx;
+}

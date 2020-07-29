@@ -1,5 +1,7 @@
-/**index.wxss**/
-.userinfo {
+page {
+  background: #ececec;
+}
+/* .userinfo {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,4 +20,104 @@
 
 .usermotto {
   margin-top: 200px;
+} */
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 30rpx;
+  padding: 20rpx 30rpx;
+  border-radius: 20rpx;
+  background:linear-gradient(90deg,#012573 0%,#3865bc 51%,#a5d3f9 100%);
+}
+.top-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.top-title {
+  color: #fff;
+  font-size: 36rpx;
+  font-weight: bold;
+  padding-bottom: 20rpx;
+}
+.top-subtitle {
+  font-size: 28rpx;
+  color: #fff;
+  opacity: 0.7;
+}
+.bg1 {
+  width: 341rpx;
+  height: 256rpx;
+}
+.head{
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 130rpx;
+  margin-bottom: 138rpx;
+}
+.head_img{
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 75rpx;
+  overflow: hidden;
+}
+.member_name {
+  font-size: 30rpx;
+  margin-top: 40rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-weight: bold;
+  border: 1rpx solid rgba(9,25,40,1);
+}
+.member_name1 {
+  font-size: 40rpx;
+  margin-top: 40rpx;
+}
+.item_border{
+  width: 2rpx;
+  height: 100rpx;
+  background: #323232;
+  opacity: 0.5;
+}
+.list_text{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.icon_img{
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 20rpx;
+}
+.myList{
+  background: #fff;
+  height: 150rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  margin: 30rpx;
+  border-radius: 20rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+  padding: 0 30rpx;
+}
+.list_right{
+  display: flex;
+  align-items: center;
+  color: #cccccc;
+}
+.list_more{
+  width: 14rpx;
+  height: 28rpx;
+}
+.support{
+  font-size: 28rpx;
+  text-align: center;
+  color: #cccccc;
+  background: #f6f6f6;
+  padding: 30rpx 0;
 }
