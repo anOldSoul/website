@@ -1,0 +1,12 @@
+<!--pages/admPw/index.wxml-->
+<view>
+  <view class='title'><view class='dot'></view>姓名</view>
+  <view class="phone_box">
+    <input bindinput="bindUsernameInput" maxlength="20" value="{{nickName}}" placeholder="最多20个字符"/>
+  </view>
+  <view class='title'><view class='dot'></view>手机号</view>
+  <view class="phone_box">
+    <input type="number" bindinput="bindTelInput" maxlength="12" value="{{telephone}}" placeholder="11位数字"/>
+  </view>
+  <view bindtap="goNext" class='add_apparatus'>确定</view>
+</view>
