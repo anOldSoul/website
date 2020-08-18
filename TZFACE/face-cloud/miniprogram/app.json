@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/device/index",
+    "pages/index/index",
+    "pages/index-1/index",
+    
+    "pages/member/index",
+    "pages/login/index",
+    "pages/logs/logs",
+    "pages/status/index",
+    "pages/people/index",
+    "pages/copper/index",
+    "pages/setting/index",
+    "pages/add/index",
+    "pages/deviceName/index",
+    "pages/userConsole/userConsole",
+    "pages/storageConsole/storageConsole",
+    "pages/databaseGuide/databaseGuide",
+    "pages/addFunction/addFunction",
+    "pages/deployFunctions/deployFunctions",
+    "pages/chooseLib/chooseLib",
+    "pages/openapi/openapi",
+    "pages/openapi/serverapi/serverapi",
+    "pages/openapi/callback/callback",
+    "pages/openapi/cloudid/cloudid",
+    "pages/im/im",
+    "pages/im/room/room"
+  ],
+  "tabBar": {
+    "color": "#acacac",
+    "selectedColor": "#091928",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/device/index",
+        "selectedIconPath": "images/index-tab-selected.png",
+        "iconPath": "images/index-tab.png",
+        "color": "#0e131e",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/member/index",
+        "selectedIconPath": "images/me-selected.png",
+        "iconPath": "images/me.png",
+        "color": "#0e131e",
+        "text": "我的"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

@@ -1,0 +1,21 @@
+<official-account></official-account>
+<view>
+  <view>
+    <view class='title'><view class='dot'></view>我的设备</view>
+    <view wx:if="{{!deviceList.length}}">
+      <view><image class="no_apparatus" src='../../images/pic-home-not-added.png'></image></view>
+      <view class='tip_text'>未添加任何设备</view>
+    </view>
+    <view wx:if="{{deviceList.length}}">
+      <view class='device_item' wx:for="{{deviceList}}" wx:key="{{index}}" data-index="{{index}}" bindtap='goHomePage'>
+        <view class='device_item_left'>
+          <view class='left_text'>型号：{{item.model}}</view>          
+          <view class='left_text'>编号：{{item.sn}}</view>
+          <view class='left_text'>状态：{{networkType}}</view>
+        </view>
+        <view class='device_item_right'><image class="pic_M6" src='../../images/device-img.png'></image></view>
+      </view>
+    </view>
+    <view bindtap="addDevice" class='add_apparatus'>添加设备</view>
+  </view>
+</view>

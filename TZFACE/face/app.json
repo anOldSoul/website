@@ -1,10 +1,14 @@
 {
   "pages":[
+    "pages/device/index",
     "pages/index/index",
-    "pages/add/index",
-    
+    "pages/logs/logs",
+    "pages/status/index",
     "pages/people/index",
-    "pages/logs/logs"
+    "pages/copper/index",
+    "pages/setting/index",
+    "pages/add/index",
+    "pages/deviceName/index" 
   ],
   "window":{
     "backgroundTextStyle":"light",

@@ -1,0 +1,70 @@
+/* pages/admPw/index.wxss */
+.title{
+  margin: 30rpx 40rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 36rpx;
+}
+.dot{
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 12rpx;
+  background-color: #17BF98;
+  margin-right: 20rpx;
+}
+input{
+  width: 630rpx;
+  height: 94rpx;
+  background-color: #F0F0F0;
+  margin-left: 30rpx;
+  padding:0 30rpx;
+  font-size: 30rpx;
+}
+.tip_text{
+  font-size: 30rpx;
+  color: #999999;
+  line-height:50rpx;
+  margin: 40rpx 30rpx;
+}
+.add_apparatus{
+  width:470rpx;
+  height:80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:linear-gradient(90deg,#012573 0%,#3865bc 51%,#a5d3f9 100%);
+  border-radius:40rpx;
+  color: #fff;
+  margin: 100rpx auto;
+  font-size: 36rpx;
+}
+.phone_box {
+  position: relative;
+}
+.get_phoneNumber {
+  position: absolute;
+  z-index: 99;
+  right: 50rpx;
+  top: -5rpx;
+  height: 64rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20rpx;
+  /* color: #17BF98; */
+  border: 1rpx solid #17BF98;
+  border-radius:8rpx;
+  margin-left: 40rpx;
+  font-size: 24rpx;
+}
+.wechat-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 15rpx;
+}
+.wechat-icon1 {
+  width: 40rpx;
+  height: 32rpx;
+  margin-right: 15rpx;
+}

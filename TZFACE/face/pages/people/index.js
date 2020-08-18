@@ -3,7 +3,6 @@
 const app = getApp()
 var img = ''
 var udp
-// img = img.slice(0, 2048)
 
 Page({
   data: {
@@ -19,7 +18,7 @@ Page({
   selectPhoto() {
     wx.chooseImage({
       count: 1,
-      sizeType: ['original', 'compressed'],
+      sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
       success: (res) => {
         console.log(res)
@@ -51,12 +50,19 @@ Page({
       success: (res) => {
         let tapIndex = res.tapIndex
         if (tapIndex === 0) {
-          this.selectPhoto()
+          wx.navigateTo({
+            url: `/pages/copper/index`
+          })
+        }
+        if (tapIndex === 1) {
+          let imgHead = { "func": "GetLog" }
+          console.log('-----------')
+          this.sendUdp(udp, imgHead)
         }
         if (tapIndex === 2) {
-          let test = { func: "GetIP" }
-          // let test = { func: "DeleteUser", id: this.data.id }
-          this.sendUdp(udp, test, '192.168.1.255')
+          let imgHead = { "func": "DeleteUserAll"}
+          console.log('-----------')
+          this.sendUdp(udp, imgHead)
         }
       }
     })
@@ -73,35 +79,75 @@ Page({
     })
   },
   udpStart(tempFilePaths) {
+    app.globalData.imgSrc = ''
     wx.showLoading({
       title: '上传中',
     })
     let test = { func: "GetIP" }
-    let i = 0
+    
     let pack = 0
-    let buffseq = ''
+    
     if (img.length % 1024 !== 0) {
       pack = Math.floor(img.length / 1024) + 1
     } else {
       pack = Math.floor(img.length / 1024)
     }
     console.log('包长度~~~' + pack)
+
+    let imgHead = { func: "StartTransfer", imgcnt: 1, width: 320, heigh: 240, type: "RGB888" }
+    this.sendUdp(udp, imgHead, this.data.ip)
+
+  },
+  goAdd() {
+    wx.navigateTo({
+      url: `/pages/add/index`
+    })
+  },
+  onLoad() {
+  },
+  onShow: function () {
     let interval = 0
     let interfunc = null
-
-
-    this.sendUdp(udp, test, '255.255.255.255')
+    let buffseq = ''
+    let i = 0
+    udp = wx.createUDPSocket()
+    console.log(udp)
+    udp.bind()
+    let imgHead = { func: "GetIP" }
+    console.log('-----------')
+    this.sendUdp(udp, imgHead, '255.255.255.255')
+    udp.onListening((res) => {
+      console.log('监听中...')
+      console.log(res)
+    })
+    udp.onClose((res) => {
+      console.log('监听关闭事件...')
+      console.log(res)
+    })
+    udp.onError((res) => {
+      console.log('监听错误事件...')
+      console.log(res)
+    })
     udp.onMessage((res) => {
       if (res.message) {
-        let testStr = this.ab2str(res.message.data)
+        let testStr = ''
+        if (app.globalData.platform === 'devtools') {
+          testStr = this.ab2str(res.message.data)
+        } else {
+          // 将 ArrayBuffer类型的res.message取出来
+          let unit8Arr = new Uint8Array(res.message)
+          let encodedString = String.fromCharCode.apply(null, unit8Arr)
+          let decodedString = decodeURIComponent(escape((encodedString)))//没有这一步中文会乱码
+          console.log('message:' + decodedString)
+          testStr = decodedString
+        }
         let remoteInfo = res.remoteInfo.address
         console.log(testStr)
-        console.log(res.message)
         let aa = JSON.parse(testStr)
         if (aa.func === 'GetIP') {
-          let imgHead = { func: "StartTransfer", imgcnt: 1, width: 320, heigh: 240, type: "RGB888" }
           this.data.ip = remoteInfo
-          this.sendUdp(udp, imgHead, this.data.ip)
+          let imgHead = { "func": "GetDeviceInfo", "timestamp": "202007202222" }
+          this.sendUdp(udp, imgHead)
         }
         if (aa.func === 'StartTransfer' && aa.status === 'ok') {
           console.log(img.length)
@@ -109,10 +155,6 @@ Page({
           this.sendUdp(udp, imgHead)
         }
         if (aa.func === 'TransferImgHead' && aa.status === 'ok') {
-          let imgHead = { "func": "GetDeviceInfo", "timestamp": "202007202222" }
-          this.sendUdp(udp, imgHead)
-        }
-        if (aa.func === 'GetDeviceInfo' && aa.status === 'ok') {
           interfunc = setInterval(() => {
             interval++
             console.log(interval)
@@ -128,6 +170,9 @@ Page({
             port: 6125,
             message: img.slice(0, 1024)
           })
+        }
+        if (aa.func === 'GetDeviceInfo' && aa.status === 'ok') {
+
         }
         if (aa.func === 'BUFReSend') {
           udp.send({
@@ -157,34 +202,14 @@ Page({
           wx.hideLoading()
         }
         if (aa.func === 'DeleteUser' && aa.status === 'ok') {
+          console.log(this.data.currentIndex)
+          this.data.peopleList.splice(this.data.currentIndex, 1)
           this.setData({
-            peopleList: this.data.peopleList.slice(this.data.currentIndex)
+            peopleList: this.data.peopleList
           })
           wx.setStorageSync('peopleList', this.data.peopleList)
         }
       }
-    })
-  },
-  goAdd() {
-    wx.navigateTo({
-      url: `/pages/add/index`
-    })
-  },
-  onShow: function () {
-    udp = wx.createUDPSocket()
-    udp.bind()
-    console.log('===========')
-    udp.onListening((res) => {
-      console.log('监听中...')
-      console.log(res)
-    })
-    udp.onClose((res) => {
-      console.log('监听关闭事件...')
-      udp = wx.createUDPSocket()
-    })
-    udp.onError((res) => {
-      console.log('监听错误事件...')
-      udp = wx.createUDPSocket()
     })
     this.setData({
       peopleList: wx.getStorageSync('peopleList') || [{
@@ -197,5 +222,22 @@ Page({
         imgUrl: ''
       }]
     })
+
+    const tempFilePaths = app.globalData.imgSrc
+    if (tempFilePaths) {
+      wx.getFileSystemManager().readFile({
+        filePath: tempFilePaths,
+        encoding: 'hex',
+        success: res => {
+          console.log(res)
+          img = res.data
+          this.udpStart(tempFilePaths)
+          //返回临时文件路径
+        },
+        fail: (errMsg) => {
+          console.log(errMsg)
+        }
+      })
+    }
   }
 })

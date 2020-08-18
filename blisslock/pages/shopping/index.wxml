@@ -1,10 +1,10 @@
 <view class='container'>
   <view class="func_manage">
     <view class='device_top'>
-      <view class="ota_update" bindtap='handleExe' wx:if="{{type === 'M6-T'}}">
+      <!-- <view class="ota_update" bindtap='handleExe' wx:if="{{type === 'M6-T'}}">
         <image class="update_img" src='../../images/ic-air-quality.png'></image>
         <view>固件升级</view>
-      </view>
+      </view> -->
       <view class='device_top_up'>
         <image class="device_img" src='../../images/ic-m7home.png'></image>
         <view class='device_name'>
@@ -13,7 +13,7 @@
         </view>
       </view>
       <view class="btn-box" wx:if="{{type === 'M6-T'}}">
-        <navigator url="/pages/gesture/index?url=unlockAtOnce" hover-class="none" class='unlock_now'><image class="update_img" src='../../images/unlock-index.png'></image>一键开锁</navigator>
+        <view bindtap="unlockAtOnce" class='unlock_now'><image class="update_img" src='../../images/unlock-index.png'></image>一键开锁</view>
         <navigator url="/pages/gesture/index?url=lockAtOnce" hover-class="none" class='lock_now'><image class="update_img" src='../../images/lock.png'></image>一键关锁</navigator>
       </view>
     </view>   

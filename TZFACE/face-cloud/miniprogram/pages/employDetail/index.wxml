@@ -1,0 +1,15 @@
+<!--logs.wxml-->
+<view class="container log-list">
+  <view class="myList" bindtap="goName">
+    <view class="list_text">设备名称</view>
+    <image class="list_more" src="/images/more.png"></image>
+  </view>
+  <view class="myList" bindtap="goNetwork">
+    <view class="list_text">网络状态</view>
+    <view><text class="net-text">{{networkType}}</text><image class="list_more" src="/images/more.png"></image></view>
+  </view>
+  <view class="myList">
+    <view class="list_text">人脸容量</view>
+    <view>500</view>
+  </view>
+</view>

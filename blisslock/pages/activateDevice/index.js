@@ -54,6 +54,9 @@ Page({
       app.util.doBLEConnection('airQuality')
     } 
     if (func === 'unlockAtOnce') {
+      wx.showLoading({
+        title: '加载中'
+      })
       app.util.doBLEConnection('unlockAtOnce')
     }
     this.setData({

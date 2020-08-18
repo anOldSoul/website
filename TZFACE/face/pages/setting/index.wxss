@@ -1,0 +1,32 @@
+.myList{
+  height: 120rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  border-bottom: 1rpx solid #f5f5f5;
+  font-size: 36rpx;
+  padding: 0 30rpx;
+}
+.list_right{
+  display: flex;
+  align-items: center;
+  color: #cccccc;
+}
+.list_more{
+  width: 14rpx;
+  height: 28rpx;
+}
+.list_text{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.icon_img{
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 20rpx;
+}
+.net-text {
+  margin-right: 15rpx;
+}

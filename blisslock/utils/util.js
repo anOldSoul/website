@@ -54,14 +54,14 @@ const openBluetoothAdapter = (resolve, reject) => {
   wx.openBluetoothAdapter({
     success: (res) => {
       console.log('openBluetoothAdapter success', res)
-      startBluetoothDevicesDiscovery(resolve, reject)
+      resolve()
     },
     fail: (res) => {
       if (res.errCode === 10001) {
         wx.onBluetoothAdapterStateChange(function (res) {
           console.log('onBluetoothAdapterStateChange', res)
           if (res.available) {
-            startBluetoothDevicesDiscovery(resolve, reject)
+            openBluetoothAdapter(resolve, reject)
           }
         })
       }
@@ -103,6 +103,10 @@ const closeConnection = () => {
   })
 }
 const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
+  console.log('doBLEConnection time' + Moment().format())
+  wx.showLoading({
+    title: '加载中'
+  })
   if (funcKey === 'startOTA') {
     TEST = 0
   }
@@ -111,8 +115,10 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
   func.resolve = resolve
   if (!wx.getStorageSync('_deviceId') && wx.getStorageSync('_deviceId') !== Format.getDeviceItem('_deviceId')) {
     new Promise((resolve1, reject) => {
+      console.log('start openBluetoothAdapter time' + Moment().format())
       openBluetoothAdapter(resolve1, reject)
     }).then(() => {
+      console.log('openBluetoothAdapter success time' + Moment().format())
       doBLEConnection(funcKey, resolve, pwAdded)
     })
   } else {
@@ -121,27 +127,38 @@ const doBLEConnection = (funcKey, resolve, pwAdded = {}) => {
       // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
       deviceId,
       success: (res) => {
+        console.log('createBLEConnection success time' + Moment().format())
         if (wx.getStorageSync('isConnecting')) {
           getBLEDeviceServices(deviceId, funcKey)
         }
       },
-      fail: (res) => {
+      fail: (res) => {        
+        console.log(res)
         if (wx.getStorageSync('isConnecting')) {
           let errCode = res.errCode
           let title = ''
-          if (errCode === 10000) {
+          //未初始化蓝牙适配器
+          if (errCode === 10000 || errCode === 10003) {
+            // wx.showToast({
+            //   title: `${errCode}`,
+            //   icon: 'none',
+            //   duration: 1500
+            // })
             new Promise((resolve1, reject) => {
+              console.log('createBLEConnection fail time' + Moment().format())
               openBluetoothAdapter(resolve1, reject)
             }).then(() => {
+              console.log('openBluetoothAdapter success1 time' + Moment().format())
               doBLEConnection(funcKey, resolve, pwAdded)
             })
           } else {
-            if (errCode === 10003) {
-              title = '等待超时，请重试'
-            } else if (errCode === 10012) {
+            console.log(`${errCode} time` + Moment().format())
+            if (errCode === 10012) {
               title = '连接超时，请重试'
+            } else if (errCode === 10002) {
+              title = '没有找到指定设备'
             } else {
-              title = '连接失败，请重试'
+              title = errCode
             }
             wx.showModal({
               title: '提示',

@@ -1,0 +1,15 @@
+<!--logs.wxml-->
+<view class="container log-list">
+  <view class="myList" bindtap="goName">
+    <view class="list_text">网络连接</view>
+    <view>{{wifi}}</view>
+  </view>
+  <view class="myList" bindtap="goNetwork">
+    <view class="list_text">IP地址</view>
+    <view>{{ip}}</view>
+  </view>
+  <view class="myList" bindtap="goName">
+    <view class="list_text">MAC地址</view>
+    <view>{{mac}}</view>
+  </view>
+</view>

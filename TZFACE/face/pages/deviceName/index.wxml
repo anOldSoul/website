@@ -1,0 +1,4 @@
+<view class='container'>
+  <view><input bindinput="bindKeyInput" maxlength="12" value="{{device_name}}" placeholder="{{placeholder}}"/></view>
+  <view bindtap="handleComplete" class='add_apparatus'>完成</view>
+</view>
