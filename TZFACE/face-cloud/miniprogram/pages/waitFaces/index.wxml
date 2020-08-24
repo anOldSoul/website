@@ -1,0 +1,14 @@
+<!--index.wxml-->
+<view class="container" wx:if="{{notEmpty}}">
+  <view class="add" wx:for="{{peopleList}}" wx:key="index">
+    <view class="add_left" bindtap="goAdd">
+      <image class="add_img" src="{{item.fileID}}"></image>{{item.name}}
+      <span class="phone">（ {{item.telephone}} ）</span>
+    </view>
+    <view bindtap="handleCheck" data-index="{{index}}"><image class="icon_img" src="/images/check-icon.png"></image></view>
+  </view>
+</view>
+<view wx:if="{{empty}}" class="wait_page">
+  <image class="wait_img" src="/images/pic-home-not-added.png"></image>
+  <view class="tip_text">暂无待审核信息...</view>
+</view>

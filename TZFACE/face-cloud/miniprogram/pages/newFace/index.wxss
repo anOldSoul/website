@@ -1,0 +1,95 @@
+
+.title{
+  margin: 30rpx 40rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 36rpx;
+}
+.dot{
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 12rpx;
+  background-color: #3865bc;
+  margin-right: 20rpx;
+}
+
+.tip_text{
+  font-size: 30rpx;
+  color: #999999;
+  line-height:50rpx;
+  margin: 40rpx 30rpx;
+}
+
+.phone_box {
+  position: relative;
+}
+.get_phoneNumber {
+  position: absolute;
+  z-index: 99;
+  right: 50rpx;
+  top: -5rpx;
+  height: 64rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20rpx;
+  /* color: #17BF98; */
+  border: 1rpx solid #17BF98;
+  border-radius:8rpx;
+  margin-left: 40rpx;
+  font-size: 24rpx;
+}
+.wechat-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 15rpx;
+}
+.wechat-icon1 {
+  width: 40rpx;
+  height: 32rpx;
+  margin-right: 15rpx;
+}
+.person {
+  width: 170rpx;
+  height: 170rpx;
+  background: #ececec;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  border-radius: 85rpx;
+  margin: 30rpx auto;
+  margin-bottom: 100rpx;
+  overflow: hidden;
+}
+.icon_img{
+  width: 48rpx;
+  height: 48rpx;
+}
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.face_name {
+  width: 100%;
+  color: grey;
+  font-size: 22rpx;
+  text-align: center;
+  margin-top: 5rpx;
+}
+.wait_page {
+  margin-top: 150rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.wait_img {
+  width: 500rpx;
+  height: 500rpx;
+}

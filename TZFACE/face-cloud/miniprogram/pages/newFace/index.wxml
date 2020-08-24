@@ -1,0 +1,29 @@
+<!--pages/admPw/index.wxml-->
+<view wx:if="{{toSubmit}}">
+  <view class="person" bindtap="handleAddPhoto">
+    <image class="icon_img" src="/images/face.png"></image>
+    <image class="face" src="{{fileID}}"></image>
+    <view class="face_name">录入人脸</view>
+  </view>
+  <view class='title'><view class='dot'></view>姓名</view>
+  <view class="phone_box">
+    <input bindinput="bindUsernameInput" maxlength="20" value="{{nickName}}" placeholder="最多20个字符"/>
+  </view>
+  <view class='title'><view class='dot'></view>手机号</view>
+  <view class="phone_box">
+    <input type="number" bindinput="bindTelInput" maxlength="12" value="{{telephone}}" placeholder="11位数字"/>
+  </view>
+  <view bindtap="submit" class='add_apparatus'>提交</view>
+</view>
+<view wx:if="{{hasSubmit}}" class="wait_page">
+  <image class="wait_img" src="/images/wait.png"></image>
+  <view>等待管理员审核中...</view>
+</view>
+<view wx:if="{{submitSuccess}}" class="wait_page">
+  <image class="wait_img" src="/images/submit_success.png"></image>
+  <view style="margin-top: 30rpx;">审核通过，快去体验人脸考勤吧!</view>
+</view>
+<view wx:if="{{submitFail}}" class="wait_page">
+  <image class="wait_img" src="/images/submit_fail.png"></image>
+  <view style="margin-top: 30rpx;">审核被拒绝，请联系管理员!</view>
+</view>

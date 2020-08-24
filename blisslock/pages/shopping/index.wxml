@@ -14,7 +14,7 @@
       </view>
       <view class="btn-box" wx:if="{{type === 'M6-T'}}">
         <view bindtap="unlockAtOnce" class='unlock_now'><image class="update_img" src='../../images/unlock-index.png'></image>一键开锁</view>
-        <navigator url="/pages/gesture/index?url=lockAtOnce" hover-class="none" class='lock_now'><image class="update_img" src='../../images/lock.png'></image>一键关锁</navigator>
+        <!-- <navigator url="/pages/gesture/index?url=lockAtOnce" hover-class="none" class='lock_now'><image class="update_img" src='../../images/lock.png'></image>一键关锁</navigator> -->
       </view>
     </view>   
     <view class='func-content'>

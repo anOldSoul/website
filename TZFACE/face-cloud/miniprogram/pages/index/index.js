@@ -48,12 +48,6 @@ Page({
     })
   },
   onShow: function () {
-    var udp = wx.createUDPSocket()
-    udp.bind()
-    udp.onListening((res) => {
-      console.log('监听中...')
-      console.log(res)
-    })
     var that = this
     wx.authorize({
       scope: 'scope.camera',

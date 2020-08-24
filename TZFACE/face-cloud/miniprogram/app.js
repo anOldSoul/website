@@ -20,6 +20,19 @@ App({
       success: (res) => {
         console.log(res)
         this.globalData.networkType = res.networkType
+        if (res.networkType === 'wifi') {
+          console.log('=========')
+          wx.getConnectedWifi({
+            success: (e) => {
+              console.log(e.wifi, 'wifi获取成功')
+              this.globalData.wifissid = e.wifi.SSID,
+              this.globalData.wifiBssid = e.wifi.BSSID
+            },
+            fail: function (e) {
+              console.log(e, 'wifi获取失败')
+            }
+          })
+        }
       }
     })
     wx.getSystemInfo({
@@ -47,6 +60,8 @@ App({
   globalData: {
     imgSrc: '',
     networkType: '',
+    wifissid: '',
+    wifiBssid: '',
     platform: '',
     userInfo: null
   }

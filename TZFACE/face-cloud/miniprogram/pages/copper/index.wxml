@@ -16,5 +16,5 @@
   <button catchtouchstart='enlarge' catchtouchend='end' data-type="enlarge">放大</button>
   <button catchtouchstart='narrow' catchtouchend='end' data-type="narrow">缩小</button>
   <button catchtouchstart='rotate' catchtouchend='end' data-type="rotate">旋转</button> -->
-  <button catchtap='upload'>上传</button>
+  <!-- <button catchtap='upload'>上传</button> -->
 </view>

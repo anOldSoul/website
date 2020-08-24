@@ -11,6 +11,7 @@ Page({
     db.collection('faces').add({
       data: {
         name: this.data.nickName,
+        sn: wx.getStorageSync('sn'),
         telephone: this.data.telephone
       },
       success: res => {

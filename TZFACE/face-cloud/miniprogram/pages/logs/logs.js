@@ -60,8 +60,30 @@ Page({
           let imgHead = { "func": "GetLog" }
           this.sendUdp(udp, imgHead)
         }
+        if (aa.func === 'GetLog' && aa.status === 'ok') {
+          let list = aa.loglist
+          this.postLog(list)
+        }
       }
     })
+  },
+  postLog(list) {
+    for (let i = 0; i < list.length; i++) {
+      let item = list[i]
+      wx.cloud.callFunction({
+        name: 'logs',
+        data: {
+          id: item.id,
+          time: item.time,
+          sn: wx.getStorageSync('sn')
+        }
+      }).then((e) => {
+        console.log(e)
+      })
+    }
+    let imgHead = { "func": "DeleteLog" }
+    this.sendUdp(udp, imgHead)
+    this.onQuery()
   },
   onQuery: function () {
     wx.showLoading()

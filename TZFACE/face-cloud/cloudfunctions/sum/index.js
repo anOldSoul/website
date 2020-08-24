@@ -11,13 +11,15 @@ exports.main = async (event, context) => {
   var imgUrl = event.imgUrl
   var fileID = event.fileID
   var imgId = event.imgId
+  var sn = event.sn
   try {
     return await db.collection('faces').doc(docid)
       .update({
         data: {
           imgUrl: imgUrl,
           fileID: fileID,
-          id: imgId
+          faceId: imgId,
+          sn: sn
         },
         success: res => {
           console.log(res)

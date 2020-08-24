@@ -3,11 +3,7 @@ const app = getApp()
 Page({
   data: {
     networkType: '',
-    deviceList: [{
-      model: 'TZFACE',
-      network: '',
-      sn: '0001'
-    }]
+    deviceList: []
   },
   onShareAppMessage: function (res) {
     return {
@@ -56,18 +52,28 @@ Page({
     console.log(status)
   },
   onShow: function () {
+    this.getList()
   },
   getList() {
-    let config = app.Apis.GET_DEVICES
-    let config1 = Object.assign([], config);
-    let userid = wx.getStorageSync('TZFACE-userid')
-    config1[1] = `${config1[1]}/${userid}`
-    app.post(config1, {}, result => {
-      if (result.errno === 0) {
-        wx.stopPullDownRefresh()
+    console.log(wx.getStorageSync('TZFACE-userid'))
+    const db = wx.cloud.database()
+    // 查询当前用户所有的 counters
+    db.collection('devices').where({
+      userid: wx.getStorageSync('TZFACE-userid')
+    }).get({
+      success: res => {
+        console.log(res)
         this.setData({
-          deviceList: result.data
+          deviceList: res.data
         })
+        wx.stopPullDownRefresh()
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
       }
     })
   },
@@ -77,8 +83,26 @@ Page({
     })
   },
   goHomePage: function (e) {
-    wx.navigateTo({
-      url: `/pages/index/index`
-    })
+    console.log(e)
+    let selectIndex = e.currentTarget.dataset.index
+    wx.setStorageSync('sn', this.data.deviceList[selectIndex].sn)
+    if (app.globalData.wifissid === this.data.deviceList[selectIndex].SSID) {
+      wx.navigateTo({
+        url: `/pages/index/index`
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: `请连接设备对应网络${this.data.deviceList[selectIndex].SSID}`,
+        showCancel: false,
+        success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }
   }
 })

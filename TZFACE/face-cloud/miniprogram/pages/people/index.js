@@ -16,6 +16,13 @@ Page({
     currentIndex: 0,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
+  onShareAppMessage() {
+    return {
+      title: `${wx.getStorageSync('nickName')}邀请您录入门禁信息`,
+      imageUrl: '/images/bg2.png',
+      path: `pages/newFace/index?sn=${wx.getStorageSync('sn')}`
+    }
+  },
   selectPhoto() {
     wx.chooseImage({
       count: 1,
@@ -101,11 +108,18 @@ Page({
       url: `/pages/add/index`
     })
   },
+  goWaitList() {
+    wx.navigateTo({
+      url: `/pages/waitFaces/index`
+    })
+  },
   onQuery: function () {
     wx.showLoading()
     const db = wx.cloud.database()
     // 查询当前用户所有的 counters
-    db.collection('faces').get({
+    db.collection('faces').where({
+      sn: wx.getStorageSync('sn')
+    }).get({
       success: res => {
         this.setData({
           peopleList: res.data
@@ -165,140 +179,142 @@ Page({
   onLoad() {
   },
   onUnload() {
-    console.log('onUnload....')
-    udp.close()
+    console.log(udp)
+    if (udp) {
+      udp.close()
+    }
   },
   onShow: function () {
     this.onQuery()
-    let interval = 0
-    let interfunc = null
-    let buffseq = ''
-    let i = 0
-    udp = wx.createUDPSocket()
-    udp.bind()
-    let imgHead = { func: "GetIP" }
-    console.log('-----------')
-    this.sendUdp(udp, imgHead, '255.255.255.255')
-    udp.onListening((res) => {
-      console.log('监听中...')
-      console.log(res)
-    })
-    udp.onClose((res) => {
-      console.log('监听关闭事件...')
-      console.log(res)
-    })
-    udp.onError((res) => {
-      udp.close()
-      console.log('监听错误事件...')
-      console.log(res)
-      clearInterval(interfunc)
-    })
-    udp.onMessage((res) => {
-      if (res.message) {
-        let testStr = ''
-        if (app.globalData.platform === 'devtools') {
-          testStr = this.ab2str(res.message.data)
-        } else {
-          // 将 ArrayBuffer类型的res.message取出来
-          let unit8Arr = new Uint8Array(res.message)
-          let encodedString = String.fromCharCode.apply(null, unit8Arr)
-          let decodedString = decodeURIComponent(escape((encodedString)))//没有这一步中文会乱码
-          console.log('message:' + decodedString)
-          testStr = decodedString
-        }
-        let remoteInfo = res.remoteInfo.address
-        console.log(testStr)
-        let aa = JSON.parse(testStr)
-        if (aa.func === 'GetIP') {
-          this.data.ip = remoteInfo
-          let imgHead = { "func": "GetDeviceInfo", "timestamp": "202007202222" }
-          this.sendUdp(udp, imgHead)
-        }
-        if (aa.func === 'StartTransfer' && aa.status === 'ok') {
-          console.log(img.length)
-          let imgHead = { "func": "TransferImgHead", "imgseq": 1, "role": 0, "totalsize": img.length, "buffsize": 10240 }
-          this.sendUdp(udp, imgHead)
-        }
-        if (aa.func === 'TransferImgHead' && aa.status === 'ok') {
-          interfunc = setInterval(() => {
-            interval++
-            console.log(interval)
-            if (interval > 3) {
-              interval = 0
-              let resend = { "func": "BUFReSend", "id": parseInt(buffseq) + 1 }
-              console.log(resend)
-              this.sendUdp(udp, resend)
-            }
-          }, 1000)
-          udp.send({
-            address: this.data.ip,
-            port: 6125,
-            message: img.slice(0, 1024)
-          })
-        }
-        if (aa.func === 'GetDeviceInfo' && aa.status === 'ok') {
-
-        }
-        if (aa.func === 'BUFReSend') {
-          udp.send({
-            address: this.data.ip,
-            port: 6125,
-            message: img.slice(i * 1024, (i + 1) * 1024)
-          })
-        }
-        if (aa.func === 'Nextpic') {
-          buffseq = aa.buffseq
-          i++
-          interval = 0
-          udp.send({
-            address: this.data.ip,
-            port: 6125,
-            message: img.slice(i * 1024, (i + 1) * 1024)
-          })
-        }
-        if (aa.func === 'TransferImgEnd') {
-          console.log('099767896789tg=============')
-          clearInterval(interfunc)
-          if (aa.id === 65535) {
-            wx.showToast({
-              icon: 'none',
-              title: '上传失败，请重试',
-            })
-          } else {
-            const filePath = tempFilePaths
-            // 上传图片
-            const cloudPath = this.data._id + filePath.match(/\.[^.]+?$/)[0]
-            wx.cloud.uploadFile({
-              cloudPath,
-              filePath,
-              success: res => {
-                this.update(cloudPath, res.fileID, aa.id)
-                console.log('[上传文件] 成功：', res)
-              },
-              fail: e => {
-                console.error('[上传文件] 失败：', e)
-                wx.showToast({
-                  icon: 'none',
-                  title: '上传失败',
-                })
-              },
-              complete: () => {
-                wx.hideLoading()
-              }
-            })
-          }
-        }
-        if (aa.func === 'DeleteUser' && aa.status === 'ok') {
-          this.deleteFace()
-        }
-        if (aa.func === 'DeleteUserAll' && aa.status === 'ok') {
-          this.deleteFace()
-        }
-      }
-    })
 
     const tempFilePaths = app.globalData.imgSrc
     if (tempFilePaths) {
+      let interval = 0
+      let interfunc = null
+      let buffseq = ''
+      let i = 0
+      udp = wx.createUDPSocket()
+      udp.bind()
+      let imgHead = { func: "GetIP" }
+      this.sendUdp(udp, imgHead, '255.255.255.255')
+      udp.onListening((res) => {
+        console.log('监听中...')
+        console.log(res)
+      })
+      udp.onClose((res) => {
+        console.log('监听关闭事件...')
+        console.log(res)
+      })
+      udp.onError((res) => {
+        udp.close()
+        console.log('监听错误事件...')
+        console.log(res)
+        clearInterval(interfunc)
+      })
+      udp.onMessage((res) => {
+        if (res.message) {
+          let testStr = ''
+          if (app.globalData.platform === 'devtools') {
+            testStr = this.ab2str(res.message.data)
+          } else {
+            // 将 ArrayBuffer类型的res.message取出来
+            let unit8Arr = new Uint8Array(res.message)
+            let encodedString = String.fromCharCode.apply(null, unit8Arr)
+            let decodedString = decodeURIComponent(escape((encodedString)))//没有这一步中文会乱码
+            console.log('message:' + decodedString)
+            testStr = decodedString
+          }
+          let remoteInfo = res.remoteInfo.address
+          console.log(testStr)
+          let aa = JSON.parse(testStr)
+          if (aa.func === 'GetIP') {
+            this.data.ip = remoteInfo
+            let imgHead = { "func": "GetDeviceInfo", "timestamp": "202007202222" }
+            this.sendUdp(udp, imgHead)
+          }
+          if (aa.func === 'StartTransfer' && aa.status === 'ok') {
+            console.log(img.length)
+            let imgHead = { "func": "TransferImgHead", "imgseq": 1, "role": 0, "totalsize": img.length, "buffsize": 10240 }
+            this.sendUdp(udp, imgHead)
+          }
+          if (aa.func === 'TransferImgHead' && aa.status === 'ok') {
+            interfunc = setInterval(() => {
+              interval++
+              console.log(interval)
+              if (interval > 3) {
+                interval = 0
+                let resend = { "func": "BUFReSend", "id": parseInt(buffseq) + 1 }
+                console.log(resend)
+                this.sendUdp(udp, resend)
+              }
+            }, 1000)
+            udp.send({
+              address: this.data.ip,
+              port: 6125,
+              message: img.slice(0, 1024)
+            })
+          }
+          if (aa.func === 'GetDeviceInfo' && aa.status === 'ok') {
+
+          }
+          if (aa.func === 'BUFReSend') {
+            udp.send({
+              address: this.data.ip,
+              port: 6125,
+              message: img.slice(i * 1024, (i + 1) * 1024)
+            })
+          }
+          if (aa.func === 'Nextpic') {
+            buffseq = aa.buffseq
+            i++
+            interval = 0
+            udp.send({
+              address: this.data.ip,
+              port: 6125,
+              message: img.slice(i * 1024, (i + 1) * 1024)
+            })
+          }
+          if (aa.func === 'TransferImgEnd') {
+            console.log('099767896789tg=============')
+            clearInterval(interfunc)
+            if (aa.id === 65535) {
+              console.log('65535==========')
+              wx.showToast({
+                icon: 'none',
+                title: '上传失败，请重试',
+              })
+            } else {
+              const filePath = tempFilePaths
+              // 上传图片
+              const cloudPath = this.data._id + filePath.match(/\.[^.]+?$/)[0]
+              wx.cloud.uploadFile({
+                cloudPath,
+                filePath,
+                success: res => {
+                  this.update(cloudPath, res.fileID, aa.id)
+                  console.log('[上传文件] 成功：', res)
+                },
+                fail: e => {
+                  console.error('[上传文件] 失败：', e)
+                  wx.showToast({
+                    icon: 'none',
+                    title: '上传失败',
+                  })
+                },
+                complete: () => {
+                  wx.hideLoading()
+                }
+              })
+            }
+          }
+          if (aa.func === 'DeleteUser' && aa.status === 'ok') {
+            this.deleteFace()
+          }
+          if (aa.func === 'DeleteUserAll' && aa.status === 'ok') {
+            this.deleteFace()
+          }
+        }
+      })
       wx.getFileSystemManager().readFile({
         filePath: tempFilePaths,
         encoding: 'hex',

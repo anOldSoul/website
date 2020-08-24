@@ -1,0 +1,56 @@
+/* pages/admPw/index.wxss */
+.addPw_input{
+  /* width: 100%; */
+  padding: 0 30rpx;
+  padding-top: 40rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+input{
+  width: 530rpx;
+  font-size: 30rpx;
+  border-radius: 12rpx;
+}
+.add_apparatus{
+  position: fixed;
+  bottom: 60rpx;
+}
+.picker {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.tel-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 30rpx;
+}
+.section_right {
+  width: 530rpx;
+  border-bottom: 1rpx solid #efefef;
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+}
+.radio{
+  padding-left: 30rpx;
+}
+radio .wx-radio-input.wx-radio-input-checked{
+  border: none;
+  background: red;
+  transform: scale(0.8);
+}
+radio .wx-radio-input{
+  transform: scale(0.8);
+}
+.choose_text {
+  /* color: #8a8a8a; */
+  line-height: 2;
+}
+.location-icon {
+  width: 30rpx;
+  height: 30rpx;
+  padding-left: 5rpx;
+  margin-bottom: -5rpx;
+}

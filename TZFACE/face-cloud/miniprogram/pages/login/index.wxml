@@ -8,7 +8,7 @@
   <view class='title'><view class='dot'></view>手机号码</view>
   <view class="phone_box">
     <input type="number" bindinput="bindTelInput" maxlength="12" value="{{telephone}}" placeholder="请输入手机号码"/>
-    <button class='get_phoneNumber' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"><image class="wechat-icon" src='../../images/wechat.png'></image>微信一键获取</button>
+    <!-- <button class='get_phoneNumber' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"><image class="wechat-icon" src='../../images/wechat.png'></image>微信一键获取</button> -->
   </view>
   <view bindtap="goNext" class='add_apparatus'>登录</view>
 </view>

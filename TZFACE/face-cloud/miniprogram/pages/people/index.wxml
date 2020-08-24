@@ -1,12 +1,16 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="add" bindtap="goAdd"><image class="add_img" src="/images/add.png"></image>添加员工</view>
+  <view class="add">
+    <view class="add_left" bindtap="goAdd"><image class="add_img" src="/images/add.png"></image>添加员工
+    </view>
+    <view bindtap="goWaitList"><image class="add_img" src="/images/toCheck.png"></image></view>
+  </view>
   <view class="top">
-    <view>
+    <view class="top_left">
       <view>人脸管理</view>
       <view class="text">录入人脸，即可在设备上人脸打卡</view>
     </view>    
-    <!-- <view class="delBtn" bindtap="handleDel"><image class="add_img" src="/images/del.png"></image>删除全部</view> -->
+    <button class="shareBtn" type="primary" open-type="share"><image class="add_img" src="/images/inform.png"></image>通知员工录入</button>
   </view>
   <view class="myList" hover-class="none">
     <view class="person" wx:for="{{peopleList}}" wx:key="index" bindtap="handleAddPhoto" data-index="{{index}}" data-id="{{item.id}}" data-_id="{{item._id}}">

@@ -1,14 +1,16 @@
 {
   "pages": [
     "pages/device/index",
+    "pages/people/index",
+    "pages/newFace/index",
+    "pages/waitFaces/index",
     "pages/index/index",
     "pages/index-1/index",
-    
+    "pages/install/index",
     "pages/member/index",
     "pages/login/index",
     "pages/logs/logs",
-    "pages/status/index",
-    "pages/people/index",
+    "pages/status/index",  
     "pages/copper/index",
     "pages/setting/index",
     "pages/add/index",
@@ -28,7 +30,7 @@
   ],
   "tabBar": {
     "color": "#acacac",
-    "selectedColor": "#091928",
+    "selectedColor": "#012573",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [
@@ -52,6 +54,11 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTextStyle": "black"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
   },
   "sitemapLocation": "sitemap.json",
   "style": "v2"

@@ -6,9 +6,20 @@
   flex-direction: row;
   justify-content: space-between;
 }
-.delBtn {
-  font-size: 30rpx;
-  color: red;
+button {
+  padding: 0 !important;
+}
+.shareBtn {
+  width: 250rpx !important;
+  height: 64rpx;
+  font-size: 28rpx;
+  color: #012573;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.top_left {
+  margin-right: 30rpx;
 }
 .person {
   width: 170rpx;
@@ -58,9 +69,16 @@
   border-top: 1rpx solid #ececec;
   padding: 30rpx;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   color: #012573;
   border-bottom: 20rpx solid #ececec;
+}
+.add_left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .add_img {
   width: 36rpx;

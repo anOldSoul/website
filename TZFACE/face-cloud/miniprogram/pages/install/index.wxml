@@ -1,0 +1,33 @@
+<!--pages/admPw/index.wxml-->
+<view>
+  <view class='addPw_input'>
+    <view class="section__title"><image class="tel-icon" src='../../images/community-icon.png'></image></view>
+    <view class="section_right" bindtap="addAddress">
+      <view>
+        <text class="choose_text">{{addressStr || '请添加安装信息'}}</text>
+        <image class="location-icon" src='../../images/location.png'></image>
+      </view>
+    </view>
+  </view>
+  <view class='addPw_input' wx:if="{{addressStr}}">
+    <view class="section__title"><image class="tel-icon" src='../../images/tel-icon.png'></image></view>
+    <view class="section_right">
+      <input maxlength="12" placeholder="请输入电话号码" bindinput="bindTelInput" value="{{chooseAddress.telNumber}}" />
+    </view>
+  </view>
+  <view class='addPw_input' wx:if="{{addressStr}}">
+    <view class="section__title"><image class="tel-icon" src='../../images/owner-icon.png'></image></view>
+    <view class="section_right">
+      <input maxlength="12" placeholder="业主姓名" bindinput="bindNameInput" value="{{chooseAddress.userName}}" />
+    </view>
+  </view>
+<view class='title'>请评价我们的服务</view>
+  <view class="section section_gap">
+    <radio-group class="radio-group" bindchange="radioChange">
+      <radio class="radio" wx:for-items="{{items}}" wx:key="name" value="{{item.name}}" color="#1989fa" checked="{{item.checked}}">
+        <text>{{item.value}}</text>
+      </radio>
+    </radio-group>
+  </view>
+  <view class='add_apparatus' bindtap="goNext">扫描绑定门锁</view>
+</view>

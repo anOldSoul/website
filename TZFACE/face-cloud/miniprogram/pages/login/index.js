@@ -109,57 +109,58 @@ Page({
     }
     wx.setStorageSync('phone', this.data.telephone)
     wx.setStorageSync('nickName', this.data.nickName)
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {
-        telephone: this.data.telephone,
-        name: this.data.nickName
-      },
+    const db = wx.cloud.database()
+    // 查询当前用户所有的 counters
+    db.collection('users').where({
+      telephone: wx.getStorageSync('phone') || this.data.telephone
+    }).get({
       success: res => {
-        wx.setStorageSync('TZFACE-userid', res.result._id)
-        app.globalData.openid = res.result.openid
-        wx.switchTab({
-          url: '/pages/member/index',
-          success: () => {
-            wx.showToast({
-              icon: 'none',
-              title: '登录成功'
-            })
-          }
-        })
+        console.log(res)
+        if (res.data.length > 0) {
+          wx.setStorageSync('TZFACE-userid', res.data[0]._id)
+          wx.switchTab({
+            url: '/pages/member/index',
+            success: () => {
+              wx.showToast({
+                icon: 'none',
+                title: '登录成功'
+              })
+            }
+          })
+        } else {
+          wx.cloud.callFunction({
+            name: 'login',
+            data: {
+              telephone: this.data.telephone,
+              name: this.data.nickName
+            },
+            success: res => {
+              wx.setStorageSync('TZFACE-userid', res.result._id)
+              app.globalData.openid = res.result.openid
+              wx.switchTab({
+                url: '/pages/member/index',
+                success: () => {
+                  wx.showToast({
+                    icon: 'none',
+                    title: '登录成功'
+                  })
+                }
+              })
+            },
+            fail: err => {
+              console.log('[云函数] [login] 获取 openid 失败，请检查是否有部署云函数，错误信息：', err)
+            }
+          })
+        }
       },
       fail: err => {
-        console.log('[云函数] [login] 获取 openid 失败，请检查是否有部署云函数，错误信息：', err)
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
       }
     })
-    // wx.login({
-    //   success: (res) => {
-    //     if (res.code) {
-    //       let data = {
-    //         nickName: this.data.nickName || this.data.userInfo.nickName,
-    //         avatarUrl: this.data.userInfo.avatarUrl,
-    //         gender: this.data.userInfo.gender,
-    //         code: res.code,
-    //         phone: this.data.telephone
-    //       }
-    //       app.post(app.Apis.POST_WECHAT_INFO, data, result => {
-    //         wx.setStorageSync('userid', result.data)
-    //         if (result.errno === 0) {
-    //           if (!wx.getStorageSync('yzx-gesturePw').length) {
-    //             wx.redirectTo({
-    //               url: `/pages/gesture/index?url=init`
-    //             })
-    //           }
-    //           // wx.switchTab({
-    //           //   url: '/pages/member/index'
-    //           // })
-    //         }
-    //       })
-    //     } else {
-    //       console.log('登录失败！' + res.errMsg)
-    //     }
-    //   }
-    // })
   },
   updateAdm() {
     let desc = {
