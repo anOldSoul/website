@@ -249,6 +249,7 @@ function avoidCollision(obj, target) {
     return obj;
 }
 
+
 function fillSeriesColor(series, config) {
     var index = 0;
     return series.map(function (item) {

@@ -86,7 +86,9 @@ Page({
     console.log(e)
     let selectIndex = e.currentTarget.dataset.index
     wx.setStorageSync('sn', this.data.deviceList[selectIndex].sn)
-    if (app.globalData.wifissid === this.data.deviceList[selectIndex].SSID) {
+    console.log('app.globalData.wifissid: ' + app.globalData.wifissid)
+    console.log('this.data.deviceList[selectIndex].SSID: ' + this.data.deviceList[selectIndex].SSID)
+    if (app.globalData.wifissid !== this.data.deviceList[selectIndex].SSID) {
       wx.navigateTo({
         url: `/pages/index/index`
       })

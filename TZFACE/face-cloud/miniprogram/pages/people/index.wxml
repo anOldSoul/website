@@ -20,3 +20,7 @@
     </view>
   </view>
 </view>
+<view wx:if="{{peopleList.length === 0}}" class="wait_page">
+  <image class="wait_img" src="/images/empty.png"></image>
+  <view style="margin-top: 30rpx;">暂无录入信息</view>
+</view>

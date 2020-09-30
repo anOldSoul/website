@@ -9,7 +9,7 @@ Page({
     peopleList: [],
     motto: 'Hello World',
     userInfo: {},
-    ip: '',
+    ip: '192.168.2.171',
     id: '',
     _id: '',
     hasUserInfo: false,
@@ -18,7 +18,7 @@ Page({
   },
   onShareAppMessage() {
     return {
-      title: `${wx.getStorageSync('nickName')}邀请您录入门禁信息`,
+      title: `管理员${wx.getStorageSync('nickName')}邀请您录入门禁信息`,
       imageUrl: '/images/bg2.png',
       path: `pages/newFace/index?sn=${wx.getStorageSync('sn')}`
     }
@@ -88,7 +88,6 @@ Page({
     wx.showLoading({
       title: '上传中',
     })
-    let test = { func: "GetIP" }
     
     let pack = 0
     
@@ -195,8 +194,8 @@ Page({
       let i = 0
       udp = wx.createUDPSocket()
       udp.bind()
-      let imgHead = { func: "GetIP" }
-      this.sendUdp(udp, imgHead, '255.255.255.255')
+      // let imgHead = { func: "GetIP" }
+      // this.sendUdp(udp, imgHead, '255.255.255.255')
       udp.onListening((res) => {
         console.log('监听中...')
         console.log(res)
@@ -229,7 +228,7 @@ Page({
           let aa = JSON.parse(testStr)
           if (aa.func === 'GetIP') {
             this.data.ip = remoteInfo
-            let imgHead = { "func": "GetDeviceInfo", "timestamp": "202007202222" }
+            let imgHead = { "func": "GetDeviceInfo", "timestamp": app.Moment().format('YYYYMMDDHHmmss') }
             this.sendUdp(udp, imgHead)
           }
           if (aa.func === 'StartTransfer' && aa.status === 'ok') {
@@ -286,7 +285,7 @@ Page({
             } else {
               const filePath = tempFilePaths
               // 上传图片
-              const cloudPath = this.data._id + filePath.match(/\.[^.]+?$/)[0]
+              const cloudPath = `${this.data._id}${app.Moment().format('YYYYMMDDHHmmss')}` + filePath.match(/\.[^.]+?$/)[0]
               wx.cloud.uploadFile({
                 cloudPath,
                 filePath,

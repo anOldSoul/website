@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/device/index",
-    "pages/people/index",
     "pages/newFace/index",
+    "pages/people/index",   
     "pages/waitFaces/index",
     "pages/index/index",
     "pages/index-1/index",

@@ -2,7 +2,7 @@
 <view class="container log-list">
   <view class="myList" bindtap="goName">
     <view class="list_text">设备名称</view>
-    <image class="list_more" src="/images/more.png"></image>
+    <view><text class="net-text">{{deviceName}}</text><image class="list_more" src="/images/more.png"></image></view>
   </view>
   <view class="myList" bindtap="goNetwork">
     <view class="list_text">网络状态</view>
@@ -12,4 +12,5 @@
     <view class="list_text">人脸容量</view>
     <view>500</view>
   </view>
+  <view bindtap="unbind" class='add_apparatus'>解绑该设备</view>
 </view>
