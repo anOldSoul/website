@@ -3,7 +3,10 @@
   <view class="add">
     <view class="add_left" bindtap="goAdd"><image class="add_img" src="/images/add.png"></image>添加员工
     </view>
-    <view bindtap="goWaitList"><image class="add_img" src="/images/toCheck.png"></image></view>
+    <view class="inform_box" bindtap="goWaitList">
+      <image class="add_img" src="/images/toCheck.png"></image>
+      <view class="inform" wx:if="{{informCount > 0}}">{{informCount}}</view>
+    </view>
   </view>
   <view class="top">
     <view class="top_left">

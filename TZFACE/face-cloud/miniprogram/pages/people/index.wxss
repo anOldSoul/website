@@ -81,8 +81,8 @@ button {
   align-items: center;
 }
 .add_img {
-  width: 36rpx;
-  height: 36rpx;
+  width: 40rpx;
+  height: 40rpx;
   margin-right: 15rpx;
 }
 .wait_page {
@@ -97,4 +97,21 @@ button {
   width: 250rpx;
   height: 129rpx;
   margin: 0 auto;
+}
+.inform_box {
+  position: relative;
+}
+.inform {
+  position: absolute;
+  top: -13rpx;
+  right: -5rpx;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 18rpx;
+  font-size: 26rpx;
+  background: red;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

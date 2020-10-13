@@ -2,17 +2,35 @@ const app = getApp()
 var udp
 Page({
   data: {
-    deviceName: '1506门禁',
-    networkType: ''
+    deviceName: ''
   },
-  onLoad: function () {
-    this.setData({
-      networkType: app.globalData.networkType
+  onShow: function () {
+    this.getDevice()
+  },
+  getDevice() {
+    const db = wx.cloud.database()
+    // 查询当前用户所有的 counters
+    db.collection('devices').where({
+      sn: wx.getStorageSync('sn')
+    }).get({
+      success: res => {
+        console.log(res)
+        this.setData({
+          deviceName: res.data[0].name
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
     })
   },
   goName() {
     wx.navigateTo({
-      url: `/pages/deviceName/index`
+      url: `/pages/deviceName/index?name=${this.data.deviceName}`
     })
   },
   goNetwork() {

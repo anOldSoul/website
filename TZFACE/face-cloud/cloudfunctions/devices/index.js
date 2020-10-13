@@ -11,7 +11,8 @@ exports.main = async (event, context) => {
       .add({
         data: {
           sn: event.sn,
-          userid: event.userid
+          userid: event.userid,
+          model: event.model
         },
         success: res => {
           console.log(res)

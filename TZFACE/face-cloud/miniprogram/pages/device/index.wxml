@@ -1,7 +1,10 @@
 <official-account></official-account>
 <view>
   <view>
-    <view class='title'><view class='dot'></view>我的设备</view>
+    <view class='title'>
+      <view class="title_text"><view class='dot'></view>我的设备</view>
+      <image bindtap="addDevice" class="add_device" src='../../images/add.png'></image>
+    </view>
     <view wx:if="{{!deviceList.length}}">
       <view><image class="no_apparatus" src='../../images/pic-home-not-added.png'></image></view>
       <view class='tip_text'>未添加任何设备</view>
@@ -11,11 +14,14 @@
         <view class='device_item_left'>
           <view class='left_text'>型号：{{item.model}}</view>          
           <view class='left_text'>编号：{{item.sn}}</view>
-          <view class='left_text'>网络：{{item.SSID}}</view>
+          <view class='left_text'>状态：
+            <view class="online" wx:if="{{item.status === '在线'}}">{{item.status}}</view>
+            <view class="offline" wx:else><image class="connect_gif" src='../../images/connect.gif'></image>连接中</view>
+          </view>
         </view>
         <view class='device_item_right'><image class="pic_M6" src='../../images/device-img.png'></image></view>
       </view>
     </view>
-    <view bindtap="addDevice" class='add_apparatus'>添加设备</view>
+    <!-- <view bindtap="addDevice" class='add_apparatus'>添加设备</view> -->
   </view>
 </view>

@@ -49,7 +49,7 @@ Page({
         that.cropper.imgReset();
         that.setData({
           src: tempFilePaths
-        });
+        })
       }
     })
   },

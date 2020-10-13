@@ -2,6 +2,7 @@
 const app = getApp()
 Page({
   data: {
+    mqttconnected: false,
     networkType: '',
     deviceList: []
   },
@@ -40,13 +41,24 @@ Page({
     }
   },
   onLoad: function (options) {
-    wx.getNetworkType({
-      success: (res) => {
-        this.setData({
-          networkType: res.networkType
-        })
-      }
-    })
+    let that = this;
+    app.watch(that.watchBack)
+  },
+  watchBack: function (name) {
+    console.log(22222);
+    console.log('this.name==' + name)
+    if (name === 'mqttconnected') {
+      this.data.mqttconnected = true
+      console.log(this.data.deviceList)
+      this.getList()
+    } else {
+      this.data.deviceList.forEach((item, index) => {
+        item.status = '在线'
+      })
+      this.setData({
+        deviceList: this.data.deviceList
+      })
+    }
   },
   onBind: function(status) {
     console.log(status)
@@ -55,14 +67,21 @@ Page({
     this.getList()
   },
   getList() {
-    console.log(wx.getStorageSync('TZFACE-userid'))
     const db = wx.cloud.database()
     // 查询当前用户所有的 counters
     db.collection('devices').where({
       userid: wx.getStorageSync('TZFACE-userid')
     }).get({
       success: res => {
-        console.log(res)
+        let list = res.data
+        if (this.data.mqttconnected) {
+          console.log('lllllllllll')
+          list.forEach((item, index) => {
+            let msg = { "func": "GetDeviceInfo", "sn": item.sn }
+            app.publish(msg)
+          })
+        }
+
         this.setData({
           deviceList: res.data
         })
@@ -86,8 +105,6 @@ Page({
     console.log(e)
     let selectIndex = e.currentTarget.dataset.index
     wx.setStorageSync('sn', this.data.deviceList[selectIndex].sn)
-    console.log('app.globalData.wifissid: ' + app.globalData.wifissid)
-    console.log('this.data.deviceList[selectIndex].SSID: ' + this.data.deviceList[selectIndex].SSID)
     if (app.globalData.wifissid !== this.data.deviceList[selectIndex].SSID) {
       wx.navigateTo({
         url: `/pages/index/index`

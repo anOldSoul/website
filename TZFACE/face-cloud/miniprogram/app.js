@@ -1,9 +1,11 @@
 const Moment = require('./utils/moment.min.js')
 var MQTT = require("./utils/paho-mqtt.js");
+var client = new MQTT.Client("wss://tzface.openn.cn:8091/mqtt", "clientId_" + Math.random().toString(36).substr(2));
 App({
   Moment: Moment,
   onHide() {},
   onLaunch: function () {
+    this.connectMq()
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
@@ -18,33 +20,22 @@ App({
     }
   },
   onShow: function () {
-    this.connectMq()
-    wx.getNetworkType({
-      success: (res) => {
-        this.globalData.networkType = res.networkType
-        if (res.networkType === 'wifi') {
-          wx.getConnectedWifi({
-            success: (e) => {
-              console.log(e.wifi, 'wifi获取成功')
-              this.globalData.wifissid = e.wifi.SSID,
-              this.globalData.wifiBssid = e.wifi.BSSID
-            },
-            fail: function (e) {
-              console.log(e, 'wifi获取失败')
-            }
-          })
-        }
+    
+  },
+  watch: function (method) {
+    var obj = this.sockData;
+    Object.defineProperty(obj, "data", {
+      configurable: true,
+      enumerable: true,
+      set: function (value) {
+        //console.log("监听数据已修改");
+        this._data = value;
+        method(value);
+      },
+      get: function () {
+        // 可以在这里打印一些东西，然后在其他界面调用getApp().globalData.name的时候，这里就会执行。
+        return this._data;
       }
-    })
-    wx.getSystemInfo({
-      success: (res) => {
-        this.globalData.platform = res.platform
-      }
-    })
-    wx.onNetworkStatusChange((res) => {
-      this.globalData.networkType = res.networkType
-      console.log(res.isConnected)
-      console.log(res.networkType)
     })
   },
   connectMq: function () {
@@ -53,7 +44,7 @@ App({
       title: '',
     })
 
-    var client = new MQTT.Client("wss://tzface.openn.cn:8091/mqtt", "clientId_" + Math.random().toString(36).substr(2));
+    
     var that = this;
     //connect to  MQTT broker
     var connectOptions = {
@@ -67,28 +58,76 @@ App({
 
         this.globalData.mqtt_client = client;
 
-        client.onMessageArrived = function (msg) {
-          if (this.globalData.messages == null) {
-            console.log('1111111111')
-            this.globalData.messages = [{ topic: msg.topic, message: msg.payloadString }];
-          } else {
-            console.log('2222222222222')
-            this.globalData.messages =
-              [{ topic: msg.topic, message: msg.payloadString }].concat(this.globalData.messages);
+        client.onMessageArrived = (msg) => {
+          console.log(msg.payloadString)
+          let str = msg.payloadString
+          str = str.replace(/\s*/g, '');
+          str = str.replace(/[\r\n]/g, "")
+          let data = JSON.parse(str)
+          if (data.func === 'GetDeviceInfo_ack') {
+            const db = wx.cloud.database()
+            // 查询当前用户所有的 counters
+            db.collection('devices').where({
+              userid: wx.getStorageSync('TZFACE-userid')
+            }).get({
+              success: res => {
+                let devices = res.data
+                let exist = devices.filter((item) => {
+                  return item.sn === data.sn
+                })
+                if (exist.length > 0) {
+                  this.sockData.data = data.sn
+                } else {
+                  wx.cloud.callFunction({
+                    name: 'devices',
+                    data: {
+                      sn: wx.getStorageSync('sn'),
+                      model: 'Biosec_lateral',
+                      userid: wx.getStorageSync('TZFACE-userid')
+                    },
+                    success: res => {
+                      data['sn'] = wx.getStorageSync('sn')
+                      wx.cloud.callFunction({
+                        name: 'address',
+                        data: data,
+                        success: res => {
+                          wx.switchTab({
+                            url: `/pages/device/index`,
+                            success(res) {
+                              wx.showToast({
+                                title: '添加成功',
+                                icon: 'none',
+                                duration: 2000
+                              })
+                            }
+                          })
+                        },
+                        fail: err => {
+                          console.log('[云函数] [login] 获取 openid 失败，请检查是否有部署云函数，错误信息：', err)
+                        }
+                      })
+                    },
+                    fail: err => {
+                      console.log('[云函数] [login] 获取 openid 失败，请检查是否有部署云函数，错误信息：', err)
+                    }
+                  })
+                }
+              },
+              fail: err => {
+                wx.showToast({
+                  icon: 'none',
+                  title: '查询设备记录失败'
+                })
+                console.error('[数据库] [查询记录] 失败：', err)
+              }
+            })
           }
-
+          // if (this.globalData.messages == null) {
+          //   this.globalData.messages = [{ topic: msg.topic, message: msg.payloadString }];
+          // } else {
+          //   this.globalData.v = [{ topic: msg.topic, message: msg.payloadString }].concat(this.globalData.messages);
+          // }
         }
-
-        // client.onConnectionLost = function (responseObject) {
-        //   if (typeof this.globalData.onConnectionLost === 'function') {
-        //     return this.globalData.onConnectionLost(responseObject);
-        //   }
-        //   if (responseObject.errorCode !== 0) {
-        //     console.log("onConnectionLost:" + responseObject.errorMessage);
-        //   }
-        // }
-        //去除按钮上的加载标志
-        
         this.subscribe()
       },
       onFailure: (option) => {
@@ -100,19 +139,20 @@ App({
           content: option.errorMessage
         });
       }
-    };
+    }
 
     client.connect(connectOptions);
 
   },
   subscribe: function () {
     if (this.globalData.mqtt_client && this.globalData.mqtt_client.isConnected()) {
-      this.globalData.mqtt_client.subscribe(this.globalData.pub_topic, {
+      this.globalData.mqtt_client.subscribe(this.globalData.subscribe_topic, {
         qos: 1,
         onSuccess: () => {
           console.log('subscribe success');
+          this.sockData.data = 'mqttconnected'
           wx.hideLoading()
-          this.publish()
+          // this.publish()
         },
         onFailure: function () {
           wx.showToast({
@@ -124,26 +164,46 @@ App({
       });
     }
   },
-  publish: function () {
-    let msg = { "func": "onlineMsg", "sn": "TZFACEV320200924" }
-    this.globalData.tst;
+  publishImg: function (msg) {
+    console.log(this.globalData)
     if (this.globalData.mqtt_client && this.globalData.mqtt_client.isConnected()) {
-      this.globalData.mqtt_client.publish(this.globalData.pub_topic,
+      this.globalData.mqtt_client.publish(this.globalData.pub_img_topic,
         JSON.stringify(msg),
         1,
         false
-      );
+      )
       wx.showToast({
-        title: 'publish success',
+        title: 'publish img iiiiiiii success',
         icon: "success",
         duration: 2000
-      });
+      })
     } else {
       wx.showToast({
         title: 'client invalid',
         icon: "loading",
         duration: 2000
-      });
+      })
+    }
+  },
+  publish: function (msg) {
+    console.log(this.globalData)
+    if (this.globalData.mqtt_client && this.globalData.mqtt_client.isConnected()) {
+      this.globalData.mqtt_client.publish(this.globalData.pub_topic,
+        JSON.stringify(msg),
+        1,
+        false
+      )
+      // wx.showToast({
+      //   title: 'publish success',
+      //   icon: "success",
+      //   duration: 2000
+      // })
+    } else {
+      wx.showToast({
+        title: 'client invalid',
+        icon: "loading",
+        duration: 2000
+      })
     }
   },
   sendUdp(udp, test, ip = '') {
@@ -156,9 +216,14 @@ App({
   ab2str(buf) {
     return String.fromCharCode.apply(null, new Uint16Array(buf));
   },
+  sockData: {
+    _data: null,
+    data: null,
+  },
   globalData: {
-    pub_topic: 'tzfacev3',
-    tst: '',
+    subscribe_topic: 'tzfacev3/wx',
+    pub_topic: 'tzfacev3/device',
+    pub_img_topic: 'tzfacev3/robot',
     mqtt_client: '',
     myInfo: {
       TelPhone: ''

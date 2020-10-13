@@ -1,8 +1,6 @@
 {
   "navigationBarTitleText": "人脸门禁考勤机",
   "enablePullDownRefresh": true,
-  "navigationBarTextStyle": "white",
-  "navigationBarBackgroundColor": "#012573",
   "disableScroll": false,
   "usingComponents": {}
 }

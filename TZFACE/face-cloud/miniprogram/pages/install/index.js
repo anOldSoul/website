@@ -111,12 +111,13 @@ Page({
             })
             const db = wx.cloud.database()
             const sn = res.result
+            wx.setStorageSync('sn', sn)
             db.collection('devices').where({
               sn: sn
             }).get({
               success: res => {
-                wx.hideLoading()
                 console.log(res)
+                wx.hideLoading()
                 if (res.data.length > 0) {
                   if (res.data[0].userid) {
                     wx.showModal({
@@ -128,38 +129,11 @@ Page({
                     })
                   }
                 } else {
-                  wx.cloud.callFunction({
-                    name: 'devices',
-                    data: {
-                      sn: sn,
-                      userid: wx.getStorageSync('TZFACE-userid')
-                    },
-                    success: res => {
-                      data['sn'] = sn
-                      wx.cloud.callFunction({
-                        name: 'address',
-                        data: data,
-                        success: res => {
-                          wx.switchTab({
-                            url: `/pages/device/index`,
-                            success(res) {
-                              wx.showToast({
-                                title: '添加成功',
-                                icon: 'none',
-                                duration: 2000
-                              })
-                            }
-                          })
-                        },
-                        fail: err => {
-                          console.log('[云函数] [login] 获取 openid 失败，请检查是否有部署云函数，错误信息：', err)
-                        }
-                      })
-                    },
-                    fail: err => {
-                      console.log('[云函数] [login] 获取 openid 失败，请检查是否有部署云函数，错误信息：', err)
-                    }
+                  let msg = { "func": "GetDeviceInfo", "sn": sn }
+                  wx.showLoading({
+                    title: '',
                   })
+                  app.publish(msg)
                 }
               },
               fail: err => {

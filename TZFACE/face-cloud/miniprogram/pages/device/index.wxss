@@ -6,6 +6,29 @@
   margin-top: 94rpx;
   margin-bottom: 78rpx;
 }
+.online {
+  font-size: 30rpx;
+  color: green;
+}
+.offline {
+  color: #012573;
+  font-size: 30rpx;
+}
+.title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.title_text {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.add_device {
+  width: 48rpx;
+  height: 48rpx;
+}
 .tip_text{
   font-size: 34rpx;
   text-align: center;
@@ -38,14 +61,20 @@
   justify-content: space-between;
 }
 .pic_M6{
-  width: 150rpx;
-  height: 150rpx;
-  margin-top: 78rpx;
-  margin-right: 77rpx;
+  width: 200rpx;
+  height: 194rpx;
+  margin-top: 40rpx;
 }
 .left_text{
-  font-size: 34rpx;
+  font-size: 32rpx;
   line-height: 1.5;
+  display: flex;
+  flex-direction: row;
+}
+.connect_gif {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 10rpx;
 }
 .device_item_left{
   display: flex;

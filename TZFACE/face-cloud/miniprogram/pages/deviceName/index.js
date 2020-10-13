@@ -6,6 +6,9 @@ Page({
     pagetype: ''
   },
   onLoad: function (options) {
+    this.setData({
+      device_name: options.name
+    })
   },
   onShow: function () {
   },
@@ -15,5 +18,20 @@ Page({
     })
   },
   handleComplete: function() {
+    wx.showLoading({
+      title: '',
+    })
+    wx.cloud.callFunction({
+      name: 'updateDevice',
+      data: {
+        sn: wx.getStorageSync('sn'),
+        name: this.data.device_name
+      }
+    }).then((e) => {
+      wx.hideLoading()
+      wx.navigateBack({
+        delta: 1
+      })
+    })
   }
 })
