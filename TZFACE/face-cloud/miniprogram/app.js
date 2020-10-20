@@ -43,7 +43,6 @@ App({
     wx.showLoading({
       title: '',
     })
-
     
     var that = this;
     //connect to  MQTT broker
@@ -66,7 +65,6 @@ App({
           let data = JSON.parse(str)
           if (data.func === 'GetDeviceInfo_ack') {
             const db = wx.cloud.database()
-            // 查询当前用户所有的 counters
             db.collection('devices').where({
               userid: wx.getStorageSync('TZFACE-userid')
             }).get({
@@ -76,21 +74,30 @@ App({
                   return item.sn === data.sn
                 })
                 if (exist.length > 0) {
-                  this.sockData.data = data.sn
+                  wx.cloud.callFunction({
+                    name: 'updateDevice',
+                    data: {
+                      sn: data.sn,
+                      userid: wx.getStorageSync('TZFACE-userid')
+                    }
+                  }).then((e) => {
+                    wx.hideLoading()
+                    this.sockData.data = data.sn
+                  })              
                 } else {
                   wx.cloud.callFunction({
                     name: 'devices',
                     data: {
-                      sn: wx.getStorageSync('sn'),
+                      sn: data.sn,
                       model: 'Biosec_lateral',
                       userid: wx.getStorageSync('TZFACE-userid')
                     },
                     success: res => {
-                      data['sn'] = wx.getStorageSync('sn')
+                      data['sn'] = data.sn
                       wx.cloud.callFunction({
                         name: 'address',
                         data: data,
-                        success: res => {
+                        success: res => { 
                           wx.switchTab({
                             url: `/pages/device/index`,
                             success(res) {
@@ -122,11 +129,36 @@ App({
               }
             })
           }
-          // if (this.globalData.messages == null) {
-          //   this.globalData.messages = [{ topic: msg.topic, message: msg.payloadString }];
-          // } else {
-          //   this.globalData.v = [{ topic: msg.topic, message: msg.payloadString }].concat(this.globalData.messages);
-          // }
+          if (data.func === 'enroll_callback') {
+            this.sockData.data = JSON.stringify(data)
+          }
+          if (data.func === 'Enroll_Finish_ack') {
+            if (this.globalData.postImgType === 'visitor') {
+              wx.cloud.callFunction({
+                name: 'updateVisitor',
+                data: {
+                  docid: data.wxid,
+                  faceid: data.faceid,
+                  status: 0
+                }
+              }).then((e) => {
+                console.log(e)
+                this.sockData.data = 'visitor_finish_ack'
+              })
+              
+            } else {
+              wx.cloud.callFunction({
+                name: 'sum',
+                data: {
+                  docid: data.wxid,
+                  faceid: data.faceid
+                }
+              }).then((e) => {
+                console.log(e)
+                this.sockData.data = data.func
+              })
+            }
+          }
         }
         this.subscribe()
       },
@@ -151,7 +183,7 @@ App({
         onSuccess: () => {
           console.log('subscribe success');
           this.sockData.data = 'mqttconnected'
-          wx.hideLoading()
+          // wx.hideLoading()
           // this.publish()
         },
         onFailure: function () {
@@ -172,11 +204,6 @@ App({
         1,
         false
       )
-      wx.showToast({
-        title: 'publish img iiiiiiii success',
-        icon: "success",
-        duration: 2000
-      })
     } else {
       wx.showToast({
         title: 'client invalid',
@@ -206,21 +233,12 @@ App({
       })
     }
   },
-  sendUdp(udp, test, ip = '') {
-    udp.send({
-      address: ip,
-      port: 6125,
-      message: JSON.stringify(test)
-    })
-  },
-  ab2str(buf) {
-    return String.fromCharCode.apply(null, new Uint16Array(buf));
-  },
   sockData: {
     _data: null,
     data: null,
   },
   globalData: {
+    postImgType: '',
     subscribe_topic: 'tzfacev3/wx',
     pub_topic: 'tzfacev3/device',
     pub_img_topic: 'tzfacev3/robot',

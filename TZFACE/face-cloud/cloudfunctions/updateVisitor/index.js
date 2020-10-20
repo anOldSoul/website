@@ -7,14 +7,13 @@ cloud.init({
 const db = cloud.database()
 const _ = db.command
 exports.main = async (event, context) => {
+  var docid = event.docid
   try {
-    return await db.collection('devices').where({
-      sn: event.sn
-    })
+    return await db.collection('visitors').doc(docid)
       .update({
         data: {
-          userid: event.userid,
-          name: event.name
+          status: event.status,
+          faceid: event.faceid
         },
         success: res => {
           console.log(res)

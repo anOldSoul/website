@@ -14,6 +14,11 @@ Page({
   onPullDownRefresh: function () {
     this.getList()
   },
+  goCreateTemp() {
+    wx.navigateTo({
+      url: `/pages/tempRecord/index`
+    })
+  },
   addDevice() {
     if (!wx.getStorageSync('TZFACE-userid')) {
       wx.navigateTo({
@@ -41,17 +46,15 @@ Page({
     }
   },
   onLoad: function (options) {
-    let that = this;
-    app.watch(that.watchBack)
   },
   watchBack: function (name) {
-    console.log(22222);
     console.log('this.name==' + name)
     if (name === 'mqttconnected') {
       this.data.mqttconnected = true
-      console.log(this.data.deviceList)
+      wx.hideLoading()
       this.getList()
     } else {
+      console.log('8888888888')
       this.data.deviceList.forEach((item, index) => {
         item.status = '在线'
       })
@@ -64,6 +67,8 @@ Page({
     console.log(status)
   },
   onShow: function () {
+    let that = this;
+    app.watch(that.watchBack)
     this.getList()
   },
   getList() {

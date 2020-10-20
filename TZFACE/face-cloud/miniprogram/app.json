@@ -1,11 +1,14 @@
 {
   "pages": [
+    
     "pages/device/index",
+    "pages/createTemp/index",
+    "pages/tempRecord/index",
     "pages/newFace/index",
     "pages/people/index",   
     "pages/waitFaces/index",
     "pages/index/index",
-    "pages/index-1/index",
+    "pages/index-1/index",   
     "pages/install/index",
     "pages/member/index",
     "pages/login/index",

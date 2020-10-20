@@ -1,7 +1,6 @@
 var wxCharts = require('../../utils/wxcharts.js');
 var app = getApp();
 var ringChart = null;
-var udp
 Page({
   data: {
     date: '2016-09-01',
@@ -16,73 +15,6 @@ Page({
     }]
   },
   onLoad() {
-    this.onQuery()
-    udp = wx.createUDPSocket()
-    udp.bind()
-    let imgHead = { func: "GetIP" }
-    console.log('-----------')
-    this.sendUdp(udp, imgHead, '255.255.255.255')
-    udp.onListening((res) => {
-      console.log('监听中...')
-      console.log(res)
-    })
-    udp.onClose((res) => {
-      console.log('监听关闭事件...')
-      console.log(res)
-    })
-    udp.onError((res) => {
-      udp.close()
-      console.log('监听错误事件...')
-      console.log(res)
-    })
-    udp.onMessage((res) => {
-      if (res.message) {
-        let testStr = ''
-        if (app.globalData.platform === 'devtools') {
-          testStr = this.ab2str(res.message.data)
-        } else {
-          // 将 ArrayBuffer类型的res.message取出来
-          let unit8Arr = new Uint8Array(res.message)
-          let encodedString = String.fromCharCode.apply(null, unit8Arr)
-          let decodedString = decodeURIComponent(escape((encodedString)))//没有这一步中文会乱码
-          console.log('message:' + decodedString)
-          testStr = decodedString
-        }
-        let remoteInfo = res.remoteInfo.address
-        console.log(testStr)
-        let aa = JSON.parse(testStr)
-        if (aa.func === 'GetIP') {
-          this.data.ip = remoteInfo
-          let imgHead = { "func": "GetDeviceInfo", "timestamp": app.Moment().format('YYYYMMDDHHmmss') }
-          this.sendUdp(udp, imgHead)
-        }
-        if (aa.func === 'GetDeviceInfo') {
-          let imgHead = { "func": "GetLog" }
-          this.sendUdp(udp, imgHead)
-        }
-        if (aa.func === 'GetLog' && aa.status === 'ok') {
-          let list = aa.loglist
-          this.postLog(list)
-        }
-      }
-    })
-  },
-  postLog(list) {
-    for (let i = 0; i < list.length; i++) {
-      let item = list[i]
-      wx.cloud.callFunction({
-        name: 'logs',
-        data: {
-          id: item.id,
-          time: item.time,
-          sn: wx.getStorageSync('sn')
-        }
-      }).then((e) => {
-        console.log(e)
-      })
-    }
-    let imgHead = { "func": "DeleteLog" }
-    this.sendUdp(udp, imgHead)
     this.onQuery()
   },
   onQuery: function () {
@@ -109,14 +41,6 @@ Page({
   // ArrayBuffer转为字符串，参数为ArrayBuffer对象
   ab2str(buf) {
     return String.fromCharCode.apply(null, new Uint16Array(buf));
-  },
-  sendUdp(udp, test, ip) {
-    console.log(test)
-    udp.send({
-      address: ip || this.data.ip,
-      port: 6125,
-      message: JSON.stringify(test)
-    })
   },
   touchHandler: function (e) {
     console.log(ringChart.getCurrentDataIndex(e));

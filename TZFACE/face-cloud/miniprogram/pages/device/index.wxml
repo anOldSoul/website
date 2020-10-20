@@ -22,6 +22,9 @@
         <view class='device_item_right'><image class="pic_M6" src='../../images/device-img.png'></image></view>
       </view>
     </view>
+    <view class="add_apparatus" bindtap="goCreateTemp">
+      <view class="list_text"><image class="icon_img" src="/images/guest.png"></image>访客管理</view>
+    </view>
     <!-- <view bindtap="addDevice" class='add_apparatus'>添加设备</view> -->
   </view>
 </view>

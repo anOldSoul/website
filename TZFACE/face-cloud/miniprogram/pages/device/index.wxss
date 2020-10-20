@@ -33,20 +33,33 @@
   font-size: 34rpx;
   text-align: center;
 }
+.list_more{
+  width: 14rpx;
+  height: 28rpx;
+}
+.list_text{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.icon_img{
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 20rpx;
+}
 .add_apparatus{
-  width:360rpx;
+  width:280rpx;
   height:94rpx;
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: 140rpx;
-  background: #012573;
+  bottom: 200rpx;
   box-shadow:0 4rpx 8rpx 0 rgba(9,25,40,0.24);
-  border-radius:8rpx;
+  border-radius: 47rpx 0 0 47rpx;
   color: #fff;
-  margin-left: 195rpx;
-  font-size: 36rpx;
+  right: 0;
+  font-size: 32rpx;
 }
 .device_item{
   width:690rpx;

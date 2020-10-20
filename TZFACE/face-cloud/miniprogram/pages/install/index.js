@@ -118,16 +118,14 @@ Page({
               success: res => {
                 console.log(res)
                 wx.hideLoading()
-                if (res.data.length > 0) {
-                  if (res.data[0].userid) {
-                    wx.showModal({
-                      title: '提示',
-                      showCancel: false,
-                      content: '该设备已被其他用户绑定',
-                      success(res) {
-                      }
-                    })
-                  }
+                if (res.data.length && res.data[0].userid) {
+                  wx.showModal({
+                    title: '提示',
+                    showCancel: false,
+                    content: '该设备已被其他用户绑定',
+                    success(res) {
+                    }
+                  })
                 } else {
                   let msg = { "func": "GetDeviceInfo", "sn": sn }
                   wx.showLoading({

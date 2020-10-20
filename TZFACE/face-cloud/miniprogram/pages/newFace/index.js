@@ -176,6 +176,7 @@ Page({
         cloudPath,
         filePath,
         success: res => {
+          app.globalData.imgSrc = ''
           this.setData({
             fileID: res.fileID
           })

@@ -5,6 +5,8 @@ var img = ''
 
 Page({
   data: {
+    showBack: false,
+    percent: 20,
     informCount: 0,
     peopleList: [],
     userInfo: {},
@@ -44,42 +46,15 @@ Page({
       path: `pages/newFace/index?sn=${wx.getStorageSync('sn')}`
     }
   },
-  selectPhoto() {
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: (res) => {
-        console.log(res)
-        // tempFilePath可以作为img标签的src属性显示图片
-        const tempFilePaths = res.tempFilePaths[0]
-
-        wx.getFileSystemManager().readFile({
-          filePath: tempFilePaths,
-          encoding: 'hex',
-          success: res => {
-            console.log(res)
-            img = res.data
-            //返回临时文件路径
-          },
-          fail: (errMsg) => {
-            console.log(errMsg)
-          }
-        })
-      }
-    })
-  },
   handleAddPhoto(e) {
     console.log(e)
     this.data.currentIndex = e.currentTarget.dataset.index
-    this.data.id = e.currentTarget.dataset.id
-    this.data._id = e.currentTarget.dataset._id
-    console.log(this.data.id)
     wx.showActionSheet({
       itemList: ['录入人脸', '查看员工详情', '删除'],
       success: (res) => {
         let tapIndex = res.tapIndex
         if (tapIndex === 0) {
+          app.globalData._id = e.currentTarget.dataset._id
           wx.navigateTo({
             url: `/pages/copper/index`
           })
@@ -106,7 +81,8 @@ Page({
     const db = wx.cloud.database()
     // 查询当前用户所有的 counters
     db.collection('faces').where({
-      sn: wx.getStorageSync('sn')
+      sn: wx.getStorageSync('sn'),
+      faceid: { "$exists": true }
     }).get({
       success: res => {
         this.setData({
@@ -124,18 +100,15 @@ Page({
       }
     })
   },
-  update(url, fileID, id) {
+  updateFace(fileID, id) {
     wx.cloud.callFunction({
       name: 'sum',
       data: {
-        docid: this.data._id,
-        imgId: id,
-        imgUrl: url,
+        docid: id,
         fileID: fileID
       }
     }).then((e) => {
       console.log(e)
-      this.onQuery()
     })
   },
   handleDel() {
@@ -166,6 +139,14 @@ Page({
   },
   onLoad() {
     this.getInformCount()
+    let that = this;
+    app.watch(that.watchBack)
+  },
+  watchBack: function (name) {
+    console.log('this.name==' + name)
+    if (name === 'Enroll_Finish_ack') {
+      this.onQuery()
+    }
   },
   onUnload() {
   },
@@ -186,7 +167,9 @@ Page({
         success: res => {
           console.log('[上传文件] 成功：', res)
           app.globalData.imgSrc = ''
-          let msg = { "func": "postImgUrl", "sn": "TZFACEV320200924", "fileid": res.fileID }
+          this.updateFace(res.fileID, app.globalData._id)
+          let msg = { "func": "postImgUrl", "sn": wx.getStorageSync('sn'), "fileid": res.fileID, wxid: app.globalData._id }
+          console.log(msg)
           app.publishImg(msg)
         },
         fail: e => {
@@ -197,7 +180,6 @@ Page({
           })
         },
         complete: () => {
-          wx.hideLoading()
         }
       })
     }

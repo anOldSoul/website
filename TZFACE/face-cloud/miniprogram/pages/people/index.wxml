@@ -27,3 +27,6 @@
   <image class="wait_img" src="/images/empty.png"></image>
   <view style="margin-top: 30rpx;">暂无录入信息</view>
 </view>
+<view class="progress-box" wx:if="{{showBack}}">
+  <progress percent="{{percent}}" border-radius="5" active="true" show-info stroke-width="10"/>
+</view>

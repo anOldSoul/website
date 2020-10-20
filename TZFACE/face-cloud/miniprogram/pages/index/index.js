@@ -37,6 +37,11 @@ Page({
       url: `/pages/people/index`
     })
   },
+  goVisitor() {
+    wx.navigateTo({
+      url: `/pages/tempRecord/index`
+    })
+  },
   goChart() {
     wx.navigateTo({
       url: `/pages/logs/logs`

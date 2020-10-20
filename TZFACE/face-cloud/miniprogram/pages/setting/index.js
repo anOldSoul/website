@@ -48,14 +48,19 @@ Page({
           wx.cloud.callFunction({
             name: 'updateDevice',
             data: {
-              sn: wx.getStorageSync('sn')
+              sn: wx.getStorageSync('sn'),
+              userid: ''
             }
           }).then((e) => {
             wx.hideLoading()
-            wx.showToast({
-              title: '已通过',
+            wx.switchTab({
+              url: 'pages/device/index',
+              success: () => {
+                wx.showToast({
+                  title: '解绑成功',
+                })
+              }
             })
-            this.onQuery()
           })
         } else if (res.cancel) {
           console.log('用户点击取消')

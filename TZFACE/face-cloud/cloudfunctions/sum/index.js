@@ -8,18 +8,12 @@ const db = cloud.database()
 const _ = db.command
 exports.main = async (event, context) => {
   var docid = event.docid
-  var imgUrl = event.imgUrl
-  var fileID = event.fileID
-  var imgId = event.imgId
-  var sn = event.sn
   try {
     return await db.collection('faces').doc(docid)
       .update({
         data: {
-          imgUrl: imgUrl,
-          fileID: fileID,
-          faceId: imgId,
-          sn: sn
+          faceid: event.faceid,
+          fileID: event.fileID
         },
         success: res => {
           console.log(res)

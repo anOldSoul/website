@@ -6,7 +6,7 @@ Page({
     // disable_width: true,
     // disable_height: true,
     src:'',
-    width: 320,//宽度
+    width: 240,//宽度
     height: 240,//高度
     max_width: 160,
     max_height: 160,
@@ -38,7 +38,7 @@ Page({
     let that = this;
     wx.chooseImage({
       count: 1,
-      sizeType: ['original', 'compressed'],
+      sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
       success(res) {
         wx.showLoading({
@@ -174,7 +174,7 @@ Page({
   enlarge() {
     this.data.enlarge = setInterval(() => {
       this.cropper.setTransform({
-        scale: 0.02
+        scale: 0.01
       });
     }, 1000 / 60)
   },
