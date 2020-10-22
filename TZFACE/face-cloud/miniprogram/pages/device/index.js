@@ -15,6 +15,21 @@ Page({
     this.getList()
   },
   goCreateTemp() {
+    if (this.data.deviceList.length === 0) {
+      wx.showModal({
+        title: '提示',
+        content: '您还未绑定设备哦，请先添加设备',
+        showCancel: false,
+        success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+      return
+    }
     wx.navigateTo({
       url: `/pages/tempRecord/index`
     })
@@ -54,7 +69,6 @@ Page({
       wx.hideLoading()
       this.getList()
     } else {
-      console.log('8888888888')
       this.data.deviceList.forEach((item, index) => {
         item.status = '在线'
       })
@@ -74,16 +88,20 @@ Page({
   getList() {
     const db = wx.cloud.database()
     // 查询当前用户所有的 counters
+    let userid = wx.getStorageSync('TZFACE-userid')
+    console.log(userid)
     db.collection('devices').where({
-      userid: wx.getStorageSync('TZFACE-userid')
+      userid: userid ? userid : { "$exists": true }
     }).get({
       success: res => {
         let list = res.data
         if (this.data.mqttconnected) {
-          console.log('lllllllllll')
           list.forEach((item, index) => {
-            let msg = { "func": "GetDeviceInfo", "sn": item.sn }
-            app.publish(msg)
+            if (item.sn) {
+              let msg = { "func": "GetDeviceInfo", "sn": item.sn, "userid": wx.getStorageSync('TZFACE-userid') }
+              console.log(msg)
+              app.publish(msg)
+            }
           })
         }
 

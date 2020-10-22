@@ -13,7 +13,8 @@ exports.main = async (event, context) => {
       .update({
         data: {
           faceid: event.faceid,
-          fileID: event.fileID
+          fileID: event.fileID,
+          status: event.status
         },
         success: res => {
           console.log(res)

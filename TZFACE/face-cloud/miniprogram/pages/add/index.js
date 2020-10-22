@@ -12,6 +12,7 @@ Page({
       data: {
         name: this.data.nickName,
         sn: wx.getStorageSync('sn'),
+        status: 1,
         telephone: this.data.telephone
       },
       success: res => {

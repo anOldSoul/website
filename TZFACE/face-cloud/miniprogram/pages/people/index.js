@@ -5,8 +5,8 @@ var img = ''
 
 Page({
   data: {
-    showBack: false,
-    percent: 20,
+    showBack: true,
+    percent: 0,
     informCount: 0,
     peopleList: [],
     userInfo: {},
@@ -50,7 +50,7 @@ Page({
     console.log(e)
     this.data.currentIndex = e.currentTarget.dataset.index
     wx.showActionSheet({
-      itemList: ['录入人脸', '查看员工详情', '删除'],
+      itemList: ['录入人脸', '删除'],
       success: (res) => {
         let tapIndex = res.tapIndex
         if (tapIndex === 0) {
@@ -82,13 +82,16 @@ Page({
     // 查询当前用户所有的 counters
     db.collection('faces').where({
       sn: wx.getStorageSync('sn'),
-      faceid: { "$exists": true }
+      status: 1 //1为管理员添加员工（无faceid）或审核通过员工，2为审核未通过
+      // faceid: { "$exists": true }
     }).get({
       success: res => {
         this.setData({
           peopleList: res.data
         })
-        wx.hideLoading()
+        if (!app.globalData.imgSrc) {
+          wx.hideLoading()
+        }        
         console.log('[数据库] [查询记录] 成功: ', res)
       },
       fail: err => {
@@ -145,7 +148,29 @@ Page({
   watchBack: function (name) {
     console.log('this.name==' + name)
     if (name === 'Enroll_Finish_ack') {
+      this.setData({
+        showBack: true
+      })
       this.onQuery()
+    } else if (name === 'finish_timeout') {
+      this.setData({
+        showBack: true
+      })
+      wx.showToast({
+        icon: 'none',
+        title: '上传失败，请重新录入',
+      })
+    } else if (name && name !== 'undefined') {
+      let result = JSON.parse(name)
+      wx.hideLoading()
+      if (result.func === 'enroll_callback') {
+        let percent = (Math.round(result.get / result.total * 100))
+        console.log(percent)
+        this.setData({
+          showBack: false,
+          percent: percent
+        })
+      }
     }
   },
   onUnload() {
@@ -168,7 +193,7 @@ Page({
           console.log('[上传文件] 成功：', res)
           app.globalData.imgSrc = ''
           this.updateFace(res.fileID, app.globalData._id)
-          let msg = { "func": "postImgUrl", "sn": wx.getStorageSync('sn'), "fileid": res.fileID, wxid: app.globalData._id }
+          let msg = { "func": "postImgUrl", "sn": wx.getStorageSync('sn'), "fileid": res.fileID, wxid: app.globalData._id, userid: wx.getStorageSync('TZFACE-userid') }
           console.log(msg)
           app.publishImg(msg)
         },

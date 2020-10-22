@@ -63,6 +63,7 @@ Page({
         fileID: this.data.peopleList[this.data.currentIndex].fileID,
         appid: this.data.peopleList[this.data.currentIndex].appid,
         sn: wx.getStorageSync('sn'),
+        status: 2,
         telephone: this.data.peopleList[this.data.currentIndex].telephone
       },
       success: res => {
@@ -81,7 +82,7 @@ Page({
   onAdd: function (item, wxid) {
     const fileID = item.fileID
     if (fileID) {
-      let msg = { "func": "postImgUrl", "sn": wx.getStorageSync('sn'), "fileid": fileID, wxid: wxid}
+      let msg = { "func": "postImgUrl", "sn": wx.getStorageSync('sn'), "fileid": fileID, wxid: wxid, userid: wx.getStorageSync('TZFACE-userid') }
       console.log(msg)
       app.publishImg(msg)
     }

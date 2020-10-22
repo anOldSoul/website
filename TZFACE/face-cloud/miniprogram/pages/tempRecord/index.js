@@ -43,16 +43,18 @@ Page({
     const db = wx.cloud.database()
     // 查询当前用户所有的 counters
     db.collection('visitors').where({
-      sn: wx.getStorageSync('sn')
-      // faceid: { "$exists": true }
+      sn: wx.getStorageSync('sn'),
+      faceid: { "$exists": true }
     }).get({
       success: res => {
+        let list = res.data.map((item, index) => {
+          item.beginTime = app.Moment(item.beginTime, 'YYYYMMDDHHmm').format('YYYY-MM-DD HH:mm')
+          item.endTime = app.Moment(item.endTime, 'YYYYMMDDHHmm').format('YYYY-MM-DD HH:mm')
+          return item
+        })
+        list.reverse()
         this.setData({
-          currentMonthData: res.data.map((item, index) => {
-            item.beginTime = app.Moment(item.beginTime, 'YYYYMMDDHHmm').format('YYYY-MM-DD HH:mm')
-            item.endTime = app.Moment(item.beginTime, 'YYYYMMDDHHmm').format('YYYY-MM-DD HH:mm')
-            return item
-          })
+          currentMonthData: list
         })
         wx.hideLoading()
         console.log('[数据库] [查询记录] 成功: ', res)

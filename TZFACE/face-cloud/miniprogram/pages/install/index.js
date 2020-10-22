@@ -126,8 +126,28 @@ Page({
                     success(res) {
                     }
                   })
+                } else if (!res.data.length) {
+                  wx.cloud.callFunction({
+                    name: 'devices',
+                    data: {
+                      sn: sn,
+                      userid: '',
+                      model: 'Biosec_lateral'
+                    },
+                    success: res => {
+                      let msg = { "func": "GetDeviceInfo", "sn": sn, userid: wx.getStorageSync('TZFACE-userid') }
+                      wx.showLoading({
+                        title: '',
+                      })
+                      app.publish(msg)
+                      console.log('添加设备成功')
+                    },
+                    fail: err => {
+                      console.log('[云函数]添加设备失败，错误信息：', err)
+                    }
+                  })
                 } else {
-                  let msg = { "func": "GetDeviceInfo", "sn": sn }
+                  let msg = { "func": "GetDeviceInfo", "sn": sn, userid: wx.getStorageSync('TZFACE-userid') }
                   wx.showLoading({
                     title: '',
                   })

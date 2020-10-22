@@ -58,22 +58,20 @@ App({
         this.globalData.mqtt_client = client;
 
         client.onMessageArrived = (msg) => {
+          console.log('收到消息为。。。。。。。。。')
           console.log(msg.payloadString)
           let str = msg.payloadString
           str = str.replace(/\s*/g, '');
           str = str.replace(/[\r\n]/g, "")
           let data = JSON.parse(str)
-          if (data.func === 'GetDeviceInfo_ack') {
+          if (data.func === 'GetDeviceInfo_ack' || data.userid === wx.getStorageSync('TZFACE-userid')) {
             const db = wx.cloud.database()
             db.collection('devices').where({
+              sn: wx.getStorageSync('sn'),
               userid: wx.getStorageSync('TZFACE-userid')
             }).get({
               success: res => {
-                let devices = res.data
-                let exist = devices.filter((item) => {
-                  return item.sn === data.sn
-                })
-                if (exist.length > 0) {
+                if (res.data.length > 0) {
                   wx.cloud.callFunction({
                     name: 'updateDevice',
                     data: {
@@ -84,40 +82,6 @@ App({
                     wx.hideLoading()
                     this.sockData.data = data.sn
                   })              
-                } else {
-                  wx.cloud.callFunction({
-                    name: 'devices',
-                    data: {
-                      sn: data.sn,
-                      model: 'Biosec_lateral',
-                      userid: wx.getStorageSync('TZFACE-userid')
-                    },
-                    success: res => {
-                      data['sn'] = data.sn
-                      wx.cloud.callFunction({
-                        name: 'address',
-                        data: data,
-                        success: res => { 
-                          wx.switchTab({
-                            url: `/pages/device/index`,
-                            success(res) {
-                              wx.showToast({
-                                title: '添加成功',
-                                icon: 'none',
-                                duration: 2000
-                              })
-                            }
-                          })
-                        },
-                        fail: err => {
-                          console.log('[云函数] [login] 获取 openid 失败，请检查是否有部署云函数，错误信息：', err)
-                        }
-                      })
-                    },
-                    fail: err => {
-                      console.log('[云函数] [login] 获取 openid 失败，请检查是否有部署云函数，错误信息：', err)
-                    }
-                  })
                 }
               },
               fail: err => {
@@ -132,31 +96,36 @@ App({
           if (data.func === 'enroll_callback') {
             this.sockData.data = JSON.stringify(data)
           }
-          if (data.func === 'Enroll_Finish_ack') {
-            if (this.globalData.postImgType === 'visitor') {
-              wx.cloud.callFunction({
-                name: 'updateVisitor',
-                data: {
-                  docid: data.wxid,
-                  faceid: data.faceid,
-                  status: 0
-                }
-              }).then((e) => {
-                console.log(e)
-                this.sockData.data = 'visitor_finish_ack'
-              })
-              
+          if (data.func === 'Enroll_Finish_ack' && data.sn && data.userid) {
+            if (data.status === 'ok') {
+              if (this.globalData.postImgType === 'visitor') {
+                wx.cloud.callFunction({
+                  name: 'updateVisitor',
+                  data: {
+                    docid: data.wxid,
+                    faceid: data.faceid,
+                    status: 0
+                  }
+                }).then((e) => {
+                  console.log(e)
+                  this.sockData.data = 'visitor_finish_ack'
+                })
+
+              } else {
+                wx.cloud.callFunction({
+                  name: 'sum',
+                  data: {
+                    docid: data.wxid,
+                    status: 1,
+                    faceid: data.faceid
+                  }
+                }).then((e) => {
+                  console.log(e)
+                  this.sockData.data = data.func
+                })
+              }
             } else {
-              wx.cloud.callFunction({
-                name: 'sum',
-                data: {
-                  docid: data.wxid,
-                  faceid: data.faceid
-                }
-              }).then((e) => {
-                console.log(e)
-                this.sockData.data = data.func
-              })
+              this.sockData.data = 'finish_timeout'
             }
           }
         }
@@ -183,8 +152,6 @@ App({
         onSuccess: () => {
           console.log('subscribe success');
           this.sockData.data = 'mqttconnected'
-          // wx.hideLoading()
-          // this.publish()
         },
         onFailure: function () {
           wx.showToast({
@@ -213,18 +180,12 @@ App({
     }
   },
   publish: function (msg) {
-    console.log(this.globalData)
     if (this.globalData.mqtt_client && this.globalData.mqtt_client.isConnected()) {
       this.globalData.mqtt_client.publish(this.globalData.pub_topic,
         JSON.stringify(msg),
         1,
         false
       )
-      // wx.showToast({
-      //   title: 'publish success',
-      //   icon: "success",
-      //   duration: 2000
-      // })
     } else {
       wx.showToast({
         title: 'client invalid',

@@ -85,6 +85,11 @@ button {
   height: 40rpx;
   margin-right: 15rpx;
 }
+.progress_img {
+  width: 92rpx;
+  height: 32rpx;
+  margin: 0 auto;
+}
 .wait_page {
   display: flex;
   flex-direction: column;
@@ -122,8 +127,10 @@ button {
   position: fixed;
   top: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 progress{
   margin: 0 20rpx;
-  margin-top: 70%;
 }
