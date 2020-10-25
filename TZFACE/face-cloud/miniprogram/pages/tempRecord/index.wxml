@@ -11,9 +11,14 @@
           <!-- <view bindtap="handleDel" data-keyId="{{item.keyId}}"><image class="del_img" src='../../images/del.png'></image></view> -->
         </view>
         <view class='detail'>授权类型: {{item.rsvd2 === '0' ? '单次有效' : '不限次'}} <text class="status">授权状态: {{status[item.status]}}</text></view>
+        <view class='detail'>授权设备: {{item.sn}}</view>
         <view class='detail'>开始时间: {{item.beginTime}}</view>
         <view class='detail'>结束时间: {{item.endTime}}</view>
       </view> 
     </view>
+  </view>
+  <view wx:if="{{currentMonthData.length === 0}}" class="wait_page">
+    <image class="wait_img" src="/images/empty.png"></image>
+    <view style="margin-top: 30rpx;">暂无访客信息</view>
   </view>
 </view>

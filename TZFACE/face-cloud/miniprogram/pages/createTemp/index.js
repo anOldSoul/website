@@ -244,6 +244,33 @@ Page({
     })
   },
   goNext: function() {
+    if (!this.data.name) {
+      wx.showToast({
+        icon: 'none',
+        title: '请输入访客姓名'
+      })
+      return
+    }
+    if (!this.data.fileID) {
+      wx.showToast({
+        icon: 'none',
+        title: '请录入人脸照片'
+      })
+      return
+    }
+    let filterList = this.data.deviceList.filter((item, index) => {
+      return item.checked
+    })
+    this.data.publishList = filterList.map((item, index) => {
+      return item.sn
+    })
+    if (this.data.publishList.length === 0) {
+      wx.showToast({
+        icon: 'none',
+        title: '请选择授权设备'
+      })
+      return
+    }
     wx.showLoading({
       title: '请稍后'
     })
@@ -257,19 +284,14 @@ Page({
         type: this.data.validIndex,
         beginTime: `${t2.slice(0, 8)}${t2.slice(8, 12)}00`,
         endTime: `${t1.slice(0, 8)}${t1.slice(8, 12)}59`,
-        sn: wx.getStorageSync('sn')
+        sn: this.data.publishList
       },
       success: res => {
         console.log(res)
-        this.data.deviceList.forEach((item, index) => {
-          if (item.checked) {
-            this.data.publishList.push(item.sn)
-          }
-        })
         this.data.publishIndex = 1
-        let msg = { "func": "postVisitorUrl", "sn": this.data.publishList[0], "fileid": this.data.fileID, wxid: res.result._id, beginTime: `${t2.slice(0, 8)}${t2.slice(8, 12)}00`, endTime: `${t1.slice(0, 8)}${t1.slice(8, 12)}59`, type: this.data.validIndex, userid: wx.getStorageSync('TZFACE-userid') }
-        app.publishImg(msg)
+        let msg = { "func": "postVisitorUrl", "sn": this.data.publishList[0], "fileid": this.data.fileID, wxid: res.result._id, beginTime: `${t2.slice(0, 8)}${t2.slice(8, 12)}00`, endTime: `${t1.slice(0, 8)}${t1.slice(8, 12)}59`, type: this.data.validIndex, userid: wx.getStorageSync('TZFACE-userid') }       
         app.globalData.postImgType = 'visitor'
+        app.publishImg(msg)
       },
       fail: err => {
         console.log('[云函数] [login] 获取 openid 失败，请检查是否有部署云函数，错误信息：', err)

@@ -64,11 +64,10 @@ App({
           str = str.replace(/\s*/g, '');
           str = str.replace(/[\r\n]/g, "")
           let data = JSON.parse(str)
-          if (data.func === 'GetDeviceInfo_ack' || data.userid === wx.getStorageSync('TZFACE-userid')) {
+          if (data.func === 'GetDeviceInfo_ack' && data.userid === wx.getStorageSync('TZFACE-userid')) {
             const db = wx.cloud.database()
             db.collection('devices').where({
-              sn: wx.getStorageSync('sn'),
-              userid: wx.getStorageSync('TZFACE-userid')
+              sn: data.sn
             }).get({
               success: res => {
                 if (res.data.length > 0) {
@@ -76,11 +75,18 @@ App({
                     name: 'updateDevice',
                     data: {
                       sn: data.sn,
-                      userid: wx.getStorageSync('TZFACE-userid')
+                      userid: data.userid
                     }
                   }).then((e) => {
                     wx.hideLoading()
+                    
                     this.sockData.data = data.sn
+                    wx.switchTab({
+                      url: `/pages/device/index`,
+                      success(res) {
+                      }
+                    })
+
                   })              
                 }
               },
@@ -96,7 +102,7 @@ App({
           if (data.func === 'enroll_callback') {
             this.sockData.data = JSON.stringify(data)
           }
-          if (data.func === 'Enroll_Finish_ack' && data.sn && data.userid) {
+          if (data.func === 'Enroll_Finish_ack' && data.userid === wx.getStorageSync('TZFACE-userid')) {
             if (data.status === 'ok') {
               if (this.globalData.postImgType === 'visitor') {
                 wx.cloud.callFunction({
@@ -108,6 +114,7 @@ App({
                   }
                 }).then((e) => {
                   console.log(e)
+                  this.globalData.postImgType === ''
                   this.sockData.data = 'visitor_finish_ack'
                 })
 
@@ -164,7 +171,7 @@ App({
     }
   },
   publishImg: function (msg) {
-    console.log(this.globalData)
+    console.log(msg)
     if (this.globalData.mqtt_client && this.globalData.mqtt_client.isConnected()) {
       this.globalData.mqtt_client.publish(this.globalData.pub_img_topic,
         JSON.stringify(msg),
@@ -187,6 +194,7 @@ App({
         false
       )
     } else {
+      this.connectMq()
       wx.showToast({
         title: 'client invalid',
         icon: "loading",

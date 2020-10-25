@@ -63,7 +63,8 @@ Page({
   onLoad: function (options) {
   },
   watchBack: function (name) {
-    console.log('this.name==' + name)
+    console.log('pageDevice监听：。。。。')
+    console.log(name)
     if (name === 'mqttconnected') {
       this.data.mqttconnected = true
       wx.hideLoading()
@@ -90,34 +91,37 @@ Page({
     // 查询当前用户所有的 counters
     let userid = wx.getStorageSync('TZFACE-userid')
     console.log(userid)
-    db.collection('devices').where({
-      userid: userid ? userid : { "$exists": true }
-    }).get({
-      success: res => {
-        let list = res.data
-        if (this.data.mqttconnected) {
-          list.forEach((item, index) => {
-            if (item.sn) {
-              let msg = { "func": "GetDeviceInfo", "sn": item.sn, "userid": wx.getStorageSync('TZFACE-userid') }
-              console.log(msg)
-              app.publish(msg)
-            }
-          })
-        }
+    if (userid) {
+      db.collection('devices').where({
+        userid: wx.getStorageSync('TZFACE-userid')
+      }).get({
+        success: res => {
+          let list = res.data
+          if (this.data.mqttconnected) {
+            list.forEach((item, index) => {
+              if (item.sn) {
+                let msg = { "func": "GetDeviceInfo", "sn": item.sn, "userid": wx.getStorageSync('TZFACE-userid') }
+                console.log(msg)
+                app.publish(msg)
+              }
+            })
+          }
 
-        this.setData({
-          deviceList: res.data
-        })
-        wx.stopPullDownRefresh()
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-        console.error('[数据库] [查询记录] 失败：', err)
-      }
-    })
+          this.setData({
+            deviceList: res.data
+          })
+          wx.stopPullDownRefresh()
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '查询记录失败'
+          })
+          console.error('[数据库] [查询记录] 失败：', err)
+        }
+      })
+    }
+
   },
   goAddDevicePage: function() {
     wx.navigateTo({
@@ -128,23 +132,8 @@ Page({
     console.log(e)
     let selectIndex = e.currentTarget.dataset.index
     wx.setStorageSync('sn', this.data.deviceList[selectIndex].sn)
-    if (app.globalData.wifissid !== this.data.deviceList[selectIndex].SSID) {
-      wx.navigateTo({
-        url: `/pages/index/index`
-      })
-    } else {
-      wx.showModal({
-        title: '提示',
-        content: `请连接设备对应网络${this.data.deviceList[selectIndex].SSID}`,
-        showCancel: false,
-        success(res) {
-          if (res.confirm) {
-            console.log('用户点击确定')
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-          }
-        }
-      })
-    }
+    wx.navigateTo({
+      url: `/pages/index/index`
+    })
   }
 })

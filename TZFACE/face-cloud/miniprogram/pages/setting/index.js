@@ -54,10 +54,11 @@ Page({
           }).then((e) => {
             wx.hideLoading()
             wx.switchTab({
-              url: 'pages/device/index',
+              url: '/pages/device/index',
               success: () => {
                 wx.showToast({
                   title: '解绑成功',
+                  icon: 'none'
                 })
               }
             })

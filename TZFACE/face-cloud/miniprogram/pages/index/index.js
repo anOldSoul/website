@@ -47,6 +47,11 @@ Page({
       url: `/pages/logs/logs`
     })
   },
+  goLog() {
+    wx.navigateTo({
+      url: `/pages/unlockRecord/index`
+    })
+  },
   goSet() {
     wx.navigateTo({
       url: `/pages/setting/index`
