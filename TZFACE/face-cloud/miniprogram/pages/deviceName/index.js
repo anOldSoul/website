@@ -2,10 +2,11 @@ const app = getApp()
 Page({
   data: {
     device_name: '',
-    placeholder: '',
+    placeholder: '请设置设备名称',
     pagetype: ''
   },
   onLoad: function (options) {
+    this.data.pagetype = options.pagetype
     this.setData({
       device_name: options.name
     })
@@ -29,9 +30,17 @@ Page({
       }
     }).then((e) => {
       wx.hideLoading()
-      wx.navigateBack({
-        delta: 1
-      })
+      if (this.data.pagetype === 'addDevice') {
+        let msg = { "func": "GetDeviceInfo", "sn": wx.getStorageSync('sn'), userid: wx.getStorageSync('TZFACE-userid') }
+        wx.showLoading({
+          title: '',
+        })
+        app.publish(msg)
+      } else {
+        wx.navigateBack({
+          delta: 1
+        })
+      }
     })
   }
 })

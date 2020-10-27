@@ -30,7 +30,10 @@ Page({
         success: res => {
           let list = res.data
           this.setData({
-            currentMonthData: list
+            currentMonthData: list.map((item, index) => {
+              item.time = app.Moment(item.time, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss')
+              return item
+            })
           })
         },
         fail: err => {

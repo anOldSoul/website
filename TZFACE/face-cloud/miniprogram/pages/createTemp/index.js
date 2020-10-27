@@ -223,7 +223,7 @@ Page({
     if (name === 'visitor_finish_ack') {
       if (this.data.publishIndex < this.data.publishList.length) {
         this.data.publishIndex ++
-        let msg = { "func": "postVisitorUrl", "sn": this.data.publishList[this.data.publishIndex], "fileid": this.data.fileID, wxid: res.result._id, beginTime: `${t2.slice(0, 8)}${t2.slice(8, 12)}00`, endTime: `${t1.slice(0, 8)}${t1.slice(8, 12)}59`, type: this.data.validIndex, userid: wx.getStorageSync('TZFACE-userid') }
+        let msg = { "func": "postVisitorUrl", "sn": this.data.publishList[this.data.publishIndex], "fileid": this.data.fileID, wxid: res.result._id, beginTime: `${t2.slice(0, 8)}${t2.slice(8, 12)}00`, endTime: `${t1.slice(0, 8)}${t1.slice(8, 12)}59`, type: '1', userid: wx.getStorageSync('TZFACE-userid') }
         app.publishImg(msg)
       } else {
         wx.navigateBack({

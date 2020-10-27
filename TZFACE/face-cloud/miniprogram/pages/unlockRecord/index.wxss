@@ -50,8 +50,8 @@
   justify-content: space-between;
 }
 .pw_record_img{
-  width:100rpx;
-  height:100rpx;
+  width:64rpx;
+  height: 64rpx;
 }
 .left{
   margin-right: 24rpx;
@@ -61,7 +61,10 @@
   flex-direction: row;
 }
 .time{
-  font-size: 32rpx;
+  font-size: 30rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .detail{
   font-size:28rpx;

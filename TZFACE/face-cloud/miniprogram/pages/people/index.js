@@ -49,14 +49,34 @@ Page({
   handleAddPhoto(e) {
     console.log(e)
     this.data.currentIndex = e.currentTarget.dataset.index
+    let id = e.currentTarget.dataset._id
+    let faceid = this.data.peopleList[this.data.currentIndex].faceid
     wx.showActionSheet({
       itemList: ['录入人脸', '删除'],
       success: (res) => {
         let tapIndex = res.tapIndex
         if (tapIndex === 0) {
-          app.globalData._id = e.currentTarget.dataset._id
+          app.globalData._id = id
           wx.navigateTo({
             url: `/pages/copper/index`
+          })
+        } else if (tapIndex === 1) {
+          wx.showModal({
+            title: '提示',
+            content: '确定要删除该员工吗',
+            success(res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+                wx.showLoading({
+                  title: '正在删除',
+                })
+                let msg = { "func": "DeleteUser", "sn": wx.getStorageSync('sn'), "id": faceid, userid: wx.getStorageSync('TZFACE-userid') }
+                console.log(msg)
+                app.publish(msg)
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
           })
         }
       }
@@ -77,7 +97,9 @@ Page({
     })
   },
   onQuery: function () {
-    wx.showLoading()
+    wx.showLoading({
+      title: '加载中'
+    })
     const db = wx.cloud.database()
     // 查询当前用户所有的 counters
     db.collection('faces').where({
@@ -147,7 +169,18 @@ Page({
   },
   watchBack: function (name) {
     console.log('this.name==' + name)
-    if (name === 'Enroll_Finish_ack') {
+    if (name === 'DeleteUser_ack') {
+      wx.showToast({
+        icon: 'none',
+        title: '删除成功',
+      })
+      this.onQuery()
+    } else if (name === 'deleteUser_fail') {
+      wx.showToast({
+        icon: 'none',
+        title: '删除失败',
+      })
+    } else if (name === 'Enroll_Finish_ack') {
       this.setData({
         showBack: true
       })

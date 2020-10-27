@@ -7,11 +7,10 @@ cloud.init({
 const db = cloud.database()
 const _ = db.command
 exports.main = async (event, context) => {
-  var docid = event.docid
-  var imgUrl = event.imgUrl
-  var fileID = event.fileID
   try {
-    return await db.collection('faces').doc(docid)
+    return await db.collection('faces').where({
+      faceid: event.faceid
+    })
       .remove({
         success: res => {
           console.log(res)

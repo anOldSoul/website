@@ -11,19 +11,14 @@
       <view class='text_content' wx:for="{{currentMonthData}}" wx:key="item">
         <view class='content_left'>
           <view class='left'>
-            <image class="pw_record_img" src='../../images/ic-record-fingerprint.png' wx:if="{{item.dataType === '1'}}"></image>
-            <image class="pw_record_img" src='../../images/idcard.png' wx:if="{{item.dataType === '2'}}"></image>
-            <image class="pw_record_img" src='../../images/ic-record-password.png' wx:if="{{item.dataType === '3'}}"></image>
-            <image class="pw_record_img" src='../../images/ic-record-password.png' wx:if="{{item.dataType === '4'}}"></image>
-            <image class="pw_record_img" src='../../images/icon-key.png' wx:if="{{item.dataType === '5'}}"></image>
-            <image class="pw_record_img" src='../../images/ic-record_tempass.png' wx:if="{{item.dataType === '6'}}"></image>
-            <image class="pw_record_img" src='../../images/admin.png' wx:if="{{item.dataType === '7'}}"></image>
+            <image class="pw_record_img" src='../../images/open.png'></image>
           </view>
           <view>
+            
+            <view class='time'><span>姓名：{{item.name}}</span> <span>类型：{{item.type === 2 ? '员工' : '访客'}}</span></view>
             <view class='time'>
-              <span>{{item.sn}}</span>
+              <span>设备：{{item.sn}}</span>
             </view>
-            <view class='detail'>wxid：{{item.wxid}}</view>
             <view class='detail'>开门时间：{{item.time}}</view>
           </view>
         </view>

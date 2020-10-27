@@ -1,6 +1,6 @@
 const Moment = require('./utils/moment.min.js')
 var MQTT = require("./utils/paho-mqtt.js");
-var client = new MQTT.Client("wss://tzface.openn.cn:8091/mqtt", "clientId_" + Math.random().toString(36).substr(2));
+var client = new MQTT.Client("wss://tzface.openn.cn:8091/mqtt", "clientId_" + Math.random().toString(36).substr(2))
 App({
   Moment: Moment,
   onHide() {},
@@ -20,7 +20,6 @@ App({
     }
   },
   onShow: function () {
-    
   },
   watch: function (method) {
     var obj = this.sockData;
@@ -39,6 +38,7 @@ App({
     })
   },
   connectMq: function () {
+    console.log('重新连接lllllllllllllllllll')
     //在按钮上显示加载标志
     wx.showLoading({
       title: '',
@@ -50,12 +50,12 @@ App({
       timeout: 10,
       useSSL: true,
       cleanSession: true,
-      keepAliveInterval: 30,
+      keepAliveInterval: 0,
       reconnect: true,
       onSuccess: () => {
         console.log('connected');
-
-        this.globalData.mqtt_client = client;
+        wx.hideLoading()
+        this.globalData.mqtt_client = client
 
         client.onMessageArrived = (msg) => {
           console.log('收到消息为。。。。。。。。。')
@@ -99,6 +99,20 @@ App({
               }
             })
           }
+          if (data.func === 'RmOpen_ack' && data.userid === wx.getStorageSync('TZFACE-userid')) {
+            if (data.status === 'ok') {
+              wx.showToast({
+                icon: 'none',
+                title: '开门成功'
+              })
+            } else {
+              wx.showToast({
+                icon: 'none',
+                title: '开门失败，请重试'
+              })
+            }
+
+          }
           if (data.func === 'enroll_callback') {
             this.sockData.data = JSON.stringify(data)
           }
@@ -117,7 +131,6 @@ App({
                   this.globalData.postImgType === ''
                   this.sockData.data = 'visitor_finish_ack'
                 })
-
               } else {
                 wx.cloud.callFunction({
                   name: 'sum',
@@ -133,6 +146,21 @@ App({
               }
             } else {
               this.sockData.data = 'finish_timeout'
+            }
+          }
+          if (data.func === 'DeleteUser_ack' && data.userid === wx.getStorageSync('TZFACE-userid')) {
+            if (data.status === 'ok') {
+              wx.cloud.callFunction({
+                name: 'deleteFace',
+                data: {
+                  faceid: data.delid
+                }
+              }).then((e) => {
+                console.log(e)
+                this.sockData.data = data.func
+              })
+            } else {
+              this.sockData.data = 'deleteUser_fail'
             }
           }
         }
@@ -179,10 +207,9 @@ App({
         false
       )
     } else {
-      wx.showToast({
-        title: 'client invalid',
-        icon: "loading",
-        duration: 2000
+      this.connectMq()
+      wx.showLoading({
+        title: '连接中',
       })
     }
   },
@@ -195,10 +222,8 @@ App({
       )
     } else {
       this.connectMq()
-      wx.showToast({
-        title: 'client invalid',
-        icon: "loading",
-        duration: 2000
+      wx.showLoading({
+        title: '连接中',
       })
     }
   },

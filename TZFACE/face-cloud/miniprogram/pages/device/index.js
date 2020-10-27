@@ -40,10 +40,10 @@ Page({
         url: `/pages/login/index`
       })
     } else {
-      if (this.data.deviceList.length === 3) {
+      if (this.data.deviceList.length === 10) {
         wx.showModal({
           title: '提示',
-          content: '您已经绑定了3把门锁，可更换其他微信号绑定。',
+          content: '您已经绑定了10把门锁，可更换其他微信号绑定。',
           showCancel: false,
           success(res) {
             if (res.confirm) {
@@ -71,7 +71,11 @@ Page({
       this.getList()
     } else {
       this.data.deviceList.forEach((item, index) => {
-        item.status = '在线'
+        if (item.sn === name) {
+          item.status = '在线'
+        } else {
+          item.status = ''
+        }      
       })
       this.setData({
         deviceList: this.data.deviceList
@@ -122,6 +126,15 @@ Page({
       })
     }
 
+  },
+  handleOpen(e) {
+    let selectIndex = e.currentTarget.dataset.index
+    let msg = { "func": "RmOpen", "sn": this.data.deviceList[selectIndex].sn, "userid": wx.getStorageSync('TZFACE-userid') }
+    console.log(msg)
+    app.publish(msg)
+    wx.showLoading({
+      title: '正在开门',
+    })
   },
   goAddDevicePage: function() {
     wx.navigateTo({

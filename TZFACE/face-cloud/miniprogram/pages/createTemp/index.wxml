@@ -21,14 +21,14 @@
       </label>
     </checkbox-group>
   </view>
-  <view class="addPw_input">
+  <!-- <view class="addPw_input">
     <picker bindchange="bindPickerValidChange" value="{{validIndex}}" range="{{validArray}}">
       <view class="picker">
         使用次数: {{validArray[validIndex]}}
       </view>     
     </picker>
     <image class="list_more" src="/images/more.png"></image>
-  </view>
+  </view> -->
   <view class="addPw_input">
     <picker mode="multiSelector" value="{{dateTime2}}" bindchange="changeDateTime2" bindcolumnchange="changeDateTimeColumn2" range="{{dateTimeArray2}}">
       <view class="tui-picker-detail">
