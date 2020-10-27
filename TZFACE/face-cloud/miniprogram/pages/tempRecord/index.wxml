@@ -10,8 +10,7 @@
           <view class="visitor_img"><image class="add_img" src="{{item.fileID}}"></image>【{{item.name}}】</view>
           <!-- <view bindtap="handleDel" data-keyId="{{item.keyId}}"><image class="del_img" src='../../images/del.png'></image></view> -->
         </view>
-        <!-- <view class='detail'>授权类型: {{item.type === '0' ? '单次有效' : '不限次'}} <text class="status">授权状态: {{status[item.status]}}</text></view> -->
-        <view class='detail'>授权设备: {{item.sn}}</view>
+        <view class='detail'>授权设备: {{item.sn}}<text class="status">授权状态: {{status[item.status]}}</text></view>
         <view class='detail'>开始时间: {{item.beginTime}}</view>
         <view class='detail'>结束时间: {{item.endTime}}</view>
       </view> 
