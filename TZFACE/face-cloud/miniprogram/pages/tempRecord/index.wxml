@@ -4,7 +4,7 @@
     <image bindtap="goCreateTemp" class="add_device" src='../../images/add.png'></image>
   </view>
   <view class='tip_text' wx:for="{{currentMonthData}}" wx:key="{{index}}">
-    <view class='text_content'>
+    <view class='text_content' style="opacity: {{item.status === 1 ? 0.7 : 1 }}">
       <view class='content_right'>
         <view class='time'>
           <view class="visitor_img"><image class="add_img" src="{{item.fileID}}"></image>【{{item.name}}】</view>
