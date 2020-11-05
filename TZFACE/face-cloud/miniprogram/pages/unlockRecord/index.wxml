@@ -1,11 +1,11 @@
 <view class="record_page">
-  <!-- <view class="section">
+  <view class="section">
     <picker mode="date" fields="month" value="{{date}}" bindchange="bindDateChange">
       <view class="picker">
         {{month}}<image class="ic-record-dropdown" src='../../images/ic-record-dropdown.png'></image>
       </view>
     </picker>
-  </view> -->
+  </view>
   <view class='record_list'>
     <view class='tip_text'>
       <view class='text_content' wx:for="{{currentMonthData}}" wx:key="item">

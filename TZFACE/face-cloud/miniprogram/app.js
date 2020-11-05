@@ -177,6 +177,10 @@ App({
       }
     }
 
+    if (!client) {
+      client = new MQTT.Client("wss://tzface.openn.cn:8091/mqtt", "clientId_" + Math.random().toString(36).substr(2))
+    }
+
     client.connect(connectOptions);
 
   },

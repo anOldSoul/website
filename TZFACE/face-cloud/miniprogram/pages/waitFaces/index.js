@@ -5,12 +5,50 @@ var img = ''
 
 Page({
   data: {
+    showBack: true,
     peopleList: [],
     id: '',
     _id: '',
     notEmpty: false,
     empty: false,
+    percent: 0,
     currentIndex: 0
+  },
+  watchBack: function (name) {
+    console.log('this.name==' + name)
+    if (name === 'Enroll_Finish_ack') {
+      wx.cloud.callFunction({
+        name: 'updateStatus',
+        data: {
+          docid: this.data.peopleList[this.data.currentIndex]._id,
+          status: 2
+        }
+      }).then((e) => {
+        this.setData({
+          showBack: true
+        })
+        this.onQuery()
+      })
+    } else if (name === 'finish_timeout') {
+      this.setData({
+        showBack: true
+      })
+      wx.showToast({
+        icon: 'none',
+        title: '上传失败，请重新录入',
+      })
+    } else if (name && name !== 'undefined') {
+      let result = JSON.parse(name)
+      wx.hideLoading()
+      if (result.func === 'enroll_callback') {
+        let percent = (Math.round(result.get / result.total * 100))
+        console.log(percent)
+        this.setData({
+          showBack: false,
+          percent: percent
+        })
+      }
+    }
   },
   onShareAppMessage() {
     return {
@@ -23,11 +61,12 @@ Page({
     this.data.currentIndex = e.currentTarget.dataset.index
     wx.showModal({
       title: '提示',
-      content: `确定要通过${this.data.peopleList[this.data.currentIndex].name}的录入信息吗`,
+      content: `确定要通过并录入${this.data.peopleList[this.data.currentIndex].name}的信息吗`,
       confirmText: '通过',
       confirmColor: '#012573',
       success: (res) => {
         if (res.confirm) {
+          wx.showLoading()
           console.log('用户点击确定')
           this.handleAdd()
         } else if (res.cancel) {
@@ -162,20 +201,6 @@ Page({
   onLoad() {
     let that = this;
     app.watch(that.watchBack)
-  },
-  watchBack: function (name) {
-    console.log('this.name==' + name)
-    if (name === 'Enroll_Finish_ack') {
-      wx.cloud.callFunction({
-        name: 'updateStatus',
-        data: {
-          docid: this.data.peopleList[this.data.currentIndex]._id,
-          status: 2
-        }
-      }).then((e) => {
-        this.onQuery()
-      })
-    }
   },
   onShow: function () {
     this.onQuery()

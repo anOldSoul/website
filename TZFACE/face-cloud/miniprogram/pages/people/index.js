@@ -51,16 +51,12 @@ Page({
     this.data.currentIndex = e.currentTarget.dataset.index
     let id = e.currentTarget.dataset._id
     let faceid = this.data.peopleList[this.data.currentIndex].faceid
+    let itemList = faceid ? ['删除'] : ['删除', '录入人脸']
     wx.showActionSheet({
-      itemList: ['录入人脸', '删除'],
+      itemList: itemList,
       success: (res) => {
         let tapIndex = res.tapIndex
         if (tapIndex === 0) {
-          app.globalData._id = id
-          wx.navigateTo({
-            url: `/pages/copper/index`
-          })
-        } else if (tapIndex === 1) {
           wx.showModal({
             title: '提示',
             content: '确定要删除该员工吗',
@@ -77,6 +73,11 @@ Page({
                 console.log('用户点击取消')
               }
             }
+          })
+        } else if (tapIndex === 1) {
+          app.globalData._id = id
+          wx.navigateTo({
+            url: `/pages/copper/index`
           })
         }
       }

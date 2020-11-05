@@ -100,3 +100,22 @@ button {
   font-size: 34rpx;
   text-align: center;
 }
+.progress-box {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+progress{
+  margin: 0 20rpx;
+}
+.progress_img {
+  width: 92rpx;
+  height: 32rpx;
+  margin: 0 auto;
+}

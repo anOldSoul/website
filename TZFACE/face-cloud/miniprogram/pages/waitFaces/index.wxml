@@ -12,3 +12,8 @@
   <image class="wait_img" src="/images/pic-home-not-added.png"></image>
   <view class="tip_text">暂无待审核信息...</view>
 </view>
+<view class="progress-box" hidden="{{showBack}}">
+  <progress percent="{{percent}}" border-radius="5" active="true" active-mode="forwards" show-info stroke-width="10"/>
+  <image class="progress_img" src="/images/loding.gif"></image>
+</view>
+

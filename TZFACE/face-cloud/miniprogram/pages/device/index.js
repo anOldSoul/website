@@ -73,9 +73,7 @@ Page({
       this.data.deviceList.forEach((item, index) => {
         if (item.sn === name) {
           item.status = '在线'
-        } else {
-          item.status = ''
-        }      
+        }    
       })
       this.setData({
         deviceList: this.data.deviceList
@@ -86,9 +84,9 @@ Page({
     console.log(status)
   },
   onShow: function () {
+    this.getList()
     let that = this;
     app.watch(that.watchBack)
-    this.getList()
   },
   getList() {
     const db = wx.cloud.database()
@@ -109,6 +107,15 @@ Page({
                 app.publish(msg)
               }
             })
+            let timer = setTimeout(() => {
+              this.data.deviceList.forEach((item, index) => {
+                if (item.status !== '在线') {
+                  let msg = { "func": "GetDeviceInfo", "sn": item.sn, "userid": wx.getStorageSync('TZFACE-userid') }
+                  console.log(msg)
+                  app.publish(msg)
+                }
+              })
+            }, 2000)
           }
 
           this.setData({
