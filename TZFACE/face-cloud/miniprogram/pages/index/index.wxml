@@ -12,10 +12,10 @@
     <view class="list_text"><image class="icon_img" src="/images/people.png"></image>考勤人员</view>
     <image class="list_more" src="/images/more.png"></image>
   </view>
-  <!-- <view class="myList" bindtap="goChart">
+  <view class="myList" bindtap="goChart">
     <view class="list_text"><image class="icon_img" src="/images/chart.png"></image>考勤统计</view>
     <image class="list_more" src="/images/more.png"></image>
-  </view> -->
+  </view>
   <view class="myList" bindtap="goLog">
     <view class="list_text"><image class="icon_img" src="/images/log.png"></image>开门记录</view>
     <image class="list_more" src="/images/more.png"></image>

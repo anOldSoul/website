@@ -15,7 +15,7 @@
           </view>
           <view>
             
-            <view class='time'><span>姓名：{{item.name}}</span> <span>类型：{{item.type === 2 ? '员工' : '访客'}}</span></view>
+            <view class='time'><span>姓名：陈**</span> <span>类型：{{item.type === 2 ? '员工' : '访客'}}</span></view>
             <view class='time'>
               <span>设备：{{item.sn}}</span>
             </view>
