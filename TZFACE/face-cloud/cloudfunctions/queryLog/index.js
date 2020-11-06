@@ -10,7 +10,7 @@ exports.main = async (event, context) => {
     return await db.collection('logs')
     .where({
       // time: 11,
-      sn: event.sn
+      sn: '1111'
     })
       // .skip(event.pageNo)
       .limit(20)

@@ -55,7 +55,7 @@ App({
       onSuccess: () => {
         console.log('connected');
         wx.hideLoading()
-        this.globalData.mqtt_client = client
+        that.globalData.mqtt_client = client
 
         client.onMessageArrived = (msg) => {
           console.log('收到消息为。。。。。。。。。')

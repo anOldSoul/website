@@ -124,6 +124,10 @@ Page({
     });
   },
   submit(){
+    // wx.navigateBack({
+    //   delta: 1
+    // })
+    console.log(this.cropper)
     this.cropper.getImg((obj)=>{
       app.globalData.imgSrc = obj.url;
       console.log(app.globalData.imgSrc)
