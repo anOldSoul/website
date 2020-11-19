@@ -11,14 +11,13 @@
       <view class='text_content' wx:for="{{currentMonthData}}" wx:key="item">
         <view class='content_left'>
           <view class='left'>
-            <image class="pw_record_img" src='../../images/open.png'></image>
+            <image class="pw_record_img" src="{{item.fileID}}"></image>
           </view>
           <view>
             
-            <view class='time'><span>姓名：陈**</span> <span>类型：{{item.type === 2 ? '员工' : '访客'}}</span></view>
-            <view class='time'>
-              <span>设备：{{item.sn}}</span>
-            </view>
+            <view class='time'><span>姓名：{{item.name}}</span> <span>用户类型：{{usertype[item.usertype]}}</span></view>
+            <view class='time'><span>设备：{{item.sn}}</span></view>
+            <view class='time'><span>日志类型：{{logtype[item.logtype]}}</span></view>
             <view class='detail'>开门时间：{{item.time}}</view>
           </view>
         </view>

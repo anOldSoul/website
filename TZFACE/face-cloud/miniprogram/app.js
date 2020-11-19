@@ -27,7 +27,7 @@ App({
       configurable: true,
       enumerable: true,
       set: function (value) {
-        //console.log("监听数据已修改");
+        console.log("监听数据已修改");
         this._data = value;
         method(value);
       },
@@ -164,7 +164,7 @@ App({
             }
           }
         }
-        this.subscribe()
+        that.subscribe()
       },
       onFailure: (option) => {
         console.log(option);
@@ -203,7 +203,6 @@ App({
     }
   },
   publishImg: function (msg) {
-    console.log(msg)
     if (this.globalData.mqtt_client && this.globalData.mqtt_client.isConnected()) {
       this.globalData.mqtt_client.publish(this.globalData.pub_img_topic,
         JSON.stringify(msg),
@@ -212,6 +211,7 @@ App({
       )
     } else {
       this.connectMq()
+      this.globalData.mqttconnected = false
       wx.showLoading({
         title: '连接中',
       })
@@ -226,6 +226,7 @@ App({
       )
     } else {
       this.connectMq()
+      this.globalData.mqttconnected = false
       wx.showLoading({
         title: '连接中',
       })
@@ -236,6 +237,7 @@ App({
     data: null,
   },
   globalData: {
+    mqttconnected: false,
     postImgType: '',
     subscribe_topic: 'tzfacev3/wx',
     pub_topic: 'tzfacev3/device',

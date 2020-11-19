@@ -2,6 +2,20 @@
 const app = getApp()
 Page({
   data: {
+    logtype: {
+      0: '人脸开门',
+      1: '人脸录入', 
+      2: '人脸删除',
+      3: '刷卡开门',
+      4: '卡片添加',
+      5: '卡片删除',
+      6: '远程开门'
+    },
+    usertype: {
+      0: '访客',
+      1: '访客',
+      2: '员工'
+    },
     pageSize: 20,
     pageNo: 1,
     pages: 0,
@@ -52,11 +66,11 @@ Page({
           regexp: startTime,
           option:'i'
         }),
-        sn: 'TZFV030004'
+        sn: sn
       })
       .orderBy('time', 'desc')
       .skip(skip)
-      .limit(skip)
+      .limit(this.data.pageSize)
       .get({
         success: res => {
           console.log(res)
@@ -74,7 +88,7 @@ Page({
               currentMonthData: this.data.currentMonthData.concat(list)
             })
           }
-          // this.getInfo()
+          this.getInfo()
         },
         fail: err => {
           wx.showToast({
@@ -87,11 +101,15 @@ Page({
     }
   },
   getInfo() {
-    console.log('======')
     const db = wx.cloud.database()
     this.data.currentMonthData.forEach((item, index) => {
-      db.collection('faces').doc(item.wxid).get().then((res) => {
-        console.log(res)
+      let collection = item.usertype === 2 ? 'faces' : 'visitors'
+      db.collection(collection).doc(item.wxid).get().then((res) => {
+        item.name = res.data.name
+        item.fileID = res.data.fileID
+        this.setData({
+          currentMonthData: this.data.currentMonthData
+        })
       })
     })
   },

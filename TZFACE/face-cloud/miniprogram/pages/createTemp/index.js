@@ -143,69 +143,6 @@ Page({
       dateTime: dateTime
     }
   },
-  getTempPwd: function () {
-    let config = app.Apis.CHECK_TEMP
-    let config1 = Object.assign([], config);
-    let sn = wx.getStorageSync('sn')
-    config1[1] = `${config1[1]}/${sn}`
-    app.post(config1, {}, result => {
-      if (result.errno === 0) {
-        let t1 = `${this.data.dateTimeArray1[0][this.data.dateTime1[0]]}${this.data.dateTimeArray1[1][this.data.dateTime1[1]]}${this.data.dateTimeArray1[2][this.data.dateTime1[2]]}${this.data.dateTimeArray1[3][this.data.dateTime1[3]]}${this.data.dateTimeArray1[4][this.data.dateTime1[4]]}`
-        let t2 = `${this.data.dateTimeArray2[0][this.data.dateTime2[0]]}${this.data.dateTimeArray2[1][this.data.dateTime2[1]]}${this.data.dateTimeArray2[2][this.data.dateTime2[2]]}${this.data.dateTimeArray2[3][this.data.dateTime2[3]]}${this.data.dateTimeArray2[4][this.data.dateTime2[4]]}`
-        console.log(t1)
-        if (isInit2) {
-          t2 = this.data.initTime
-        }
-        if (app.Moment(t1, 'YYYYMMDDHHmm').isBefore(app.Moment(t2, 'YYYYMMDDHHmm')) || t1 === t2) {
-          wx.showModal({
-            title: '提示',
-            content: '结束时间必须大于开始时间',
-            showCancel: false,
-            success(res) {
-              if (res.confirm) {
-                console.log('用户点击确定')
-              } else if (res.cancel) {
-                console.log('用户点击取消')
-              }
-            }
-          })
-          return
-        }
-        if (this.data.tempPw) {
-          this.setData({
-            createText: '开始创建',
-            tempPw: '',
-            userName: ''
-          })
-        } else {
-          let desc = {
-            "start_time": `${t2.slice(0, 8)}T${t2.slice(8, 12)}00Z`,
-            "end_time": `${t1.slice(0, 8)}T${t1.slice(8, 12)}59Z`,
-            "pwd": this.data.tempPw,
-            "hijack": '1',
-            "pwd_type": this.data.validIndex === '0' ? 'once' : 'repeat'
-          }
-          wx.navigateTo({
-            url: `/pages/activateDevice/index?func=createTemp&desc=${JSON.stringify(desc)}&userid=${this.data.userid}`,
-            success: () => { }
-          })
-        }
-      } else {
-        wx.showModal({
-          title: '提示',
-          content: result.errmsg,
-          showCancel: false,
-          success: (res) => {
-            if (res.confirm) {
-              console.log('用户点击确定')
-            } else if (res.cancel) {
-              console.log('用户点击取消')
-            }
-          }
-        })
-      }
-    })
-  },
   onShareAppMessage: function (res) {
     console.log(wx.getStorageSync('currentKeyId'))
     return {

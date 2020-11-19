@@ -66,7 +66,7 @@ Page({
     console.log('pageDevice监听：。。。。')
     console.log(name)
     if (name === 'mqttconnected') {
-      this.data.mqttconnected = true
+      app.globalData.mqttconnected = true
       wx.hideLoading()
       this.getList()
     } else {
@@ -99,23 +99,25 @@ Page({
       }).get({
         success: res => {
           let list = res.data
-          if (this.data.mqttconnected) {
+          console.log(res)
+          if (app.globalData.mqttconnected) {
+            console.log('ppppppppppppppppp')
             list.forEach((item, index) => {
               if (item.sn) {
                 let msg = { "func": "GetDeviceInfo", "sn": item.sn, "userid": wx.getStorageSync('TZFACE-userid') }
                 console.log(msg)
-                app.publish(msg)
+                app.publishImg(msg)
               }
             })
-            let timer = setTimeout(() => {
-              this.data.deviceList.forEach((item, index) => {
-                if (item.status !== '在线') {
-                  let msg = { "func": "GetDeviceInfo", "sn": item.sn, "userid": wx.getStorageSync('TZFACE-userid') }
-                  console.log(msg)
-                  app.publish(msg)
-                }
-              })
-            }, 2000)
+            // let timer = setTimeout(() => {
+            //   this.data.deviceList.forEach((item, index) => {
+            //     if (item.status !== '在线') {
+            //       let msg = { "func": "GetDeviceInfo", "sn": item.sn, "userid": wx.getStorageSync('TZFACE-userid') }
+            //       console.log(msg)
+            //       app.publish(msg)
+            //     }
+            //   })
+            // }, 2000)
           }
 
           this.setData({
