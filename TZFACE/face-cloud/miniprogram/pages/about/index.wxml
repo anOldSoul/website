@@ -1,0 +1,6 @@
+<!--pages/index/index.wxml-->
+<view>
+  <view><image class="no_apparatus" src='../../images/logo-BIOSEC.jpg'></image></view>
+  <view class='about_title'>人脸门禁考勤机</view>
+  <view class='about_subtitle'>版本号：V 1.0.1</view>
+</view>

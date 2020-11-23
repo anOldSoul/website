@@ -84,6 +84,10 @@ Page({
     console.log(status)
   },
   onShow: function () {
+    if (!app.globalData.mqttconnected) {
+      console.log('app.globalData.mqttconnected丢失。。。。')
+      app.connectMq()
+    }
     this.getList()
     let that = this;
     app.watch(that.watchBack)
@@ -99,7 +103,6 @@ Page({
       }).get({
         success: res => {
           let list = res.data
-          console.log(res)
           if (app.globalData.mqttconnected) {
             console.log('ppppppppppppppppp')
             list.forEach((item, index) => {

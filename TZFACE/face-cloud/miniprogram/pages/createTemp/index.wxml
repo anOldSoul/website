@@ -47,3 +47,8 @@
   </view>
   <view bindtap="goNext" class='add_apparatus'>提交</view>
 </view>
+<view class="progress-box" hidden="{{showBack}}">
+  <view class="progress-text">正在录入第{{publishIndex + 1}}台设备</view>
+  <progress percent="{{percent}}" border-radius="5" active="true" active-mode="forwards" show-info stroke-width="10"/>
+  <image class="progress_img" src="/images/loding.gif"></image>
+</view>

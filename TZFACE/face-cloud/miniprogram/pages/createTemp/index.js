@@ -4,6 +4,8 @@ var isInit1 = true
 var isInit2 = true
 Page({
   data: {
+    percent: 0,
+    showBack: true,
     fileID: '',
     index: '0',
     validIndex: '0',
@@ -160,8 +162,11 @@ Page({
     if (name === 'visitor_finish_ack') {
       if (this.data.publishIndex < this.data.publishList.length) {
         this.data.publishIndex ++
-        let msg = { "func": "postVisitorUrl", "sn": this.data.publishList[this.data.publishIndex], "fileid": this.data.fileID, wxid: res.result._id, beginTime: `${t2.slice(0, 8)}${t2.slice(8, 12)}00`, endTime: `${t1.slice(0, 8)}${t1.slice(8, 12)}59`, type: '1', userid: wx.getStorageSync('TZFACE-userid') }
-        app.publishImg(msg)
+        this.setData({
+          publishIndex: this.data.publishIndex,
+          percent: 0
+        })
+        this.postVistor()
       } else {
         wx.navigateBack({
           delta: 1,
@@ -170,6 +175,33 @@ Page({
               title: '录入成功',
             })
           }
+        })
+      }
+    } else if (name === 'finish_timeout') {
+      this.setData({
+        showBack: true
+      })
+      wx.showModal({
+        title: '提示',
+        content: `设备${this.data.publishList[this.data.publishIndex]}上传失败，请重新录入`,
+        showCancel: false,
+        success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    } else if (name && name !== 'undefined') {
+      let result = JSON.parse(name)
+      wx.hideLoading()
+      if (result.func === 'enroll_callback') {
+        let percent = (Math.round(result.get / result.total * 100))
+        console.log(percent)
+        this.setData({
+          showBack: false,
+          percent: percent
         })
       }
     }
@@ -211,6 +243,9 @@ Page({
     wx.showLoading({
       title: '请稍后'
     })
+    this.postVistor()
+  },
+  postVistor() {
     let t1 = `${this.data.dateTimeArray1[0][this.data.dateTime1[0]]}${this.data.dateTimeArray1[1][this.data.dateTime1[1]]}${this.data.dateTimeArray1[2][this.data.dateTime1[2]]}${this.data.dateTimeArray1[3][this.data.dateTime1[3]]}${this.data.dateTimeArray1[4][this.data.dateTime1[4]]}`
     let t2 = `${this.data.dateTimeArray2[0][this.data.dateTime2[0]]}${this.data.dateTimeArray2[1][this.data.dateTime2[1]]}${this.data.dateTimeArray2[2][this.data.dateTime2[2]]}${this.data.dateTimeArray2[3][this.data.dateTime2[3]]}${this.data.dateTimeArray2[4][this.data.dateTime2[4]]}`
     wx.cloud.callFunction({
@@ -225,8 +260,9 @@ Page({
       },
       success: res => {
         console.log(res)
-        this.data.publishIndex = 1
-        let msg = { "func": "postVisitorUrl", "sn": this.data.publishList[0], "fileid": this.data.fileID, wxid: res.result._id, beginTime: `${t2.slice(0, 8)}${t2.slice(8, 12)}00`, endTime: `${t1.slice(0, 8)}${t1.slice(8, 12)}59`, type: this.data.validIndex, userid: wx.getStorageSync('TZFACE-userid') }       
+        console.log(this.data.publishIndex)
+        let msg = { "func": "postVisitorUrl", "sn": this.data.publishList[this.data.publishIndex], "fileid": this.data.fileID, wxid: res.result._id, beginTime: `${t2.slice(0, 8)}${t2.slice(8, 12)}00`, endTime: `${t1.slice(0, 8)}${t1.slice(8, 12)}59`, type: this.data.validIndex, userid: wx.getStorageSync('TZFACE-userid') }
+        console.log(msg)
         app.globalData.postImgType = 'visitor'
         app.publishImg(msg)
       },

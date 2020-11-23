@@ -1,0 +1,27 @@
+/* pages/index/index.wxss */
+.no_apparatus{
+  width: 132rpx;
+  height: 132rpx;
+  margin-left: 309rpx;
+  margin-top: 86rpx;
+  margin-bottom: 70rpx;
+}
+.about_title{
+  font-size: 44rpx;
+  text-align: center;
+}
+.about_subtitle{
+  font-size: 32rpx;
+  text-align: center;
+  color: #333333;
+  margin-top: 18rpx;
+}
+.about_company{
+  width: 100%;
+  line-height: 1.5;
+  font-size: 24rpx;
+  position: fixed;
+  bottom: 60rpx;
+  color: #BCBCBC;
+  text-align: center;
+}

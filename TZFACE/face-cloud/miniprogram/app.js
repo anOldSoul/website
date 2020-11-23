@@ -20,6 +20,10 @@ App({
     }
   },
   onShow: function () {
+    if (!this.globalData.mqttconnected) {
+      console.log('this.globalData.mqttconnected丢失。。。。')
+      this.connectMq()
+    }
   },
   watch: function (method) {
     var obj = this.sockData;
