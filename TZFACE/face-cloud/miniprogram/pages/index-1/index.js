@@ -106,7 +106,9 @@ Page({
             })
           },
           complete: () => {
-            wx.hideLoading()
+            wx.hideLoading({
+              fail: () => { }
+            })
           }
         })
 

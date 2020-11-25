@@ -29,7 +29,9 @@ Page({
         name: this.data.device_name
       }
     }).then((e) => {
-      wx.hideLoading()
+      wx.hideLoading({
+        fail: () => { }
+      })
       if (this.data.pagetype === 'addDevice') {
         let msg = { "func": "GetDeviceInfo", "sn": wx.getStorageSync('sn'), userid: wx.getStorageSync('TZFACE-userid') }
         wx.showLoading({

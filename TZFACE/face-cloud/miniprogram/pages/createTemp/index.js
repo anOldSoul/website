@@ -158,9 +158,9 @@ Page({
     })
   },
   watchBack: function (name) {
-    console.log('this.name==' + name)
+    console.log('this.name==' + name)   
     if (name === 'visitor_finish_ack') {
-      if (this.data.publishIndex < this.data.publishList.length) {
+      if ((this.data.publishIndex + 1) < this.data.publishList.length) {
         this.data.publishIndex ++
         this.setData({
           publishIndex: this.data.publishIndex,
@@ -195,7 +195,9 @@ Page({
       })
     } else if (name && name !== 'undefined') {
       let result = JSON.parse(name)
-      wx.hideLoading()
+      wx.hideLoading({
+        fail: () => { }
+      })
       if (result.func === 'enroll_callback') {
         let percent = (Math.round(result.get / result.total * 100))
         console.log(percent)
@@ -259,8 +261,6 @@ Page({
         sn: this.data.publishList
       },
       success: res => {
-        console.log(res)
-        console.log(this.data.publishIndex)
         let msg = { "func": "postVisitorUrl", "sn": this.data.publishList[this.data.publishIndex], "fileid": this.data.fileID, wxid: res.result._id, beginTime: `${t2.slice(0, 8)}${t2.slice(8, 12)}00`, endTime: `${t1.slice(0, 8)}${t1.slice(8, 12)}59`, type: this.data.validIndex, userid: wx.getStorageSync('TZFACE-userid') }
         console.log(msg)
         app.globalData.postImgType = 'visitor'
@@ -299,7 +299,9 @@ Page({
           })
         },
         complete: () => {
-          wx.hideLoading()
+          wx.hideLoading({
+            fail: () => { }
+          })
         }
       })
     }

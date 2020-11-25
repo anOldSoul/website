@@ -52,7 +52,9 @@ Page({
               userid: ''
             }
           }).then((e) => {
-            wx.hideLoading()
+            wx.hideLoading({
+              fail: () => { }
+            })
             wx.switchTab({
               url: '/pages/device/index',
               success: () => {

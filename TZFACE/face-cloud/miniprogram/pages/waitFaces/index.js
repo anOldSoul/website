@@ -39,7 +39,9 @@ Page({
       })
     } else if (name && name !== 'undefined') {
       let result = JSON.parse(name)
-      wx.hideLoading()
+      wx.hideLoading({
+        fail: () => { }
+      })
       if (result.func === 'enroll_callback') {
         let percent = (Math.round(result.get / result.total * 100))
         console.log(percent)
@@ -148,7 +150,9 @@ Page({
             empty: true
           })
         }
-        wx.hideLoading()
+        wx.hideLoading({
+          fail: () => { }
+        })
         console.log('[数据库] [查询记录] 成功: ', res)
       },
       fail: err => {

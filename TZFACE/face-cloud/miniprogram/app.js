@@ -58,7 +58,9 @@ App({
       reconnect: true,
       onSuccess: () => {
         console.log('connected');
-        wx.hideLoading()
+        wx.hideLoading({
+          fail: () => {}
+        })
         that.globalData.mqtt_client = client
 
         client.onMessageArrived = (msg) => {
@@ -82,7 +84,9 @@ App({
                       userid: data.userid
                     }
                   }).then((e) => {
-                    wx.hideLoading()
+                    wx.hideLoading({
+                      fail: () => { }
+                    })
                     
                     this.sockData.data = data.sn
                     wx.switchTab({
@@ -173,7 +177,10 @@ App({
       onFailure: (option) => {
         console.log(option);
         //去除按钮上的加载标志
-        wx.hideLoading()
+        wx.hideLoading({
+          fail: () => { }
+        })
+        client.end()
         wx.showModal({
           //title: msg.destinationName,
           content: option.errorMessage
@@ -194,7 +201,7 @@ App({
         qos: 1,
         onSuccess: () => {
           console.log('subscribe success');
-          this.sockData.data = 'mqttconnected'
+          this.globalData.mqttconnected = true
         },
         onFailure: function () {
           wx.showToast({

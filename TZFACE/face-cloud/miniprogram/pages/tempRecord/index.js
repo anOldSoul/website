@@ -56,7 +56,9 @@ Page({
         this.setData({
           currentMonthData: list
         })
-        wx.hideLoading()
+        wx.hideLoading({
+          fail: () => { }
+        })
         console.log('[数据库] [查询记录] 成功: ', res)
       },
       fail: err => {

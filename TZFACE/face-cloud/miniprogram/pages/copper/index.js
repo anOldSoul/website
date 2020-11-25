@@ -22,7 +22,9 @@ Page({
     console.log('cropper加载完成');
   },
   loadimage(e){
-    wx.hideLoading();
+    wx.hideLoading({
+      fail: () => { }
+    })
     console.log('图片');
     this.cropper.imgReset();
   },

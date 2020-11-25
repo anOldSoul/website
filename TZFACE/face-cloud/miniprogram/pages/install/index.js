@@ -115,11 +115,11 @@ Page({
             db.collection('devices').where({
               sn: sn
             }).get({
-              success: res => {
-                console.log(res)
-                
+              success: res => {               
                 if (res.data.length && res.data[0].userid) {
-                  wx.hideLoading()
+                  wx.hideLoading({
+                    fail: () => { }
+                  })
                   wx.showModal({
                     title: '提示',
                     showCancel: false,
@@ -139,7 +139,9 @@ Page({
                       wx.navigateTo({
                         url: '/pages/deviceName/index?pagetype=addDevice',
                         success: () => {
-                          wx.hideLoading()
+                          wx.hideLoading({
+                            fail: () => { }
+                          })
                         }
                       })
                       console.log('添加设备成功')

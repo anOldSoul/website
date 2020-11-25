@@ -27,7 +27,7 @@
 	},
 	"appid": "wx3791c31c8eef29ac",
 	"projectname": "face-cloud",
-	"libVersion": "2.12.1",
+	"libVersion": "2.14.0",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
