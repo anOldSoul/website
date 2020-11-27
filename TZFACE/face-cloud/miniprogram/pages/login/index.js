@@ -9,7 +9,7 @@ Page({
     isUpdate: false,
     telephone: '',
     nickName: '',
-    password: '123456'
+    password: ''
   },
   onLoad: function (options) {
     let type = options.type
@@ -38,6 +38,13 @@ Page({
   test() {
     let TEL_REGEXP = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
     if (TEL_REGEXP.test(this.data.telephone)) {
+      return true
+    }
+    return false
+  },
+  testPwd() {
+    let PWD_REGEXP = /^(?![^a-zA-Z]+$)(?!\D+$).{8,15}$/
+    if (PWD_REGEXP.test(this.data.password)) {
       return true
     }
     return false
@@ -107,6 +114,21 @@ Page({
       })
       return
     }
+    if (!this.testPwd()) {
+      wx.showModal({
+        title: '提示',
+        content: '请输入8-15位密码，至少包含1个字母和1个数字',
+        showCancel: false,
+        success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+      return
+    }
     wx.setStorageSync('phone', this.data.telephone)
     wx.setStorageSync('nickName', this.data.nickName)
     const db = wx.cloud.database()
@@ -117,22 +139,39 @@ Page({
       success: res => {
         console.log(res)
         if (res.data.length > 0) {
-          wx.setStorageSync('TZFACE-userid', res.data[0]._id)
-          wx.switchTab({
-            url: '/pages/member/index',
-            success: () => {
-              wx.showToast({
-                icon: 'none',
-                title: '登录成功'
-              })
-            }
-          })
+          if (res.data[0].password === this.data.password) {
+            wx.setStorageSync('TZFACE-userid', res.data[0]._id)
+            wx.switchTab({
+              url: '/pages/member/index',
+              success: () => {
+                wx.showToast({
+                  icon: 'none',
+                  title: '登录成功'
+                })
+              }
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: '登录失败，密码不正确',
+              showCancel: false,
+              success(res) {
+                if (res.confirm) {
+                  console.log('用户点击确定')
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
+          }
+
         } else {
           wx.cloud.callFunction({
             name: 'login',
             data: {
               telephone: this.data.telephone,
-              name: this.data.nickName
+              name: this.data.nickName,
+              password: this.data.password
             },
             success: res => {
               wx.setStorageSync('TZFACE-userid', res.result._id)
@@ -160,15 +199,6 @@ Page({
         })
         console.error('[数据库] [查询记录] 失败：', err)
       }
-    })
-  },
-  updateAdm() {
-    let desc = {
-      pwd: this.data.password
-    }
-    app.globalData.adminPw = this.data.password
-    wx.navigateTo({
-      url: `/pages/activateDevice/index?func=updateAdmin&desc=${JSON.stringify(desc)}`
     })
   },
   onShow: function () {

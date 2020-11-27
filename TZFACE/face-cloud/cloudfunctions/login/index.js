@@ -15,6 +15,7 @@ exports.main = async (event, context) => {
           unionid: wxContext.UNIONID,
           env: wxContext.ENV,
           name: event.name,
+          password: event.password,
           telephone: event.telephone
         },
         success: res => {

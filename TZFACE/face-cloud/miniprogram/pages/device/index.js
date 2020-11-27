@@ -15,30 +15,30 @@ Page({
     this.getList()
   },
   goCreateTemp() {
-    wx.requestSubscribeMessage({
-      tmplIds: ['8OIe-ZGan3uVaf0YaZPhBbW6ivtLXdE3G4Kr7bl8o80'],
-      success(res) {
-        console.log(res)
-      }
-    })
-    // if (this.data.deviceList.length === 0) {
-    //   wx.showModal({
-    //     title: '提示',
-    //     content: '您还未绑定设备哦，请先添加设备',
-    //     showCancel: false,
-    //     success(res) {
-    //       if (res.confirm) {
-    //         console.log('用户点击确定')
-    //       } else if (res.cancel) {
-    //         console.log('用户点击取消')
-    //       }
-    //     }
-    //   })
-    //   return
-    // }
-    // wx.navigateTo({
-    //   url: `/pages/tempRecord/index`
+    // wx.requestSubscribeMessage({
+    //   tmplIds: ['8OIe-ZGan3uVaf0YaZPhBbW6ivtLXdE3G4Kr7bl8o80'],
+    //   success(res) {
+    //     console.log(res)
+    //   }
     // })
+    if (this.data.deviceList.length === 0) {
+      wx.showModal({
+        title: '提示',
+        content: '您还未绑定设备哦，请先添加设备',
+        showCancel: false,
+        success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+      return
+    }
+    wx.navigateTo({
+      url: `/pages/tempRecord/index`
+    })
   },
   addDevice() {
     if (!wx.getStorageSync('TZFACE-userid')) {
