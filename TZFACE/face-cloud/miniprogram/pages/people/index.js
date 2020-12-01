@@ -60,15 +60,28 @@ Page({
           wx.showModal({
             title: '提示',
             content: '确定要删除该员工吗',
-            success(res) {
+            success: (res) => {
               if (res.confirm) {
                 console.log('用户点击确定')
                 wx.showLoading({
                   title: '正在删除',
                 })
-                let msg = { "func": "DeleteUser", "sn": wx.getStorageSync('sn'), "id": faceid, userid: wx.getStorageSync('TZFACE-userid') }
-                console.log(msg)
-                app.publish(msg)
+                if (faceid) {
+                  let msg = { "func": "DeleteUser", "sn": wx.getStorageSync('sn'), "id": faceid, userid: wx.getStorageSync('TZFACE-userid') }
+                  console.log(msg)
+                  app.publish(msg)
+                } else {
+                  wx.cloud.callFunction({
+                    name: 'deleteFace',
+                    data: {
+                      docid: id
+                    }
+                  }).then((e) => {
+                    console.log(e)
+                    this.onQuery()
+                  })
+                }
+                
               } else if (res.cancel) {
                 console.log('用户点击取消')
               }

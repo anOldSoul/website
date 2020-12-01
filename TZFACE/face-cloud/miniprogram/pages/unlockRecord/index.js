@@ -104,13 +104,15 @@ Page({
     const db = wx.cloud.database()
     this.data.currentMonthData.forEach((item, index) => {
       let collection = item.usertype === 2 ? 'faces' : 'visitors'
-      db.collection(collection).doc(item.wxid).get().then((res) => {
-        item.name = res.data.name
-        item.fileID = res.data.fileID
-        this.setData({
-          currentMonthData: this.data.currentMonthData
+      if (item.faceId !== 65535) {
+        db.collection(collection).doc(item.wxid).get().then((res) => {
+          item.name = res.data.name
+          item.fileID = res.data.fileID
+          this.setData({
+            currentMonthData: this.data.currentMonthData
+          })
         })
-      })
+      }
     })
   },
   onShow: function() {

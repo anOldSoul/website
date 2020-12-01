@@ -8,9 +8,14 @@ const db = cloud.database()
 const _ = db.command
 exports.main = async (event, context) => {
   try {
-    return await db.collection('faces').where({
-      faceid: event.faceid
-    })
+    let faceid = event.faceid
+    let obj = {}
+    if (faceid) {
+      obj.faceid = faceid
+    } else {
+      obj._id = event.docid
+    }
+    return await db.collection('faces').where(obj)
       .remove({
         success: res => {
           console.log(res)
