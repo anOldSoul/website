@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/device/index",
+    "pages/syncDevice/index",
+    
     "pages/unlockRecord/index",  
     "pages/createTemp/index",
     "pages/tempRecord/index",

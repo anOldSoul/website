@@ -1,0 +1,29 @@
+<!--pages/admPw/index.wxml-->
+<view>
+  <view class="addPw_input">
+    <view class="input_title">员工姓名：</view>
+    <view>{{nickName}}</view>
+  </view>
+  <view class="addPw_input">
+    <view>人脸照片：</view>
+    <view class="person">
+      <image class="icon_img" src="/images/photo.png"></image>
+      <image class="face" src="{{fileID}}"></image>
+    </view>
+  </view>
+  <view class="addPw_input">
+    <view class="input_title">授权设备：</view>
+    <checkbox-group bindchange="checkboxChange">
+      <label class="checkitem" wx:for="{{deviceList}}" wx:key="{{item.sn}}">
+        <checkbox value="{{item.sn}}" checked="{{item.checked}}"/>
+        <text>{{item.sn}}</text>
+      </label>
+    </checkbox-group>
+  </view>
+  <view bindtap="goNext" class='add_apparatus'>同步</view>
+</view>
+<view class="progress-box" hidden="{{showBack}}">
+  <view class="progress-text">正在录入第{{publishIndex + 1}}台设备</view>
+  <progress percent="{{percent}}" border-radius="5" active="true" active-mode="forwards" show-info stroke-width="10"/>
+  <image class="progress_img" src="/images/loding.gif"></image>
+</view>

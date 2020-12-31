@@ -50,8 +50,10 @@ Page({
     console.log(e)
     this.data.currentIndex = e.currentTarget.dataset.index
     let id = e.currentTarget.dataset._id
+    let name = e.currentTarget.dataset.name
     let faceid = this.data.peopleList[this.data.currentIndex].faceid
-    let itemList = faceid ? ['删除'] : ['删除', '录入人脸']
+    let fileID = e.currentTarget.dataset.fileid
+    let itemList = faceid >= 0 ? ['删除', '同步到其他设备'] : ['删除', '录入人脸']
     wx.showActionSheet({
       itemList: itemList,
       success: (res) => {
@@ -88,10 +90,16 @@ Page({
             }
           })
         } else if (tapIndex === 1) {
-          app.globalData._id = id
-          wx.navigateTo({
-            url: `/pages/copper/index`
-          })
+          if (!faceid && faceid !== 0) {
+            app.globalData._id = id
+            wx.navigateTo({
+              url: `/pages/copper/index`
+            })
+          } else {
+            wx.navigateTo({
+              url: `/pages/syncDevice/index?nickName=${name}&fileID=${fileID}`
+            })
+          }
         }
       }
     })
