@@ -53,6 +53,7 @@ Page({
     let name = e.currentTarget.dataset.name
     let faceid = this.data.peopleList[this.data.currentIndex].faceid
     let fileID = e.currentTarget.dataset.fileid
+    let sn = e.currentTarget.dataset.sn
     let itemList = faceid >= 0 ? ['删除', '同步到其他设备'] : ['删除', '录入人脸']
     wx.showActionSheet({
       itemList: itemList,
@@ -97,7 +98,7 @@ Page({
             })
           } else {
             wx.navigateTo({
-              url: `/pages/syncDevice/index?nickName=${name}&fileID=${fileID}`
+              url: `/pages/syncDevice/index?nickName=${name}&fileID=${fileID}&sn=${sn}&wxid=${id}`
             })
           }
         }

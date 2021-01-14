@@ -16,7 +16,7 @@
     <button class="shareBtn" type="primary" open-type="share"><image class="add_img" src="/images/inform.png"></image>通知员工录入</button>
   </view>
   <view class="myList" hover-class="none">
-    <view class="person" wx:for="{{peopleList}}" wx:key="index" bindtap="handleAddPhoto" data-fileID="{{item.fileID}}" data-name="{{item.name}}" data-index="{{index}}" data-id="{{item.id}}" data-_id="{{item._id}}">
+    <view class="person" wx:for="{{peopleList}}" wx:key="index" bindtap="handleAddPhoto" data-sn="{{item.sn}}" data-fileID="{{item.fileID}}" data-name="{{item.name}}" data-index="{{index}}" data-id="{{item.id}}" data-_id="{{item._id}}">
       <image class="icon_img" src="/images/face.png"></image>
       <image class="face" src="{{item.faceid >= 0 ? item.fileID : ''}}"></image>
       <view class="face_name">{{item.name}}</view>

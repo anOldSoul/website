@@ -9,6 +9,7 @@ Page({
     fileID: '',
     isShare: false,
     deviceList: [],
+    sn: '',
     publishList: [],
     publishIndex: 0,
     name: '',
@@ -17,7 +18,9 @@ Page({
   onLoad: function (options) {
     this.setData({
       nickName: options.nickName,
-      fileID: options.fileID
+      fileID: options.fileID,
+      sn: options.sn,
+      wxid: options.wxid
     })
     this.getList()
   },
@@ -46,8 +49,13 @@ Page({
       userid: wx.getStorageSync('TZFACE-userid')
     }).get({
       success: res => {
+        let list = res.data
+        console.log(list)
+        let deviceList = list.filter((item, index) => {
+          return item.sn !== this.data.sn
+        })
         this.setData({
-          deviceList: res.data
+          deviceList: deviceList
         })
       },
       fail: err => {
@@ -111,7 +119,7 @@ Page({
   },
   watchBack: function (name) {
     console.log('this.name==' + name)   
-    if (name === 'visitor_finish_ack') {
+    if (name === 'Enroll_Finish_ack') {
       if ((this.data.publishIndex + 1) < this.data.publishList.length) {
         this.data.publishIndex ++
         this.setData({
@@ -130,6 +138,7 @@ Page({
         })
       }
     } else if (name === 'finish_timeout') {
+      wx.hideLoading()
       this.setData({
         showBack: true
       })
@@ -167,20 +176,6 @@ Page({
     })
   },
   goNext: function() {
-    if (!this.data.name) {
-      wx.showToast({
-        icon: 'none',
-        title: '请输入访客姓名'
-      })
-      return
-    }
-    if (!this.data.fileID) {
-      wx.showToast({
-        icon: 'none',
-        title: '请录入人脸照片'
-      })
-      return
-    }
     let filterList = this.data.deviceList.filter((item, index) => {
       return item.checked
     })
@@ -206,11 +201,12 @@ Page({
         data: {
           name: this.data.nickName,
           sn: item,
-          status: 1
+          status: 1,
+          fileID: this.data.fileID
         },
         success: res => {
           console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-          let msg = { "func": "postImgUrl", "sn": wx.getStorageSync('sn'), "fileid": res.fileID, wxid: app.globalData._id, userid: wx.getStorageSync('TZFACE-userid') }
+          let msg = { "func": "postImgUrl", "sn": item, "fileid": this.data.fileID, wxid: res._id, userid: wx.getStorageSync('TZFACE-userid') }
           console.log(msg)
           app.publishImg(msg)
         },
