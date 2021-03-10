@@ -4,13 +4,19 @@
 		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"autoAudits": false,
+		"coverView": true,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"useCompilerModule": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.5.0",
-	"appid": "wx6ab6719870ec701d",
-	"projectname": "mini",
+	"appid": "wx3791c31c8eef29ac",
+	"projectname": "small-programm",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {

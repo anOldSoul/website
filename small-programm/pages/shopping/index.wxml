@@ -8,11 +8,11 @@ module.exports.len = function(arr) {
   return arr.length
 }
 </wxs>
-<button bindtap="openBluetoothAdapter">开始扫描</button>
+<!-- <button bindtap="openBluetoothAdapter">开始扫描</button>
 <button bindtap="stopBluetoothDevicesDiscovery">停止扫描</button>
 <button bindtap="closeBluetoothAdapter">结束流程</button>
 
-<view class="devices_summary">已发现 {{devices.length}} 个外围设备：</view>
+<view class="devices_summary">已发现 {{devices.length}} 个外围设备：</view> -->
 <scroll-view class="device_list" scroll-y scroll-with-animation>
   <view wx:for="{{devices}}" wx:key="index"
    data-device-id="{{item.deviceId}}"
