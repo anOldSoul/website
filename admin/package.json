@@ -13,7 +13,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "babel-polyfill": "^6.26.0",
-    "dot-prop": "^4.2.0",
+    "dot-prop": "^5.1.1",
     "element-ui": "^2.4.6",
     "elementui-china-area": "^1.0.1",
     "moment": "^2.22.2",
